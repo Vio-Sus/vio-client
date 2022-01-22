@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import Form from './components/form';
 
 function App() {
   const [whatever, setWhatever] = useState('');
@@ -16,6 +17,7 @@ function App() {
   return (
     <div className="App">
       <h1>{whatever}</h1>
+      <Form></Form>
     </div>
   );
 }
