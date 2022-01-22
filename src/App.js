@@ -1,14 +1,14 @@
-import logo from "./logo.svg";
-import "./App.css";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import logo from './logo.svg';
+import './App.css';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 function App() {
-  const [whatever, setWhatever] = useState("");
+  const [whatever, setWhatever] = useState('');
 
   useEffect(() => {
     axios
-      .get("/api/test")
+      .get('/api/test')
       .then((result) => result.data)
       .then((data) => setWhatever(data.message));
   }, []);
