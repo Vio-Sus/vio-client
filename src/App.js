@@ -3,6 +3,7 @@ import './App.css';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Form from './components/form';
+import Entries from './components/entries';
 
 function App() {
   const [whatever, setWhatever] = useState('');
@@ -18,6 +19,7 @@ function App() {
     <div className="App">
       <h1>{whatever}</h1>
       <Form></Form>
+      <Entries></Entries>
     </div>
   );
 }
