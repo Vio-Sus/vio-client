@@ -1,14 +1,18 @@
 import { useEffect, useState } from 'react';
-import { getSources } from '../network';
+import { getItems, getSources } from '../network';
 
 export default function Form() {
   const [sources, setSources] = useState([]);
+  const [items, setItems] = useState([]);
   useEffect(() => {
     getSources().then((result) => {
-      console.log(result);
+      console.log('Sources', result);
       setSources(result.data);
     });
-    // setSources();
+    getItems().then((result) => {
+      console.log('Items', result);
+      setItems(result.data);
+    });
   }, []);
 
   const [itemWeights, setItemWeights] = useState([{ item: '', weight: '' }]);
@@ -46,7 +50,7 @@ export default function Form() {
     console.log(JSON.stringify(formValues));
     console.log(JSON.stringify(itemWeights));
   };
-  
+
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -61,7 +65,9 @@ export default function Form() {
         <select name="source" onChange={(e) => handleFormValues(e)}>
           <option hidden>Select Source</option>
           {sources.map((source, key) => (
-            <option key={key}>{source.name}</option>
+            <option key={key} value={source.source_id}>
+              {source.name}
+            </option>
           ))}
         </select>
         <br />
@@ -71,8 +77,11 @@ export default function Form() {
             <label>Item</label>
             <select name="item" onChange={(e) => handleChange(index, e)}>
               <option hidden>Select Item</option>
-              <option>Item 1</option>
-              <option>Item 2</option>
+              {items.map((item, key) => (
+                <option key={key} value={item.item_id}>
+                  {item.name}
+                </option>
+              ))}
             </select>
             <label>Weight</label>
             <input
