@@ -26,7 +26,7 @@ export default function Form() {
   let handleChange = (i, e) => {
     let newEntryWeights = [...entryWeights];
     newEntryWeights[i][e.target.name] = Number(e.target.value);
-    console.log('handling wntry changes', newEntryWeights);
+    console.log('handling entry changes', newEntryWeights);
     setEntryWeights(newEntryWeights);
   };
 
@@ -34,7 +34,11 @@ export default function Form() {
     // copying the original state
     let newFormValues = formValues;
     // adding onto the copy
-    newFormValues[e.target.name] = e.target.value;
+    if (e.target.name === 'date') {
+      newFormValues[e.target.name] = e.target.value;
+    } else {
+      newFormValues[e.target.name] = Number(e.target.value);
+    }
     console.log('handling form changes', newFormValues);
     // setting the state from the original to the new copy
     setFormValues(newFormValues);
@@ -51,7 +55,7 @@ export default function Form() {
   };
 
   let checkIfValid = (err) =>
-    err == '' ? setIsValid(true) : setIsValid(false);
+    err.length === 0 ? setIsValid(true) : setIsValid(false);
 
   let checkForErrors = () => {
     let err = [];
@@ -63,15 +67,15 @@ export default function Form() {
     }
     for (let i = 0; i < entryWeights.length; i++) {
       const entry = entryWeights[i];
-      if (entry.item != '') {
+      if (entry.item !== '') {
         if (entry.weight === '') {
           let isMissingItem = items.find(
-            ({ item_id }) => item_id == entry.item
+            ({ item_id }) => item_id === Number(entry.item)
           );
           err.push(`${isMissingItem.name} is missing a weight`);
         }
       }
-      if (entry.weight != '') {
+      if (entry.weight !== '') {
         if (entry.item === '') {
           err.push(`Which item weighs ${entry.weight} kg?`);
         }
