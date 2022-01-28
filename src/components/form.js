@@ -17,7 +17,7 @@ export default function Form() {
 
   const [entryWeights, setEntryWeights] = useState([{ item: '', weight: '' }]);
 
-  const [formValues, setFormValues] = useState({ date: '', source: '' });
+  const [formValues, setFormValues] = useState({});
 
   const [errorMsgs, setErrorMsgs] = useState([]);
 
@@ -54,10 +54,10 @@ export default function Form() {
     setEntryWeights(newEntryWeights);
   };
 
-  let checkIfValid = (err) =>
-    err.length === 0 ? setIsValid(true) : setIsValid(false);
+  let checkIfValid = () =>
+    errorMsgs.length === 0 ? setIsValid(true) : setIsValid(false);
 
-  let checkForErrors = () => {
+  let checkForErrors = async () => {
     let err = [];
     if (!formValues.date) {
       err.push('A date is missing');
@@ -81,14 +81,16 @@ export default function Form() {
         }
       }
     }
-    setErrorMsgs(err);
+    await setErrorMsgs(err);
     return err;
   };
 
   let handleSubmit = (event) => {
     event.preventDefault();
-    checkForErrors();
-    checkIfValid(errorMsgs);
+    checkForErrors().then((err) => {
+      console.log(err);
+      checkIfValid();
+    });
     console.log('is this valid?', isValid);
     if (!isValid) {
       console.log('Form is missing values; try again');
