@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getItems, getSources } from '../network';
+import { getItems, getSources, postEntries } from '../network';
 
 export default function Form() {
   const [sources, setSources] = useState([]);
@@ -15,7 +15,7 @@ export default function Form() {
     });
   }, []);
 
-  const [itemWeights, setItemWeights] = useState([{ item: '', weight: '' }]);
+  const [entryWeights, setEntryWeights] = useState([{ item: '', weight: '' }]);
 
   const [formValues, setFormValues] = useState({ date: '', source: '' });
 
@@ -24,9 +24,10 @@ export default function Form() {
   const [isValid, setIsValid] = useState(false);
 
   let handleChange = (i, e) => {
-    let newItemWeights = [...itemWeights];
-    newItemWeights[i][e.target.name] = e.target.value;
-    setItemWeights(newItemWeights);
+    let newEntryWeights = [...entryWeights];
+    newEntryWeights[i][e.target.name] = Number(e.target.value);
+    console.log('handling wntry changes', newEntryWeights);
+    setEntryWeights(newEntryWeights);
   };
 
   let handleFormValues = (e) => {
@@ -40,13 +41,13 @@ export default function Form() {
   };
 
   let addFormFields = () => {
-    setItemWeights([...itemWeights, { item: '', weight: '' }]);
+    setEntryWeights([...entryWeights, { item: '', weight: '' }]);
   };
 
   let removeFormFields = (i) => {
-    let newItemWeights = [...itemWeights];
-    newItemWeights.splice(i, 1);
-    setItemWeights(newItemWeights);
+    let newEntryWeights = [...entryWeights];
+    newEntryWeights.splice(i, 1);
+    setEntryWeights(newEntryWeights);
   };
 
   let checkIfValid = (err) =>
@@ -60,8 +61,8 @@ export default function Form() {
     if (!formValues.source) {
       err.push('A source is missing');
     }
-    for (let i = 0; i < itemWeights.length; i++) {
-      const entry = itemWeights[i];
+    for (let i = 0; i < entryWeights.length; i++) {
+      const entry = entryWeights[i];
       if (entry.item != '') {
         if (entry.weight === '') {
           let isMissingItem = items.find(
@@ -88,8 +89,12 @@ export default function Form() {
     if (!isValid) {
       console.log('Form is missing values; try again');
     } else {
-      console.log(JSON.stringify(formValues));
-      console.log(JSON.stringify(itemWeights));
+      let formContent = {
+        formValues,
+        entryWeights,
+      };
+      console.log(formContent);
+      postEntries(formContent);
     }
   };
 
@@ -114,7 +119,7 @@ export default function Form() {
         </select>
         <br />
         <br />
-        {itemWeights.map((element, index) => (
+        {entryWeights.map((element, index) => (
           <div className="form-inline" key={index}>
             <label>Item</label>
             <select name="item" onChange={(e) => handleChange(index, e)}>
