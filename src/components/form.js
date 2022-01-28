@@ -57,39 +57,54 @@ export default function Form() {
   let checkIfValid = () =>
     errorMsgs.length === 0 ? setIsValid(true) : setIsValid(false);
 
-  let checkForErrors = async () => {
+  let handleValidation = async () => {
     let err = [];
     if (!formValues.date) {
       err.push('A date is missing');
+      setIsValid(false);
     }
     if (!formValues.source) {
       err.push('A source is missing');
+      setIsValid(false);
     }
-    for (let i = 0; i < entryWeights.length; i++) {
-      const entry = entryWeights[i];
-      if (entry.item !== '') {
-        if (entry.weight === '') {
-          let isMissingItem = items.find(
-            ({ item_id }) => item_id === Number(entry.item)
-          );
-          err.push(`${isMissingItem.name} is missing a weight`);
+    if (entryWeights[0].item === '' && entryWeights[0].weight === '') {
+      err.push('There are no entries to submit');
+      setIsValid(false);
+    } else {
+      for (let i = 0; i < entryWeights.length; i++) {
+        const entry = entryWeights[i];
+        if (entry.item !== '') {
+          if (entry.weight === '') {
+            let isMissingItem = items.find(
+              ({ item_id }) => item_id === Number(entry.item)
+            );
+            err.push(`${isMissingItem.name} is missing a weight`);
+            setIsValid(false);
+          }
         }
-      }
-      if (entry.weight !== '') {
-        if (entry.item === '') {
-          err.push(`Which item weighs ${entry.weight} kg?`);
+        if (entry.weight !== '') {
+          if (entry.item === '') {
+            err.push(`Which item weighs ${entry.weight} kg?`);
+            setIsValid(false);
+          }
         }
       }
     }
     await setErrorMsgs(err);
+    if (err.length === 0) {
+      setIsValid(true);
+    }
     return err;
   };
 
   let handleSubmit = (event) => {
     event.preventDefault();
-    checkForErrors().then((err) => {
+    let form = document.getElementById('input-form');
+    handleValidation().then((err) => {
       console.log(err);
-      checkIfValid();
+      if (err.length === 0) {
+        setIsValid(true);
+      }
     });
     console.log('is this valid?', isValid);
     if (!isValid) {
@@ -100,13 +115,16 @@ export default function Form() {
         entryWeights,
       };
       console.log(formContent);
-      postEntries(formContent);
+      postEntries(formContent).then((res) => {
+        console.log(res);
+        form.reset();
+      });
     }
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} id="input-form">
         <label>Start date:</label>
         <input
           name="date"
