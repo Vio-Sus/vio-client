@@ -17,7 +17,7 @@ export default function Form() {
 
   const [entryWeights, setEntryWeights] = useState([{ item: '', weight: '' }]);
 
-  const [formValues, setFormValues] = useState({ date: '', source: '' });
+  const [formValues, setFormValues] = useState({});
 
   const [errorMsgs, setErrorMsgs] = useState([]);
 
@@ -26,7 +26,7 @@ export default function Form() {
   let handleChange = (i, e) => {
     let newEntryWeights = [...entryWeights];
     newEntryWeights[i][e.target.name] = Number(e.target.value);
-    console.log('handling wntry changes', newEntryWeights);
+    console.log('handling entry changes', newEntryWeights);
     setEntryWeights(newEntryWeights);
   };
 
@@ -34,7 +34,11 @@ export default function Form() {
     // copying the original state
     let newFormValues = formValues;
     // adding onto the copy
-    newFormValues[e.target.name] = e.target.value;
+    if (e.target.name === 'date') {
+      newFormValues[e.target.name] = e.target.value;
+    } else {
+      newFormValues[e.target.name] = Number(e.target.value);
+    }
     console.log('handling form changes', newFormValues);
     // setting the state from the original to the new copy
     setFormValues(newFormValues);
@@ -50,41 +54,58 @@ export default function Form() {
     setEntryWeights(newEntryWeights);
   };
 
-  let checkIfValid = (err) =>
-    err == '' ? setIsValid(true) : setIsValid(false);
+  let checkIfValid = () =>
+    errorMsgs.length === 0 ? setIsValid(true) : setIsValid(false);
 
-  let checkForErrors = () => {
+  let handleValidation = async () => {
     let err = [];
     if (!formValues.date) {
       err.push('A date is missing');
+      setIsValid(false);
     }
     if (!formValues.source) {
       err.push('A source is missing');
+      setIsValid(false);
     }
-    for (let i = 0; i < entryWeights.length; i++) {
-      const entry = entryWeights[i];
-      if (entry.item != '') {
-        if (entry.weight === '') {
-          let isMissingItem = items.find(
-            ({ item_id }) => item_id == entry.item
-          );
-          err.push(`${isMissingItem.name} is missing a weight`);
+    if (entryWeights[0].item === '' && entryWeights[0].weight === '') {
+      err.push('There are no entries to submit');
+      setIsValid(false);
+    } else {
+      for (let i = 0; i < entryWeights.length; i++) {
+        const entry = entryWeights[i];
+        if (entry.item !== '') {
+          if (entry.weight === '') {
+            let isMissingItem = items.find(
+              ({ item_id }) => item_id === Number(entry.item)
+            );
+            err.push(`${isMissingItem.name} is missing a weight`);
+            setIsValid(false);
+          }
+        }
+        if (entry.weight !== '') {
+          if (entry.item === '') {
+            err.push(`Which item weighs ${entry.weight} kg?`);
+            setIsValid(false);
+          }
         }
       }
-      if (entry.weight != '') {
-        if (entry.item === '') {
-          err.push(`Which item weighs ${entry.weight} kg?`);
-        }
-      }
     }
-    setErrorMsgs(err);
+    await setErrorMsgs(err);
+    if (err.length === 0) {
+      setIsValid(true);
+    }
     return err;
   };
 
   let handleSubmit = (event) => {
     event.preventDefault();
-    checkForErrors();
-    checkIfValid(errorMsgs);
+    let form = document.getElementById('input-form');
+    handleValidation().then((err) => {
+      console.log(err);
+      if (err.length === 0) {
+        setIsValid(true);
+      }
+    });
     console.log('is this valid?', isValid);
     if (!isValid) {
       console.log('Form is missing values; try again');
@@ -94,13 +115,16 @@ export default function Form() {
         entryWeights,
       };
       console.log(formContent);
-      postEntries(formContent);
+      postEntries(formContent).then((res) => {
+        console.log(res);
+        form.reset();
+      });
     }
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} id="input-form">
         <label>Start date:</label>
         <input
           name="date"
