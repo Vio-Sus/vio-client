@@ -13,13 +13,6 @@ export default function EditForm({ id, setIsEditing }) {
   const [sources, setSources] = useState([]);
   const [items, setItems] = useState([]);
 
-  const setEntryStates = (entry) => {
-    setItemId(entry.item_id);
-    setSourceId(entry.source_id);
-    setDate(entry.entry_date);
-    setWeight(entry.entry_weight);
-  };
-
   useEffect(() => {
     getEntry(id)
       .then((result) => {
@@ -27,10 +20,10 @@ export default function EditForm({ id, setIsEditing }) {
         return result.data;
       })
       .then((entry) => {
-        setItemId(entry.item_id);
-        setSourceId(entry.source_id);
-        setDate(entry.entry_date);
-        setWeight(entry.entry_weight);
+        setItemId(entry.itemId);
+        setSourceId(entry.sourceId);
+        setDate(entry.date);
+        setWeight(entry.weight);
       });
     getSources().then((result) => {
       setSources(result.data);
@@ -85,7 +78,7 @@ export default function EditForm({ id, setIsEditing }) {
         <input
           name="date"
           type="date"
-          value={entry.entry_date}
+          value={entry.date}
           onChange={(e) => handleChange(e)}
         ></input>
         <br />
@@ -120,7 +113,7 @@ export default function EditForm({ id, setIsEditing }) {
         <input
           type="number"
           name="weight"
-          value={entry.entry_weight}
+          value={entry.weight}
           onChange={(e) => handleChange(e)}
         />
         <br />
