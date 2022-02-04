@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { getItems, getSources, postEntries } from '../network';
+import { handleValidation } from '../validation';
 
-export default function Form() {
+export default function Form(props) {
   const [sources, setSources] = useState([]);
   const [items, setItems] = useState([]);
   useEffect(() => {
@@ -21,9 +22,7 @@ export default function Form() {
 
   const [errorMsgs, setErrorMsgs] = useState([]);
 
-  const [isValid, setIsValid] = useState(false);
-
-  let handleChange = (i, e) => {
+  let handleChange = (e, i) => {
     let newEntryWeights = [...entryWeights];
     newEntryWeights[i][e.target.name] = Number(e.target.value);
     console.log('handling entry changes', newEntryWeights);
@@ -54,58 +53,13 @@ export default function Form() {
     setEntryWeights(newEntryWeights);
   };
 
-  let checkIfValid = () =>
-    errorMsgs.length === 0 ? setIsValid(true) : setIsValid(false);
-
-  let handleValidation = async () => {
-    let err = [];
-    if (!formValues.date) {
-      err.push('A date is missing');
-      setIsValid(false);
-    }
-    if (!formValues.source) {
-      err.push('A source is missing');
-      setIsValid(false);
-    }
-    if (entryWeights[0].item === '' && entryWeights[0].weight === '') {
-      err.push('There are no entries to submit');
-      setIsValid(false);
-    } else {
-      for (let i = 0; i < entryWeights.length; i++) {
-        const entry = entryWeights[i];
-        if (entry.item !== '') {
-          if (entry.weight === '') {
-            let isMissingItem = items.find(
-              ({ item_id }) => item_id === Number(entry.item)
-            );
-            err.push(`${isMissingItem.name} is missing a weight`);
-            setIsValid(false);
-          }
-        }
-        if (entry.weight !== '') {
-          if (entry.item === '') {
-            err.push(`Which item weighs ${entry.weight} kg?`);
-            setIsValid(false);
-          }
-        }
-      }
-    }
-    await setErrorMsgs(err);
-    if (err.length === 0) {
-      setIsValid(true);
-    }
-    return err;
-  };
-
-  let handleSubmit = (event) => {
+  let handleSubmit = async (event) => {
     event.preventDefault();
     let form = document.getElementById('input-form');
-    handleValidation().then((err) => {
-      console.log(err);
-      if (err.length === 0) {
-        setIsValid(true);
-      }
-    });
+    let errorMsgs = handleValidation(formValues, entryWeights, items); // ['error messages']
+    setErrorMsgs(errorMsgs);
+    console.log(errorMsgs);
+    let isValid = errorMsgs.length === 0;
     console.log('is this valid?', isValid);
     if (!isValid) {
       console.log('Form is missing values; try again');
@@ -146,7 +100,7 @@ export default function Form() {
         {entryWeights.map((element, index) => (
           <div className="form-inline" key={index}>
             <label>Item</label>
-            <select name="item" onChange={(e) => handleChange(index, e)}>
+            <select name="item" onChange={(e) => handleChange(e, index)}>
               <option hidden>Select Item</option>
               {items.map((item, key) => (
                 <option key={key} value={item.item_id}>
@@ -156,9 +110,9 @@ export default function Form() {
             </select>
             <label>Weight</label>
             <input
-              type="text"
+              type="number"
               name="weight"
-              onChange={(e) => handleChange(index, e)}
+              onChange={(e) => handleChange(e, index)}
             />
 
             {index ? (
@@ -174,7 +128,7 @@ export default function Form() {
         ))}
         <div className="error-messages">
           {errorMsgs.map((msg, key) => (
-            <p key={key}>{msg}</p>
+            <span key={key}>{msg}</span>
           ))}
         </div>
 
