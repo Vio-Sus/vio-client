@@ -7,8 +7,8 @@ export async function getItems() {
   return await axios.get('/api/items');
 }
 export async function getListOfEntries() {
-  return await axios.get('/api/getEntries');
+  return await axios.get('/api/entries');
 }
 export async function postEntries(formContent) {
-  return await axios.post('/api/addItems', { data: formContent });
+  return await axios.post('/api/entries', { data: formContent });
 }
