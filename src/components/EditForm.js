@@ -1,24 +1,14 @@
 import { useState, useEffect } from 'react';
-import { getItems, getSources, getEntry, updateEntry } from '../network';
+import { getEntry, updateEntry } from '../network';
 
-export default function EditForm({ id, setIsEditing }) {
+export default function EditForm({ id, setIsEditing, items, sources }) {
   // selected entry data
+  const [entryId] = useState(id);
   const [entry, setEntry] = useState('');
   const [itemId, setItemId] = useState('');
   const [sourceId, setSourceId] = useState('');
   const [date, setDate] = useState('');
   const [weight, setWeight] = useState(0);
-
-  // naming the dropdown options
-  const [sources, setSources] = useState([]);
-  const [items, setItems] = useState([]);
-
-  const setEntryStates = (entry) => {
-    setItemId(entry.item_id);
-    setSourceId(entry.source_id);
-    setDate(entry.entry_date);
-    setWeight(entry.entry_weight);
-  };
 
   useEffect(() => {
     getEntry(id)
@@ -32,29 +22,29 @@ export default function EditForm({ id, setIsEditing }) {
         setDate(entry.entry_date);
         setWeight(entry.entry_weight);
       });
-    getSources().then((result) => {
-      setSources(result.data);
-    });
-    getItems().then((result) => {
-      setItems(result.data);
-    });
-  }, []);
+  }, [id]);
 
   const handleChange = (e) => {
     let inputName = e.target.name;
-
+    console.log('inputName', inputName);
     switch (inputName) {
       case 'date':
+        console.log('date before', date);
         setDate(e.target.value);
+        console.log('date after', date);
         break;
       case 'source':
         setSourceId(Number(e.target.value));
         break;
       case 'item':
+        console.log('itemId before', itemId);
         setItemId(Number(e.target.value));
+        console.log('itemId after', itemId);
         break;
       case 'weight':
+        console.log('weight before', weight);
         setWeight(Number(e.target.value));
+        console.log('weight after', weight);
         break;
       default:
         return;
@@ -62,7 +52,7 @@ export default function EditForm({ id, setIsEditing }) {
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     let formContent = {
       itemId,
       sourceId,
@@ -76,6 +66,10 @@ export default function EditForm({ id, setIsEditing }) {
     });
   };
 
+  const handleCancel = () => {
+    setIsEditing(false);
+  };
+
   return (
     <>
       <h3>Edit Single Item in Entry</h3>
@@ -85,7 +79,7 @@ export default function EditForm({ id, setIsEditing }) {
         <input
           name="date"
           type="date"
-          value={entry.entry_date}
+          value={date}
           onChange={(e) => handleChange(e)}
         ></input>
         <br />
@@ -120,11 +114,12 @@ export default function EditForm({ id, setIsEditing }) {
         <input
           type="number"
           name="weight"
-          value={entry.entry_weight}
-          onChange={(e) => handleChange(e)}
+          value={weight}
+          onInput={(e) => handleChange(e)}
         />
         <br />
         <button type="submit">Save Edit</button>
+        <button onClick={handleCancel}>Cancel</button>
       </form>
     </>
   );

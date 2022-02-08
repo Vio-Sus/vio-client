@@ -1,16 +1,14 @@
 import { useState, useEffect } from 'react';
 import { getListOfEntries } from '../network';
 
-export default function Entries({selectEntry}) {
+export default function EntriesList({selectEntry}) {
   const [entries, setEntries] = useState([]);
   useEffect(() => {
     getListOfEntries().then((result) => {
       console.log(result);
       setEntries(result.data);
     });
-    // setSources();
   }, []);
-  console.log(entries);
 
   return (
     <table>
@@ -30,11 +28,11 @@ export default function Entries({selectEntry}) {
             <td> {entry.entry_date} </td>
             <td> {entry.source_name}</td>
             <td>
-              <button onClick={() => selectEntry(entry.entry_id)}>Edit</button>
+              <button onClick={() => selectEntry(entry.entry_id, 'edit')}>Edit</button>
             </td>
 
             <td>
-              <button>Delete</button>
+              <button onClick={() => selectEntry(entry.entry_id, 'delete')}>Delete</button>
             </td>
           </tr>
         ))}
