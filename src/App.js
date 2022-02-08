@@ -20,7 +20,7 @@ function App() {
   const selectEntry = (entryId) => {
     console.log('function called', entryId);
     setSelectedEntry(entryId);
-    setIsEditing(!isEditing);
+    setIsEditing(true);
   };
 
   return (
@@ -28,7 +28,7 @@ function App() {
       <h1>{whatever}</h1>
       <Form></Form>
       <Entries selectEntry={selectEntry}></Entries>
-      {isEditing && <EditForm id={selectedEntry} setIsEditing={setIsEditing}/>}
+      {isEditing && <EditForm id={selectedEntry} setIsEditing={setIsEditing} />}
     </div>
   );
 }

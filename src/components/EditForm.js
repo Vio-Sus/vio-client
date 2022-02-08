@@ -3,6 +3,7 @@ import { getItems, getSources, getEntry, updateEntry } from '../network';
 
 export default function EditForm({ id, setIsEditing }) {
   // selected entry data
+  const [entryId] = useState(id);
   const [entry, setEntry] = useState('');
   const [itemId, setItemId] = useState('');
   const [sourceId, setSourceId] = useState('');
@@ -13,12 +14,14 @@ export default function EditForm({ id, setIsEditing }) {
   const [sources, setSources] = useState([]);
   const [items, setItems] = useState([]);
 
-  const setEntryStates = (entry) => {
-    setItemId(entry.item_id);
-    setSourceId(entry.source_id);
-    setDate(entry.entry_date);
-    setWeight(entry.entry_weight);
-  };
+  useEffect(() => {
+    getSources().then((result) => {
+      setSources(result.data);
+    });
+    getItems().then((result) => {
+      setItems(result.data);
+    });
+  }, []);
 
   useEffect(() => {
     getEntry(id)
@@ -32,13 +35,7 @@ export default function EditForm({ id, setIsEditing }) {
         setDate(entry.entry_date);
         setWeight(entry.entry_weight);
       });
-    getSources().then((result) => {
-      setSources(result.data);
-    });
-    getItems().then((result) => {
-      setItems(result.data);
-    });
-  }, []);
+  }, [id]);
 
   const handleChange = (e) => {
     let inputName = e.target.name;
