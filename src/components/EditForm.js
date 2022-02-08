@@ -42,19 +42,25 @@ export default function EditForm({ id, setIsEditing }) {
 
   const handleChange = (e) => {
     let inputName = e.target.name;
-
+    console.log('inputName', inputName);
     switch (inputName) {
       case 'date':
+        console.log('date before', date);
         setDate(e.target.value);
+        console.log('date after', date);
         break;
       case 'source':
         setSourceId(Number(e.target.value));
         break;
       case 'item':
+        console.log('itemId before', itemId);
         setItemId(Number(e.target.value));
+        console.log('itemId after', itemId);
         break;
       case 'weight':
+        console.log('weight before', weight);
         setWeight(Number(e.target.value));
+        console.log('weight after', weight);
         break;
       default:
         return;
@@ -62,7 +68,7 @@ export default function EditForm({ id, setIsEditing }) {
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     let formContent = {
       itemId,
       sourceId,
@@ -85,7 +91,7 @@ export default function EditForm({ id, setIsEditing }) {
         <input
           name="date"
           type="date"
-          value={entry.entry_date}
+          value={date}
           onChange={(e) => handleChange(e)}
         ></input>
         <br />
@@ -120,8 +126,8 @@ export default function EditForm({ id, setIsEditing }) {
         <input
           type="number"
           name="weight"
-          value={entry.entry_weight}
-          onChange={(e) => handleChange(e)}
+          value={weight}
+          onInput={(e) => handleChange(e)}
         />
         <br />
         <button type="submit">Save Edit</button>
