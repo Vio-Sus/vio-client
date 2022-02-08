@@ -18,3 +18,6 @@ export async function getEntry(entryId) {
 export async function updateEntry(entryId, formContent) {
   return await axios.put(`/api/entry/${entryId}`, { data: formContent });
 }
+export async function deleteEntry(entryId) {
+  return await axios.delete(`/api/entry/${entryId}`);
+}

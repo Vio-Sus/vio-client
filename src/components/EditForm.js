@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { getItems, getSources, getEntry, updateEntry } from '../network';
+import { getEntry, updateEntry } from '../network';
 
-export default function EditForm({ id, setIsEditing }) {
+export default function EditForm({ id, setIsEditing, items, sources }) {
   // selected entry data
   const [entryId] = useState(id);
   const [entry, setEntry] = useState('');
@@ -9,19 +9,6 @@ export default function EditForm({ id, setIsEditing }) {
   const [sourceId, setSourceId] = useState('');
   const [date, setDate] = useState('');
   const [weight, setWeight] = useState(0);
-
-  // naming the dropdown options
-  const [sources, setSources] = useState([]);
-  const [items, setItems] = useState([]);
-
-  useEffect(() => {
-    getSources().then((result) => {
-      setSources(result.data);
-    });
-    getItems().then((result) => {
-      setItems(result.data);
-    });
-  }, []);
 
   useEffect(() => {
     getEntry(id)
@@ -79,6 +66,10 @@ export default function EditForm({ id, setIsEditing }) {
     });
   };
 
+  const handleCancel = () => {
+    setIsEditing(false);
+  };
+
   return (
     <>
       <h3>Edit Single Item in Entry</h3>
@@ -128,6 +119,7 @@ export default function EditForm({ id, setIsEditing }) {
         />
         <br />
         <button type="submit">Save Edit</button>
+        <button onClick={handleCancel}>Cancel</button>
       </form>
     </>
   );
