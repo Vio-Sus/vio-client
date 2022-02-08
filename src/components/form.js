@@ -7,7 +7,7 @@ export default function Form(props) {
   const [items, setItems] = useState([]);
   useEffect(() => {
     getSources().then((result) => {
-      console.log('Sources', result);
+      console.log('Sources', result.data);
       setSources(result.data);
     });
     getItems().then((result) => {
