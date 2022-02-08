@@ -66,6 +66,10 @@ export default function EditForm({ id, setIsEditing, items, sources }) {
     });
   };
 
+  const handleCancel = () => {
+    setIsEditing(false);
+  };
+
   return (
     <>
       <h3>Edit Single Item in Entry</h3>
@@ -115,6 +119,7 @@ export default function EditForm({ id, setIsEditing, items, sources }) {
         />
         <br />
         <button type="submit">Save Edit</button>
+        <button onClick={handleCancel}>Cancel</button>
       </form>
     </>
   );

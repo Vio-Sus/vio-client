@@ -6,7 +6,7 @@ export default function DeleteConfirmation({
   id,
   setIsDeleting,
   items,
-  sources
+  sources,
 }) {
   const [entryId] = useState(id);
   const [entry, setEntry] = useState('');
@@ -35,12 +35,13 @@ export default function DeleteConfirmation({
     deleteEntry(entryId).then((res) => {
       console.log(res);
       setIsDeleting(false);
-    })
-  }
+      window.location.reload();
+    });
+  };
 
   const handleCancel = () => {
     setIsDeleting(false);
-  }
+  };
 
   return (
     <>
