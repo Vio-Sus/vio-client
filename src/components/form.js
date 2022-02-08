@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import { getItems, getSources, postEntries } from '../network';
 import { handleValidation } from '../validation';
 
-export default function Form() {
+export default function Form(props) {
   const [sources, setSources] = useState([]);
   const [items, setItems] = useState([]);
   useEffect(() => {
     getSources().then((result) => {
-      console.log('Sources', result);
+      console.log('Sources', result.data);
       setSources(result.data);
     });
     getItems().then((result) => {
@@ -22,7 +22,7 @@ export default function Form() {
 
   const [errorMsgs, setErrorMsgs] = useState([]);
 
-  let handleChange = (i, e) => {
+  let handleChange = (e, i) => {
     let newEntryWeights = [...entryWeights];
     newEntryWeights[i][e.target.name] = Number(e.target.value);
     console.log('handling entry changes', newEntryWeights);
@@ -100,7 +100,7 @@ export default function Form() {
         {entryWeights.map((element, index) => (
           <div className="form-inline" key={index}>
             <label>Item</label>
-            <select name="item" onChange={(e) => handleChange(index, e)}>
+            <select name="item" onChange={(e) => handleChange(e, index)}>
               <option hidden>Select Item</option>
               {items.map((item, key) => (
                 <option key={key} value={item.item_id}>
@@ -110,9 +110,9 @@ export default function Form() {
             </select>
             <label>Weight</label>
             <input
-              type="text"
+              type="number"
               name="weight"
-              onChange={(e) => handleChange(index, e)}
+              onChange={(e) => handleChange(e, index)}
             />
 
             {index ? (

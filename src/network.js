@@ -12,3 +12,9 @@ export async function getListOfEntries() {
 export async function postEntries(formContent) {
   return await axios.post('/api/entries', { data: formContent });
 }
+export async function getEntry(entryId) {
+  return await axios.get(`/api/entry/${entryId}`);
+}
+export async function updateEntry(entryId, formContent) {
+  return await axios.put(`/api/entry/${entryId}`, { data: formContent });
+}

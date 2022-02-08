@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getListOfEntries } from '../network';
 
-export default function Entries() {
+export default function Entries({selectEntry}) {
   const [entries, setEntries] = useState([]);
   useEffect(() => {
     getListOfEntries().then((result) => {
@@ -11,6 +11,7 @@ export default function Entries() {
     // setSources();
   }, []);
   console.log(entries);
+
   return (
     <table>
       <thead>
@@ -29,8 +30,9 @@ export default function Entries() {
             <td> {entry.entry_date} </td>
             <td> {entry.source_name}</td>
             <td>
-              <button>Edit</button>
+              <button onClick={() => selectEntry(entry.entry_id)}>Edit</button>
             </td>
+
             <td>
               <button>Delete</button>
             </td>
@@ -38,10 +40,5 @@ export default function Entries() {
         ))}
       </tbody>
     </table>
-    // <div>
-    //   {entries.map((entry, key) => (
-    //     <p key={key}> {entry.item_name} </p>
-    //   ))}
-    // </div>
   );
 }
