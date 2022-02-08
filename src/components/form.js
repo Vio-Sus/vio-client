@@ -16,7 +16,9 @@ export default function Form(props) {
     });
   }, []);
 
-  const [entryWeights, setEntryWeights] = useState([{ item: '', weight: '' }]);
+  const [entryWeights, setEntryWeights] = useState([
+    { item_id: '', weight: '' },
+  ]);
 
   const [formValues, setFormValues] = useState({});
 
@@ -33,7 +35,7 @@ export default function Form(props) {
     // copying the original state
     let newFormValues = formValues;
     // adding onto the copy
-    if (e.target.name === 'date') {
+    if (e.target.name === 'created') {
       newFormValues[e.target.name] = e.target.value;
     } else {
       newFormValues[e.target.name] = Number(e.target.value);
@@ -44,7 +46,7 @@ export default function Form(props) {
   };
 
   let addFormFields = () => {
-    setEntryWeights([...entryWeights, { item: '', weight: '' }]);
+    setEntryWeights([...entryWeights, { item_id: '', weight: '' }]);
   };
 
   let removeFormFields = (i) => {
@@ -65,14 +67,12 @@ export default function Form(props) {
       console.log('Form is missing values; try again');
     } else {
       let formContent = {
-        formValues,
-        entryWeights,
+        entries: entryWeights.map((e) => ({ ...e, ...formValues })),
       };
       console.log(formContent);
-      postEntries(formContent).then((res) => {
-        console.log(res);
-        form.reset();
-      });
+      const res = await postEntries(formContent);
+      console.log(res);
+      form.reset();
     }
   };
 
@@ -81,13 +81,13 @@ export default function Form(props) {
       <form onSubmit={handleSubmit} id="input-form">
         <label>Start date:</label>
         <input
-          name="date"
+          name="created"
           type="date"
           onChange={(e) => handleFormValues(e)}
         ></input>
         <br />
         <label>Source</label>
-        <select name="source" onChange={(e) => handleFormValues(e)}>
+        <select name="source_id" onChange={(e) => handleFormValues(e)}>
           <option hidden>Select Source</option>
           {sources.map((source, key) => (
             <option key={key} value={source.source_id}>
@@ -100,10 +100,10 @@ export default function Form(props) {
         {entryWeights.map((element, index) => (
           <div className="form-inline" key={index}>
             <label>Item</label>
-            <select name="item" onChange={(e) => handleChange(e, index)}>
+            <select name="item_id" onChange={(e) => handleChange(e, index)}>
               <option hidden>Select Item</option>
-              {items.map((item, key) => (
-                <option key={key} value={item.item_id}>
+              {items.map((item) => (
+                <option key={item.item_id} value={item.item_id}>
                   {item.name}
                 </option>
               ))}
