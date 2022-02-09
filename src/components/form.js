@@ -2,6 +2,12 @@ import { useEffect, useState } from 'react';
 import { getItems, getSources, postEntries } from '../network';
 import { handleValidation } from '../validation';
 
+const newEntryWeight = () => ({
+  id: crypto.randomUUID(),
+  item_id: '',
+  weight: '',
+});
+
 export default function Form(props) {
   const [sources, setSources] = useState([]);
   const [items, setItems] = useState([]);
@@ -16,24 +22,17 @@ export default function Form(props) {
     });
   }, []);
 
-  const [entryWeights, setEntryWeights] = useState([{ item: '', weight: '' }]);
+  const [entryWeights, setEntryWeights] = useState([newEntryWeight()]);
 
   const [formValues, setFormValues] = useState({});
 
   const [errorMsgs, setErrorMsgs] = useState([]);
 
-  let handleChange = (e, i) => {
-    let newEntryWeights = [...entryWeights];
-    newEntryWeights[i][e.target.name] = Number(e.target.value);
-    console.log('handling entry changes', newEntryWeights);
-    setEntryWeights(newEntryWeights);
-  };
-
   let handleFormValues = (e) => {
     // copying the original state
     let newFormValues = formValues;
     // adding onto the copy
-    if (e.target.name === 'date') {
+    if (e.target.name === 'created') {
       newFormValues[e.target.name] = e.target.value;
     } else {
       newFormValues[e.target.name] = Number(e.target.value);
@@ -44,12 +43,13 @@ export default function Form(props) {
   };
 
   let addFormFields = () => {
-    setEntryWeights([...entryWeights, { item: '', weight: '' }]);
+    setEntryWeights([...entryWeights, newEntryWeight()]);
   };
 
-  let removeFormFields = (i) => {
-    let newEntryWeights = [...entryWeights];
-    newEntryWeights.splice(i, 1);
+  let removeFormFields = (element) => {
+    let newEntryWeights = entryWeights.filter(
+      (weight) => weight.id != element.id
+    );
     setEntryWeights(newEntryWeights);
   };
 
@@ -65,14 +65,12 @@ export default function Form(props) {
       console.log('Form is missing values; try again');
     } else {
       let formContent = {
-        formValues,
-        entryWeights,
+        entries: entryWeights.map((e) => ({ ...e, ...formValues })),
       };
       console.log(formContent);
-      postEntries(formContent).then((res) => {
-        console.log(res);
-        form.reset();
-      });
+      const res = await postEntries(formContent);
+      console.log(res);
+      form.reset();
     }
   };
 
@@ -81,13 +79,13 @@ export default function Form(props) {
       <form onSubmit={handleSubmit} id="input-form">
         <label>Start date:</label>
         <input
-          name="date"
+          name="created"
           type="date"
           onChange={(e) => handleFormValues(e)}
         ></input>
         <br />
         <label>Source</label>
-        <select name="source" onChange={(e) => handleFormValues(e)}>
+        <select name="source_id" onChange={(e) => handleFormValues(e)}>
           <option hidden>Select Source</option>
           {sources.map((source, key) => (
             <option key={key} value={source.source_id}>
@@ -98,12 +96,17 @@ export default function Form(props) {
         <br />
         <br />
         {entryWeights.map((element, index) => (
-          <div className="form-inline" key={index}>
+          <div className="form-inline" key={element.id}>
             <label>Item</label>
-            <select name="item" onChange={(e) => handleChange(e, index)}>
+            <select
+              name="item_id"
+              onChange={(e) => {
+                element.item_id = Number(e.target.value);
+              }}
+            >
               <option hidden>Select Item</option>
-              {items.map((item, key) => (
-                <option key={key} value={item.item_id}>
+              {items.map((item) => (
+                <option key={item.item_id} value={item.item_id}>
                   {item.name}
                 </option>
               ))}
@@ -112,18 +115,20 @@ export default function Form(props) {
             <input
               type="number"
               name="weight"
-              onChange={(e) => handleChange(e, index)}
+              onChange={(e) => {
+                element.weight = Number(e.target.value);
+              }}
             />
 
-            {index ? (
+            {!!index && (
               <button
                 type="button"
                 className="button remove"
-                onClick={() => removeFormFields(index)}
+                onClick={() => removeFormFields(element)}
               >
                 Remove
               </button>
-            ) : null}
+            )}
           </div>
         ))}
         <div className="error-messages">
