@@ -76,7 +76,7 @@ export default function Form(props) {
 
   return (
     <>
-      <form onSubmit={handleSubmit} id="input-form">
+      <form onSubmit={handleSubmit} id="input-form" noValidate>
         <label>Start date:</label>
         <input
           name="created"
