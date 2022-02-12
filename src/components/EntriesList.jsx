@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { getListOfEntries } from '../network';
+import { useAuth0 } from '@auth0/auth0-react';
 
-export default function EntriesList({selectEntry}) {
+export default function EntriesList({ selectEntry }) {
   const [entries, setEntries] = useState([]);
   useEffect(() => {
     getListOfEntries().then((result) => {
@@ -9,6 +10,8 @@ export default function EntriesList({selectEntry}) {
       setEntries(result.data);
     });
   }, []);
+
+  const { user } = useAuth0();
 
   return (
     <table>
@@ -28,15 +31,20 @@ export default function EntriesList({selectEntry}) {
             <td> {entry.entry_date} </td>
             <td> {entry.source_name}</td>
             <td>
-              <button onClick={() => selectEntry(entry.entry_id, 'edit')}>Edit</button>
+              <button onClick={() => selectEntry(entry.entry_id, 'edit')}>
+                Edit
+              </button>
             </td>
 
             <td>
-              <button onClick={() => selectEntry(entry.entry_id, 'delete')}>Delete</button>
+              <button onClick={() => selectEntry(entry.entry_id, 'delete')}>
+                Delete
+              </button>
             </td>
           </tr>
         ))}
       </tbody>
+      {JSON.stringify(user.sub)}
     </table>
   );
 }

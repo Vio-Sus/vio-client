@@ -12,6 +12,7 @@ import LoginButton from './components/LoginButton';
 import LogoutButton from './components/LogoutButton';
 
 function App() {
+  
   const { isLoading, error } = useAuth0();
 
   const [sources, setSources] = useState([]);
@@ -67,6 +68,8 @@ function App() {
       {isAuthenticated && (
         <div className="App">
           <LogoutButton></LogoutButton>
+          <br></br>
+          {JSON.stringify(user)}
           <Form sources={sources} items={items}></Form>
           <EntriesList selectEntry={selectEntry}></EntriesList>
           {isEditing && (
