@@ -4,10 +4,12 @@
   "private": true,
   "proxy": "http://localhost:8080",
   "dependencies": {
+    "@auth0/auth0-react": "github:auth0/auth0-react",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.25.0",
+    "dotenv": "^16.0.0",
     "react": "^17.0.2",
     "react-datepicker": "^4.6.0",
     "react-dom": "^17.0.2",
