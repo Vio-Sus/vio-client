@@ -1,7 +1,7 @@
 import './App.css';
 import { useEffect, useState } from 'react';
 import { getSources, getItems } from './network';
-import Form from './components/form';
+import Form from './components/Form';
 import EntriesList from './components/EntriesList';
 import EditForm from './components/EditForm';
 import DeleteConfirmation from './components/DeleteConfirmation';
