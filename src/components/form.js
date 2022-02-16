@@ -3,18 +3,8 @@ import { getItems, getSources, postEntries } from '../network';
 import { handleValidation } from '../validation';
 
 export default function Form(props) {
-  const [sources, setSources] = useState([]);
-  const [items, setItems] = useState([]);
-  useEffect(() => {
-    getSources().then((result) => {
-      console.log('Sources', result.data);
-      setSources(result.data);
-    });
-    getItems().then((result) => {
-      // console.log('Items', result);
-      setItems(result.data);
-    });
-  }, []);
+  const [sources, setSources] = useState(props.sources);
+  const [items, setItems] = useState(props.items);
 
   const [entryWeights, setEntryWeights] = useState([{ item: '', weight: '' }]);
 

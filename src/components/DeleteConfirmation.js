@@ -15,20 +15,19 @@ export default function DeleteConfirmation({
   const [date, setDate] = useState('');
   const [weight, setWeight] = useState(0);
 
-  useEffect(() => {
-    getEntry(id)
-      .then((result) => {
-        setEntry(result.data);
-        return result.data;
-      })
-      .then((entry) => {
+    useEffect(() => {
+    (async () => {
+      try {
+        let [entry] = await Promise.all([getEntry(id)]); // returns new promise with all data
         let item = findItem(entry.item_id, items).name;
         let source = findSource(entry.source_id, sources).name;
         setItemName(item);
         setSourceName(source);
         setDate(entry.entry_date);
         setWeight(entry.entry_weight);
-      });
+
+      } catch {}
+    })();
   }, [id]);
 
   const handleDelete = () => {
