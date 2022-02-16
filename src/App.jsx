@@ -1,27 +1,34 @@
 import './App.css';
 import { useEffect, useState } from 'react';
-import { getSources, getItems } from './network';
+import { getSources, getItems, getLoggedInUser } from './network';
 import Form from './components/form';
 import EntriesList from './components/EntriesList';
 import EditForm from './components/EditForm';
 import DeleteConfirmation from './components/DeleteConfirmation';
 
 function App() {
-
   const [sources, setSources] = useState([]);
   const [items, setItems] = useState([]);
+  const [user, setUser] = useState({});
 
   const [isEditing, setIsEditing] = useState(false);
   const [selectedEntry, setSelectedEntry] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    getSources().then((result) => {
-      setSources(result.data);
-    });
-    getItems().then((result) => {
-      setItems(result.data);
-    });
+    (async () => {
+      try {
+        let [user, sources, items] = await Promise.all([
+          getLoggedInUser(),
+          getSources(),
+          getItems(),
+        ]); // returns new promise with all data
+        setUser(user);
+        setSources(sources);
+        setItems(items);
+        console.log(user, sources, items);
+      } catch {}
+    })();
   }, []);
 
   const selectEntry = (entryId, method) => {
@@ -43,6 +50,7 @@ function App() {
 
   return (
     <div className="App">
+      {JSON.stringify(user)}
       <Form sources={sources} items={items}></Form>
       <EntriesList selectEntry={selectEntry}></EntriesList>
       {isEditing && (

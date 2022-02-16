@@ -1,13 +1,21 @@
 import { useState, useEffect } from 'react';
 import { getListOfEntries } from '../network';
 
-export default function EntriesList({selectEntry}) {
+export default function EntriesList({ selectEntry }) {
   const [entries, setEntries] = useState([]);
+  // useEffect(() => {
+  //   getListOfEntries().then((result) => {
+  //     console.log(result);
+  //     setEntries(result);
+  //   });
+  // }, []);
   useEffect(() => {
-    getListOfEntries().then((result) => {
-      console.log(result);
-      setEntries(result.data);
-    });
+    (async () => {
+      try {
+        let [entries] = await Promise.all([getListOfEntries()]); // returns new promise with all data
+        setEntries(entries || []);
+      } catch {}
+    })();
   }, []);
 
   return (
@@ -28,11 +36,15 @@ export default function EntriesList({selectEntry}) {
             <td> {entry.entry_date} </td>
             <td> {entry.source_name}</td>
             <td>
-              <button onClick={() => selectEntry(entry.entry_id, 'edit')}>Edit</button>
+              <button onClick={() => selectEntry(entry.entry_id, 'edit')}>
+                Edit
+              </button>
             </td>
 
             <td>
-              <button onClick={() => selectEntry(entry.entry_id, 'delete')}>Delete</button>
+              <button onClick={() => selectEntry(entry.entry_id, 'delete')}>
+                Delete
+              </button>
             </td>
           </tr>
         ))}

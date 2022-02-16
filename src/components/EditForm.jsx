@@ -10,18 +10,30 @@ export default function EditForm({ id, setIsEditing, items, sources }) {
   const [date, setDate] = useState('');
   const [weight, setWeight] = useState(0);
 
+  // useEffect(() => {
+  //   getEntry(id)
+  //     .then((result) => {
+  //       setEntry(result);
+  //       return result;
+  //     })
+  //     .then((entry) => {
+  //       setItemId(entry.item_id);
+  //       setSourceId(entry.source_id);
+  //       setDate(entry.entry_date);
+  //       setWeight(entry.entry_weight);
+  //     });
+  // }, [id]);
+
   useEffect(() => {
-    getEntry(id)
-      .then((result) => {
-        setEntry(result.data);
-        return result.data;
-      })
-      .then((entry) => {
+    (async () => {
+      try {
+        let [entry] = await Promise.all([getEntry(id)]); // returns new promise with all data
         setItemId(entry.item_id);
         setSourceId(entry.source_id);
         setDate(entry.entry_date);
         setWeight(entry.entry_weight);
-      });
+      } catch {}
+    })();
   }, [id]);
 
   const handleChange = (e) => {
