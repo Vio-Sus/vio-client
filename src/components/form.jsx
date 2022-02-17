@@ -8,9 +8,9 @@ const newEntryWeight = () => ({
   weight: '',
 });
 
-export default function Form(props) {
-  const [sources, setSources] = useState(props.sources);
-  const [items, setItems] = useState(props.items);
+export default function Form({ items, sources }) {
+  // const [sources, setSources] = useState(props.sources);
+  // const [items, setItems] = useState(props.items);
 
   const [entryWeights, setEntryWeights] = useState([newEntryWeight()]);
 
