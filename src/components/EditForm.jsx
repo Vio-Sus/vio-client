@@ -1,40 +1,35 @@
 import { useState, useEffect } from 'react';
 import { getEntry, updateEntry } from '../network';
 
-export default function EditForm({ id, setIsEditing, items, sources }) {
+export default function EditForm({ entry, setIsEditing, items, sources }) {
   // selected entry data
-  const [entryId] = useState(id);
-  const [entry, setEntry] = useState('');
   const [itemId, setItemId] = useState('');
   const [sourceId, setSourceId] = useState('');
   const [date, setDate] = useState('');
   const [weight, setWeight] = useState(0);
 
+  useEffect(() => {
+    if (!entry) {
+      return;
+    }
+    console.log({ entry });
+    setItemId(entry.item_id);
+    setSourceId(entry.source_id);
+    setDate(entry.entry_date);
+    setWeight(entry.entry_weight);
+  }, [entry]);
+
   // useEffect(() => {
-  //   getEntry(id)
-  //     .then((result) => {
-  //       setEntry(result);
-  //       return result;
-  //     })
-  //     .then((entry) => {
+  //   (async () => {
+  //     try {
+  //       let [entry] = await Promise.all([getEntry(id)]); // returns new promise with all data
   //       setItemId(entry.item_id);
   //       setSourceId(entry.source_id);
   //       setDate(entry.entry_date);
   //       setWeight(entry.entry_weight);
-  //     });
+  //     } catch {}
+  //   })();
   // }, [id]);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        let [entry] = await Promise.all([getEntry(id)]); // returns new promise with all data
-        setItemId(entry.item_id);
-        setSourceId(entry.source_id);
-        setDate(entry.entry_date);
-        setWeight(entry.entry_weight);
-      } catch {}
-    })();
-  }, [id]);
 
   const handleChange = (e) => {
     let inputName = e.target.name;
@@ -72,10 +67,16 @@ export default function EditForm({ id, setIsEditing, items, sources }) {
       date,
     };
 
-    updateEntry(id, formContent).then((res) => {
+    updateEntry(entry.entry_id, formContent).then((res) => {
       console.log(res);
+      console.log('entry ID', entry.entry_id);
+      console.log('form content', formContent);
       setIsEditing(false);
+    }).catch((err) => {
+      console.log(err)
     });
+
+    window.location.reload();
   };
 
   const handleCancel = () => {
@@ -130,7 +131,9 @@ export default function EditForm({ id, setIsEditing, items, sources }) {
           onInput={(e) => handleChange(e)}
         />
         <br />
-        <button type="submit">Save Edit</button>
+        <button type="button" onClick={handleSubmit}>
+          Save Edit
+        </button>
         <button onClick={handleCancel}>Cancel</button>
       </form>
     </>

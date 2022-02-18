@@ -13,7 +13,7 @@ function App() {
   const [user, setUser] = useState(null);
 
   const [isEditing, setIsEditing] = useState(false);
-  const [selectedEntry, setSelectedEntry] = useState(0);
+  const [selectedEntry, setSelectedEntry] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
@@ -34,9 +34,9 @@ function App() {
     })();
   }, []);
 
-  const selectEntry = (entryId, method) => {
-    console.log('Entry selected: ', entryId);
-    setSelectedEntry(entryId);
+  const selectEntry = (entry, method) => {
+    console.log('Entry selected: ', entry);
+    setSelectedEntry(entry);
     switch (method) {
       case 'edit':
         setIsDeleting(false);
@@ -60,7 +60,7 @@ function App() {
           <EntriesList selectEntry={selectEntry}></EntriesList>
           {isEditing && (
             <EditForm
-              id={selectedEntry}
+              entry={selectedEntry}
               setIsEditing={setIsEditing}
               sources={sources}
               items={items}
@@ -68,7 +68,7 @@ function App() {
           )}
           {isDeleting && (
             <DeleteConfirmation
-              id={selectedEntry}
+              entry={selectedEntry}
               setIsDeleting={setIsDeleting}
               sources={sources}
               items={items}
