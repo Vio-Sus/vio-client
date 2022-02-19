@@ -36,7 +36,7 @@ export default function EntriesList({ selectEntry }) {
             <td> {entry.entry_date} </td>
             <td> {entry.source_name}</td>
             <td>
-              <button onClick={() => selectEntry(entry.entry_id, 'edit')}>
+              <button onClick={() => selectEntry(entry, 'edit')}>
                 Edit
               </button>
             </td>

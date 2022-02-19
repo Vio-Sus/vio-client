@@ -16,11 +16,11 @@ export async function postEntries(formContent) {
   return (await axios.post('/api/entries', { data: formContent })).data;
 }
 export async function getEntry(entryId) {
-  return (await axios.get(`/api/entry/${entryId}`)).data;
+  return (await axios.get(`/api/entries/${entryId}`)).data;
 }
 export async function updateEntry(entryId, formContent) {
-  return await axios.put(`/api/entry/${entryId}`, { data: formContent });
+  return await axios.put(`/api/entries/${entryId}`, { data: formContent });
 }
 export async function deleteEntry(entryId) {
-  return (await axios.delete(`/api/entry/${entryId}`)).data;
+  return (await axios.delete(`/api/entries/${entryId}`)).data;
 }
