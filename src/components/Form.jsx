@@ -61,13 +61,14 @@ export default function Form({ items, sources }) {
       const res = await postEntries(formContent);
       console.log(res);
       form.reset();
+      window.location.reload();
     }
   };
 
   return (
     <>
       <form onSubmit={handleSubmit} id="input-form" noValidate>
-        <label>Start date:</label>
+        <label>Date:</label>
         <input
           name="created"
           type="date"
