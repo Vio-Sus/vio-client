@@ -3,39 +3,39 @@ import { deleteEntry, getEntry } from '../network';
 import { findItem, findSource } from '../setIdToNames';
 
 export default function DeleteConfirmation({
-  id,
+  entry,
   setIsDeleting,
   items,
   sources,
 }) {
-  const [entryId] = useState(id);
-  const [entry, setEntry] = useState('');
+  // const [entryId] = useState(id);
+  // const [entry, setEntry] = useState('');
   const [itemName, setItemName] = useState('');
   const [sourceName, setSourceName] = useState('');
   const [date, setDate] = useState('');
   const [weight, setWeight] = useState(0);
 
-    useEffect(() => {
-    (async () => {
-      try {
-        let [entry] = await Promise.all([getEntry(id)]); // returns new promise with all data
-        let item = findItem(entry.item_id, items).name;
-        let source = findSource(entry.source_id, sources).name;
-        setItemName(item);
-        setSourceName(source);
-        setDate(entry.entry_date);
-        setWeight(entry.entry_weight);
+  useEffect(() => {
+    if (!entry) {
+      return;
+    }
+    console.log({ entry });
+    setItemName(entry.item_name);
+    setSourceName(entry.source_name);
+    setDate(entry.entry_date);
+    setWeight(entry.entry_weight);
+  }, [entry]);
 
-      } catch {}
-    })();
-  }, [id]);
-
-  const handleDelete = () => {
-    deleteEntry(entryId).then((res) => {
-      console.log(res);
-      setIsDeleting(false);
-      window.location.reload();
-    });
+  const handleDelete = async () => {
+    try {
+      await deleteEntry(entry.entry_id).then((res) => {
+        console.log(res);
+        setIsDeleting(false);
+        window.location.reload();
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleCancel = () => {
