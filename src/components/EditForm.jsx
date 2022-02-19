@@ -66,18 +66,12 @@ export default function EditForm({ entry, setIsEditing, items, sources }) {
       weight,
       date,
     };
-
-    await updateEntry(entry.entry_id, formContent)
-      .then((res) => {
-        console.log(res);
-        console.log('entry ID', entry.entry_id);
-        console.log('form content', formContent);
-        setIsEditing(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
+    try {
+      await updateEntry(entry.entry_id, formContent);
+      setIsEditing(false);
+    } catch (error) {
+      console.log(error);
+    }
     window.location.reload();
   };
 
