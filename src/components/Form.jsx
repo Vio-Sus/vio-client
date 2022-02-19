@@ -3,7 +3,7 @@ import { getItems, getSources, postEntries } from '../network';
 import { handleValidation } from '../validation';
 
 const newEntryWeight = () => ({
-  id: crypto.randomUUID(),
+  id: Date.now(),
   item_id: '',
   weight: '',
 });
