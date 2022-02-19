@@ -58,7 +58,7 @@ function App() {
         <div className="App">
           <LogoutButton />
           <br/>
-          {JSON.stringify(user)}
+          {/* {JSON.stringify(user)} */}
           <Form sources={sources} items={items}></Form>
           <EntriesList selectEntry={selectEntry}></EntriesList>
           {isEditing && (
