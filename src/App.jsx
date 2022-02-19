@@ -6,6 +6,7 @@ import EntriesList from './components/EntriesList';
 import EditForm from './components/EditForm';
 import DeleteConfirmation from './components/DeleteConfirmation';
 import LoginButton from './components/LoginButton';
+import LogoutButton from './components/LogoutButton';
 
 function App() {
   const [sources, setSources] = useState([]);
@@ -55,6 +56,8 @@ function App() {
     <>
       {user && (
         <div className="App">
+          <LogoutButton />
+          <br/>
           {JSON.stringify(user)}
           <Form sources={sources} items={items}></Form>
           <EntriesList selectEntry={selectEntry}></EntriesList>
