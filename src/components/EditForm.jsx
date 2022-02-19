@@ -67,14 +67,16 @@ export default function EditForm({ entry, setIsEditing, items, sources }) {
       date,
     };
 
-    updateEntry(entry.entry_id, formContent).then((res) => {
-      console.log(res);
-      console.log('entry ID', entry.entry_id);
-      console.log('form content', formContent);
-      setIsEditing(false);
-    }).catch((err) => {
-      console.log(err)
-    });
+    await updateEntry(entry.entry_id, formContent)
+      .then((res) => {
+        console.log(res);
+        console.log('entry ID', entry.entry_id);
+        console.log('form content', formContent);
+        setIsEditing(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
     window.location.reload();
   };
@@ -86,7 +88,7 @@ export default function EditForm({ entry, setIsEditing, items, sources }) {
   return (
     <>
       <h3>Edit Single Item in Entry</h3>
-      <form onSubmit={handleSubmit} id="edit-form">
+      <form id="edit-form">
         <label>Collection date:</label>
         <br />
         <input
