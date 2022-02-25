@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { getItems, getSources, postEntries } from '../network';
-import { handleValidation } from '../validation';
+import { useState } from 'react';
+import { postEntries } from '../../network';
+import { handleValidation } from '../../validation';
 
 const newEntryWeight = () => ({
   id: Date.now(),
@@ -9,13 +9,9 @@ const newEntryWeight = () => ({
 });
 
 export default function Form({ items, sources }) {
-  // const [sources, setSources] = useState(props.sources);
-  // const [items, setItems] = useState(props.items);
 
   const [entryWeights, setEntryWeights] = useState([newEntryWeight()]);
-
   const [formValues, setFormValues] = useState({});
-
   const [errorMsgs, setErrorMsgs] = useState([]);
 
   let handleFormValues = (e) => {
@@ -85,7 +81,6 @@ export default function Form({ items, sources }) {
           ))}
         </select>
         <br />
-        <br />
         {entryWeights.map((element, index) => (
           <div className="form-inline" key={element.id}>
             <label>Item</label>
@@ -117,7 +112,7 @@ export default function Form({ items, sources }) {
                 className="button remove"
                 onClick={() => removeFormFields(element)}
               >
-                Remove
+                -
               </button>
             )}
           </div>
@@ -137,8 +132,9 @@ export default function Form({ items, sources }) {
             +
           </button>
           <br />
+          <br />
           <button className="button submit" type="submit">
-            Submit
+            Save Entry
           </button>
         </div>
       </form>

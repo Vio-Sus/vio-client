@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { deleteEntry, getEntry } from '../network';
-import { findItem, findSource } from '../setIdToNames';
+import { deleteEntry, getEntry } from '../../network';
+import { findItem, findSource } from '../../setIdToNames';
 
 export default function DeleteConfirmation({
   id,
