@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getListOfEntries } from '../network';
+import { getListOfEntries } from '../../network';
 
 export default function EntriesList({ selectEntry }) {
   const [entries, setEntries] = useState([]);

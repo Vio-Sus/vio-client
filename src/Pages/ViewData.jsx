@@ -1,6 +1,6 @@
-import EntriesList from "../components/EntriesList";
-import DeleteConfirmation from "../components/DeleteConfirmation";
-import EditForm from "../components/EditForm";
+import EntriesList from "../components/Entry/EntriesList";
+import DeleteConfirmation from '../components/Entry/DeleteEntryConfirmation';
+import EditForm from '../components/Entry/EditEntryForm';
 import { useState } from "react";
 
 const ViewDataPage = ({ sources, items } ) => {

@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { postEntries } from '../network';
-import { handleValidation } from '../validation';
+import { postEntries } from '../../network';
+import { handleValidation } from '../../validation';
 
 const newEntryWeight = () => ({
   id: Date.now(),

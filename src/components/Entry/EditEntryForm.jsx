@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getEntry, updateEntry } from '../network';
+import { getEntry, updateEntry } from '../../network';
 
 export default function EditForm({ entry, setIsEditing, items, sources }) {
   // selected entry data
