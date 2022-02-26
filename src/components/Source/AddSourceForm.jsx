@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { postSource } from '../../network';
 
-export default function AddSourceForm({ items, sources }) {
+export default function AddSourceForm() {
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
