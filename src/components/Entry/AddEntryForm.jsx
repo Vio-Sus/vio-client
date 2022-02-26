@@ -57,7 +57,6 @@ export default function Form({ items, sources }) {
       const res = await postEntries(formContent);
       console.log(res);
       form.reset();
-      window.location.reload();
     }
   };
 
