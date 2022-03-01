@@ -89,8 +89,8 @@ export default function EditSourceForm({ source, setIsEditing }) {
         <label>Address:</label>
         <br />
         <input
-          type="address"
-          name="text"
+          type="text"
+          name="address"
           value={address}
           onInput={(e) => handleChange(e)}
         />
@@ -98,8 +98,8 @@ export default function EditSourceForm({ source, setIsEditing }) {
         <label>Phone Number:</label>
         <br />
         <input
-          type="phoneNumber"
-          name="text"
+          type="text"
+          name="phoneNumber"
           value={phoneNumber}
           onInput={(e) => handleChange(e)}
         />
