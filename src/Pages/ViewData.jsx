@@ -1,9 +1,9 @@
-import EntriesList from "../components/Entry/EntriesList";
+import EntriesList from '../components/Entry/EntriesList';
 import DeleteConfirmation from '../components/Entry/DeleteEntryConfirmation';
 import EditForm from '../components/Entry/EditEntryForm';
-import { useState } from "react";
+import { useState } from 'react';
 
-const ViewDataPage = ({ sources, items } ) => {
+const ViewDataPage = ({ sources, items }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [selectedEntry, setSelectedEntry] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);

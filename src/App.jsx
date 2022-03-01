@@ -7,7 +7,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import DashboardPage from './Pages/Dashboard';
 import NewEntryPage from './Pages/NewEntry';
 import ViewDataPage from './Pages/ViewData';
-
+import ViewSourcePage from './Pages/ViewSource';
 
 function App() {
   const [sources, setSources] = useState([]);
@@ -46,12 +46,11 @@ function App() {
               ></Route>
               <Route
                 path="viewData"
-                element={
-                  <ViewDataPage
-                    sources={sources}
-                    items={items}
-                  />
-                }
+                element={<ViewDataPage sources={sources} items={items} />}
+              ></Route>
+              <Route
+                path="viewSource"
+                element={<ViewSourcePage sources={sources} items={items} />}
               ></Route>
             </Routes>
           </BrowserRouter>

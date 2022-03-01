@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { postSource } from '../../network';
 
-export default function AddSourceForm() {
+export default function AddSourceForm({ setIsAdding }) {
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-
+  const [msg, setMsg] = useState('');
   const handleChange = (e) => {
     let inputName = e.target.name;
     console.log('inputName: ', inputName, 'inputValue: ', e.target.value);
@@ -32,18 +32,24 @@ export default function AddSourceForm() {
       address,
       phoneNumber,
     };
-    try {
-      console.log('sending form...', formContent);
-      let res = await postSource(formContent);
-      console.log(res);
-      form.reset();
-    } catch (error) {
-      console.log(error);
+    console.log(name.length);
+    if (name.length == '' || address.length == '') {
+      setMsg('Name and address of source must be filled; try again');
+    } else {
+      try {
+        console.log('sending form...', formContent);
+        let res = await postSource(formContent);
+        console.log(res);
+        form.reset();
+        window.location.reload();
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
   const handleCancel = () => {
-    // TODO: closes the form div
+    setIsAdding(false);
   };
 
   return (
@@ -51,6 +57,7 @@ export default function AddSourceForm() {
       <h2>Add a new source</h2>
       <form onSubmit={handleSubmit} id="new-source-form" noValidate>
         <label>Name:</label>
+        <br />
         <input
           name="name"
           type="text"
@@ -58,6 +65,7 @@ export default function AddSourceForm() {
         ></input>
         <br />
         <label>Address:</label>
+        <br />
         <input
           name="address"
           type="text"
@@ -65,6 +73,7 @@ export default function AddSourceForm() {
         ></input>
         <br />
         <label>Contact Number:</label>
+        <br />
         <input
           type="text"
           name="phoneNumber"
@@ -76,6 +85,8 @@ export default function AddSourceForm() {
             Save Source
           </button>
           <button onClick={handleCancel}>Cancel</button>
+          <br />
+          {msg}
         </div>
       </form>
     </>
