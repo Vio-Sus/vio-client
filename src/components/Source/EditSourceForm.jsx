@@ -81,7 +81,7 @@ export default function EditSourceForm({ source, setIsEditing }) {
         <br />
         <input
           name="name"
-          type="name"
+          type="text"
           value={name}
           onChange={(e) => handleChange(e)}
         ></input>
@@ -90,7 +90,7 @@ export default function EditSourceForm({ source, setIsEditing }) {
         <br />
         <input
           type="address"
-          name="address"
+          name="text"
           value={address}
           onInput={(e) => handleChange(e)}
         />
@@ -99,7 +99,7 @@ export default function EditSourceForm({ source, setIsEditing }) {
         <br />
         <input
           type="phoneNumber"
-          name="phoneNumber"
+          name="text"
           value={phoneNumber}
           onInput={(e) => handleChange(e)}
         />
