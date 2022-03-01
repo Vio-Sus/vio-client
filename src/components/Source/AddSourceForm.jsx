@@ -1,95 +1,92 @@
 import { useState } from 'react';
-import { postEntries } from '../../network';
-import { handleValidation } from '../../validation';
+import { postSource } from '../../network';
 
-const newSource = () => ({
-  name: '',
-  address: '',
-  phoneNumber: '',
-});
-
-export default function SourceForm({ items, sources }) {
-  const [entryWeights, setEntryWeights] = useState([newEntryWeight()]);
-  const [formValues, setFormValues] = useState({});
-  const [errorMsgs, setErrorMsgs] = useState([]);
-
-  let handleFormValues = (e) => {
-    // copying the original state
-    let newFormValues = formValues;
-    // adding onto the copy
-    if (e.target.name === 'created') {
-      newFormValues[e.target.name] = e.target.value;
-    } else {
-      newFormValues[e.target.name] = Number(e.target.value);
+export default function AddSourceForm({ setIsAdding }) {
+  const [name, setName] = useState('');
+  const [address, setAddress] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [msg, setMsg] = useState('');
+  const handleChange = (e) => {
+    let inputName = e.target.name;
+    console.log('inputName: ', inputName, 'inputValue: ', e.target.value);
+    switch (inputName) {
+      case 'name':
+        setName(e.target.value);
+        break;
+      case 'address':
+        setAddress(e.target.value);
+        break;
+      case 'phoneNumber':
+        setPhoneNumber(e.target.value);
+        break;
+      default:
+        return;
     }
-    console.log('handling form changes', newFormValues);
-    // setting the state from the original to the new copy
-    setFormValues(newFormValues);
   };
 
-  let removeFormFields = (element) => {
-    let newEntryWeights = entryWeights.filter(
-      (weight) => weight.id != element.id
-    );
-    setEntryWeights(newEntryWeights);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let form = document.getElementById('new-source-form');
+    let formContent = {
+      name,
+      address,
+      phoneNumber,
+    };
+    console.log(name.length);
+    if (name.length == '' || address.length == '') {
+      setMsg('Name and address of source must be filled; try again');
+    } else {
+      try {
+        console.log('sending form...', formContent);
+        let res = await postSource(formContent);
+        console.log(res);
+        form.reset();
+        window.location.reload();
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
-  let handleSubmit = async (event) => {
-    event.preventDefault();
-    let form = document.getElementById('input-form');
-    let errorMsgs = handleValidation(formValues, entryWeights, items); // ['error messages']
-    setErrorMsgs(errorMsgs);
-    console.log(errorMsgs);
-    let isValid = errorMsgs.length === 0;
-    console.log('is this valid?', isValid);
-    if (!isValid) {
-      console.log('Form is missing values; try again');
-    } else {
-      let formContent = {
-        entries: entryWeights.map((e) => ({ ...e, ...formValues })),
-      };
-      console.log(formContent);
-      const res = await postEntries(formContent);
-      console.log(res);
-      form.reset();
-      window.location.reload();
-    }
+  const handleCancel = () => {
+    setIsAdding(false);
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit} id="input-form" noValidate>
-        <label>Name</label>
+      <h2>Add a new source</h2>
+      <form onSubmit={handleSubmit} id="new-source-form" noValidate>
+        <label>Name:</label>
+        <br />
         <input
           name="name"
           type="text"
-          onChange={(e) => handleFormValues(e)}
+          onChange={(e) => handleChange(e)}
         ></input>
         <br />
-        <label>Address</label>
+        <label>Address:</label>
+        <br />
         <input
           name="address"
           type="text"
-          onChange={(e) => handleFormValues(e)}
-        ></input>
-        <label>Phone Number</label>
-        <input
-          name="phoneNumber"
-          type="text"
-          onChange={(e) => handleFormValues(e)}
+          onChange={(e) => handleChange(e)}
         ></input>
         <br />
-
-        <div className="error-messages">
-          {errorMsgs.map((msg, key) => (
-            <span key={key}>{msg}</span>
-          ))}
-        </div>
+        <label>Contact Number:</label>
+        <br />
+        <input
+          type="text"
+          name="phoneNumber"
+          onChange={(e) => handleChange(e)}
+        />
 
         <div className="button-section">
           <button className="button submit" type="submit">
             Save Source
           </button>
+          <button onClick={handleCancel}>Cancel</button>
+          <br />
+          {msg}
         </div>
       </form>
     </>

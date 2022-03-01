@@ -14,7 +14,7 @@ export default function EditSourceForm({ source, setIsEditing }) {
     console.log({ source });
     setName(source.name);
     setAddress(source.address);
-    setPhoneNumber(source.PhoneNumber);
+    setPhoneNumber(source.phone_number);
   }, [source]);
 
   // useEffect(() => {
@@ -75,7 +75,7 @@ export default function EditSourceForm({ source, setIsEditing }) {
 
   return (
     <>
-      <h3>Edit Source</h3>
+      <h2>Edit Source</h2>
       <form id="edit-form">
         <label>Name:</label>
         <br />
