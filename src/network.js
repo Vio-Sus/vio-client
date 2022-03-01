@@ -24,3 +24,9 @@ export async function updateEntry(entryId, formContent) {
 export async function deleteEntry(entryId) {
   return (await axios.delete(`/api/entries/${entryId}`)).data;
 }
+export async function postSource(formContent) {
+  return (await axios.post('/api/sources', { data: formContent })).data;
+}
+export async function updateSource(formContent) {
+  return (await axios.put('/api/sources', { data: formContent })).data;
+}
