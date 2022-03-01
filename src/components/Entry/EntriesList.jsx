@@ -22,19 +22,19 @@ export default function EntriesList({ selectEntry }) {
     <table>
       <thead>
         <tr>
-          <th> Item Name </th>
-          <th> Weight </th>
           <th> Entry Date </th>
           <th> Source </th>
+          <th> Item Name </th>
+          <th> Weight </th>
         </tr>
       </thead>
       <tbody>
         {entries.map((entry, index) => (
           <tr key={index}>
-            <td> {entry.item_name} </td>
-            <td> {entry.entry_weight} </td>
             <td> {entry.entry_date} </td>
             <td> {entry.source_name}</td>
+            <td> {entry.item_name} </td>
+            <td> {entry.entry_weight} kg </td>
             <td>
               <button onClick={() => selectEntry(entry, 'edit')}>
                 Edit
