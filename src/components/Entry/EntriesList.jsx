@@ -42,7 +42,7 @@ export default function EntriesList({ selectEntry }) {
             </td>
 
             <td>
-              <button onClick={() => selectEntry(entry.entry_id, 'delete')}>
+              <button onClick={() => selectEntry(entry, 'delete')}>
                 Delete
               </button>
             </td>
