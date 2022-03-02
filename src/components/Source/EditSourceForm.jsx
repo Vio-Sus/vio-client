@@ -61,7 +61,8 @@ export default function EditSourceForm({ source, setIsEditing }) {
       phoneNumber,
     };
     try {
-      await updateSource(source.sourceId, formContent);
+      console.log(`sourceid = ${source.sourceId}`);
+      await updateSource(source.source_id, formContent);
       setIsEditing(false);
     } catch (error) {
       console.log(error);
