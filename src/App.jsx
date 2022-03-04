@@ -10,7 +10,6 @@ import ViewDataPage from './Pages/ViewData';
 import ViewSourcePage from './Pages/ViewSource';
 import ViewItemPage from './Pages/ViewItem';
 import BluetoothPage from './Pages/Bluetooth';
-// import BluetoothConnection from './components/BluetoothConnection';
 
 function App() {
   const [sources, setSources] = useState([]);
