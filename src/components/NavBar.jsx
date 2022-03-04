@@ -16,7 +16,10 @@ const NavBar = ({ user }) => {
           <a href="viewData">View Data</a>
         </li>
         <li>
-          <a href="viewSource">View Source</a>
+          <a href="viewSource">View Sources</a>
+        </li>
+        <li>
+          <a href="viewItem">View Items</a>
         </li>
       </ul>
     </>
