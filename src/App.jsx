@@ -7,15 +7,15 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import DashboardPage from './Pages/Dashboard';
 import NewEntryPage from './Pages/NewEntry';
 import ViewDataPage from './Pages/ViewData';
-import { connectBT, disconnectBT } from './bluetooth';
 import ViewSourcePage from './Pages/ViewSource';
 import ViewItemPage from './Pages/ViewItem';
+import BluetoothPage from './Pages/Bluetooth';
+// import BluetoothConnection from './components/BluetoothConnection';
 
 function App() {
   const [sources, setSources] = useState([]);
   const [items, setItems] = useState([]);
   const [user, setUser] = useState(null);
-  const [weight, setWeight] = useState(0);
 
   useEffect(() => {
     (async () => {
@@ -35,13 +35,8 @@ function App() {
     })();
   }, []);
 
-
-
   return (
     <>
-      <p>{weight}</p>
-      <button onClick={() => connectBT(setWeight)}>CONNECT BLUETOOTH</button>
-      <button onClick={disconnectBT}>DISCONNECT BLUETOOTH</button>
       {user && (
         <div className="App">
           <NavBar user={user} />
@@ -64,6 +59,7 @@ function App() {
                 path="viewItem"
                 element={<ViewItemPage items={items} />}
               ></Route>
+              <Route path="bt" element={<BluetoothPage />}></Route>
             </Routes>
           </BrowserRouter>
         </div>
