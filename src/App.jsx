@@ -25,9 +25,10 @@ function App() {
         ]); // returns new promise with all data
         if (!user.error) {
           setUser(user);
+          setSources(sources);
+          setItems(items);
         }
-        setSources(sources);
-        setItems(items);
+
         console.log(user, sources, items);
       } catch {}
     })();
