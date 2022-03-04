@@ -9,7 +9,6 @@ const newEntryWeight = () => ({
 });
 
 export default function Form({ items, sources }) {
-
   const [entryWeights, setEntryWeights] = useState([newEntryWeight()]);
   const [formValues, setFormValues] = useState({});
   const [errorMsgs, setErrorMsgs] = useState([]);
@@ -53,6 +52,7 @@ export default function Form({ items, sources }) {
       let formContent = {
         entries: entryWeights.map((e) => ({ ...e, ...formValues })),
       };
+      console.log('~~~~~~~~~~~~~~~~~`');
       console.log(formContent);
       const res = await postEntries(formContent);
       console.log(res);

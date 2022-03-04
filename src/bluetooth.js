@@ -1,14 +1,18 @@
 export async function connectBT(setWeight) {
   try {
     const device = await navigator.bluetooth.requestDevice({
-      filters: [{ services: [0xd270] }],
+      filters: [{ services: ['bca881ce-42c0-444d-91f4-b31e9acc667c'] }],
     });
     console.log(device);
     const connect = await device.gatt.connect();
     console.log(connect);
-    const service = await device.gatt.getPrimaryService(0xd270);
+    const service = await device.gatt.getPrimaryService(
+      'bca881ce-42c0-444d-91f4-b31e9acc667c'
+    );
     console.log(service);
-    const characteristic = await service.getCharacteristic(0xd272);
+    const characteristic = await service.getCharacteristic(
+      'c40d35b1-9bcd-401f-b5ee-8abf58dab24b'
+    );
     console.log(characteristic);
     const notifs = await characteristic.startNotifications();
     setInterval(() => {
@@ -28,7 +32,7 @@ export async function connectBT(setWeight) {
 
 export async function disconnectBT() {
   const device = await navigator.bluetooth.requestDevice({
-    filters: [{ services: [0xd270] }],
+    filters: [{ services: ['bca881ce-42c0-444d-91f4-b31e9acc667c'] }],
   });
   console.log(device);
   const disconnect = await device.gatt.disconnect();

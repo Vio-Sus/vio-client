@@ -8,6 +8,8 @@ import DashboardPage from './Pages/Dashboard';
 import NewEntryPage from './Pages/NewEntry';
 import ViewDataPage from './Pages/ViewData';
 import { connectBT, disconnectBT } from './bluetooth';
+import ViewSourcePage from './Pages/ViewSource';
+import ViewItemPage from './Pages/ViewItem';
 
 function App() {
   const [sources, setSources] = useState([]);
@@ -53,6 +55,14 @@ function App() {
               <Route
                 path="viewData"
                 element={<ViewDataPage sources={sources} items={items} />}
+              ></Route>
+              <Route
+                path="viewSource"
+                element={<ViewSourcePage sources={sources} items={items} />}
+              ></Route>
+              <Route
+                path="viewItem"
+                element={<ViewItemPage items={items} />}
               ></Route>
             </Routes>
           </BrowserRouter>

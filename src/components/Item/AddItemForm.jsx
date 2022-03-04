@@ -1,10 +1,8 @@
 import { useState } from 'react';
-import { postSource } from '../../network';
+import { postItem } from '../../network';
 
-export default function AddSourceForm({ setIsAdding }) {
+export default function AddItemForm({ setIsAdding }) {
   const [name, setName] = useState('');
-  const [address, setAddress] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
   const [msg, setMsg] = useState('');
   const handleChange = (e) => {
     let inputName = e.target.name;
@@ -13,12 +11,6 @@ export default function AddSourceForm({ setIsAdding }) {
       case 'name':
         setName(e.target.value);
         break;
-      case 'address':
-        setAddress(e.target.value);
-        break;
-      case 'phoneNumber':
-        setPhoneNumber(e.target.value);
-        break;
       default:
         return;
     }
@@ -26,19 +18,17 @@ export default function AddSourceForm({ setIsAdding }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let form = document.getElementById('new-source-form');
+    let form = document.getElementById('new-item-form');
     let formContent = {
       name,
-      address,
-      phoneNumber,
     };
     console.log(name.length);
-    if (name.length == '' || address.length == '') {
-      setMsg('Name and address of source must be filled; try again');
+    if (name.length == '') {
+      setMsg('Name of item must be filled; try again');
     } else {
       try {
         console.log('sending form...', formContent);
-        let res = await postSource(formContent);
+        let res = await postItem(formContent);
         console.log(res);
         form.reset();
         window.location.reload();
@@ -54,8 +44,8 @@ export default function AddSourceForm({ setIsAdding }) {
 
   return (
     <>
-      <h2>Add a new source</h2>
-      <form onSubmit={handleSubmit} id="new-source-form" noValidate>
+      <h2>Add a new item</h2>
+      <form onSubmit={handleSubmit} id="new-item-form" noValidate>
         <label>Name:</label>
         <br />
         <input
@@ -64,25 +54,10 @@ export default function AddSourceForm({ setIsAdding }) {
           onChange={(e) => handleChange(e)}
         ></input>
         <br />
-        <label>Address:</label>
-        <br />
-        <input
-          name="address"
-          type="text"
-          onChange={(e) => handleChange(e)}
-        ></input>
-        <br />
-        <label>Contact Number:</label>
-        <br />
-        <input
-          type="text"
-          name="phoneNumber"
-          onChange={(e) => handleChange(e)}
-        />
 
         <div className="button-section">
           <button className="button submit" type="submit">
-            Save Source
+            Save Item
           </button>
           <button onClick={handleCancel}>Cancel</button>
           <br />
