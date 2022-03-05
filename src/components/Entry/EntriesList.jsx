@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { getListOfEntries } from '../../network';
 
-export default function EntriesList({ selectEntry, sources }) {
+export default function EntriesList({ selectEntry, sources, items }) {
   const [entries, setEntries] = useState([]);
+  const [filteredEntries, setFilteredEntries] = useState([]);
+
   // useEffect(() => {
   //   getListOfEntries().then((result) => {
   //     console.log(result);
@@ -14,22 +16,66 @@ export default function EntriesList({ selectEntry, sources }) {
       try {
         let [entries] = await Promise.all([getListOfEntries()]); // returns new promise with all data
         setEntries(entries || []);
+        setFilteredEntries(entries || []);
         console.log({ sources });
       } catch {}
     })();
   }, []);
 
+  const selectSource = (sourceId) => {
+    if (sourceId === 'all') {
+      setFilteredEntries(entries);
+    } else {
+      let filtered = entries.filter((entry) => {
+        if (entry['source_id'] === sourceId) {
+          return entry;
+        }
+      });
+      setFilteredEntries(filtered);
+    }
+  };
+
+  const selectItem = (itemId) => {
+    if (itemId === 'all') {
+      setFilteredEntries(entries);
+    } else {
+      let filtered = entries.filter((entry) => {
+        if (entry['item_id'] === itemId) {
+          return entry;
+        }
+      });
+      setFilteredEntries(filtered);
+    }
+  };
+
   return (
     <>
+      Filter by source:
       <select>
-        <option hidden>Filter by Source</option>
+        <option onClick={() => selectSource('all')}>All</option>
         {sources.map((source, key) => (
-          <option key={key} value={source.source_id}>
+          <option
+            key={key}
+            value={source.source_id}
+            onClick={() => selectSource(source.source_id)}
+          >
             {source.name}
           </option>
         ))}
       </select>
-
+      Filter by item:
+      <select>
+        <option onClick={() => selectItem('all')}>All</option>
+        {items.map((item, key) => (
+          <option
+            key={key}
+            value={item.item_id}
+            onClick={() => selectItem(item.item_id)}
+          >
+            {item.name}
+          </option>
+        ))}
+      </select>
       <table>
         <thead>
           <tr>
@@ -40,7 +86,7 @@ export default function EntriesList({ selectEntry, sources }) {
           </tr>
         </thead>
         <tbody>
-          {entries.map((entry, index) => (
+          {filteredEntries.map((entry, index) => (
             <tr key={index}>
               <td> {entry.entry_date} </td>
               <td> {entry.source_name}</td>
