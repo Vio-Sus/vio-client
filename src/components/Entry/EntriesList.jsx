@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { getListOfEntries } from '../../network';
 
-export default function EntriesList({ selectEntry, sources }) {
+export default function EntriesList({ selectEntry, sources, items }) {
   const [entries, setEntries] = useState([]);
   const [filteredEntries, setFilteredEntries] = useState([]);
+
   // useEffect(() => {
   //   getListOfEntries().then((result) => {
   //     console.log(result);
@@ -22,11 +23,24 @@ export default function EntriesList({ selectEntry, sources }) {
   }, []);
 
   const selectSource = (sourceId) => {
-    if (sourceId == 'all') {
+    if (sourceId === 'all') {
       setFilteredEntries(entries);
     } else {
       let filtered = entries.filter((entry) => {
-        if (entry['source_id'] == sourceId) {
+        if (entry['source_id'] === sourceId) {
+          return entry;
+        }
+      });
+      setFilteredEntries(filtered);
+    }
+  };
+
+  const selectItem = (itemId) => {
+    if (itemId === 'all') {
+      setFilteredEntries(entries);
+    } else {
+      let filtered = entries.filter((entry) => {
+        if (entry['item_id'] === itemId) {
           return entry;
         }
       });
@@ -46,6 +60,19 @@ export default function EntriesList({ selectEntry, sources }) {
             onClick={() => selectSource(source.source_id)}
           >
             {source.name}
+          </option>
+        ))}
+      </select>
+      Filter by item:
+      <select>
+        <option onClick={() => selectItem('all')}>All</option>
+        {items.map((item, key) => (
+          <option
+            key={key}
+            value={item.item_id}
+            onClick={() => selectItem(item.item_id)}
+          >
+            {item.name}
           </option>
         ))}
       </select>

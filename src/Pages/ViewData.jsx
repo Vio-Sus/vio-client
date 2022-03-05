@@ -29,7 +29,11 @@ const ViewDataPage = ({ sources, items }) => {
   return (
     <>
       <h1>View Data</h1>
-      <EntriesList selectEntry={selectEntry} sources={sources}></EntriesList>
+      <EntriesList
+        selectEntry={selectEntry}
+        sources={sources}
+        items={items}
+      ></EntriesList>
       {isEditing && (
         <EditForm
           entry={selectedEntry}
