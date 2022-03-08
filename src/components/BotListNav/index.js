@@ -4,15 +4,16 @@ import React from 'react';
 
 const Cont = styled.div`
 width: 100%;
-background-color:lightgray;
 display: flex;
 flex-direction: row;
 justify-content: space-evenly;
+margin-top:20px;
 `;
 
 const ActiveAcc = styled.text`
 color: black;
 font-size: 10px;
+margin-right:600px;
 `;
 
 
@@ -30,31 +31,39 @@ font-size: 10px;
 const Arrows= styled.div`
 color: black;
 font-size: 10px;
+display: flex;
+position: relative;
+left:40px;
 `;
 
-const ArrowLeft = styled.text``;
+const LeftCont = styled.div`
+    display: flex;
+    justify-content: flex-start;
+`;
 
-const ArrowRight = styled.text``;
+const RightCont = styled.div`
+    display: flex;
+    justify-content: flex-end;
+`;
+
 
 const BotListNav = ({
-    AccNum="456",
+    AccNum1="456",
+    AccNum2="456",
     RowsNum="10",
     PgA="1",
     PgB="1",
 }) => {
     return (
         <Cont>
-            <ActiveAcc>Active Accounts: {AccNum} </ActiveAcc>
+            <LeftCont>
+            <ActiveAcc>Active Accounts: {AccNum1}/{AccNum2} </ActiveAcc>
+            <RowsPerPage> Rows per page: {RowsNum}</RowsPerPage>
+            </LeftCont>
 
-            <RowsPerPage> Rows per page:{RowsNum}</RowsPerPage>
-
-            
-            <PageNum> {PgA} of {PgB} </PageNum>
-
-            <Arrows>
-                <ArrowLeft> &#60; </ArrowLeft>
-                <ArrowRight> &#62; </ArrowRight>
-            </Arrows>
+            <RightCont>
+            <PageNum> {PgA} of {PgB} &#60; &#62;</PageNum>
+            </RightCont>
             
         </Cont>
     );

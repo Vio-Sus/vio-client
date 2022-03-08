@@ -8,8 +8,8 @@ import BotListNav from './components/BotListNav/index'
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
-    <div>test</div>
+    {/* <App /> */}
+  
     <BotListNav/>
   </React.StrictMode>,
   document.getElementById('root')
