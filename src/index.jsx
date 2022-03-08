@@ -4,9 +4,13 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import BotListNav from './components/BotListNav/index'
+
 ReactDOM.render(
   <React.StrictMode>
     <App />
+    <div>test</div>
+    <BotListNav/>
   </React.StrictMode>,
   document.getElementById('root')
 );
