@@ -5,12 +5,15 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import BotListNav from './components/BotListNav/index'
+import Button from './components/Button/index';
+
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* <App /> */}
+    <App />
   
     <BotListNav/>
+    <Button/>
   </React.StrictMode>,
   document.getElementById('root')
 );
