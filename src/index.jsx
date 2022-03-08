@@ -4,9 +4,9 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import BotListNav from './components/BotListNav/index'
+import BotListNav from './components/BotListNav/index';
 import Button from './components/Button/index';
-
+import TextInputBox from './components/TextInputBox/index'
 
 ReactDOM.render(
   <React.StrictMode>
@@ -14,6 +14,7 @@ ReactDOM.render(
   
     <BotListNav/>
     <Button/>
+    <TextInputBox/>
   </React.StrictMode>,
   document.getElementById('root')
 );
