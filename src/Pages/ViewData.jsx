@@ -28,7 +28,7 @@ const ViewDataPage = ({ sources, items }) => {
   return (
     <>
       <h1>View Data</h1>
-      <EntriesList selectEntry={selectEntry}></EntriesList>
+      <EntriesList selectEntry={selectEntry} ></EntriesList>
       {isEditing && (
         <EditForm
           entry={selectedEntry}
