@@ -2,6 +2,7 @@ import EntriesList from '../components/Entry/EntriesList';
 import DeleteConfirmation from '../components/Entry/DeleteEntryConfirmation';
 import EditForm from '../components/Entry/EditEntryForm';
 import { useState } from 'react';
+import Summary from '../components/Summary/Summary';
 
 const ViewDataPage = ({ sources, items }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -28,7 +29,7 @@ const ViewDataPage = ({ sources, items }) => {
   return (
     <>
       <h1>View Data</h1>
-      <EntriesList selectEntry={selectEntry} ></EntriesList>
+      <EntriesList selectEntry={selectEntry}></EntriesList>
       {isEditing && (
         <EditForm
           entry={selectedEntry}
@@ -45,6 +46,7 @@ const ViewDataPage = ({ sources, items }) => {
           items={items}
         />
       )}
+      <Summary startDate={'2022-01-01'} endDate={'2022-03-04'} />
     </>
   );
 };

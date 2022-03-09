@@ -44,6 +44,6 @@ export async function updateSource(sourceId, formContent) {
 }
 
 // totals
-export async function getTotalsBySource(startDate, endDate) {
-  return await axios.get(`/api/totals/${startDate}/${endDate}`).data;
+export async function getTotalWeights(startDate, endDate) {
+  return (await axios.get(`/api/totals/${startDate}/${endDate}`)).data;
 }
