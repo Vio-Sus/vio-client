@@ -68,52 +68,6 @@ export default function EntriesList({ selectEntry, sources, items }) {
     })();
   }, [startDate, endDate]);
 
-  // const dateRangeFilter = () => {
-  //   console.log('start date: ', startDate);
-  //   console.log('end date: ', endDate);
-  //   if (startDate && endDate) {
-  //     // let filtered = entries.filter((entry) => {
-  //     //   if (entry['entry_date'] > startDate && entry['entry_date'] < endDate) {
-  //     //     return entry;
-  //     //   }
-  //     // });
-  //     //-----
-  //     // (async () => {
-  //     //   try {
-  //     //     let [entriesDateRange] = await Promise.all([
-  //     //       getEntriesByDateRange(startDate, endDate),
-  //     //     ]);
-  //     //     setEntries(entriesDateRange);
-  //     //   } catch {}
-  //     // })();
-  //   } else {
-  //     setEntries(entries);
-  //   }
-  // };
-
-  // const dateRangeFilter = () => {
-  //   console.log('start date: ', startDate);
-  //   console.log('end date: ', endDate);
-  //   if (startDate && endDate) {
-  //     // let filtered = filteredEntries.filter((entry) => {
-  //     //   if (entry['entry_date'] > startDate && entry['entry_date'] < endDate) {
-  //     //     return entry;
-  //     //   }
-  //     // });
-
-  //     (async () => {
-  //       try {
-  //         let [entriesDateRange] = await Promise.all([
-  //           getEntriesByDateRange(startDate, endDate),
-  //         ]);
-  //         setEntries(entriesDateRange);
-  //       } catch {}
-  //     })();
-  //   } else {
-  //     setFilteredEntries(entries);
-  //   }
-  // };
-
   const selectSource = (sourceId) => {
     if (sourceId === 'all') {
       setFilteredEntries(entries);
