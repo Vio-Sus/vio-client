@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const Cont = styled.div`
     width:913px;
-    height: 15px;
+    height: 20px;
     display:flex;
     justify-content: space-around;
 `;

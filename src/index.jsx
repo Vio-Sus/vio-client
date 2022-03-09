@@ -3,7 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+
 import ListInputHeadings from './components/ListInputHeadings';
+import DropDownOptions from './components/DropDownOptions';
+import BasicSelect from './components/Materialtest'
+
 
 
 import BotListNav from './components/BotListNav/index';
@@ -15,6 +19,7 @@ ReactDOM.render(
   <React.StrictMode>
     <App />
 
+
     <div>test</div>
     <BotListNav/>
     <Button/>
@@ -23,6 +28,13 @@ ReactDOM.render(
 
 
     <ListInputHeadings/>
+
+
+    <ListInputHeadings/>
+
+    <BasicSelect/>
+    <DropDownOptions/>
+
 
   </React.StrictMode>,
   document.getElementById('root')
