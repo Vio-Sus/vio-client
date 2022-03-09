@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState,  } from "react";
 import { useRouter } from "next/router";
+import React from 'react';
 
 export default function NavBar({}) {
   const r = useRouter();

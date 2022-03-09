@@ -14,6 +14,7 @@ import BotListNav from './components/BotListNav/index';
 import Button from './components/Button/index';
 import TextInputBox from './components/TextInputBox/index';
 import DeleteEntryPopup from './components/DeleteEntryPopup/index'
+// import NavBar from './components/NavBar/index'
 
 ReactDOM.render(
   <React.StrictMode>
@@ -23,10 +24,11 @@ ReactDOM.render(
     <Button/>
     <TextInputBox/>
     <DeleteEntryPopup/>
-    
+
     <ListInputHeadings/>
     <BasicSelect/>
     <DropDownOptions/>
+    {/* <NavBar/> */}
 
 
   </React.StrictMode>,

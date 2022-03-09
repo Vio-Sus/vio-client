@@ -18,8 +18,8 @@ const Text= styled.text`
 `;
 
 const TextInputBox = ({
-    buttonwidth = "10.03",
-    buttonheight=  "73.23",
+    buttonwidth = '10.03',
+    buttonheight=  '70',
     text= "Source Address",
 }) => {
     return (
