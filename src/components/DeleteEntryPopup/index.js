@@ -28,6 +28,7 @@ flex-direction: column;
 `;
 
 const Li = styled.Text`
+color: black;
 `;
 
 const DeleteEntryPopup = ({
