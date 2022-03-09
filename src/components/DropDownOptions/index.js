@@ -1,7 +1,10 @@
-import { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 
+
+
 const Cont = styled.div`
+  width: 250px;
 `
 
 const DropHeaderCont = styled.div`
@@ -26,16 +29,20 @@ const DropDownBox = styled.select`
 export default function DropDownOptions({}) {
   return (
     <Cont>
-        <DropHeaderCont>
-            Source
-        </DropHeaderCont>
-        <DropDownBox
-        name="source"
-        >
-        <option value="vioCoffee">Vio Coffee Shop</option>
-        <option value="minTech">Mins Tech</option>
-        <option value="brickOff">Brick it OFF</option>
-        </DropDownBox>
+        <form id="make_checkbox_select">
+
+            <select name="sources">
+                <option data-count="1" value="Min's Tech">Min's Tech</option>
+                <option data-count="2" value="Vio Coffee">Vio Coffee</option>
+                <option data-count="3" value="Brick it OFF">Brick it off</option>
+                <option data-count="4" value="Textile">Textile Refresh</option>
+
+
+            </select>
+
+{/* <input type="submit" /> */}
+
+</form>
     </Cont>
   );
 }

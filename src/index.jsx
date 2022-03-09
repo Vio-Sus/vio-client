@@ -3,9 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+
 import ListInputHeadings from './components/ListInputHeadings';
 import DropDownOptions from './components/DropDownOptions';
-import DropDownCheckbox from './components/DropDownCheckBox';
+import BasicSelect from './components/Materialtest'
+
 
 
 ReactDOM.render(
@@ -14,7 +16,7 @@ ReactDOM.render(
 
     <ListInputHeadings/>
 
-    <DropDownCheckbox/>
+    <BasicSelect/>
     <DropDownOptions/>
 
   </React.StrictMode>,
