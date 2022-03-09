@@ -13,11 +13,14 @@ export default function Summary({ startDate, endDate }) {
         console.log('This is SUMMARRRYY: ', totalWeightsList);
       } catch {}
     })();
-  },[]);
+  }, []);
   return (
     <>
       <hr></hr>
       <h2>Summary</h2>
+      <p>
+        {startDate} to {endDate}
+      </p>
       {/* <ItemTotalWeight totalWeightsList={totalWeightsList} /> */}
       <SourceItemWeight totalWeightsList={totalWeightsList} />
     </>
