@@ -55,7 +55,7 @@ export default function EntriesList({ selectEntry, sources, items }) {
       setFilteredEntries(entries);
     } else {
       let filtered = entries.filter((entry) => {
-        if (entry['source_id'] === sourceId) {
+        if (entry['source_id'] === +sourceId) {
           return entry;
         }
       });
@@ -68,7 +68,7 @@ export default function EntriesList({ selectEntry, sources, items }) {
       setFilteredEntries(entries);
     } else {
       let filtered = entries.filter((entry) => {
-        if (entry['item_id'] === itemId) {
+        if (entry['item_id'] === +itemId) {
           return entry;
         }
       });
@@ -79,27 +79,19 @@ export default function EntriesList({ selectEntry, sources, items }) {
   return (
     <>
       Filter by source:
-      <select>
-        <option onClick={() => selectSource('all')}>All</option>
+      <select onChange={(e) => selectSource(e.target.value)}>
+        <option value="all">All</option>
         {sources.map((source, key) => (
-          <option
-            key={key}
-            value={source.source_id}
-            onClick={() => selectSource(source.source_id)}
-          >
+          <option key={key} value={source.source_id}>
             {source.name}
           </option>
         ))}
       </select>
       Filter by item:
-      <select>
-        <option onClick={() => selectItem('all')}>All</option>
+      <select onChange={(e) => selectItem(e.target.value)}>
+        <option value="all">All</option>
         {items.map((item, key) => (
-          <option
-            key={key}
-            value={item.item_id}
-            onClick={() => selectItem(item.item_id)}
-          >
+          <option key={key} value={item.item_id}>
             {item.name}
           </option>
         ))}
