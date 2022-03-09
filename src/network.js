@@ -42,3 +42,8 @@ export async function postSource(formContent) {
 export async function updateSource(sourceId, formContent) {
   return await axios.put(`/api/sources/${sourceId}`, { data: formContent });
 }
+
+// totals
+export async function getTotalsBySource(startDate, endDate) {
+  return await axios.get(`/api/totals/${startDate}/${endDate}`).data;
+}
