@@ -4,12 +4,18 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import ListInputHeadings from './components/ListInputHeadings';
+import DropDownOptions from './components/DropDownOptions'
 
 
 ReactDOM.render(
   <React.StrictMode>
     <App />
+
     <ListInputHeadings/>
+
+
+    <DropDownOptions/>
+
   </React.StrictMode>,
   document.getElementById('root')
 );
