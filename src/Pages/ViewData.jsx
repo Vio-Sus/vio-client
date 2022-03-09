@@ -1,7 +1,7 @@
 import EntriesList from '../components/Entry/EntriesList';
 import DeleteConfirmation from '../components/Entry/DeleteEntryConfirmation';
 import EditForm from '../components/Entry/EditEntryForm';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Summary from '../components/Summary/Summary';
 
 const ViewDataPage = ({ sources, items }) => {
@@ -9,6 +9,7 @@ const ViewDataPage = ({ sources, items }) => {
   const [selectedEntry, setSelectedEntry] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
+  console.log(`i am sources from view data ${JSON.stringify({ sources })}`);
   const selectEntry = (entry, method) => {
     console.log('Entry selected: ', entry);
     setSelectedEntry(entry);
@@ -29,7 +30,11 @@ const ViewDataPage = ({ sources, items }) => {
   return (
     <>
       <h1>View Data</h1>
-      <EntriesList selectEntry={selectEntry}></EntriesList>
+      <EntriesList
+        selectEntry={selectEntry}
+        sources={sources}
+        items={items}
+      ></EntriesList>
       {isEditing && (
         <EditForm
           entry={selectedEntry}
@@ -46,7 +51,7 @@ const ViewDataPage = ({ sources, items }) => {
           items={items}
         />
       )}
-      <Summary startDate={'2022-01-01'} endDate={'2022-03-04'} />
+      <Summary startDate={'2022-01-01'} endDate={'2022-03-10'} />
     </>
   );
 };

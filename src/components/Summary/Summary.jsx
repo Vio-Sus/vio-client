@@ -18,7 +18,7 @@ export default function Summary({ startDate, endDate }) {
     <>
       <hr></hr>
       <h2>Summary</h2>
-      <ItemTotalWeight totalWeightsList={totalWeightsList} />
+      {/* <ItemTotalWeight totalWeightsList={totalWeightsList} /> */}
       <SourceItemWeight totalWeightsList={totalWeightsList} />
     </>
   );
