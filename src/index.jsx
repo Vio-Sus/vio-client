@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import ListInputHeadings from './components/ListInputHeadings';
+
 
 import BotListNav from './components/BotListNav/index';
 import Button from './components/Button/index';
@@ -12,11 +14,15 @@ import DeleteEntryPopup from './components/DeleteEntryPopup/index'
 ReactDOM.render(
   <React.StrictMode>
     <App />
+
     <div>test</div>
     <BotListNav/>
     <Button/>
     <TextInputBox/>
     <DeleteEntryPopup/>
+
+
+    <ListInputHeadings/>
 
   </React.StrictMode>,
   document.getElementById('root')
