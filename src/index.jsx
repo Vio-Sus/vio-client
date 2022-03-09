@@ -6,15 +6,18 @@ import reportWebVitals from './reportWebVitals';
 
 import BotListNav from './components/BotListNav/index';
 import Button from './components/Button/index';
-import TextInputBox from './components/TextInputBox/index'
+import TextInputBox from './components/TextInputBox/index';
+import DeleteEntryPopup from './components/DeleteEntryPopup/index'
 
 ReactDOM.render(
   <React.StrictMode>
     <App />
-  
+    <div>test</div>
     <BotListNav/>
     <Button/>
     <TextInputBox/>
+    <DeleteEntryPopup/>
+
   </React.StrictMode>,
   document.getElementById('root')
 );

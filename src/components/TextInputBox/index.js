@@ -3,14 +3,14 @@ import styled from 'styled-components';
 import React from 'react';
 
 const Cont = styled.div`
-    width:${props => props.width};
+    width: ${props => props.width};
     height:${props => props.height};
-    background-color: ${props => props.bgColor};
     border-radius: 7px;
     display: flex;
-    align-items:center;
-    justify-content: center;
+    flex-direction: column;
+    font-size: 10px;
 
+    margin-top:20px;
 `;
 
 const Text= styled.text`
@@ -18,17 +18,21 @@ const Text= styled.text`
 `;
 
 const TextInputBox = ({
-    buttonwidth = '150.03px',
-    buttonheight=  '73.23px',
+    buttonwidth = "10.03",
+    buttonheight=  "73.23",
     text= "Source Address",
-
 }) => {
     return (
-        <Cont width={buttonwidth} height={buttonheight}>
-            <Text>
+        <Cont >
+            
             <label for="sxaddress">{text}</label>
-            <input type="text" id="fname" name="fname"></input>
-            </Text>
+            <input 
+            width={buttonwidth} 
+            height={buttonheight} 
+            type="text" 
+            id="sxaddress" 
+            name="sxaddress"></input>
+            
         </Cont>
     );
 } 
