@@ -6,6 +6,7 @@ import SourceItemWeight from './SourceItemWeight';
 export default function Summary({ startDate, endDate }) {
   const [totalWeightsList, setTotalWeightsList] = useState([]);
   useEffect(() => {
+    console.log(startDate, endDate);
     (async () => {
       try {
         let totalWeights = await getTotalWeights(startDate, endDate);

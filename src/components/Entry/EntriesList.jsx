@@ -7,8 +7,8 @@ export default function EntriesList({ selectEntry, sources, items }) {
   const [filteredEntries, setFilteredEntries] = useState([]);
 
   //setting up dates
-  const [startDate, setStartDate] = useState([]);
-  const [endDate, setEndDate] = useState([]);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
   const [today, setToday] = useState([]);
   const [defaultStart, setDefaultStart] = useState([]);
 
@@ -28,12 +28,14 @@ export default function EntriesList({ selectEntry, sources, items }) {
   //     setEntries(result);
   //   });
   // }, []);
+    const todayDate = dateToYMD(todayObj);
+    const defaultStartDate = dateToYMD(todayMinus100);
   useEffect(() => {
     (async () => {
       try {
         //set up dates for date input
-        const todayDate = dateToYMD(todayObj);
-        const defaultStartDate = dateToYMD(todayMinus100);
+        // const todayDate = dateToYMD(todayObj);
+        // const defaultStartDate = dateToYMD(todayMinus100);
         setToday(todayDate);
         setDefaultStart(defaultStartDate);
         setStartDate(defaultStartDate);
@@ -173,6 +175,7 @@ export default function EntriesList({ selectEntry, sources, items }) {
         </tbody>
       </table>
       <Summary startDate={'2022-01-01'} endDate={'2022-03-10'} />
+      {/* <Summary startDate={startDate} endDate={endDate} /> */}
     </>
   );
 }
