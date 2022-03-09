@@ -18,20 +18,13 @@ import DeleteEntryPopup from './components/DeleteEntryPopup/index'
 ReactDOM.render(
   <React.StrictMode>
     <App />
-
-
-    <div>test</div>
+    {/* //alicia */}
     <BotListNav/>
     <Button/>
     <TextInputBox/>
     <DeleteEntryPopup/>
-
-
+    
     <ListInputHeadings/>
-
-
-    <ListInputHeadings/>
-
     <BasicSelect/>
     <DropDownOptions/>
 

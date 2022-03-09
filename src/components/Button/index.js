@@ -8,6 +8,7 @@ const Cont = styled.div`
     height:${props => props.height};
     background-color: ${props => props.bgColor};
     border-radius: 7px;
+    border:${props => props.border};
     display: flex;
     align-items:center;
     justify-content: center;
@@ -15,9 +16,9 @@ const Cont = styled.div`
 `;
 
 const ButtonText = styled.text`
- color: white;
+ color: ${props => props.color};
  font-size:${props => props.fontSize};
- font-weight: bold;
+ font-weight: ${props => props.fontWeight};
 `;
 
 const Button = ({
@@ -26,10 +27,13 @@ const Button = ({
     buttontext ="Input New Data",
     buttoncolor = "#80CF76",
     fontsize = "10px",
+    textcolor="white",
+    textweight="bold",
+    borderweight="none",
 }) => {
     return (
-        <Cont bgColor={buttoncolor} width={buttonwidth} height={buttonheight}>
-            <ButtonText fontSize={fontsize}>{buttontext}</ButtonText>
+        <Cont border={borderweight} bgColor={buttoncolor} width={buttonwidth} height={buttonheight}>
+            <ButtonText fontWeight={textweight} color={textcolor} fontSize={fontsize}>{buttontext}</ButtonText>
         </Cont>
     );
 } 

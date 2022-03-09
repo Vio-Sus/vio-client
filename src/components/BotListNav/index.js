@@ -7,7 +7,6 @@ width: 100%;
 display: flex;
 flex-direction: row;
 justify-content: space-evenly;
-margin-top:20px;
 `;
 
 const ActiveAcc = styled.text`

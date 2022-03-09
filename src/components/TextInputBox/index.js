@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import React from 'react';
 
 const Cont = styled.div`
+    display:flex;
     width: ${props => props.width};
     height:${props => props.height};
     border-radius: 7px;
-    display: flex;
     flex-direction: column;
     font-size: 10px;
 
