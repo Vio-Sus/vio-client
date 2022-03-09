@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getListOfEntries } from '../../network';
+import { getListOfEntries, getEntriesByDateRange } from '../../network';
 
 export default function EntriesList({ selectEntry, sources, items }) {
   const [entries, setEntries] = useState([]);
@@ -15,6 +15,8 @@ export default function EntriesList({ selectEntry, sources, items }) {
     return `${yyyy}-${mm}-${dd}`;
   };
 
+  const todayObj = new Date(new Date().toString());
+
   // useEffect(() => {
   //   getListOfEntries().then((result) => {
   //     console.log(result);
@@ -24,7 +26,6 @@ export default function EntriesList({ selectEntry, sources, items }) {
   useEffect(() => {
     (async () => {
       try {
-        const todayObj = new Date(new Date().toString());
         setToday(dateToYMD(todayObj));
         setEndDate(dateToYMD(todayObj));
         let [entries] = await Promise.all([getListOfEntries()]); // returns new promise with all data
@@ -39,14 +40,21 @@ export default function EntriesList({ selectEntry, sources, items }) {
     console.log('start date: ', startDate);
     console.log('end date: ', endDate);
     if (startDate && endDate) {
-      let filtered = entries.filter((entry) => {
-        if (entry['entry_date'] > startDate && entry['entry_date'] < endDate) {
-          return entry;
-        }
-      });
-      setFilteredEntries(filtered);
+      // let filtered = entries.filter((entry) => {
+      //   if (entry['entry_date'] > startDate && entry['entry_date'] < endDate) {
+      //     return entry;
+      //   }
+      // });
+      (async () => {
+        try {
+          let [entriesDateRange] = await Promise.all([
+            getEntriesByDateRange(startDate, endDate),
+          ]);
+          setEntries(entriesDateRange);
+        } catch {}
+      })();
     } else {
-      setFilteredEntries(entries);
+      setEntries(entries);
     }
   };
 
