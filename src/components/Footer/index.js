@@ -1,42 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
-import { useRouter } from "next/router";
-
-export default function Footer({}) {
-  const r = useRouter();
-
-  const handleLink = (t) => {
-    r.push(t);
-  };
-
-  return (
-    <FooterUI>
-      <FooterNavigation>
-        <LinkUI selected={r.pathname == "/"} onClick={() => handleLink("/")}>
-        About Us
-        </LinkUI>
-        <LinkUI
-          selected={r.pathname == "/contactus"}
-          onClick={() => handleLink("/contactus")}
-        >
-          Contact Us
-        </LinkUI>
-        <LinkUI
-          selected={r.pathname == "/howtosort"}
-          onClick={() => handleLink("/howtosort")}
-        >
-          How to Sort
-        </LinkUI>
-        <LinkUI
-          selected={r.pathname == "/privacypolicy"}
-          onClick={() => handleLink("/privacypolicys")}
-        >
-          Privacy Policy 
-        </LinkUI>
-      </FooterNavigation>
-    </FooterUI>
-  );
-}
+import React from "react";
 
 const FooterUI = styled.div`
   width: 100%;
@@ -68,4 +31,21 @@ const LinkUI = styled.div`
     color:#489CED;
     ;
 `;
+
+
+export default function Footer({
+  onClick = () => {},
+}){
+  return (
+    <FooterUI>
+      <FooterNavigation>
+       <LinkUI onClick={onClick}>About Us</LinkUI>
+       <LinkUI>Contact Us</LinkUI>
+       <LinkUI>How to Sort</LinkUI>
+       <LinkUI>Privacy Policy</LinkUI>
+       </FooterNavigation>
+    </FooterUI>
+  );
+}
+
 
