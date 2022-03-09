@@ -172,7 +172,7 @@ export default function EntriesList({ selectEntry, sources, items }) {
             : null}
         </tbody>
       </table>
-
+      <Summary startDate={'2022-01-01'} endDate={'2022-03-10'} />
     </>
   );
 }
