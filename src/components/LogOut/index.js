@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import React from "react";
 
 const LogOutUI = styled.div`
 width: 100px;
@@ -35,7 +36,9 @@ const LinkUI = styled.div`
   }
 `;
 
-const LogOut = ({}) =>{
+const LogOut = ({
+  onClick = () => {},
+}) =>{
 
 return (
     <LogOutUI>
@@ -45,7 +48,7 @@ return (
         style={{ width: 30 }}
       ></Avatar>
       <Username>User Name</Username>
-      <LinkUI OnClick={()=> x }>LogOut</LinkUI>
+      <LinkUI onClick={onClick}>LogOut</LinkUI>
 
     </LogOutUI>
     )};
