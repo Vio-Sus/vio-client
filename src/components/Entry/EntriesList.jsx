@@ -58,12 +58,12 @@ export default function EntriesList({ selectEntry, sources, items }) {
             getEntriesByDateRange(startDate, endDate),
           ]);
           setEntries(entriesDateRange);
-          setFilteredEntries(entries || []);
+          setFilteredEntries(entriesDateRange || []);
         } catch {}
       } else {
         let [entriesDateRange] = await Promise.all([getListOfEntries()]);
         setEntries(entriesDateRange);
-        setFilteredEntries(entries || []);
+        setFilteredEntries(entriesDateRange || []);
       }
     })();
   }, [startDate, endDate]);
