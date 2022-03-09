@@ -4,6 +4,8 @@ import { getListOfEntries, getEntriesByDateRange } from '../../network';
 export default function EntriesList({ selectEntry, sources, items }) {
   const [entries, setEntries] = useState([]);
   const [filteredEntries, setFilteredEntries] = useState([]);
+  const [itemFilter, setItemfilter] = useState('');
+  const [sourceFilter, setSourcefilter] = useState('');
 
   //setting up dates
   const [startDate, setStartDate] = useState([]);
@@ -139,6 +141,27 @@ export default function EntriesList({ selectEntry, sources, items }) {
     }
   };
 
+  const selectFilter = (type, filterId) => {
+    if (type == 'source_id') {
+      setSourcefilter(filterId);
+    } else {
+      setItemfilter(filterId);
+    }
+    console.log(sourceFilter + 'sourceFilter');
+    console.log(itemFilter + 'itemfilter');
+    let filtered = entries.filter((entry) => {
+      if (entry['source_id'] === +sourceFilter) {
+        console.log(`source stuff ${entry['item_id']} is ${+sourceFilter}`);
+        if (entry['item_id'] === +itemFilter) {
+          console.log(`item stuff ${entry['item_id']} is ${+itemFilter}`);
+
+          return entry;
+        }
+      }
+    });
+    setFilteredEntries(filtered);
+  };
+
   return (
     <>
       Filter by Date Range:
@@ -167,8 +190,8 @@ export default function EntriesList({ selectEntry, sources, items }) {
       />
       <br></br>
       Filter by source:
-      <select onChange={(e) => selectSource(e.target.value)}>
-        <option value="all">All</option>
+      <select onChange={(e) => selectFilter('source_id', e.target.value)}>
+        <option value="allSources">All</option>
         {sources.map((source, key) => (
           <option key={key} value={source.source_id}>
             {source.name}
@@ -176,8 +199,8 @@ export default function EntriesList({ selectEntry, sources, items }) {
         ))}
       </select>
       Filter by item:
-      <select onChange={(e) => selectItem(e.target.value)}>
-        <option value="all">All</option>
+      <select onChange={(e) => selectFilter('item_id', e.target.value)}>
+        <option value="allItems">All</option>
         {items.map((item, key) => (
           <option key={key} value={item.item_id}>
             {item.name}
