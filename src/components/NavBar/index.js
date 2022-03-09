@@ -72,6 +72,10 @@ const LinkUI = styled.div`
   color: #000000;
   color: ${(props) => (props.selected ? "#004384" : "#000000")};
   font-weight: ${(props) => (props.selected ? "500" : "300")};
+  &:hover {
+    color:#489CED;
+    ;
+  }
 `;
 
 const ButtonUI = styled.button`
