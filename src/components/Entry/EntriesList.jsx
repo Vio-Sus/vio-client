@@ -76,6 +76,19 @@ export default function EntriesList({ selectEntry, sources, items }) {
           </option>
         ))}
       </select>
+      Filter by Date Range:
+      <select>
+        <option onClick={() => selectSource('all')}>All</option>
+        {sources.map((source, key) => (
+          <option
+            key={key}
+            value={source.source_id}
+            onClick={() => selectSource(source.source_id)}
+          >
+            {source.name}
+          </option>
+        ))}
+      </select>
       <table>
         <thead>
           <tr>
