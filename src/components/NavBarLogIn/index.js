@@ -1,46 +1,7 @@
 import styled from "styled-components";
-import { useState } from "react";
-import { useRouter } from "next/router";
-
-export default function NavBar({}) {
-  const r = useRouter();
-
-  const handleLink = (t) => {
-    r.push(t);
-  };
-
-  return (
-    <NavbarUI>
-      <Logo
-        src="./logo.png"
-        selected={r.pathname == "/"}
-        onClick={() => handleLink("/")}
-        style={{ width: 80 }}
-      ></Logo>
-      <Navigation>
-        <LinkUI selected={r.pathname == "/"} onClick={() => handleLink("/")}>
-        Dashboard
-        </LinkUI>
-        <LinkUI
-          selected={r.pathname == "/dashboard"}
-          onClick={() => handleLink("/dashboard")}
-        >
-          ViewData
-        </LinkUI>
-        <LinkUI
-          selected={r.pathname == "/viewdata"}
-          onClick={() => handleLink("/viewdata")}
-        >
-          Subaccounts
-        </LinkUI>
-    <ButtonUI OnClick={()=> x }>Login</ButtonUI>
-      </Navigation>
-    </NavbarUI>
-  );
-}
+import React from "react";
 
 const NavbarUI = styled.div`
-  width: 100%;
   padding: 0 3%;
   height: 100px;
   background-color:#E9E9E9;
@@ -95,3 +56,21 @@ const ButtonUI = styled.button`
     ;
   }
 `;
+
+export default function NavBarLogIn({
+  onClick = () => {},
+}){
+  return (
+    <NavbarUI>
+      <Logo src="./logo.png" onClick={onClick} style={{ width: 80 }}></Logo>
+      <Navigation>
+       <LinkUI onClick={onClick}>Dashboard</LinkUI>
+       <LinkUI onClick={onClick}>ViewData</LinkUI>
+       <LinkUI onClick={onClick}>Subaccounts</LinkUI>
+       <ButtonUI onClick={onClick}> Login</ButtonUI>
+       </Navigation>
+    </NavbarUI>
+  );
+}
+
+
