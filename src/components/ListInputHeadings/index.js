@@ -1,9 +1,10 @@
+import * as React from 'react';
 import styled from "styled-components";
 
 
 const Cont = styled.div`
     width:913px;
-    height: 20px;
+    height: 100px;
     display:flex;
     justify-content: space-around;
 `;
