@@ -26,9 +26,12 @@ export default function EntriesList({ selectEntry, sources, items }) {
   useEffect(() => {
     (async () => {
       try {
-        setToday(dateToYMD(todayObj));
-        setEndDate(dateToYMD(todayObj));
-        let [entries] = await Promise.all([getListOfEntries()]); // returns new promise with all data
+        const todayDate = dateToYMD(todayObj);
+        setToday(todayDate);
+        setEndDate(todayDate);
+        let [entries] = await Promise.all([
+          getEntriesByDateRange('2020-01-01', todayDate),
+        ]); // returns new promise with all data
         setEntries(entries || []);
         setFilteredEntries(entries || []);
         console.log({ sources });
@@ -36,15 +39,51 @@ export default function EntriesList({ selectEntry, sources, items }) {
     })();
   }, []);
 
+  useEffect(() => {
+    (async () => {
+      try {
+        let [entriesDateRange] = await Promise.all([
+          getEntriesByDateRange(startDate, endDate),
+        ]);
+        setEntries(entriesDateRange);
+        setFilteredEntries(entries || []);
+      } catch {}
+    })();
+  }, [startDate, endDate]);
+
+  // const dateRangeFilter = () => {
+  //   console.log('start date: ', startDate);
+  //   console.log('end date: ', endDate);
+  //   if (startDate && endDate) {
+  //     // let filtered = entries.filter((entry) => {
+  //     //   if (entry['entry_date'] > startDate && entry['entry_date'] < endDate) {
+  //     //     return entry;
+  //     //   }
+  //     // });
+  //     //-----
+  //     // (async () => {
+  //     //   try {
+  //     //     let [entriesDateRange] = await Promise.all([
+  //     //       getEntriesByDateRange(startDate, endDate),
+  //     //     ]);
+  //     //     setEntries(entriesDateRange);
+  //     //   } catch {}
+  //     // })();
+  //   } else {
+  //     setEntries(entries);
+  //   }
+  // };
+
   const dateRangeFilter = () => {
     console.log('start date: ', startDate);
     console.log('end date: ', endDate);
     if (startDate && endDate) {
-      // let filtered = entries.filter((entry) => {
+      // let filtered = filteredEntries.filter((entry) => {
       //   if (entry['entry_date'] > startDate && entry['entry_date'] < endDate) {
       //     return entry;
       //   }
       // });
+
       (async () => {
         try {
           let [entriesDateRange] = await Promise.all([
@@ -54,7 +93,7 @@ export default function EntriesList({ selectEntry, sources, items }) {
         } catch {}
       })();
     } else {
-      setEntries(entries);
+      setFilteredEntries(entries);
     }
   };
 
@@ -86,25 +125,6 @@ export default function EntriesList({ selectEntry, sources, items }) {
 
   return (
     <>
-      Filter by source:
-      <select onChange={(e) => selectSource(e.target.value)}>
-        <option value="all">All</option>
-        {sources.map((source, key) => (
-          <option key={key} value={source.source_id}>
-            {source.name}
-          </option>
-        ))}
-      </select>
-      Filter by item:
-      <select onChange={(e) => selectItem(e.target.value)}>
-        <option value="all">All</option>
-        {items.map((item, key) => (
-          <option key={key} value={item.item_id}>
-            {item.name}
-          </option>
-        ))}
-      </select>
-      <br></br>
       Filter by Date Range:
       <label for="startDate">Start Date</label>
       <input
@@ -129,6 +149,25 @@ export default function EntriesList({ selectEntry, sources, items }) {
           dateRangeFilter();
         }}
       />
+      <br></br>
+      Filter by source:
+      <select onChange={(e) => selectSource(e.target.value)}>
+        <option value="all">All</option>
+        {sources.map((source, key) => (
+          <option key={key} value={source.source_id}>
+            {source.name}
+          </option>
+        ))}
+      </select>
+      Filter by item:
+      <select onChange={(e) => selectItem(e.target.value)}>
+        <option value="all">All</option>
+        {items.map((item, key) => (
+          <option key={key} value={item.item_id}>
+            {item.name}
+          </option>
+        ))}
+      </select>
       <table>
         <thead>
           <tr>
@@ -139,23 +178,27 @@ export default function EntriesList({ selectEntry, sources, items }) {
           </tr>
         </thead>
         <tbody>
-          {filteredEntries.map((entry, index) => (
-            <tr key={index}>
-              <td> {entry.entry_date} </td>
-              <td> {entry.source_name}</td>
-              <td> {entry.item_name} </td>
-              <td> {entry.entry_weight} kg </td>
-              <td>
-                <button onClick={() => selectEntry(entry, 'edit')}>Edit</button>
-              </td>
+          {filteredEntries
+            ? filteredEntries.map((entry, index) => (
+                <tr key={index}>
+                  <td> {entry.entry_date} </td>
+                  <td> {entry.source_name}</td>
+                  <td> {entry.item_name} </td>
+                  <td> {entry.entry_weight} kg </td>
+                  <td>
+                    <button onClick={() => selectEntry(entry, 'edit')}>
+                      Edit
+                    </button>
+                  </td>
 
-              <td>
-                <button onClick={() => selectEntry(entry, 'delete')}>
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
+                  <td>
+                    <button onClick={() => selectEntry(entry, 'delete')}>
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))
+            : null}
         </tbody>
       </table>
     </>
