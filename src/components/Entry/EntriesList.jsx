@@ -147,7 +147,7 @@ export default function EntriesList({ selectEntry, sources, items }) {
         type="date"
         name="startDate"
         id="startDate"
-        value={defaultStart}
+        value={startDate}
         onChange={(e) => {
           setStartDate(e.target.value);
           // dateRangeFilter();
