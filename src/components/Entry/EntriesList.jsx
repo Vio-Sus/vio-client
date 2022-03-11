@@ -30,8 +30,8 @@ export default function EntriesList({ selectEntry, sources, items }) {
   //     setEntries(result);
   //   });
   // }, []);
-    const todayDate = dateToYMD(todayObj);
-    const defaultStartDate = dateToYMD(todayMinus100);
+  const todayDate = dateToYMD(todayObj);
+  const defaultStartDate = dateToYMD(todayMinus100);
   useEffect(() => {
     (async () => {
       try {
@@ -71,32 +71,6 @@ export default function EntriesList({ selectEntry, sources, items }) {
       }
     })();
   }, [startDate, endDate]);
-
-  const selectSource = (sourceId) => {
-    if (sourceId === 'all') {
-      setFilteredEntries(entries);
-    } else {
-      let filtered = entries.filter((entry) => {
-        if (entry['source_id'] === +sourceId) {
-          return entry;
-        }
-      });
-      setFilteredEntries(filtered);
-    }
-  };
-
-  const selectItem = (itemId) => {
-    if (itemId === 'all') {
-      setFilteredEntries(entries);
-    } else {
-      let filtered = entries.filter((entry) => {
-        if (entry['item_id'] === +itemId) {
-          return entry;
-        }
-      });
-      setFilteredEntries(filtered);
-    }
-  };
 
   const updateFilter = () => {
     let itemSelection = document.getElementById('itemSelection').value;
