@@ -76,7 +76,7 @@ const ViewDataPage = ({ sources, items }) => {
           items={items}
         />
       )}
-      <Summary startDate={startDate} endDate={endDate} />
+      {/* <Summary startDate={startDate} endDate={endDate} /> */}
       {/* <Summary startDate={'2022-01-01'} endDate={'2022-03-10'} /> */}
     </>
   );
