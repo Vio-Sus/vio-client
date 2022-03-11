@@ -4,8 +4,8 @@ import { getListOfEntries, getEntriesByDateRange } from '../../network';
 export default function EntriesList({ selectEntry, sources, items }) {
   const [entries, setEntries] = useState([]);
   const [filteredEntries, setFilteredEntries] = useState([]);
-  const [itemFilter, setItemfilter] = useState('');
-  const [sourceFilter, setSourcefilter] = useState('');
+  // const [itemFilter, setItemfilter] = useState('');
+  // const [sourceFilter, setSourcefilter] = useState('');
 
   //setting up dates
   const [startDate, setStartDate] = useState([]);
@@ -141,25 +141,39 @@ export default function EntriesList({ selectEntry, sources, items }) {
     }
   };
 
-  const selectFilter = (type, filterId) => {
-    if (type == 'source_id') {
-      setSourcefilter(filterId);
-    } else {
-      setItemfilter(filterId);
-    }
-    console.log(sourceFilter + 'sourceFilter');
-    console.log(itemFilter + 'itemfilter');
-    let filtered = entries.filter((entry) => {
-      if (entry['source_id'] === +sourceFilter) {
-        console.log(`source stuff ${entry['item_id']} is ${+sourceFilter}`);
-        if (entry['item_id'] === +itemFilter) {
-          console.log(`item stuff ${entry['item_id']} is ${+itemFilter}`);
+  const updateFilter = () => {
+    let itemSelection = document.getElementById('itemSelection').value;
+    let sourceSelection = document.getElementById('sourceSelection').value;
 
+    if (sourceSelection === 'allSources' && itemSelection === 'allItems') {
+      setFilteredEntries(entries);
+    } else if (sourceSelection === 'allSources') {
+      let filtered = entries.filter((entry) => {
+        if (entry['item_id'] === +itemSelection) {
           return entry;
         }
-      }
-    });
-    setFilteredEntries(filtered);
+      });
+      setFilteredEntries(filtered);
+    } else if (itemSelection === 'allItems') {
+      let filtered = entries.filter((entry) => {
+        if (entry['source_id'] === +sourceSelection) {
+          return entry;
+        }
+      });
+      setFilteredEntries(filtered);
+    } else {
+      let filtered = entries.filter((entry) => {
+        if (entry['source_id'] === +sourceSelection) {
+          return entry;
+        }
+      });
+      filtered = filtered.filter((entry) => {
+        if (entry['item_id'] === +itemSelection) {
+          return entry;
+        }
+      });
+      setFilteredEntries(filtered);
+    }
   };
 
   return (
@@ -190,7 +204,7 @@ export default function EntriesList({ selectEntry, sources, items }) {
       />
       <br></br>
       Filter by source:
-      <select onChange={(e) => selectFilter('source_id', e.target.value)}>
+      <select id="sourceSelection" onChange={(e) => updateFilter()}>
         <option value="allSources">All</option>
         {sources.map((source, key) => (
           <option key={key} value={source.source_id}>
@@ -199,7 +213,7 @@ export default function EntriesList({ selectEntry, sources, items }) {
         ))}
       </select>
       Filter by item:
-      <select onChange={(e) => selectFilter('item_id', e.target.value)}>
+      <select id="itemSelection" onChange={(e) => updateFilter()}>
         <option value="allItems">All</option>
         {items.map((item, key) => (
           <option key={key} value={item.item_id}>
