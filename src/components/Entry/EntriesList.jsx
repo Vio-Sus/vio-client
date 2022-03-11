@@ -5,6 +5,8 @@ import Summary from '../Summary/Summary';
 export default function EntriesList({ selectEntry, sources, items }) {
   const [entries, setEntries] = useState([]);
   const [filteredEntries, setFilteredEntries] = useState([]);
+  // const [itemFilter, setItemfilter] = useState('');
+  // const [sourceFilter, setSourcefilter] = useState('');
 
   //setting up dates
   const [startDate, setStartDate] = useState('');
@@ -28,8 +30,8 @@ export default function EntriesList({ selectEntry, sources, items }) {
   //     setEntries(result);
   //   });
   // }, []);
-    const todayDate = dateToYMD(todayObj);
-    const defaultStartDate = dateToYMD(todayMinus100);
+  const todayDate = dateToYMD(todayObj);
+  const defaultStartDate = dateToYMD(todayMinus100);
   useEffect(() => {
     (async () => {
       try {
@@ -70,25 +72,34 @@ export default function EntriesList({ selectEntry, sources, items }) {
     })();
   }, [startDate, endDate]);
 
-  const selectSource = (sourceId) => {
-    if (sourceId === 'all') {
+  const updateFilter = () => {
+    let itemSelection = document.getElementById('itemSelection').value;
+    let sourceSelection = document.getElementById('sourceSelection').value;
+
+    if (sourceSelection === 'allSources' && itemSelection === 'allItems') {
       setFilteredEntries(entries);
-    } else {
+    } else if (sourceSelection === 'allSources') {
       let filtered = entries.filter((entry) => {
-        if (entry['source_id'] === +sourceId) {
+        if (entry['item_id'] === +itemSelection) {
           return entry;
         }
       });
       setFilteredEntries(filtered);
-    }
-  };
-
-  const selectItem = (itemId) => {
-    if (itemId === 'all') {
-      setFilteredEntries(entries);
+    } else if (itemSelection === 'allItems') {
+      let filtered = entries.filter((entry) => {
+        if (entry['source_id'] === +sourceSelection) {
+          return entry;
+        }
+      });
+      setFilteredEntries(filtered);
     } else {
       let filtered = entries.filter((entry) => {
-        if (entry['item_id'] === +itemId) {
+        if (entry['source_id'] === +sourceSelection) {
+          return entry;
+        }
+      });
+      filtered = filtered.filter((entry) => {
+        if (entry['item_id'] === +itemSelection) {
           return entry;
         }
       });
@@ -124,8 +135,8 @@ export default function EntriesList({ selectEntry, sources, items }) {
       />
       <br></br>
       Filter by source:
-      <select onChange={(e) => selectSource(e.target.value)}>
-        <option value="all">All</option>
+      <select id="sourceSelection" onChange={(e) => updateFilter()}>
+        <option value="allSources">All</option>
         {sources.map((source, key) => (
           <option key={key} value={source.source_id}>
             {source.name}
@@ -133,8 +144,8 @@ export default function EntriesList({ selectEntry, sources, items }) {
         ))}
       </select>
       Filter by item:
-      <select onChange={(e) => selectItem(e.target.value)}>
-        <option value="all">All</option>
+      <select id="itemSelection" onChange={(e) => updateFilter()}>
+        <option value="allItems">All</option>
         {items.map((item, key) => (
           <option key={key} value={item.item_id}>
             {item.name}
