@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { getListOfEntries, getEntriesByDateRange } from '../../network';
+import Summary from '../Summary/Summary';
 
 export default function EntriesList({ selectEntry, sources, items }) {
   const [entries, setEntries] = useState([]);
   const [filteredEntries, setFilteredEntries] = useState([]);
 
   //setting up dates
-  const [startDate, setStartDate] = useState([]);
-  const [endDate, setEndDate] = useState([]);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
   const [today, setToday] = useState([]);
   const [defaultStart, setDefaultStart] = useState([]);
 
@@ -27,15 +28,17 @@ export default function EntriesList({ selectEntry, sources, items }) {
   //     setEntries(result);
   //   });
   // }, []);
+    const todayDate = dateToYMD(todayObj);
+    const defaultStartDate = dateToYMD(todayMinus100);
   useEffect(() => {
     (async () => {
       try {
         //set up dates for date input
-        const todayDate = dateToYMD(todayObj);
-        const defaultStartDate = dateToYMD(todayMinus100);
+        // const todayDate = dateToYMD(todayObj);
+        // const defaultStartDate = dateToYMD(todayMinus100);
         setToday(todayDate);
         setDefaultStart(defaultStartDate);
-        setStartDate(defaultStart);
+        setStartDate(defaultStartDate);
         setEndDate(todayDate);
 
         let [entries] = await Promise.all([
@@ -57,61 +60,15 @@ export default function EntriesList({ selectEntry, sources, items }) {
             getEntriesByDateRange(startDate, endDate),
           ]);
           setEntries(entriesDateRange);
-          setFilteredEntries(entries || []);
+          setFilteredEntries(entriesDateRange || []);
         } catch {}
       } else {
         let [entriesDateRange] = await Promise.all([getListOfEntries()]);
         setEntries(entriesDateRange);
-        setFilteredEntries(entries || []);
+        setFilteredEntries(entriesDateRange || []);
       }
     })();
   }, [startDate, endDate]);
-
-  // const dateRangeFilter = () => {
-  //   console.log('start date: ', startDate);
-  //   console.log('end date: ', endDate);
-  //   if (startDate && endDate) {
-  //     // let filtered = entries.filter((entry) => {
-  //     //   if (entry['entry_date'] > startDate && entry['entry_date'] < endDate) {
-  //     //     return entry;
-  //     //   }
-  //     // });
-  //     //-----
-  //     // (async () => {
-  //     //   try {
-  //     //     let [entriesDateRange] = await Promise.all([
-  //     //       getEntriesByDateRange(startDate, endDate),
-  //     //     ]);
-  //     //     setEntries(entriesDateRange);
-  //     //   } catch {}
-  //     // })();
-  //   } else {
-  //     setEntries(entries);
-  //   }
-  // };
-
-  // const dateRangeFilter = () => {
-  //   console.log('start date: ', startDate);
-  //   console.log('end date: ', endDate);
-  //   if (startDate && endDate) {
-  //     // let filtered = filteredEntries.filter((entry) => {
-  //     //   if (entry['entry_date'] > startDate && entry['entry_date'] < endDate) {
-  //     //     return entry;
-  //     //   }
-  //     // });
-
-  //     (async () => {
-  //       try {
-  //         let [entriesDateRange] = await Promise.all([
-  //           getEntriesByDateRange(startDate, endDate),
-  //         ]);
-  //         setEntries(entriesDateRange);
-  //       } catch {}
-  //     })();
-  //   } else {
-  //     setFilteredEntries(entries);
-  //   }
-  // };
 
   const selectSource = (sourceId) => {
     if (sourceId === 'all') {
@@ -147,7 +104,7 @@ export default function EntriesList({ selectEntry, sources, items }) {
         type="date"
         name="startDate"
         id="startDate"
-        value={defaultStart}
+        value={startDate}
         onChange={(e) => {
           setStartDate(e.target.value);
           // dateRangeFilter();
@@ -217,6 +174,8 @@ export default function EntriesList({ selectEntry, sources, items }) {
             : null}
         </tbody>
       </table>
+      {/* <Summary startDate={'2022-01-01'} endDate={'2022-03-10'} /> */}
+      {/* <Summary startDate={startDate} endDate={endDate} /> */}
     </>
   );
 }

@@ -23,6 +23,7 @@ export async function getListOfEntries() {
   return (await axios.get('/api/entries')).data;
 }
 export async function getEntriesByDateRange(startDate, endDate) {
+  console.log('getEntriesByDateRange-------------');
   return (await axios.get(`/api/entries/${startDate}/${endDate}`)).data;
 }
 export async function postEntries(formContent) {
@@ -44,4 +45,9 @@ export async function postSource(formContent) {
 }
 export async function updateSource(sourceId, formContent) {
   return await axios.put(`/api/sources/${sourceId}`, { data: formContent });
+}
+
+// totals
+export async function getTotalWeights(startDate, endDate) {
+  return (await axios.get(`/api/totals/${startDate}/${endDate}`)).data;
 }
