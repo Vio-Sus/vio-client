@@ -11,6 +11,8 @@ const ViewDataPage = ({ sources, items }) => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
 
+  //-------Loading screen-----------
+
   console.log(`i am sources from view data ${JSON.stringify({ sources })}`);
   const selectEntry = (entry, method) => {
     console.log('Entry selected: ', entry);
@@ -35,50 +37,54 @@ const ViewDataPage = ({ sources, items }) => {
     return `${yyyy}-${mm}-${dd}`;
   };
 
+  const todayObj = new Date(new Date().toString());
+  const todayMinus100 = new Date(new Date().setDate(todayObj.getDate() - 100));
+  //set up dates for date input
+  const todayDate = dateToYMD(todayObj);
+  const defaultStartDate = dateToYMD(todayMinus100);
+
   useEffect(() => {
     (async () => {
       try {
-        const todayObj = new Date(new Date().toString());
-        const todayMinus100 = new Date(
-          new Date().setDate(todayObj.getDate() - 100)
-        );
-        //set up dates for date input
-        const todayDate = dateToYMD(todayObj);
-        const defaultStartDate = dateToYMD(todayMinus100);
+        await setStartDate(defaultStartDate);
+        await setEndDate(todayDate);
 
-        setStartDate(defaultStartDate);
-        setEndDate(todayDate);
+        console.log('startDate: ', startDate);
+        console.log('endDate: ', endDate);
       } catch {}
     })();
   }, []);
 
   return (
-    <>
-      <h1>View Data</h1>
-      <EntriesList
-        selectEntry={selectEntry}
-        sources={sources}
-        items={items}
-      ></EntriesList>
-      {isEditing && (
-        <EditForm
-          entry={selectedEntry}
-          setIsEditing={setIsEditing}
+    startDate &&
+    endDate && (
+      <>
+        <h1>View Data</h1>
+        <EntriesList
+          selectEntry={selectEntry}
           sources={sources}
           items={items}
-        />
-      )}
-      {isDeleting && (
-        <DeleteConfirmation
-          entry={selectedEntry}
-          setIsDeleting={setIsDeleting}
-          sources={sources}
-          items={items}
-        />
-      )}
-      {/* <Summary startDate={startDate} endDate={endDate} /> */}
-      {/* <Summary startDate={'2022-01-01'} endDate={'2022-03-10'} /> */}
-    </>
+        ></EntriesList>
+        {isEditing && (
+          <EditForm
+            entry={selectedEntry}
+            setIsEditing={setIsEditing}
+            sources={sources}
+            items={items}
+          />
+        )}
+        {isDeleting && (
+          <DeleteConfirmation
+            entry={selectedEntry}
+            setIsDeleting={setIsDeleting}
+            sources={sources}
+            items={items}
+          />
+        )}
+        <Summary startDate={startDate} endDate={endDate} />
+        {/* <Summary startDate={'2022-01-01'} endDate={'2022-03-10'} /> */}
+      </>
+    )
   );
 };
 

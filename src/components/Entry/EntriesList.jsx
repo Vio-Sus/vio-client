@@ -116,6 +116,7 @@ export default function EntriesList({ selectEntry, sources, items }) {
         name="startDate"
         id="startDate"
         value={startDate}
+        max={today}
         onChange={(e) => {
           setStartDate(e.target.value);
           // dateRangeFilter();
