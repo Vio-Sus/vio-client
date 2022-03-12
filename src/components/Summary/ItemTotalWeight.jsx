@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { calculateTotalsByItem } from '../../networkHelpers';
+import { calculateTotalsByItem } from '../../common/networkHelpers';
 
 export default function ItemTotalWeight({ totalWeightsList }) {
   const [itemWeights, setItemWeights] = useState([]);

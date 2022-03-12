@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getListOfEntries, getEntriesByDateRange } from '../../network';
+import { getListOfEntries, getEntriesByDateRange } from '../../common/network';
 import Summary from '../Summary/Summary';
 
 export default function EntriesList({ selectEntry, sources, items }) {

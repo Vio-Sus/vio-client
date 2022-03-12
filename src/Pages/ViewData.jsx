@@ -3,6 +3,7 @@ import DeleteConfirmation from '../components/Entry/DeleteEntryConfirmation';
 import EditForm from '../components/Entry/EditEntryForm';
 import { useEffect, useState } from 'react';
 import Summary from '../components/Summary/Summary';
+import { dateToYMD } from '../common/date';
 
 const ViewDataPage = ({ sources, items }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -13,7 +14,6 @@ const ViewDataPage = ({ sources, items }) => {
 
   //-------Loading screen-----------
 
-  console.log(`i am sources from view data ${JSON.stringify({ sources })}`);
   const selectEntry = (entry, method) => {
     console.log('Entry selected: ', entry);
     setSelectedEntry(entry);
@@ -29,12 +29,6 @@ const ViewDataPage = ({ sources, items }) => {
       default:
         return;
     }
-  };
-  const dateToYMD = (date) => {
-    let yyyy = date.getFullYear();
-    let mm = (date.getMonth() + 1).toString().padStart(2, '0');
-    let dd = date.getDate().toString().padStart(2, '0');
-    return `${yyyy}-${mm}-${dd}`;
   };
 
   const todayObj = new Date(new Date().toString());
