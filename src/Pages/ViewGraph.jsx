@@ -129,7 +129,7 @@ const ViewGraphPage = () => {
   return (
     <>
       <h1>Graph</h1>
-      {xAxisLabels ? (
+      {xAxisLabels && datasets ? (
         <LineGraph
           sourceName={'source 1'}
           xAxisLabels={xAxisLabels}
