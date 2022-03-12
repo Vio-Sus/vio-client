@@ -9,6 +9,7 @@ import NewEntryPage from './Pages/NewEntry';
 import ViewDataPage from './Pages/ViewData';
 import ViewSourcePage from './Pages/ViewSource';
 import ViewItemPage from './Pages/ViewItem';
+import ViewGraphPage from './Pages/ViewGraph';
 
 function App() {
   const [sources, setSources] = useState([]);
@@ -58,6 +59,7 @@ function App() {
                 path="viewItem"
                 element={<ViewItemPage items={items} />}
               ></Route>
+              <Route path="viewGraph" element={<ViewGraphPage />}></Route>
             </Routes>
           </BrowserRouter>
         </div>
