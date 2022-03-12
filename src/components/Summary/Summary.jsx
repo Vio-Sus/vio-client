@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getTotalWeights } from '../../network';
+import { getTotalWeights } from '../../common/network';
 import ItemTotalWeight from './ItemTotalWeight';
 import SourceItemWeight from './SourceItemWeight';
 

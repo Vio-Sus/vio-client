@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getListOfEntries, getEntriesByDateRange } from '../../network';
+import { getListOfEntries, getEntriesByDateRange } from '../../common/network';
 import Summary from '../Summary/Summary';
 
 export default function EntriesList({ selectEntry, sources, items }) {
@@ -116,6 +116,7 @@ export default function EntriesList({ selectEntry, sources, items }) {
         name="startDate"
         id="startDate"
         value={startDate}
+        max={today}
         onChange={(e) => {
           setStartDate(e.target.value);
           // dateRangeFilter();

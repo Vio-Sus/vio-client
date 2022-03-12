@@ -1,6 +1,6 @@
 import './App.css';
 import { useEffect, useState } from 'react';
-import { getSources, getItems, getLoggedInUser } from './network';
+import { getSources, getItems, getLoggedInUser } from './common/network';
 import LoginButton from './components/LoginButton';
 import NavBar from './components/NavBar';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
