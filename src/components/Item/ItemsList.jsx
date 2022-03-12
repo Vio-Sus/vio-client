@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getItems } from '../../network';
+import { getItems } from '../../common/network';
 
 export default function ItemList({ selectItem }) {
   const [items, setItems] = useState([]);

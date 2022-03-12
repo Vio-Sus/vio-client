@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { postSource } from '../../network';
+import { postSource } from '../../common/network';
 
 export default function AddSourceForm({ setIsAdding }) {
   const [name, setName] = useState('');
