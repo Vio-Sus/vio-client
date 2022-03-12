@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { generateXAxis } from '../common/chartHelpers';
 import LineGraph from '../components/Graph/LineGraph';
 
 const ViewGraphPage = () => {
@@ -125,6 +126,8 @@ const ViewGraphPage = () => {
     // need to have sums and the date
     // parse the response
     // set x AxisLabels
+    let labels = generateXAxis('2022-03-01', '2022-03-11');
+    setXAxisLabels(labels);
   }, []);
   return (
     <>
