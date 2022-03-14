@@ -1,23 +1,24 @@
 import { useState } from 'react';
 import SourcesList from '../components/Source/SourcesList';
 import EditSourceForm from '../components/Source/EditSourceForm';
-import AddSourceForm from '../components/Source/AddSourceForm';
+// import AddSourceForm from '../components/Source/AddSourceForm';
+import AddSourceModal from '../components/Source/AddSourceModal';
 
 const ViewSourcePage = ({ sources, items }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [isAdding, setIsAdding] = useState(false);
+  const [isAddingSource, setIsAddingSource] = useState(false);
   const [selectedSource, setSelectedSource] = useState(null);
 
   const selectSource = (source) => {
     console.log('Source selected: ', source);
     setSelectedSource(source);
     setIsEditing(true);
-    setIsAdding(false);
+    setIsAddingSource(false);
     return;
   };
 
   const addSource = () => {
-    setIsAdding(true);
+    setIsAddingSource(true);
     setIsEditing(false);
   };
 
@@ -30,10 +31,12 @@ const ViewSourcePage = ({ sources, items }) => {
         <EditSourceForm
           source={selectedSource}
           setIsEditing={setIsEditing}
-          setIsAdding={setIsAdding}
+          setIsAddingSource={setIsAddingSource}
         />
       )}
-      {isAdding && <AddSourceForm setIsAdding={setIsAdding} />}
+      {isAddingSource && (
+        <AddSourceModal setIsAddingSource={setIsAddingSource} />
+      )}
     </>
   );
 };

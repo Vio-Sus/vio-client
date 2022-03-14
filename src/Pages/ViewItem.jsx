@@ -1,23 +1,24 @@
 import { useState } from 'react';
 import ItemsList from '../components/Item/ItemsList';
 import EditItemForm from '../components/Item/EditItemForm';
-import AddItemForm from '../components/Item/AddItemForm';
+// import AddItemForm from '../components/Item/AddItemForm';
+import AddItemModal from '../components/Item/AddItemModal';
 
 const ViewItemPage = ({ items }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [isAdding, setIsAdding] = useState(false);
+  const [isAddingItem, setIsAddingItem] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
   const selectItem = (item) => {
     console.log('Item selected: ', item);
     setSelectedItem(item);
     setIsEditing(true);
-    setIsAdding(false);
+    setIsAddingItem(false);
     return;
   };
 
   const addItem = () => {
-    setIsAdding(true);
+    setIsAddingItem(true);
     setIsEditing(false);
   };
 
@@ -30,10 +31,10 @@ const ViewItemPage = ({ items }) => {
         <EditItemForm
           item={selectedItem}
           setIsEditing={setIsEditing}
-          setIsAdding={setIsAdding}
+          setIsAddingItem={setIsAddingItem}
         />
       )}
-      {isAdding && <AddItemForm setIsAdding={setIsAdding} />}
+      {isAddingItem && <AddItemModal setIsAddingItem={setIsAddingItem} />}
     </>
   );
 };
