@@ -10,6 +10,7 @@ import ViewDataPage from './Pages/ViewData';
 import ViewSourcePage from './Pages/ViewSource';
 import ViewItemPage from './Pages/ViewItem';
 import ViewGraphPage from './Pages/ViewGraph';
+import BluetoothPage from './Pages/Bluetooth';
 
 function App() {
   const [sources, setSources] = useState([]);
@@ -60,6 +61,7 @@ function App() {
                 element={<ViewItemPage items={items} />}
               ></Route>
               <Route path="viewGraph" element={<ViewGraphPage />}></Route>
+              <Route path="bluetooth" element={<BluetoothPage />}></Route>
             </Routes>
           </BrowserRouter>
         </div>
