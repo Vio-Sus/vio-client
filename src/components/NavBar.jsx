@@ -24,6 +24,9 @@ const NavBar = ({ user }) => {
         <li>
           <a href="viewGraph">View Graph</a>
         </li>
+        <li>
+          <a href="bluetooth">Bluetooth</a>
+        </li>
       </ul>
     </>
   );
