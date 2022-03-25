@@ -147,8 +147,8 @@ const ListInput = ({
     totalweight = "369.23kg",
     editSrc = "/edit.svg",
     deleteSrc = "/delete.svg",
-
-
+    onClickEdit = () => {},
+    onClickDelete = () => {},
 
 }) => {
     return <Cont bgcolor={bgcolor}>
@@ -186,8 +186,8 @@ const ListInput = ({
         </ItemStatusCont>
 
         <EditCont>
-                <EditIcon src={editSrc}></EditIcon>
-                <DeleteIcon src={deleteSrc}></DeleteIcon>
+                <EditIcon onClick={ onClickEdit } src={editSrc}></EditIcon>
+                <DeleteIcon onClick={ onClickDelete } src={deleteSrc}></DeleteIcon>
         </EditCont>
         
     </Cont>
