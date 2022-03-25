@@ -58,7 +58,7 @@ function App() {
                 path="viewItem"
                 element={<ViewItemPage items={items} />}
               ></Route>
-              <Route path="bt" element={<BluetoothPage />}></Route>
+              <Route path="bluetooth" element={<BluetoothPage />}></Route>
             </Routes>
           </BrowserRouter>
         </div>
