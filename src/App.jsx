@@ -61,7 +61,10 @@ function App() {
                 element={<ViewItemPage items={items} />}
               ></Route>
               <Route path="viewGraph" element={<ViewGraphPage />}></Route>
-              <Route path="bluetooth" element={<BluetoothPage />}></Route>
+              <Route
+                path="bluetooth"
+                element={<BluetoothPage sources={sources} items={items} />}
+              ></Route>
             </Routes>
           </BrowserRouter>
         </div>
