@@ -3,6 +3,10 @@ import { generateXAxis } from '../common/chartHelpers';
 import LineGraph from '../components/Graph/LineGraph';
 
 const ViewGraphPage = () => {
+
+  const [startDate, setStartDate] = useState('2022-03-01');
+  const [endDate, setEndDate] = useState('2022-03-11');
+
   const [xAxisLabels, setXAxisLabels] = useState([
     'January',
     'February',
@@ -15,16 +19,16 @@ const ViewGraphPage = () => {
 
   const [datasets, setDatasets] = useState([
     {
-      label: 'Dataset 1',
-      data: [1, 2, 3, 4, 5, 6, 7, 8],
+      label: 'Dataset 1', // item name retrieved from api
+      data: [1, 2, 3, 4, 5, 6, 7, 8], // weights retrieved from api
       borderColor: 'rgba(255, 99, 132, 0.5)',
       backgroundColor: 'rgba(255, 99, 132, 0.5)',
     },
     {
       label: 'Dataset 2',
       data: [1, 2, 3, 4, 5, 6, 7, 8],
-      // borderColor: 'rgb(53, 162, 235)',
-      // backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      borderColor: 'rgb(53, 162, 235)',
+      backgroundColor: 'rgba(53, 162, 235, 0.5)',
     },
   ]);
 
@@ -126,7 +130,7 @@ const ViewGraphPage = () => {
     // need to have sums and the date
     // parse the response
     // set x AxisLabels
-    let labels = generateXAxis('2022-03-01', '2022-03-11');
+    let labels = generateXAxis(startDate, endDate);
     setXAxisLabels(labels);
   }, []);
   return (
