@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getListOfEntries, getEntriesByDateRange } from '../../common/network';
 import Summary from '../Summary/Summary';
+import DateFilter from '../filter/DateFilter';
 
 export default function EntriesList({ selectEntry, sources, items }) {
   const [entries, setEntries] = useState([]);
@@ -12,7 +13,6 @@ export default function EntriesList({ selectEntry, sources, items }) {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [today, setToday] = useState([]);
-  const [defaultStart, setDefaultStart] = useState([]);
 
   // grabbed from binibin-repo
   const dateToYMD = (date) => {
@@ -39,7 +39,6 @@ export default function EntriesList({ selectEntry, sources, items }) {
         // const todayDate = dateToYMD(todayObj);
         // const defaultStartDate = dateToYMD(todayMinus100);
         setToday(todayDate);
-        setDefaultStart(defaultStartDate);
         setStartDate(defaultStartDate);
         setEndDate(todayDate);
 
@@ -109,6 +108,19 @@ export default function EntriesList({ selectEntry, sources, items }) {
 
   return (
     <>
+      {/* {(startDate, endDate, today) && (
+        <DateFilter
+          startDate={startDate}
+          endDate={endDate}
+          today={today}
+          setStartDate={(e) => {
+            setStartDate(e.target.value);
+          }}
+          setEndDate={(e) => {
+            setEndDate(e.target.value);
+          }}
+        />
+      )}{' '} */}
       Filter by Date Range:
       <label for="startDate">Start Date</label>
       <input
