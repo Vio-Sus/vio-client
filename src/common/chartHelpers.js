@@ -81,3 +81,73 @@ export const loadChart = async (
 
   datasets.sort(compare);
 };
+
+/******
+// Things to do to make a dataset that looks like this for EVERY SOURCE:
+[
+  {
+    label: 'PAper Cups', // item name
+    data: [5.55, 5.00, 20.00], // weights
+    borderColor: 'rgba(255, 99, 132, 0.5)',
+    backgroundColor: 'rgba(255, 99, 132, 0.5)',
+  },
+  {
+    label: 'Coffee Chafs',
+    data: [1, 2, 3, 4, 5, 6, 7, 8],
+    borderColor: 'rgb(53, 162, 235)',
+    backgroundColor: 'rgba(53, 162, 235, 0.5)',
+  },
+];
+
+Graph component needs: label, data, rgba colour.
+
+1. Filter api result so info is separated by source name
+2. Filter result by itemName
+3. Set label as itemName
+4. Make an array of weights for each item
+
+****/
+export const filterBySource = (input) => {
+  let data = [];
+  if (input.length === 0) {
+    return [];
+  }
+  let items = [];
+  input.forEach((entry) => {
+    //loop items
+    // for (let i = 0; i < items.length; i++) {
+    // if items[i].itemName = entry.itemName
+    let item = items.find((item) => item.itemName === entry.itemName);
+    if (item) {
+      item.data.push(Number(entry.totalWeight));
+    } else {
+      // else items.push({ itemName: '', data: [] })
+      // then set item[i].data.push(entry.totalWeight)
+      items.push({
+        itemName: entry.itemName,
+        data: [Number(entry.totalWeight)],
+      });
+    }
+  });
+
+  let structure = [];
+
+  items.forEach((item) => {
+    structure.push({
+      label: item.itemName, // item name
+      data: item.data, // weights
+      borderColor: 'rgb(53, 162, 235)',
+      backgroundColor: 'rgba(53, 162, 235, 0.5)',
+    });
+  });
+
+  // input.forEach((item) => {
+  //   if (item.nam) {
+  //   }
+
+  //   data.push(Number(item.totalWeight));
+  // });
+
+  console.log(structure);
+  return structure;
+};
