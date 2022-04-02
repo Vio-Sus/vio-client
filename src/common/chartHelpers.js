@@ -108,40 +108,85 @@ Graph component needs: label, data, rgba colour.
 
 ****/
 export const generateDataset = (input, datesArray) => {
+  // let datesArray = [
+  //   '2022-01-28',
+  //   '2022-01-29',
+  //   '2022-01-30',
+  //   '2022-01-31',
+  //   '2022-02-01',
+  // ];
+  // console.log('datesArray', datesArray);
   // returns empty array if given empty array
   if (input.length === 0) {
     return [];
   }
-  let dataThing;
+  //dates array has all dates, no missing dates
+
   // datesArray.forEach((date, i) => {
-  //   // if date === input date, push input data
+  //   // if date === input date, push weight
+
   //   // else push comma (push null/undefined?)
   // });
+
   //if dates label doesnt have entry, push comma (empty array thingy)
   // data[0] = somethign
   // date[2] = something
   // [something,,something]
 
-  let items = []; // ['cafe 1', 'cafe2']
+  let items = [];
   input.forEach((entry) => {
-    // let smt = dates.find((date) => item.itemName === entry.itemName);
-    //loop items
-    // for (let i = 0; i < items.length; i++) {
-    // if items[i].itemName = entry.itemName
     let item = items.find((item) => item.itemName === entry.itemName);
     if (item) {
       item.data.push(Number(entry.totalWeight));
+      item.date.push(entry.date);
     } else {
       // else items.push({ itemName: '', data: [] })
       // then set item[i].data.push(entry.totalWeight)
       items.push({
         itemName: entry.itemName,
         data: [Number(entry.totalWeight)],
+        date: [entry.date],
       });
     }
   });
 
+  //   datesArray.forEach((date, i) => {
+  //   // let found = input.find((entry) => entry.date === date);
+  //   // if (found) {
+  //   // }
+  //     items.forEach((item, j) => {
+  //       if(item[j])
+  //     });
+  // });
+
   let structure = [];
+  // console.log('items', items);
+  // [
+  //   {
+  //     itemName: 'Paper Cups',
+  //     data: [5.55, 15.55, 5.55, 15.55],
+  //     date: ['2022-01-28', '2022-01-29', '2022-01-30', '2022-02-01'],
+  //   },
+  // ];
+
+  items.forEach((item) => {
+    let structureData = [];
+    let structureDate = [];
+    datesArray.forEach((date, i) => {
+      // // let found = item.find((item) => item.date === date);
+      // console.log('item.date', item.date[i]);
+      // console.log('comared to date', date);
+      // let found = item.date.find((item) => item.date === date);
+      item.date.forEach((d, j) => {
+        if (d == date) {
+          // structureData.push(item.data[i])
+          structureData[i] = item.data[j];
+          structureDate[i] = item.date[j];
+        }
+      });
+    });
+    item.data = structureData;
+  });
 
   items.forEach((item) => {
     structure.push({
@@ -172,9 +217,7 @@ export const filterEntriesBySource = (input) => {
     let source = Object.keys(sources);
 
     let found = source.find((key) => key === entry.sourceName);
-    console.log('source:', source);
-    console.log('entry.sourcename', entry.sourceName);
-    console.log('found: ', found);
+
     if (found) {
       sources[entry.sourceName] = [
         ...sources[entry.sourceName],

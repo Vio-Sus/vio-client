@@ -90,3 +90,11 @@ export const graphApi = [
     totalWeight: '1000.00',
   },
 ];
+
+export let datesArray = [
+  '2022-01-28',
+  '2022-01-29',
+  '2022-01-30',
+  '2022-01-31',
+  '2022-02-01',
+];

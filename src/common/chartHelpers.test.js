@@ -50,7 +50,7 @@ describe('make chart dataset', () => {
       {
         itemName: 'Paper Cups',
         sourceName: 'Cafe 1',
-        date: '2022-01-28',
+        date: '2022-01-29',
         totalWeight: '15.55',
       },
     ];
@@ -81,7 +81,7 @@ describe('make chart dataset', () => {
       {
         itemName: 'Coffee Chaff',
         sourceName: 'Cafe 1',
-        date: '2022-01-28',
+        date: '2022-01-29',
         totalWeight: '15.55',
       },
     ];
@@ -94,7 +94,7 @@ describe('make chart dataset', () => {
       },
       {
         label: 'Coffee Chaff', // item name
-        data: [15.55], // weights
+        data: [, 15.55], // weights
       },
     ];
 
@@ -110,31 +110,31 @@ describe('make chart dataset', () => {
       {
         itemName: 'Paper Cups',
         sourceName: 'Cafe 1',
-        date: '2022-03-03',
+        date: '2022-01-28',
         totalWeight: '5.00',
       },
       {
         itemName: 'Coffee Pods',
         sourceName: 'Cafe 1',
-        date: '2022-03-03',
+        date: '2022-01-28',
         totalWeight: '5.00',
       },
       {
         itemName: 'Coffee Chaffs',
         sourceName: 'Cafe 1',
-        date: '2022-03-03',
+        date: '2022-01-28',
         totalWeight: '5.00',
       },
       {
         itemName: 'Coffee Pods',
         sourceName: 'Cafe 1',
-        date: '2022-03-03',
+        date: '2022-01-29',
         totalWeight: '5.00',
       },
       {
         itemName: 'Paper Cups',
         sourceName: 'Cafe 1',
-        date: '2022-03-04',
+        date: '2022-01-29',
         totalWeight: '20.00',
       },
     ];
@@ -190,7 +190,7 @@ describe('make chart dataset', () => {
       },
     ];
 
-    let dates = [
+    let datesArray = [
       '2022-01-28',
       '2022-01-29',
       '2022-01-30',
@@ -208,7 +208,75 @@ describe('make chart dataset', () => {
 
     // test it
     expect(
-      generateDataset(input, dates).map((a) => ({
+      generateDataset(input, datesArray).map((a) => ({
+        label: a.label,
+        data: a.data,
+      }))
+    ).toEqual(expected);
+  });
+
+  test('given xAxis labels, multiple sources skipping dates', () => {
+    // define the input
+    let input = [
+      {
+        itemName: 'Paper Cups',
+        sourceName: 'Cafe 1',
+        date: '2022-01-28',
+        totalWeight: '5.55',
+      },
+      {
+        itemName: 'Paper Cups',
+        sourceName: 'Cafe 1',
+        date: '2022-01-29',
+        totalWeight: '15.55',
+      },
+      {
+        itemName: 'Paper Cups',
+        sourceName: 'Cafe 1',
+        date: '2022-01-30',
+        totalWeight: '5.55',
+      },
+      {
+        itemName: 'Paper Cups',
+        sourceName: 'Cafe 1',
+        date: '2022-02-01',
+        totalWeight: '15.55',
+      },
+      {
+        itemName: 'Paper Poop',
+        sourceName: 'Cafe 1',
+        date: '2022-01-28',
+        totalWeight: '15.55',
+      },
+      {
+        itemName: 'Paper Poop',
+        sourceName: 'Cafe 1',
+        date: '2022-01-30',
+        totalWeight: '5.55',
+      },
+      {
+        itemName: 'Paper Poop',
+        sourceName: 'Cafe 1',
+        date: '2022-01-31',
+        totalWeight: '15.55',
+      },
+    ];
+
+    // define the expected output
+    const expected = [
+      {
+        label: 'Paper Cups', // item name
+        data: [5.55, 15.55, 5.55, , 15.55], // weights
+      },
+      {
+        label: 'Paper Poop', // item name
+        data: [15.55, , 5.55, 15.55], // weights
+      },
+    ];
+
+    // test it
+    expect(
+      generateDataset(input).map((a) => ({
         label: a.label,
         data: a.data,
       }))
