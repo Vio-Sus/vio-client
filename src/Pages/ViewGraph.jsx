@@ -39,10 +39,23 @@ const ViewGraphPage = () => {
     // set x AxisLabels
     let labels = generateXAxis(startDate, endDate);
     setXAxisLabels(labels);
+    // make request for data from api
+    // parse data -> filter it by source
+    // make datasets to give to each graph
+    // set something
   }, []);
+
+  //  graphs.map((graph) => (
+  //    <LineGraph
+  //      sourceName={graph.source}
+  //      xAxisLabels={xAxisLabels}
+  //      datasets={graph.datasets}
+  //    />
+  //  ));
   return (
     <>
       <h1>Graph</h1>
+
       {xAxisLabels && datasets ? (
         <LineGraph
           sourceName={'source 1'}

@@ -107,13 +107,24 @@ Graph component needs: label, data, rgba colour.
 4. Make an array of weights for each item
 
 ****/
-export const filterBySource = (input) => {
-  let data = [];
+export const generateDataset = (input, datesArray) => {
+  // returns empty array if given empty array
   if (input.length === 0) {
     return [];
   }
-  let items = [];
+  let dataThing;
+  // datesArray.forEach((date, i) => {
+  //   // if date === input date, push input data
+  //   // else push comma (push null/undefined?)
+  // });
+  //if dates label doesnt have entry, push comma (empty array thingy)
+  // data[0] = somethign
+  // date[2] = something
+  // [something,,something]
+
+  let items = []; // ['cafe 1', 'cafe2']
   input.forEach((entry) => {
+    // let smt = dates.find((date) => item.itemName === entry.itemName);
     //loop items
     // for (let i = 0; i < items.length; i++) {
     // if items[i].itemName = entry.itemName
@@ -148,6 +159,42 @@ export const filterBySource = (input) => {
   //   data.push(Number(item.totalWeight));
   // });
 
-  console.log(structure);
   return structure;
+};
+
+// function that returns an array of objects for a given source
+export const filterEntriesBySource = (input) => {
+  let sources = {}; // ['cafe 1', 'cafe2']
+  input.forEach((entry) => {
+    // let source = sources.find(
+    //   (source) => source.sourceName === entry.sourceName
+    // );
+    let source = Object.keys(sources);
+
+    let found = source.find((key) => key === entry.sourceName);
+    console.log('source:', source);
+    console.log('entry.sourcename', entry.sourceName);
+    console.log('found: ', found);
+    if (found) {
+      sources[entry.sourceName] = [
+        ...sources[entry.sourceName],
+        {
+          itemName: entry.itemName,
+          date: entry.date,
+          totalWeight: entry.totalWeight,
+        },
+      ];
+    } else {
+      // else items.push({ itemName: '', data: [] })
+      // then set item[i].data.push(entry.totalWeight)
+      sources[entry.sourceName] = [
+        {
+          itemName: entry.itemName,
+          date: entry.date,
+          totalWeight: entry.totalWeight,
+        },
+      ];
+    }
+  });
+  return sources;
 };
