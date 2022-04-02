@@ -13,7 +13,6 @@ export default function EntriesList({ selectEntry, sources, items }) {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [today, setToday] = useState([]);
-  const [defaultStart, setDefaultStart] = useState([]);
 
   // grabbed from binibin-repo
   const dateToYMD = (date) => {
@@ -40,7 +39,6 @@ export default function EntriesList({ selectEntry, sources, items }) {
         // const todayDate = dateToYMD(todayObj);
         // const defaultStartDate = dateToYMD(todayMinus100);
         setToday(todayDate);
-        setDefaultStart(defaultStartDate);
         setStartDate(defaultStartDate);
         setEndDate(todayDate);
 
