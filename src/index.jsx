@@ -16,6 +16,7 @@ import NavBarLogin from './components/NavBarLogIn/index'
 import Footer from './components/Footer/index'
 import LogOut from './components/LogOut/index'
 import GraphRightSideKey from './components/GraphRightSideKey';
+import GraphLeftSideFilter from './components/GraphLeftSideFilter';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -34,6 +35,7 @@ ReactDOM.render(
     <Footer/>
     <LogOut/>
     <GraphRightSideKey/>
+    <GraphLeftSideFilter/>
     
 
 

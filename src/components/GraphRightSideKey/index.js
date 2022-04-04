@@ -8,14 +8,14 @@ const Cont = styled.div`
 `;
 
 const Dot = styled.div`
-    width: 14px;
-    height: 14px;
+    width: 10px;
+    height: 10px;
     background-color: ${props => props.bgColor};
     border-radius: 100px;
 `;
 
 const MaterialText = styled.text`
-    font-size: 12px;
+    font-size: 10px;
 `;
 
 const Row = styled.div`
@@ -34,6 +34,7 @@ const GraphRightSideKey = ({
             <Dot bgColor={bgcolor}/>
             <MaterialText>{text}</MaterialText>
             </Row>
+
         </Cont>
     );
 } 
