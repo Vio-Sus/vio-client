@@ -15,6 +15,7 @@ import DeleteEntryPopup from './components/DeleteEntryPopup/index'
 import NavBarLogin from './components/NavBarLogIn/index'
 import Footer from './components/Footer/index'
 import LogOut from './components/LogOut/index'
+import GraphRightSideKey from './components/GraphRightSideKey';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -32,6 +33,7 @@ ReactDOM.render(
     <NavBarLogin/>
     <Footer/>
     <LogOut/>
+    <GraphRightSideKey/>
     
 
 
