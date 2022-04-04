@@ -7,6 +7,7 @@ import reportWebVitals from './reportWebVitals';
 import ListInputHeadings from './components/ListInputHeadings';
 import DropDownOptions from './components/DropDownOptions';
 import BasicSelect from './components/Materialtest'
+import DropdownExampleSimple from './components/DropDownCheckBox'
 
 
 
@@ -18,6 +19,7 @@ ReactDOM.render(
 
     <BasicSelect/>
     <DropDownOptions/>
+    <DropdownExampleSimple/>
 
   </React.StrictMode>,
   document.getElementById('root')
