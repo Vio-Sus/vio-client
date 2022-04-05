@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import React from 'react';
+
+//1
 import { motion } from "framer-motion";
 
 import Button from '../Button/index'
@@ -16,7 +18,7 @@ const Cont = styled.div`
     margin: 20px;
     border: 1px solid darkgray;
 `;
-
+//2
 const DeleteCont = styled.div`
     display: flex;
     justify-content: flex-end;
@@ -25,7 +27,7 @@ const DeleteCont = styled.div`
     height: 25px;
     width: 100%;
 `;
-
+//3
 const Delete = styled(motion.div)`
     display: flex;
     justify-content: center;
@@ -102,6 +104,7 @@ export default function DeleteMultipleEntries({
    account = " : 5684236583",
    nametwo = "Vio Coffee Shop",
    accounttwo = ": 56745921373",
+   //4
    onClickClose = () => {},
    onClickCancel = () => {},
    onClickDelete = () => {},
@@ -109,6 +112,7 @@ export default function DeleteMultipleEntries({
 {
     return (
         <Cont>
+            {/* 5 */}
             <DeleteCont>
                 <Delete 
                     onClick={onClickClose} 

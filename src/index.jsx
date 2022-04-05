@@ -36,9 +36,6 @@ import ContactInputData from './components/ContactInputData'
 ReactDOM.render(
   <React.StrictMode>
     <App />
-
-    <SubAccountPopUp/>
-    <SubAccountPopUp text="Edit"/>
   
     {/* //alicia */}
      <BotListNav/>
@@ -55,7 +52,6 @@ ReactDOM.render(
     <DeleteMultipleEntries/>
     <AllButton/>
 
-
     {/* Min */}
     <BasicSelect/>
     <DropDownOptions/>
@@ -70,6 +66,8 @@ ReactDOM.render(
     <ListInputData/>
     <ContactInputHeadings/>
     <ContactInputData/>
+
+    {/* Catherine */}
    
     
 
