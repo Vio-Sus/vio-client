@@ -13,16 +13,25 @@ import Button from './components/Button/index';
 import TextInputBox from './components/TextInputBox/index';
 import DeleteEntryPopup from './components/DeleteEntryPopup/index'
 import NavBarLogin from './components/NavBarLogIn/index'
-import Footer from './components/Footer/index';
-import LogOut from './components/LogOut/index';
+
+import Footer from './components/Footer/index'
+import LogOut from './components/LogOut/index'
+import SubAccountPopUp from './components/SubAccountPopUp'
+
+
 import ContactsListDetailPopup from './components/ContactsListDetailPopup/index';
 import EditContactPopup from './components/EditContactPopup';
 import GraphRightSideKey from './components/GraphRightSideKey';
 import GraphLeftSideFilter from './components/GraphLeftSideFilter';
 
+
 ReactDOM.render(
   <React.StrictMode>
     <App />
+
+    <SubAccountPopUp/>
+    <SubAccountPopUp text="Edit"/>
+  
     {/* //alicia */}
     <BotListNav/>
     <Button/>
