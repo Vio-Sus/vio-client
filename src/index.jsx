@@ -16,6 +16,7 @@ import NavBarLogin from './components/NavBarLogIn/index';
 import Footer from './components/Footer/index';
 import LogOut from './components/LogOut/index';
 import DeleteContactPopup from './components/DeleteContactPopup/index';
+import DeleteMultipleEntries from './components/DeleteMultipleEntries';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -25,7 +26,8 @@ ReactDOM.render(
     <Button/>
     <TextInputBox/> */}
     {/* <DeleteEntryPopup/> */}
-    <DeleteContactPopup/>
+    {/* <DeleteContactPopup/> */}
+    <DeleteMultipleEntries/>
 {/* 
     <ListInputHeadings/>
     <BasicSelect/>

@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import Button from '../Button/index'
 
 const Cont = styled.div`
-    width: 400px;
+    width: 450px;
     height: 225px;
     background-color: #F9F9F9;
     border: #ACACAC;
@@ -48,25 +48,46 @@ const Delete = styled(motion.div)`
     }
 `;
 
-const Header = styled.text`
+const Header= styled.text`
     font-size: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    margin-bottom: 35px;
-    margin-top: 25px;
+    padding:25px;
 `;
 
-const Contact = styled.div`
+const EntryCont = styled.div`
     color: black;
     display: flex;
     justify-content: center;
-    align-items: center;
     flex-direction: column;
-    font-size: 20px;
-    font-weight: 500;
+    margin-left: 35px;
+    margin-right: 35px;
     margin-bottom: 35px;
+`;
+
+const Entry = styled.text`
+    color: black;
+    display: flex;
+    font-size: 16px;
+    justify-content: center;
+`;
+
+const Name = styled.text`
+    color: black;
+    display: flex;
+    font-size: 16px;
+    font-weight: 500;
+    justify-content: flex-start;
+`;
+
+const Account = styled.text`
+    color: black;
+    display: flex;
+    font-size: 16px;
+    font-weight: 300;
+    justify-content: flex-start;
 `;
 
 const Buttons = styled.div`
@@ -76,8 +97,11 @@ const Buttons = styled.div`
     margin-top: 35px;
 `;
 
-export default function DeleteContactPopup({
-   name="VIO Coffee Shop",
+export default function DeleteMultipleEntries({
+   name="Min's Tech Shop ",
+   account=": 5684236583",
+   nametwo= "Vio Coffee Shop",
+   accounttwo = ": 56745921373",
    onClickClose = () => {},
    onClickCancel = () => {},
    onClickDelete = () => {},
@@ -94,8 +118,17 @@ export default function DeleteContactPopup({
                     X
                 </Delete>
             </DeleteCont>
-            <Header>Are you sure you want to delete the contact:</Header>
-            <Contact>{name}</Contact>
+            <Header>Are you sure you want to delete the following entries:</Header>
+            <EntryCont>
+                    <Entry>
+                        <Name>{name}</Name>
+                        <Account>{account}</Account>
+                    </Entry>
+                    <Entry>
+                        <Name>{nametwo}</Name>
+                        <Account>{accounttwo}</Account>
+                    </Entry>
+            </EntryCont>
             <Buttons>
                 <Button 
                     borderweight="solid 1px darkgray" 
@@ -117,3 +150,4 @@ export default function DeleteContactPopup({
         </Cont>
     );
 } 
+
