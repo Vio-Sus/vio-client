@@ -1,6 +1,6 @@
 import './App.css';
 import { useEffect, useState } from 'react';
-import { getSources, getItems, getLoggedInUser } from './network';
+import { getSources, getItems, getLoggedInUser } from './common/network';
 import LoginButton from './components/LoginButton';
 import NavBar from './components/NavBar';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -9,6 +9,8 @@ import NewEntryPage from './Pages/NewEntry';
 import ViewDataPage from './Pages/ViewData';
 import ViewSourcePage from './Pages/ViewSource';
 import ViewItemPage from './Pages/ViewItem';
+import ViewGraphPage from './Pages/ViewGraph';
+import BluetoothPage from './Pages/Bluetooth';
 
 function App() {
   const [sources, setSources] = useState([]);
@@ -58,6 +60,8 @@ function App() {
                 path="viewItem"
                 element={<ViewItemPage items={items} />}
               ></Route>
+              <Route path="viewGraph" element={<ViewGraphPage />}></Route>
+              <Route path="bluetooth" element={<BluetoothPage />}></Route>
             </Routes>
           </BrowserRouter>
         </div>

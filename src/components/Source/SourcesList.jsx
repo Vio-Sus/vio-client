@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getSources } from '../../network';
+import { getSources } from '../../common/network';
 
 export default function SourceList({ selectSource }) {
   const [sources, setSources] = useState([]);
