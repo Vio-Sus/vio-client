@@ -15,24 +15,12 @@ import DeleteEntryPopup from './components/DeleteEntryPopup/index'
 import NavBarLogin from './components/NavBarLogIn/index'
 import Footer from './components/Footer/index'
 import LogOut from './components/LogOut/index'
+import SubAccountPopUp from './components/SubAccountPopUp'
 
 ReactDOM.render(
   <React.StrictMode>
     <App />
-    {/* //alicia */}
-    <BotListNav/>
-    <Button/>
-    <TextInputBox/>
-    <DeleteEntryPopup/>
-
-    <ListInputHeadings/>
-    <BasicSelect/>
-    <DropDownOptions/>
-
-    <NavBarLogin/>
-    <Footer/>
-    <LogOut/>
-    
+    <SubAccountPopUp/>
 
 
   </React.StrictMode>,
