@@ -25,9 +25,9 @@ ReactDOM.render(
     {/* <BotListNav/>
     <Button/>
     <TextInputBox/> */}
-    {/* <DeleteEntryPopup/> */}
+    <DeleteEntryPopup/>
     {/* <DeleteContactPopup/> */}
-    <DeleteMultipleEntries/>
+    {/* <DeleteMultipleEntries/> */}
 {/* 
     <ListInputHeadings/>
     <BasicSelect/>
