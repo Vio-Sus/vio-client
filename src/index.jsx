@@ -28,18 +28,21 @@ ReactDOM.render(
     <Button/>
     <TextInputBox/>
     <DeleteEntryPopup/>
-
-    <ListInputHeadings/>
-    <BasicSelect/>
-    <DropDownOptions/>
-
-    <NavBarLogin/>
-    <Footer/>
-    <LogOut/>
     <ContactsListDetailPopup/>
     <EditContactPopup/>
     <GraphRightSideKey/>
     <GraphLeftSideFilter/>
+
+    {/* Min */}
+    <ListInputHeadings/>
+    <BasicSelect/>
+    <DropDownOptions/>
+
+    {/* Jess */}
+    <NavBarLogin/>
+    <Footer/>
+    <LogOut/>
+   
     
 
 
