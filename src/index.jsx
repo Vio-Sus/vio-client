@@ -6,32 +6,34 @@ import reportWebVitals from './reportWebVitals';
 
 import ListInputHeadings from './components/ListInputHeadings';
 import DropDownOptions from './components/DropDownOptions';
-import BasicSelect from './components/Materialtest'
+import BasicSelect from './components/Materialtest';
 
 import BotListNav from './components/BotListNav/index';
 import Button from './components/Button/index';
 import TextInputBox from './components/TextInputBox/index';
-import DeleteEntryPopup from './components/DeleteEntryPopup/index'
-import NavBarLogin from './components/NavBarLogIn/index'
-import Footer from './components/Footer/index'
-import LogOut from './components/LogOut/index'
+import DeleteEntryPopup from './components/DeleteEntryPopup/index';
+import NavBarLogin from './components/NavBarLogIn/index';
+import Footer from './components/Footer/index';
+import LogOut from './components/LogOut/index';
+import DeleteContactPopup from './components/DeleteContactPopup/index';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    {/* <App /> */}
     {/* //alicia */}
-    <BotListNav/>
+    {/* <BotListNav/>
     <Button/>
-    <TextInputBox/>
-    <DeleteEntryPopup/>
-
+    <TextInputBox/> */}
+    {/* <DeleteEntryPopup/> */}
+    <DeleteContactPopup/>
+{/* 
     <ListInputHeadings/>
     <BasicSelect/>
     <DropDownOptions/>
 
     <NavBarLogin/>
     <Footer/>
-    <LogOut/>
+    <LogOut/> */}
     
 
 
