@@ -17,28 +17,6 @@ const Cont = styled.div`
     border: 1px solid darkgray;
 `;
 
-const Header= styled.text`
- font-size: 15px;
- display: flex;
- justify-content: center;
- align-items: center;
-text-align: center;
- padding:25px;
-`;
-
-const List = styled.text`
-color: black;
-display: flex;
-justify-content: flex-start;
-flex-direction: column;
-font-size: 12px;
-margin-left: 35px;
-margin-right: 35px;
-`;
-
-const Li = styled.text`
-color: black;
-`;
 
 const DeleteCont = styled.div`
     display: flex;
@@ -155,4 +133,4 @@ export default function DeleteEntryPopup({
     );
 } 
 
-export default DeleteEntryPopup;
+

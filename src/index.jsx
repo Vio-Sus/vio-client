@@ -6,11 +6,7 @@ import reportWebVitals from './reportWebVitals';
 
 import ListInputHeadings from './components/ListInputHeadings';
 import DropDownOptions from './components/DropDownOptions';
-<<<<<<< Updated upstream
 import BasicSelect from './components/Materialtest'
-=======
-import BasicSelect from './components/Materialtest';
->>>>>>> Stashed changes
 
 import BotListNav from './components/BotListNav/index';
 import Button from './components/Button/index';
@@ -25,21 +21,24 @@ import AllButton from './components/AllButton';
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* <App /> */}
+    <App /> 
     {/* //alicia */}
-    {/* <BotListNav/>
+     <BotListNav/>
     <Button/>
-    <TextInputBox/> */}
-    {/* <DeleteEntryPopup/> */}
-    {/* <DeleteContactPopup/> */}
-    {/* <DeleteMultipleEntries/> */}
-    {/* <AllButton/> */}
-{/* 
+    <TextInputBox/> 
+
+    {/* Jurgen */}
+    <DeleteEntryPopup/>
+    <DeleteContactPopup/>
+    <DeleteMultipleEntries/>
+    <AllButton/>
+
+
     <ListInputHeadings/>
     <BasicSelect/>
     <DropDownOptions/>
 
-    {/* Jess */}
+    {/* Jess  */}
     <NavBarLogin/>
     <Footer/>
     <LogOut/>
