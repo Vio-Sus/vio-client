@@ -13,15 +13,12 @@ import Button from './components/Button/index';
 import TextInputBox from './components/TextInputBox/index';
 import DeleteEntryPopup from './components/DeleteEntryPopup/index'
 import NavBarLogin from './components/NavBarLogIn/index'
-import Footer from './components/Footer/index'
-import LogOut from './components/LogOut/index'
-<<<<<<< HEAD
+import Footer from './components/Footer/index';
+import LogOut from './components/LogOut/index';
 import ContactsListDetailPopup from './components/ContactsListDetailPopup/index';
 import EditContactPopup from './components/EditContactPopup';
-=======
 import GraphRightSideKey from './components/GraphRightSideKey';
 import GraphLeftSideFilter from './components/GraphLeftSideFilter';
->>>>>>> 5ad0e0c9698850204761a99bb2897d2f35324c83
 
 ReactDOM.render(
   <React.StrictMode>
@@ -39,13 +36,10 @@ ReactDOM.render(
     <NavBarLogin/>
     <Footer/>
     <LogOut/>
-<<<<<<< HEAD
     <ContactsListDetailPopup/>
     <EditContactPopup/>
-=======
     <GraphRightSideKey/>
     <GraphLeftSideFilter/>
->>>>>>> 5ad0e0c9698850204761a99bb2897d2f35324c83
     
 
 
