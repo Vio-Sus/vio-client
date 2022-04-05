@@ -11,6 +11,12 @@ const Text = styled.p`
     display: flex;
     justify-content:center;
     flex:1;
+    width:913px;
+    height: 20px;
+    display:flex;
+    justify-content: space-around;
+`;
+const Text = styled.p`
     font-size: 12px;
     font-weight: 500;
 `;
