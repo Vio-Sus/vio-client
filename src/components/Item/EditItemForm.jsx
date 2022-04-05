@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { updateItem } from '../../network';
+import { updateItem } from '../../common/network';
 
 export default function EditItemForm({ item, setIsEditing }) {
   // selected entry data

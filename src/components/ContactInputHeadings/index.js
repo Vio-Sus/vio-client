@@ -11,12 +11,6 @@ const Text = styled.p`
     display: flex;
     justify-content:center;
     flex:1;
-    width:913px;
-    height: 20px;
-    display:flex;
-    justify-content: space-around;
-`;
-const Text = styled.p`
     font-size: 12px;
     font-weight: 500;
 `;
@@ -26,7 +20,7 @@ const Div = styled.div`
     flex:1;
 `
 
-export default function ListInputHeadings({
+export default function ContactInputHeadings({
     // text = 'button',
     onClick = () => {},
 }){
@@ -34,12 +28,12 @@ export default function ListInputHeadings({
     return<Cont>
         <Text 
         // onClick={onClick}>{text}</Text>
-        onClick={onClick}>SUBACCOUNTS</Text>
-        <Text>PROCESSOR</Text>
-        <Text>DATE</Text>
-        <Text>MATERIALS</Text>
-        <Text>TOTAL WEIGHT</Text>
-        <Text>STATUS</Text>
+        onClick={onClick}>NAME</Text>
+        <Text>TYPE</Text>
+        <Text>PHONE NUMBER</Text>
+        <Text>ADDRESS</Text>
+        <Text>EMAIL</Text>
+        <Text>NOTES</Text>
         <Div></Div>
     </Cont>
 }

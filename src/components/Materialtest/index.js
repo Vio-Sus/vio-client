@@ -7,13 +7,14 @@ import ListItemText from '@mui/material/ListItemText';
 import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 
-const ITEM_HEIGHT = 48;
+const ITEM_HEIGHT = 40;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 100,
+      minWidth: 100,
+      //if needed
     },
   },
 };
@@ -42,8 +43,17 @@ export default function MultipleSelectCheckmarks() {
 
   return (
     <div>
-      <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="materials-checkbox-label">Materials</InputLabel>
+      <FormControl 
+      sx={{
+         m: 1, 
+         width: 120, 
+        //  height: 10, 
+         }}>
+        <InputLabel id="materials-checkbox-label"
+        sx={{
+          fontSize:8,
+        }}
+        >Materials</InputLabel>
         <Select
           labelId="materials-checkbox-label"
           id="multiple-checkbox"

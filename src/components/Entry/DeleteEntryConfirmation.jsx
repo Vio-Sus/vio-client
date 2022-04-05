@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { deleteEntry, getEntry } from '../../network';
+import { deleteEntry, getEntry } from '../../common/network';
 import { findItem, findSource } from '../../setIdToNames';
 
 export default function DeleteConfirmation({
@@ -14,10 +14,10 @@ export default function DeleteConfirmation({
   // const [date, setDate] = useState('');
   // const [weight, setWeight] = useState(0);
 
-   const [itemId, setItemId] = useState('');
-   const [sourceId, setSourceId] = useState('');
-   const [date, setDate] = useState('');
-   const [weight, setWeight] = useState(0);
+  const [itemId, setItemId] = useState('');
+  const [sourceId, setSourceId] = useState('');
+  const [date, setDate] = useState('');
+  const [weight, setWeight] = useState(0);
 
   //   useEffect(() => {
   //   (async () => {

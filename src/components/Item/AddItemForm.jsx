@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { postItem } from '../../network';
+import { postItem } from '../../common/network';
 
 export default function AddItemForm({ setIsAdding }) {
   const [name, setName] = useState('');
