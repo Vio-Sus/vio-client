@@ -17,6 +17,7 @@ import Footer from './components/Footer/index';
 import LogOut from './components/LogOut/index';
 import DeleteContactPopup from './components/DeleteContactPopup/index';
 import DeleteMultipleEntries from './components/DeleteMultipleEntries';
+import AllButton from './components/AllButton';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -25,9 +26,10 @@ ReactDOM.render(
     {/* <BotListNav/>
     <Button/>
     <TextInputBox/> */}
-    <DeleteEntryPopup/>
+    {/* <DeleteEntryPopup/> */}
     {/* <DeleteContactPopup/> */}
     {/* <DeleteMultipleEntries/> */}
+    {/* <AllButton/> */}
 {/* 
     <ListInputHeadings/>
     <BasicSelect/>

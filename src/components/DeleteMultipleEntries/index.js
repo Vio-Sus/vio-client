@@ -98,9 +98,9 @@ const Buttons = styled.div`
 `;
 
 export default function DeleteMultipleEntries({
-   name="Min's Tech Shop ",
-   account=": 5684236583",
-   nametwo= "Vio Coffee Shop",
+   name = "Min's Tech Shop ",
+   account = " : 5684236583",
+   nametwo = "Vio Coffee Shop",
    accounttwo = ": 56745921373",
    onClickClose = () => {},
    onClickCancel = () => {},

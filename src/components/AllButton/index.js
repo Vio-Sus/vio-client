@@ -3,13 +3,9 @@ import styled from 'styled-components';
 import React from 'react';
 import { motion } from "framer-motion";
 
-
 const Cont = styled(motion.div)`
-    width:${props => props.width};
-    height:${props => props.height};
-    background-color: ${props => props.bgColor};
-    border-radius: 7px;
-    border:${props => props.border};
+    width:100px;
+    height:25px;
     display: flex;
     align-items:center;
     justify-content: center;
@@ -22,28 +18,20 @@ const Cont = styled(motion.div)`
 
 const ButtonText = styled.text`
     color: ${props => props.color};
-    font-size:${props => props.fontSize};
-    font-weight: ${props => props.fontWeight};
+    font-size: 14px;
+    text-decoration: underline;
 `;
 
-export default function Button({
-    buttonwidth = '100px',
-    buttonheight =  '30px',
-    buttontext = "Input New Data",
-    buttoncolor = "#80CF76",
+export default function AllButton({
+    buttontext = "Select All",
     fontsize = "12px",
-    textcolor = "white",
+    textcolor = "black",
     textweight = "bold",
-    borderweight = "none",
     onClick = () => {},
 })
 {
     return (
-        <Cont 
-            border={borderweight} 
-            bgColor={buttoncolor} 
-            width={buttonwidth} 
-            height={buttonheight}
+        <Cont
             onClick={onClick}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}

@@ -77,7 +77,7 @@ const Buttons = styled.div`
 `;
 
 export default function DeleteContactPopup({
-   name="VIO Coffee Shop",
+   name = "VIO Coffee Shop",
    onClickClose = () => {},
    onClickCancel = () => {},
    onClickDelete = () => {},

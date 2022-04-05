@@ -82,9 +82,9 @@ const Buttons = styled.div`
 `;
 
 export default function DeleteEntryPopup({
-   date="03/05/2022",
-   source="VIO Coffee Shop",
-   materials= "Coffee cups, Straws",
+   date = "03/05/2022",
+   source = "VIO Coffee Shop",
+   materials = "Coffee cups, Straws",
    processor = "processor A",
    onClickClose = () => {},
    onClickCancel = () => {},
