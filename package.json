@@ -12,8 +12,13 @@
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.25.0",
+<<<<<<< Updated upstream
     "next-routes": "^1.4.2",
     "chart.js": "^3.7.1",
+=======
+    "framer-motion": "^6.2.8",
+    "next-routes": "^1.4.2",
+>>>>>>> Stashed changes
     "react": "^17.0.2",
     "react-chartjs-2": "^4.0.1",
     "react-datepicker": "^4.6.0",

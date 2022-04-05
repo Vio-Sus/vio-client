@@ -6,34 +6,35 @@ import reportWebVitals from './reportWebVitals';
 
 import ListInputHeadings from './components/ListInputHeadings';
 import DropDownOptions from './components/DropDownOptions';
+<<<<<<< Updated upstream
 import BasicSelect from './components/Materialtest'
+=======
+import BasicSelect from './components/Materialtest';
+>>>>>>> Stashed changes
 
 import BotListNav from './components/BotListNav/index';
 import Button from './components/Button/index';
 import TextInputBox from './components/TextInputBox/index';
-import DeleteEntryPopup from './components/DeleteEntryPopup/index'
-import NavBarLogin from './components/NavBarLogIn/index'
+import DeleteEntryPopup from './components/DeleteEntryPopup/index';
+import NavBarLogin from './components/NavBarLogIn/index';
 import Footer from './components/Footer/index';
 import LogOut from './components/LogOut/index';
-import ContactsListDetailPopup from './components/ContactsListDetailPopup/index';
-import EditContactPopup from './components/EditContactPopup';
-import GraphRightSideKey from './components/GraphRightSideKey';
-import GraphLeftSideFilter from './components/GraphLeftSideFilter';
+import DeleteContactPopup from './components/DeleteContactPopup/index';
+import DeleteMultipleEntries from './components/DeleteMultipleEntries';
+import AllButton from './components/AllButton';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    {/* <App /> */}
     {/* //alicia */}
-    <BotListNav/>
+    {/* <BotListNav/>
     <Button/>
-    <TextInputBox/>
-    <DeleteEntryPopup/>
-    <ContactsListDetailPopup/>
-    <EditContactPopup/>
-    <GraphRightSideKey/>
-    <GraphLeftSideFilter/>
-
-    {/* Min */}
+    <TextInputBox/> */}
+    {/* <DeleteEntryPopup/> */}
+    {/* <DeleteContactPopup/> */}
+    {/* <DeleteMultipleEntries/> */}
+    {/* <AllButton/> */}
+{/* 
     <ListInputHeadings/>
     <BasicSelect/>
     <DropDownOptions/>

@@ -6,8 +6,8 @@ import { motion } from "framer-motion";
 import Button from '../Button/index'
 
 const Cont = styled.div`
-    width: 450px;
-    height: 235px;
+    width: 400px;
+    height: 225px;
     background-color: #F9F9F9;
     border: #ACACAC;
     border-radius: 7px;
@@ -15,29 +15,6 @@ const Cont = styled.div`
     align-items: center;
     margin: 20px;
     border: 1px solid darkgray;
-`;
-
-const Header= styled.text`
- font-size: 15px;
- display: flex;
- justify-content: center;
- align-items: center;
-text-align: center;
- padding:25px;
-`;
-
-const List = styled.text`
-color: black;
-display: flex;
-justify-content: flex-start;
-flex-direction: column;
-font-size: 12px;
-margin-left: 35px;
-margin-right: 35px;
-`;
-
-const Li = styled.text`
-color: black;
 `;
 
 const DeleteCont = styled.div`
@@ -70,45 +47,37 @@ const Delete = styled(motion.div)`
         cursor: pointer;
     }
 `;
-const Header= styled.text`
+
+const Header = styled.text`
     font-size: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 25px;
+    margin-bottom: 35px;
+    margin-top: 25px;
 `;
 
-const List = styled.text`
+const Contact = styled.div`
     color: black;
     display: flex;
     justify-content: center;
+    align-items: center;
     flex-direction: column;
-    margin-left: 35px;
-    margin-right: 35px;
-`;
-
-const Li = styled.text`
-    color: black;
-    font-size:14px;
-`;
-
-const Bold = styled.text`
-    font-weight: 600;
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 35px;
 `;
 
 const Buttons = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    margin-top: 20px;
+    margin-top: 35px;
 `;
 
-export default function DeleteEntryPopup({
-   date = "03/05/2022",
-   source = "VIO Coffee Shop",
-   materials = "Coffee cups, Straws",
-   processor = "processor A",
+export default function DeleteContactPopup({
+   name = "VIO Coffee Shop",
    onClickClose = () => {},
    onClickCancel = () => {},
    onClickDelete = () => {},
@@ -125,14 +94,8 @@ export default function DeleteEntryPopup({
                     X
                 </Delete>
             </DeleteCont>
-            <Header>Are you sure you want to delete the following entry:</Header>
-            <List>
-                    <Li><Bold>Date: </Bold>{date}</Li>
-                    <Li><Bold>Source: </Bold>{source}</Li>
-                    <Li><Bold>Materials: </Bold>{materials}</Li>
-                    <Li><Bold>Processor: </Bold>{processor}</Li>
-            </List>
-
+            <Header>Are you sure you want to delete the contact:</Header>
+            <Contact>{name}</Contact>
             <Buttons>
                 <Button 
                     borderweight="solid 1px darkgray" 
@@ -149,10 +112,8 @@ export default function DeleteEntryPopup({
                     textcolor="white" 
                     buttontext="Delete"
                     onClick={onClickDelete}
-                    />
+                /> 
             </Buttons>
         </Cont>
     );
 } 
-
-export default DeleteEntryPopup;
