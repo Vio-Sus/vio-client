@@ -7,6 +7,10 @@ import Button from '../Button/index';
 import DropDownOptions from '../DropDownOptions';
 import TextInputBox from '../TextInputBox';
 
+import IconButton from '@mui/material/IconButton';
+import Delete from '@mui/icons-material/Delete';
+import AddCircle from '@mui/icons-material/AddCircle';
+
 const Cont = styled.div`
     max-width : 400px;
     min-height : 200px;
@@ -72,13 +76,21 @@ const EditEntryPopup = ({
                 <TextInputBox text="" defaultvalue="Coffee Grinds"/>
                 <TextInputBox text="" defaultvalue="100.22 kg"/>
                 <DropDownOptions/>
-                
+                <IconButton  sx={{ "&:hover": { color: "#60C993" } }}>
+                    <Delete/>
+                </IconButton>
             </RowCont>
             <RowCont>
                 <TextInputBox text="" defaultvalue="Coffee Grinds"/>
                 <TextInputBox text="" defaultvalue="100.22 kg"/>
                 <DropDownOptions/>
+                <IconButton sx={{ "&:hover": { color: "#60C993" } }}>
+                    <Delete/>
+                </IconButton>
             </RowCont>
+            <IconButton>
+                <AddCircle  sx={{ "&:hover": { color: "#60C993" } }}/>
+            </IconButton>
             <Buttons>
                 <Button borderweight="solid 1px darkgray" textweight="regular" buttoncolor="#D2D1D1" textcolor="black" buttontext="Save Edits"/>
             </Buttons>
