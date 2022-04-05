@@ -20,7 +20,8 @@ const Text= styled.text`
 const TextInputBox = ({
     buttonwidth = '10.03',
     buttonheight=  '70',
-    text= "Source Address",
+    text = "Source Address",
+    defaultvalue = "",
 }) => {
     return (
         <Cont >
@@ -31,7 +32,8 @@ const TextInputBox = ({
             height={buttonheight} 
             type="text" 
             id="sxaddress" 
-            name="sxaddress"></input>
+            name="sxaddress"
+            value={defaultvalue}></input>
             
         </Cont>
     );
