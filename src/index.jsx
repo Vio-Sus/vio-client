@@ -21,6 +21,7 @@ ReactDOM.render(
   <React.StrictMode>
     <App />
     <SubAccountPopUp/>
+    <SubAccountPopUp text="Edit"/>
 
 
   </React.StrictMode>,

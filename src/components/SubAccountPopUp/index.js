@@ -5,6 +5,7 @@ import React from 'react';
 import Button from '../Button/index'
 import DropDownOptions from '../DropDownOptions'
 import BasicSelect from '../Materialtest/'
+import CancelIcon from '@mui/icons-material/Cancel';
 
 const Cont = styled.div`
     width:491.59px;
@@ -50,15 +51,6 @@ const FirstCont = styled.div`
 
 `;
 
-const InputBox = styled.input`
-    height: ${props => props.height};
-    width:${props => props.width};
-    border: 1px solid darkgray;
-    border-radius: 5px ;
-    
-
-`;
-
 const InputBoxCont = styled.div`
     display:flex;
     flex-direction: column ;
@@ -77,12 +69,35 @@ const MaterialCont = styled.div`
 
 `;
 
+const ButtonCont = styled.div`
+    display: flex;
+    justify-content: flex-end;
+`;
+
+const InputBox = styled.input`
+    height: ${props => props.height};
+    width:${props => props.width};
+    border: 1px solid darkgray;
+    border-radius: 5px ;
+    
+
+`;
+
+
+
 
 const SubAccountPopUp = ({
   text = "Add",
+  onClick = () => {},
+
 }) => {
     return (
         <Cont>
+        <ButtonCont>
+            <CancelIcon 
+            sx={{ color: "#C4C4C4" }}
+            />
+        </ButtonCont>
             <Header>{text} A Sub-account</Header>
             <FirstCont>
                 <InputBoxCont>
@@ -103,7 +118,7 @@ const SubAccountPopUp = ({
                 </InputBoxCont>
 
                 <InputBoxCont>
-                    <SubHeader>Source Address</SubHeader>
+                    <SubHeader>Description</SubHeader>
                     <InputBox
                      width="391.54px"
                      height="74.05px"
