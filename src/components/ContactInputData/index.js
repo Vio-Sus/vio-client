@@ -1,16 +1,16 @@
 import React from 'react'
 import styled from "styled-components";
 import { Checkbox } from 'semantic-ui-react'
-import ItemStatus from '../ItemStatus';
+import ContactInputHeadings from '../ContactInputHeadings';
 
 const Cont = styled.div`
 display:flex;
 flex-direction: row;
 background-color:${props=>props.bgcolor};
 height: 66px;
-width:100vw;
+width:90vw;
 `
-//subaccounts
+//name
 const UniqueCont = styled.div`
 display:flex;
 flex-direction: row;
@@ -33,7 +33,7 @@ flex:2;
 align-items:center;
 `
 
-const SubAccount = styled.div`
+const Name = styled.div`
 font-size: 14px;
 color: #2E3B52;
 `
@@ -42,8 +42,8 @@ color:#606F89;
 font-size:12px;
 `
 
-//processor 
-const ProcessorCont = styled.div`
+//type 
+const TypeCont = styled.div`
     display:flex;
     flex-direction: row;
     flex:1;
@@ -51,13 +51,13 @@ const ProcessorCont = styled.div`
     align-items:center;
 `
 
-const Processor = styled.div`
+const Type = styled.div`
 font-size: 14px;
 color: #2E3B52;
 `
 
-//date
-const DateCont = styled.div`
+//phone number
+const NumberCont = styled.div`
 display:flex;
 flex-direction: row;
 flex:1;
@@ -65,56 +65,50 @@ justify-content:center;
 align-items:center;
 `
 
-const Date = styled.text`
+const PNumber = styled.text`
 font-size: 14px;
 color: #2E3B52;
 `
 
-//materials
-const MaterialCont = styled.div`
+//address
+const AddressCont = styled.div`
 display:flex;
 flex-direction: column;
 flex:1;
 align-items:center;
 justify-content:space-around;
 `
-const WrapMaterialCont = styled.div`
-display:flex;
-flex-direction: column;
-flex:2;
-align-items:center;
-justify-content:center;
-`
 
-const Material = styled.div`
+const Address = styled.div`
 font-size: 14px;
 color: #2E3B52;
 `
-const MoreMaterials = styled.div`
-color:#606F89;
-font-size:12px;
-`
 
-//total weight
-const WeightCont = styled.div`
+//email
+const EmailCont = styled.div`
 display:flex;
 flex-direction: column;
 flex:1;
 align-items:center;
 justify-content:space-around;
 `
-const Weight = styled.div`
+const Email = styled.div`
 font-size: 14px;
 color: #2E3B52;
 `
 
-//item status cont
-const ItemStatusCont = styled.div`
+//notes
+const NotesCont = styled.div`
 display:flex;
 flex-direction: column;
 flex:1;
 align-items:center;
 justify-content:space-around;
+`
+
+const Notes = styled.div`
+font-size: 14px;
+color: #2E3B52;
 `
 
 //edit
@@ -135,16 +129,15 @@ const DeleteIcon = styled.img`
     height: 20px;
 `
 
-
-const ListInput = ({
+const ContactInputData = ({
     bgcolor="#ECFAEE",
-    subaccount = "Vio Coffee Shop",
-    processor = "P1",
-    uniquenumber = "5684236583",
-    date = "April 23, 2022",
-    material = "Coffee Cups",
-    morematerials="+2 materials",
-    totalweight = "369.23kg",
+    name = "Processor 1",
+    type = "PROCESSOR",
+    number = "5684236583",
+    phonenumber = "123-456-7890",
+    address = "590 Circle Road, Stony Brook NY",
+    email = "processor@vio.com",
+    notes = "don’t like mixed wastes",
     editSrc = "/edit.svg",
     deleteSrc = "/delete.svg",
     onClickEdit = () => {},
@@ -157,33 +150,30 @@ const ListInput = ({
                 <Checkbox />
             </UniqueContLeft>
             <UniqueContRight>
-                <SubAccount>{subaccount}</SubAccount>
-                <Number>{uniquenumber}</Number>
+                <Name>{name}</Name>
+                <Number>{number}</Number>
             </UniqueContRight>
         </UniqueCont>
 
-        <ProcessorCont>
-            <Processor>{processor}</Processor>
-        </ProcessorCont>
+        <TypeCont>
+            <Type>{type}</Type>
+        </TypeCont>
 
-        <DateCont>
-            <Date>{date}</Date>
-        </DateCont>
+        <NumberCont>
+            <PNumber>{phonenumber}</PNumber>
+        </NumberCont>
 
-        <MaterialCont>
-            <WrapMaterialCont>
-            <Material>{material}</Material>
-            <MoreMaterials>{morematerials}</MoreMaterials>
-            </WrapMaterialCont>
-        </MaterialCont>
+        <AddressCont>
+            <Address>{address}</Address>
+        </AddressCont>
 
-        <WeightCont>
-            <Weight>{totalweight}</Weight>
-        </WeightCont>
+        <EmailCont>
+            <Email>{email}</Email>
+        </EmailCont>
 
-        <ItemStatusCont>
-            <ItemStatus />
-        </ItemStatusCont>
+        <NotesCont>
+            <Notes>{notes}</Notes>
+        </NotesCont>
 
         <EditCont>
                 <EditIcon onClick={ onClickEdit } src={editSrc}></EditIcon>
@@ -194,5 +184,5 @@ const ListInput = ({
 }
 
 
-export default ListInput
+export default ContactInputData
 
