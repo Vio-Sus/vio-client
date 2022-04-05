@@ -18,6 +18,9 @@ import LogOut from './components/LogOut/index';
 import DeleteContactPopup from './components/DeleteContactPopup/index';
 import DeleteMultipleEntries from './components/DeleteMultipleEntries';
 import AllButton from './components/AllButton';
+import ListInputData from './components/ListInputData'
+import ContactInputHeadings from './components/ContactInputHeadings'
+import ContactInputData from './components/ContactInputData'
 
 ReactDOM.render(
   <React.StrictMode>
@@ -34,7 +37,7 @@ ReactDOM.render(
     <AllButton/>
 
 
-    <ListInputHeadings/>
+    
     <BasicSelect/>
     <DropDownOptions/>
 
@@ -42,6 +45,10 @@ ReactDOM.render(
     <NavBarLogin/>
     <Footer/>
     <LogOut/>
+    <ListInputHeadings/>
+    <ListInputData/>
+    <ContactInputHeadings/>
+    <ContactInputData/>
    
     
 
