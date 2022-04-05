@@ -9,7 +9,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 
 const Cont = styled.div`
     width:491.59px;
-    height:auto;
+    height: 412px;
     padding: 0.5rem;
     background-color: #F9F9F9;
     border: #ACACAC;
@@ -54,6 +54,7 @@ const FirstCont = styled.div`
 const InputBoxCont = styled.div`
     display:flex;
     flex-direction: column ;
+    margin:2px;
 `;
 
 const SecondCont = styled.div`
