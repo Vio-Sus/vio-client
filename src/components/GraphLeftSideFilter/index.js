@@ -6,7 +6,7 @@ const Cont = styled.div`
     height:421px;
     width: 177px;
     //fix bg color
-    background-color: lightgray;
+    background-color: #F9F9F9;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -35,7 +35,7 @@ const Cont2 = styled.div`
 `;
 
 const Cont2_1 = styled.text`
-    margin-left:22px;
+    margin-left:25px;
 `;
 
 const Cont3 = styled.div`
