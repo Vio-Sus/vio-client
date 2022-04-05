@@ -1,10 +1,10 @@
-
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import React from 'react';
 
 import Button from '../Button/index'
-import
+import DropDownOptions from '../DropDownOptions'
+import BasicSelect from '../Materialtest/'
 
 const Cont = styled.div`
     width:491.59px;
@@ -30,6 +30,7 @@ text-align: center;
 
 const SubHeader = styled.text`
 font-size:11px;
+text-align: left ;
 `;
 
 
@@ -45,9 +46,6 @@ const FirstCont = styled.div`
     justify-content:center ;
     flex-wrap: wrap;
     width:491.59px;
-    background-color: #fad ;
-
-
 
 
 `;
@@ -66,7 +64,16 @@ const InputBoxCont = styled.div`
     flex-direction: column ;
 `;
 
+const SecondCont = styled.div`
+    display:flex;
+    flex-direction: column ;
+    /* align-items:center;  */
+    width:391.54px;
+`;
 const MaterialCont = styled.div`
+    display: flex;
+    flex-direction: row ;
+    height: 80px;
 
 `;
 
@@ -102,15 +109,20 @@ const SubAccountPopUp = ({
                      height="74.05px"
                     />
                 </InputBoxCont>
-
-                <MaterialCont>
+            <SecondCont>
                 <SubHeader>Main Materials</SubHeader>
+                <MaterialCont>
 
-             </MaterialCont>
+                    <BasicSelect/>
+                    <BasicSelect/>
+                    <BasicSelect/>
+
+                </MaterialCont>
+
+            </SecondCont>
                         
                 <Buttons>
                 <Button borderweight="solid 1px darkgray" textweight="regular" buttoncolor="#D2D1D1" textcolor="black" buttontext="Add Source"/>
-                <Button borderweight="solid 1px darkgray" textweight="regular" buttoncolor="#F86E6E" textcolor="black" buttontext="No, Cancel"/> 
             </Buttons>
 
 
