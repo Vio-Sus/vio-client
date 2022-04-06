@@ -30,6 +30,7 @@ import AllButton from './components/AllButton';
 import ListInputData from './components/ListInputData'
 import ContactInputHeadings from './components/ContactInputHeadings'
 import ContactInputData from './components/ContactInputData'
+import EditEntryPopop from './components/EditEntryPopup'
 
 
 
@@ -43,9 +44,6 @@ ReactDOM.render(
     <Button/>
     <TextInputBox/>
     <DeleteEntryPopup/>
-
-    <EditEntryPopup/>
-
     <ContactsListDetailPopup/>
     <EditContactPopup/>
     <GraphLeftSideFilter/>
@@ -74,7 +72,7 @@ ReactDOM.render(
     <ContactInputData/>
 
     {/* Catherine */}
-   
+   <EditEntryPopop/>
     
 
 
