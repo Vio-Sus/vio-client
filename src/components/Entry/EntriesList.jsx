@@ -1,7 +1,13 @@
 import { useState, useEffect } from 'react';
 import { getListOfEntries, getEntriesByDateRange } from '../../common/network';
+<<<<<<< HEAD
 import Summary from '../Summary/Summary';
 import DateFilter from '../Filter/DateFilter';
+=======
+// import Summary from '../Summary/Summary';
+// import DateFilter from '../filter/DateFilter';
+
+>>>>>>> 61f65422e7196c843741d32a4cbfaac88172a6d6
 
 export default function EntriesList({ selectEntry, sources, items }) {
   const [entries, setEntries] = useState([]);
