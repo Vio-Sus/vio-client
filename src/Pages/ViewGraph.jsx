@@ -24,7 +24,7 @@ const ViewGraphPage = () => {
 
   return (
     <>
-      <h1>Graph</h1>
+      <h1>Min's Graph</h1>
       Filter by Date Range:
       <label for="startDate">Start Date</label>
       <input
