@@ -3,6 +3,10 @@ import { postEntries } from '../../common/network';
 import { handleValidation } from '../../common/validation';
 import AddSourceModal from '../Source/AddSourceModal';
 import AddItemModal from '../Item/AddItemModal';
+import React from 'react';
+import styled from "styled-components";
+import Button from '../../components/'
+
 
 const newEntryWeight = () => ({
   id: Date.now(),
@@ -159,9 +163,11 @@ export default function Form({ items, sources }) {
             </button>
             <br />
             <br />
+            <SaveButton>
             <button className="button submit" type="submit">
               Save Entry
             </button>
+            </SaveButton>
           </div>
         </form>
       </div>
