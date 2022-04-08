@@ -22,9 +22,9 @@ export default function SourceList({ selectSource }) {
     <table>
       <thead>
         <tr>
-          <th> Source </th>
-          <th> Address </th>
-          <th> Phone Number </th>
+          <th> SOURCE </th>
+          <th> ADDRESS </th>
+          <th> PHONE NUMBER</th>
         </tr>
       </thead>
       <tbody>
@@ -42,3 +42,6 @@ export default function SourceList({ selectSource }) {
     </table>
   );
 }
+
+
+

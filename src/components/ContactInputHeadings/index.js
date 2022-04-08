@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 
 const Cont = styled.div`
-    width:90vw;
+    width:1200px;
     height: 15px;
     display:flex;
     align-items: center;

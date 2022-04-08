@@ -6,7 +6,6 @@ import EditSourceForm from '../components/Source/EditSourceForm';
 // import AddSourceForm from '../components/Source/AddSourceForm';
 import AddSourceModal from '../components/Source/AddSourceModal';
 
-import NavBarLogIn from '../components/NavBarLogIn';
 import ContactInputHeadings from '../components/ContactInputHeadings';
 import ContactInputData from '../components/ContactInputData';
 import Materialtest from '../components/Materialtest';
@@ -50,7 +49,6 @@ const ViewSourcePage = ({ sources, items }) => {
       )}
       </SourceListCont>
       {/* stlyed comp */}
-      <NavBarLogIn></NavBarLogIn>
 
       <Top>
         <HeadingWrap>

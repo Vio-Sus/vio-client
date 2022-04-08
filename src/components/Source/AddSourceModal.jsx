@@ -57,10 +57,13 @@ export default function AddSourceModal({ setIsAddingSource }) {
     left: '50%',
     top: '50%',
     transform: 'translate(-50%, -50%)',
-    backgroundColor: (0, 0, 0),
+    backgroundColor: "#F9F9F9",
+
     display: 'flex',
     allignItems: 'center',
-      justifyContent: 'center',
+    justifyContent: 'center',
+      zIndex:6,
+      
  
   };
 
