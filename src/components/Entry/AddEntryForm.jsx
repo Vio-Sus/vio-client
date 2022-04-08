@@ -5,8 +5,67 @@ import AddSourceModal from '../Source/AddSourceModal';
 import AddItemModal from '../Item/AddItemModal';
 import React from 'react';
 import styled from "styled-components";
+import Button from '../Button'
 
+const MainCont = styled.div`
+  display: flex;
+  width: 500px;
+  background-color: pink;
+`;
 
+const Headings = styled.text`
+  font-size:12px;
+`;
+
+const SourceCont=styled.div`
+  margin-bottom: 5%;
+`;
+
+const DateCont=styled.div`
+  height: 50px;
+  background-color: red;
+`;
+
+const ItemCont=styled.div`
+ background-color: blue;
+`;
+
+const WeightCont=styled.div`
+background-color: yellow;
+`;
+
+const DateItemWeightCont = styled.div`
+  display: flex;
+  flex-wrap: none;
+  width: 500px;
+  background-color: aliceblue;
+`;
+
+// here
+const Inputs = styled.input`
+  width: 152px;
+  height: 36px;
+  background-color: #fff;
+  border:1px solid #CBCBCB;
+  border-radius:10px;
+  text-align: center;
+`;
+
+const Select = styled.select`
+  width: 152px;
+  height: 38px;
+  background-color: #fff;
+  border-color: #CBCBCB;
+  border-radius:10px;
+  text-align: center;
+`;
+
+const AddItemButton = styled.button`
+  background-color: #e6e3e3;
+  border:1px solid #CBCBCB;
+  border-radius: 100px;
+  
+`;
 
 const newEntryWeight = () => ({
   id: Date.now(),
@@ -87,18 +146,14 @@ export default function Form({ items, sources }) {
   };
 
   return (
-    <>
+    <MainCont>
       <div onClick={handleCancel}>
         <form onSubmit={handleSubmit} id="input-form" noValidate>
-          <label>Date:</label>
-          <input
-            name="created"
-            type="date"
-            onChange={(e) => handleFormValues(e)}
-          ></input>
-          <br />
-          <label>Source</label>
-          <select name="source_id" onChange={(e) => handleFormValues(e)}>
+
+      <SourceCont>
+        <Headings>Source</Headings>
+          <br/>
+          <Select name="source_id" onChange={(e) => handleFormValues(e)}>
             <option hidden>Select Source</option>
             {sources.map((source, key) => (
               <option key={key} value={source.source_id}>
@@ -106,12 +161,32 @@ export default function Form({ items, sources }) {
               </option>
             ))}
             <option value="add_source">Add Source...</option>
-          </select>
-          <br />
+          </Select>
+          <br/>
+      </SourceCont>
+
+
+          
+
+      <DateItemWeightCont>
+          <DateCont>
+            <Headings>Date:</Headings>
+            <br/>
+            {/* here */}
+              <Inputs
+                name="created"
+                type="date"
+                onChange={(e) => handleFormValues(e)}
+              />
+          </DateCont>
+
           {entryWeights.map((element, index) => (
             <div className="form-inline" key={element.id}>
-              <label>Item</label>
-              <select
+
+              <ItemCont>
+              <Headings>Item</Headings>
+              <br/>
+              <Select
                 name="item_id"
                 onChange={(e) => {
                   e.target.value === 'add_item'
@@ -126,15 +201,23 @@ export default function Form({ items, sources }) {
                   </option>
                 ))}
                 <option value="add_item">Add Item...</option>
-              </select>
-              <label>Weight</label>
-              <input
+              </Select>
+              </ItemCont>
+
+
+          
+              
+              <WeightCont>
+              <Headings>Weight</Headings>
+              <br/>
+              <Inputs
                 type="number"
                 name="weight"
                 onChange={(e) => {
                   element.weight = Number(e.target.value);
                 }}
               />
+              </WeightCont>
 
               {!!index && (
                 <button
@@ -145,29 +228,45 @@ export default function Form({ items, sources }) {
                   -
                 </button>
               )}
+ 
             </div>
+            
           ))}
+       </DateItemWeightCont>  
+
           <div className="error-messages">
             {errorMsgs.map((msg, key) => (
               <span key={key}>{msg}</span>
             ))}
           </div>
+          
+               
 
           <div className="button-section">
-            <button
+            <AddItemButton
               className="button add"
               type="button"
               onClick={() => addFormFields()}
             >
               +
-            </button>
+            </AddItemButton>
+
             <br />
             <br />
-            
-            <button className="button submit" type="submit">
-              Save Entry
-            </button>
-            
+
+            {/* needs onclick to graphs */}
+            <Button 
+            className="button submit" 
+            type="submit"
+            buttoncolor = "#EFEFEF"
+            fontsize = "13px"
+            textcolor="black"
+            textweight="medium"
+            buttontext="Save Entry"
+            buttonwidth = '126px'
+            buttonheight=  '40px'
+            />
+              
           </div>
         </form>
       </div>
@@ -175,6 +274,6 @@ export default function Form({ items, sources }) {
         <AddSourceModal setIsAddingSource={setIsAddingSource} />
       )}
       {isAddingItem && <AddItemModal setIsAddingItem={setIsAddingItem} />}
-    </>
+    </MainCont>
   );
 }

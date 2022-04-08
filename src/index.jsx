@@ -30,11 +30,11 @@ ReactDOM.render(
   <React.StrictMode>
     <App />
 
-    <SubAccountPopUp/>
-    <SubAccountPopUp text="Edit"/>
+    {/* <SubAccountPopUp/>
+    <SubAccountPopUp text="Edit"/> */}
   
     {/* //alicia */}
-    <BotListNav/>
+    {/* <BotListNav/>
     <Button/>
     <TextInputBox/>
     <DeleteEntryPopup/>
@@ -44,18 +44,18 @@ ReactDOM.render(
     <ContactsListDetailPopup/>
     <EditContactPopup/>
     <GraphRightSideKey/>
-    <GraphLeftSideFilter/>
+    <GraphLeftSideFilter/> */}
 
 
-    {/* Min */}
+    {/* Min
     <ListInputHeadings/>
     <BasicSelect/>
     <DropDownOptions/>
 
     {/* Jess */}
-    <NavBarLogin/>
+    {/* <NavBarLogin/>
     <Footer/>
-    <LogOut/>
+    <LogOut/> */} 
    
     
 
