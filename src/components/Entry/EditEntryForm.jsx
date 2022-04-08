@@ -27,9 +27,26 @@ const DateInput = styled.input`
   border-radius: 7px;
   border: 0.5px solid #cbcbcb;
   box-shadow: 0px 2px 4px 0px #7474741a;
+  cursor: pointer;
   &:focus {
     outline: none;
   }
+  &::-webkit-calendar-picker-indicator {
+    opacity: 0;
+  }
+  background-image:
+    linear-gradient(45deg, transparent 50%, #80CF76 50%),
+    linear-gradient(135deg, #80CF76 50%, transparent 50%),
+    radial-gradient(#F1FAF0 70%, transparent 72%);
+  background-position:
+    120px 16px,
+    125px 16px,
+    115px 8px;
+  background-size:
+    5px 5px,
+    5px 5px,
+    1.5em 1.5em;
+  background-repeat: no-repeat;
 `;
 
 const Select = styled.select`
@@ -38,6 +55,24 @@ const Select = styled.select`
   border-radius: 7px;
   border: 0.5px solid #cbcbcb;
   box-shadow: 0px 2px 4px 0px #7474741a;
+  cursor: pointer;
+  appearance: none;
+  &:focus {
+    outline: none;
+  }
+  background-image:
+    linear-gradient(45deg, transparent 50%, #80CF76 50%),
+    linear-gradient(135deg, #80CF76 50%, transparent 50%),
+    radial-gradient(#F1FAF0 70%, transparent 72%);
+  background-position:
+    119px 16px,
+    124px 16px,
+    114px 8px;
+  background-size:
+    5px 5px,
+    5px 5px,
+    1.5em 1.5em;
+  background-repeat: no-repeat;
 `;
 
 const InputCont = styled.div`
@@ -71,7 +106,7 @@ const ButtonCont = styled.div`
   grid-column-start: 1;
   grid-column-end: 3;
   gap: 40px;
-  display:flex;
+  display: flex;
   justify-content: center;
 `;
 
@@ -79,6 +114,7 @@ const Button = styled.button`
   height: 30px;
   width: 120px;
   font-size: 12px;
+  cursor: pointer;
 `;
 
 export default function EditForm({ entry, setIsEditing, items, sources }) {
