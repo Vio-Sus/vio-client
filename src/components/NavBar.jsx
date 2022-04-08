@@ -21,6 +21,9 @@ const NavBar = ({ user }) => {
         <li>
           <a href="viewItem">View Items</a>
         </li>
+        <li>
+          <a href="viewGraph">View Graph</a>
+        </li>
       </ul>
     </>
   );
