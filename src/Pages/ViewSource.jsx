@@ -15,7 +15,6 @@ import BotListNav from '../components/BotListNav';
 import Footer from '../components/Footer';
 
 
-
 const ViewSourcePage = ({ sources, items }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isAddingSource, setIsAddingSource] = useState(false);
@@ -36,7 +35,8 @@ const ViewSourcePage = ({ sources, items }) => {
 
   return (
     <>
-      <button onClick={addSource}>Add New Source</button>
+      
+      <SourceListCont>
       <SourcesList selectSource={selectSource}></SourcesList>
       {isEditing && (
         <EditSourceForm
@@ -48,7 +48,7 @@ const ViewSourcePage = ({ sources, items }) => {
       {isAddingSource && (
         <AddSourceModal setIsAddingSource={setIsAddingSource} />
       )}
-
+      </SourceListCont>
       {/* stlyed comp */}
       <NavBarLogIn></NavBarLogIn>
 
@@ -59,8 +59,8 @@ const ViewSourcePage = ({ sources, items }) => {
         </HeadingWrap>
 
         <ButtonWrap>
-          <Button buttontext="EXPORT" fontsize="12px" buttonwidth='126px' buttonheight='40px'></Button>
-          <Button buttoncolor = "#4A4A4A" buttontext="Add New Entry " fontsize="12px" buttonwidth='135px' buttonheight='40px' src="PlusIcon.svg"></Button>
+          <Button buttoncolor = "#4A4A4A" buttontext="EXPORT" fontsize="12px" buttonwidth='126px' buttonheight='40px'></Button>
+          <AddSourceButton onClick={addSource} src="PlusIcon.svg">Add New Source</AddSourceButton>
         </ButtonWrap>
         </Top>
 
@@ -92,6 +92,25 @@ const ViewSourcePage = ({ sources, items }) => {
 export default ViewSourcePage;
 
 //styled components 
+
+const AddSourceButton = styled.div`
+background-color: #80CF76;
+font-size: 12px;
+width: 135px;
+height:40px;
+border-radius:7px;
+display:flex;
+align-items:center;
+justify-content: center;
+color: white;
+font-weight:bold;
+`
+
+const SourceListCont = styled.div`
+display:flex;
+flex-direction:column;
+align-items:center;
+`
 
 const Top = styled.div`
   display:flex;
@@ -127,9 +146,9 @@ const ButtonWrap = styled.div`
 `
 
 const DropDownWrap = styled.div`
-margin-left: 233px;
-  margin-right:233px;
-  margin-top:10px;
+margin-left: 225px;
+  margin-top:22px;
+  width:300px;
   display:flex;
 `
 const ContactHeadingWrap = styled.div`
@@ -138,12 +157,14 @@ const ContactHeadingWrap = styled.div`
 `
 const ClearWrap = styled.div`
 margin-top:8px;
+margin-left:12px;
 `
 
 const Mid = styled.div`
 display:flex;
 flex-direction:column;
 align-items:center;
+
 `
 
 const BotNavWrap = styled.div`

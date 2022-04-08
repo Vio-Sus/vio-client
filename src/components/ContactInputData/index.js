@@ -9,7 +9,7 @@ display:flex;
 flex-direction: row;
 background-color:${props=>props.bgcolor};
 height: 66px;
-width:90vw;
+width:1208px;
 `
 //name
 const UniqueCont = styled.div`
