@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { generateXAxis } from '../common/chartHelpers';
+import { generateXAxis, filterEntriesBySource, generateDataset } from '../common/chartHelpers';
 import LineGraph from '../components/Graph/LineGraph';
 import { graphApi } from '../common/mockData';
 import { dateToYMD } from '../common/date';
+import { getGraphDataset} from '../common/network';
 
 const ViewGraphPage = () => {
   // const [startDate, setStartDate] = useState('2022-03-01');
@@ -26,18 +27,18 @@ const ViewGraphPage = () => {
   ]);
 
   const [datasets, setDatasets] = useState([
-    {
-      label: 'Dataset 1', // item name retrieved from api
-      data: [, , , , , 1, 2, 3, 4, 5, 6, 7, 8], // weights retrieved from api
-      borderColor: 'rgba(255, 99, 132, 0.5)',
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
-    },
-    {
-      label: 'Dataset 2',
-      data: [1, 2, 3, 4, 5, 6, 7, 8],
-      borderColor: 'rgb(53, 162, 235)',
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
-    },
+    // {
+    //   label: 'Dataset 1', // item name retrieved from api
+    //   data: [, , , , , 1, 2, 3, 4, 5, 6, 7, 8], // weights retrieved from api
+    //   borderColor: 'rgba(255, 99, 132, 0.5)',
+    //   backgroundColor: 'rgba(255, 99, 132, 0.5)',
+    // },
+    // {
+    //   label: 'Dataset 2',
+    //   data: [1, 2, 3, 4, 5, 6, 7, 8],
+    //   borderColor: 'rgb(53, 162, 235)',
+    //   backgroundColor: 'rgba(53, 162, 235, 0.5)',
+    // },
   ]);
 
   useEffect(() => {
@@ -50,12 +51,20 @@ const ViewGraphPage = () => {
         // need to have sums and the date
         // parse the response
         // set x AxisLabels
-        let labels = await generateXAxis(startDate, endDate);
+        let labels = await generateXAxis('2022-01-01', '2022-03-16');
         setXAxisLabels(labels);
         // make request for data from api
+        let sums = await getGraphDataset('2022-01-01', '2022-03-16');
+        console.log('sums: ', sums);
         // parse data -> filter it by source
+        let sorted = await filterEntriesBySource(sums);
+        console.log('sorted: ', sorted);
         // make datasets to give to each graph
+        let formated = await generateDataset(sorted, labels);
+        console.log('SOME RANDOM SHIIIIIIIIIT');
+        console.log('formatted: ', formated);
         // set something
+        setDatasets(formated);
       } catch {}
     })();
   }, []);

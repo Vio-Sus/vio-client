@@ -1,16 +1,25 @@
 import { generateDataset, filterEntriesBySource } from './chartHelpers';
 import { graphApi } from './mockData';
 
+   let datesArray = [
+     '2022-01-28',
+     '2022-01-29',
+     '2022-01-30',
+     '2022-01-31',
+     '2022-02-01',
+   ];
+
 describe('make chart dataset', () => {
   test('empty array returns empty', () => {
     // define the input
     let input = [];
 
+
     // define the expected output
     const expected = [];
 
     // test it
-    expect(generateDataset(input)).toEqual(expected);
+    expect(generateDataset(input, datesArray)).toEqual(expected);
   });
 
   test('given 1 entry', () => {
@@ -34,7 +43,10 @@ describe('make chart dataset', () => {
 
     // test it
     expect(
-      generateDataset(input).map((a) => ({ label: a.label, data: a.data }))
+      generateDataset(input, datesArray).map((a) => ({
+        label: a.label,
+        data: a.data,
+      }))
     ).toEqual(expected);
   });
 
@@ -65,7 +77,10 @@ describe('make chart dataset', () => {
 
     // test it
     expect(
-      generateDataset(input).map((a) => ({ label: a.label, data: a.data }))
+      generateDataset(input, datesArray).map((a) => ({
+        label: a.label,
+        data: a.data,
+      }))
     ).toEqual(expected);
   });
 
@@ -100,7 +115,10 @@ describe('make chart dataset', () => {
 
     // test it
     expect(
-      generateDataset(input).map((a) => ({ label: a.label, data: a.data }))
+      generateDataset(input, datesArray).map((a) => ({
+        label: a.label,
+        data: a.data,
+      }))
     ).toEqual(expected);
   });
 
@@ -157,7 +175,10 @@ describe('make chart dataset', () => {
 
     // test it
     expect(
-      generateDataset(input).map((a) => ({ label: a.label, data: a.data }))
+      generateDataset(input, datesArray).map((a) => ({
+        label: a.label,
+        data: a.data,
+      }))
     ).toEqual(expected);
   });
 
@@ -276,7 +297,7 @@ describe('make chart dataset', () => {
 
     // test it
     expect(
-      generateDataset(input).map((a) => ({
+      generateDataset(input, datesArray).map((a) => ({
         label: a.label,
         data: a.data,
       }))
