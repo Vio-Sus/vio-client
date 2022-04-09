@@ -1,5 +1,22 @@
 import { useState, useEffect } from 'react';
 import { updateSource } from '../../common/network';
+import styled from 'styled-components';
+import CancelIcon from '@mui/icons-material/Cancel';
+
+const Heading = styled.text`
+  font-size:24px;
+  font-weight:400;
+  color:black;
+`;
+
+const SaveButton = styled.button`
+  height: 30px;
+  width: 120px;
+  font-size: 12px;
+  cursor: pointer;
+`;
+
+
 
 export default function EditSourceForm({ source, setIsEditing }) {
   // selected entry data
@@ -76,7 +93,7 @@ export default function EditSourceForm({ source, setIsEditing }) {
 
   return (
     <>
-      <h2>Edit Source</h2>
+      <Heading>Edit Source</Heading>
       <form id="edit-form">
         <label>Name:</label>
         <br />
@@ -105,10 +122,10 @@ export default function EditSourceForm({ source, setIsEditing }) {
           onInput={(e) => handleChange(e)}
         />
         <br />
-        <button type="button" onClick={handleSubmit}>
+        <SaveButton buttontext="save" onClick={handleSubmit}>
           Save Edit
-        </button>
-        <button onClick={handleCancel}>Cancel</button>
+        </SaveButton>
+        <CancelIcon sx={{ color: "#C4C4C4" }} onClick={handleCancel}>Cancel</CancelIcon>
       </form>
     </>
   );

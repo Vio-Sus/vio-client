@@ -34,21 +34,6 @@ const ViewSourcePage = ({ sources, items }) => {
 
   return (
     <>
-      
-      <SourceListCont>
-      <SourcesList selectSource={selectSource}></SourcesList>
-      {isEditing && (
-        <EditSourceForm
-          source={selectedSource}
-          setIsEditing={setIsEditing}
-          setIsAddingSource={setIsAddingSource}
-        />
-      )}
-      {isAddingSource && (
-        <AddSourceModal setIsAddingSource={setIsAddingSource} />
-      )}
-      </SourceListCont>
-      {/* stlyed comp */}
 
       <Top>
         <HeadingWrap>
@@ -70,12 +55,19 @@ const ViewSourcePage = ({ sources, items }) => {
         </DropDownWrap>
         
        <Mid>
-         <ContactHeadingWrap>
-       <ContactInputHeadings></ContactInputHeadings> 
-       </ContactHeadingWrap>
-      <ContactInputData />
-      <ContactInputData bgcolor="#FFFFF" name="Vio Coffee Shop" type="SOURCE"/>
-      <ContactInputData />
+       <SourceListCont>
+      <SourcesList selectSource={selectSource}></SourcesList>
+      {isEditing && (
+        <EditSourceForm
+          source={selectedSource}
+          setIsEditing={setIsEditing}
+          setIsAddingSource={setIsAddingSource}
+        />
+      )}
+      {isAddingSource && (
+        <AddSourceModal setIsAddingSource={setIsAddingSource} />
+      )}
+      </SourceListCont>
       </Mid> 
 
         <BotNavWrap>
@@ -162,10 +154,10 @@ const Mid = styled.div`
 display:flex;
 flex-direction:column;
 align-items:center;
-
 `
 
 const BotNavWrap = styled.div`
+//position:sticky;
 display:flex;
 margin-top:400px;
 margin-bottom:100px;
