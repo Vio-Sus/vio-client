@@ -11,6 +11,7 @@ import ViewSourcePage from './Pages/ViewSource';
 import ViewItemPage from './Pages/ViewItem';
 import ViewGraphPage from './Pages/ViewGraph';
 import BluetoothPage from './Pages/Bluetooth';
+import NavBarLogIn from './components/NavBarLogIn';
 
 function App() {
   const [sources, setSources] = useState([]);
@@ -41,6 +42,7 @@ function App() {
       {user && (
         <div className="App">
           <NavBar user={user} />
+          <NavBarLogIn/>
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<DashboardPage />}></Route>

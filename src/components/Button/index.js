@@ -22,14 +22,16 @@ const ButtonText = styled.text`
 `;
 
 const Button = ({
-    buttonwidth = '99.26px',
-    buttonheight=  '31.51px',
+    buttonwidth = '135px',
+    buttonheight=  '40px',
     buttontext ="Input New Data",
     buttoncolor = "#80CF76",
-    fontsize = "10px",
+    fontsize = "13px",
     textcolor="white",
     textweight="bold",
     borderweight="none",
+
+    
 }) => {
     return (
         <Cont border={borderweight} bgColor={buttoncolor} width={buttonwidth} height={buttonheight}>

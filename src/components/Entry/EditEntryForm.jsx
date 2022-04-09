@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
+import React from 'react';
 import { getEntry, updateEntry } from '../../common/network';
+import styled from 'styled-components';
 
 export default function EditForm({ entry, setIsEditing, items, sources }) {
   // selected entry data
@@ -94,7 +96,7 @@ export default function EditForm({ entry, setIsEditing, items, sources }) {
         <br />
         <label>Source:</label>
         <br />
-        <select
+        <Select
           value={sourceId}
           name="source"
           onChange={(e) => handleChange(e)}
@@ -105,22 +107,22 @@ export default function EditForm({ entry, setIsEditing, items, sources }) {
               {source.name}
             </option>
           ))}
-        </select>
+        </Select>
         <br />
         <label>Item:</label>
         <br />
-        <select value={itemId} name="item" onChange={(e) => handleChange(e)}>
+        <Select value={itemId} name="item" onChange={(e) => handleChange(e)}>
           <option hidden>Select Item</option>
           {items.map((item, key) => (
             <option key={key} value={item.item_id}>
               {item.name}
             </option>
           ))}
-        </select>
+        </Select>
         <br />
         <label>Weight:</label>
         <br />
-        <input
+        <Input
           type="number"
           name="weight"
           value={weight}
@@ -135,3 +137,21 @@ export default function EditForm({ entry, setIsEditing, items, sources }) {
     </>
   );
 }
+
+const Select = styled.select`
+  width: 152px;
+  height: 30px;
+  background-color: #fff;
+  border-color: #CBCBCB;
+  border-radius:7px;
+  text-align: center;
+`;
+
+const Input = styled.input`
+  width: 152px;
+  height: 30px;
+  border-width: 1px;
+  border-color: #CBCBCB;
+  border-radius:7px;
+  text-align: center;
+`;

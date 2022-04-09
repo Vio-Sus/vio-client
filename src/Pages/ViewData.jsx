@@ -6,6 +6,10 @@ import Summary from '../components/Summary/Summary';
 import { dateToYMD } from '../common/date';
 import styled from 'styled-components';
 
+
+import Button from '../components/Button';
+import AllButton from '../components/AllButton';
+
 const ViewDataPage = ({ sources, items }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [selectedEntry, setSelectedEntry] = useState(null);
@@ -57,49 +61,65 @@ const ViewDataPage = ({ sources, items }) => {
       <Page>
       <HeaderCont>
         <HeaderTextcont>
-                <Header>Graph View</Header>
+                <Header>List View</Header>
                 <Subheader>Here’s an overview of the performance.</Subheader>
         </HeaderTextcont>
               <ButtonCont>
                 <EachButtonCont> 
-                  <Button/>
+                  <Button 
+                    buttontext='Graph View'
+                    buttoncolor='#4A4A4A'
+                  />
                 </EachButtonCont>
                 <EachButtonCont> 
-                  <Button/>
+                  <Button
+                    buttontext='Export'
+                    buttoncolor='#4A4A4A'
+                  />
                 </EachButtonCont>
                 <EachButtonCont> 
-                  <Button/>
+                  <Button
+                    buttontext='Add New Entry'
+                  />
                 </EachButtonCont>
               </ButtonCont>
       </HeaderCont>
+
+      <Spacer />
 
         {/* <TextCont>
           <Heading>List View</Heading>
           <SubHead>Here's an overview of the performance</SubHead>
         </TextCont> */}
-        <EntriesList
-          selectEntry={selectEntry}
-          sources={sources}
-          items={items}
-        ></EntriesList>
-        {isEditing && (
-          <EditForm
-            entry={selectedEntry}
-            setIsEditing={setIsEditing}
+        <FilterCont>
+          <EntriesList
+            selectEntry={selectEntry}
             sources={sources}
             items={items}
-          />
-        )}
-        {isDeleting && (
-          <DeleteConfirmation
-            entry={selectedEntry}
-            setIsDeleting={setIsDeleting}
-            sources={sources}
-            items={items}
-          />
-        )}
-        <Summary startDate={startDate} endDate={endDate} />
-        {/* <Summary startDate={'2022-01-01'} endDate={'2022-03-10'} /> */}
+          ></EntriesList>
+          {isEditing && (
+            <EditForm
+              entry={selectedEntry}
+              setIsEditing={setIsEditing}
+              sources={sources}
+              items={items}
+            />
+          )}
+          {isDeleting && (
+            <DeleteConfirmation
+              entry={selectedEntry}
+              setIsDeleting={setIsDeleting}
+              sources={sources}
+              items={items}
+            />
+          )}
+          <AllButtonCont>
+
+          <AllButton/>
+          </AllButtonCont>
+        </FilterCont>
+        {/* <Summary startDate={startDate} endDate={endDate} />
+        <Summary startDate={'2022-01-01'} endDate={'2022-03-10'} /> */}
       </Page>
       </>
     )
@@ -111,15 +131,15 @@ export default ViewDataPage;
 
 // styled components
 
-const Heading = styled.text`
+const Header = styled.text`
   font-size: 36px;
   font-weight: 300;
   color: black; 
 `;
 
-const SubHead = styled.text`
+const Subheader = styled.text`
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 400;
   color: black; 
 `;
 
@@ -127,31 +147,16 @@ const Page = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  width: 80vw;
+  width: 100vw;
   height: 100vh;
-  justify content-
-  background-color:blue;
-`
+`;
 
-const HeadCont = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 80%;
-  background-color:blue;
-`
-const TextCont = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 80vw;
-  background-color:green;
-`
 const HeaderCont = styled.div`
+  margin-top: 10vh;
   display:flex;
   flex-direction: row ;
   justify-content: space-between;
   width: 80vw;
-  background-color: red;
 `;
 
 const HeaderTextcont = styled.div`
@@ -161,18 +166,30 @@ const HeaderTextcont = styled.div`
 `;
 
 const ButtonCont = styled.div`
-  background-color: green ;
-  display:flex;
+  display: flex;
   flex-direction: row;
 `;
+
+const Spacer = styled.div`
+  display: flex;
+  height: 10%;
+`
+
+const FilterCont = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 80vw;
+`
 const EachButtonCont = styled.div`
-    margin: .3rem;
+  margin: .3rem;
 `;
 
-const Header = styled.text`
-  font-size: 24px;
-`;
-const Subheader = styled.text`
-  font-size: 12px;
-  color: #888888;
+const AllButtonCont = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-left: -75px;
+  width: 150px;
+  height: 50px;
 `;
