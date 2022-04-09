@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import LineGraph from '../components/Graph/LineGraph';
 import { dateToYMD } from '../common/date';
+import DateFilter from '../components/filter/DateFilter';
 
 const ViewGraphPage = () => {
   const [startDate, setStartDate] = useState('');
@@ -25,6 +26,19 @@ const ViewGraphPage = () => {
   return (
     <>
       <h1>Graph</h1>
+      {(startDate, endDate, today) && (
+        <DateFilter
+          startDate={startDate}
+          endDate={endDate}
+          today={today}
+          setStartDate={(e) => {
+            setStartDate(e.target.value);
+          }}
+          setEndDate={(e) => {
+            setEndDate(e.target.value);
+          }}
+        />
+      )}{' '}
       Filter by Date Range:
       <label for="startDate">Start Date</label>
       <input
