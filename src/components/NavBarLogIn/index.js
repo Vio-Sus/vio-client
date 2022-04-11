@@ -83,7 +83,7 @@ const ButtonUI = styled.button`
   font-weight:300;
   color:#000000;
   border-radius: 7.88px;
-  height: 27.57pxpx;
+  height: 27.57px;
   width: 83.51px;
   border: none;
   transition: 0.1s ease;
