@@ -66,6 +66,7 @@ const UserUI = styled(User)`
   flex-direction: column;
 `;
 
+
 const NavBar = ({ user }) => {
   return (
     <>
