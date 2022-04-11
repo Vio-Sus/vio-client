@@ -10,7 +10,7 @@ import Button from '../Button'
 const MainCont = styled.div`
   display: flex;
   width: 500px;
-  background-color: pink;
+  background-color:none;
 `;
 
 const Headings = styled.text`
@@ -23,15 +23,15 @@ const SourceCont=styled.div`
 
 const DateCont=styled.div`
   height: 50px;
-  background-color: red;
+  background-color: none;
 `;
 
 const ItemCont=styled.div`
- background-color: blue;
+ background-color: none;
 `;
 
 const WeightCont=styled.div`
-background-color: yellow;
+background-color: none;
 `;
 
 const DateItemWeightCont = styled.div`
