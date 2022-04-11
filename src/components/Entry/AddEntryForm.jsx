@@ -18,28 +18,30 @@ const Headings = styled.text`
 
 const SourceCont=styled.div`
   margin-bottom: 5%;
+  background-color: #fad;
 `;
 
 const DateCont=styled.div`
   background-color: none;
+  background-color: red;
 `;
 
 const ItemCont=styled.div`
   margin-left:10%;
- background-color: none;
+ background-color: green;
 `;
 
 //issues here
 const WeightCont=styled.div`
   margin-left:10%;
-  /* background-color: yellow; */
+  background-color: yellow;
 `;
 
 const DateItemWeightCont = styled.div`
   display: flex;
-  flex-wrap: none;
-  width: 500px;
-  /* background-color: aliceblue; */
+  flex-direction: row;
+  width: 600px;
+  background-color: pink;
 `;
 
 // here
@@ -116,6 +118,10 @@ const ButtonCont = styled.div`
   justify-content: center;
   width: 125%;
   margin-top:-3%;
+`;
+
+const ItemWeightCont = styled.div`
+ display: flex;
 `;
 
 const newEntryWeight = () => ({
@@ -233,7 +239,7 @@ export default function Form({ items, sources }) {
 
           {entryWeights.map((element, index) => (
             <div className="form-inline" key={element.id}>
-
+              <ItemWeightCont>
               <ItemCont>
               <Headings>Item</Headings>
               <br/>
@@ -266,6 +272,7 @@ export default function Form({ items, sources }) {
                 }}
               />
               </WeightCont>
+              </ItemWeightCont>
 
               {!!index && (
                 <button
