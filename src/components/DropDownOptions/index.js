@@ -4,7 +4,9 @@ import styled from "styled-components";
 
 
 const Cont = styled.div`
-  display: grid;
+
+  display: flex;
+  flex-direction: row;
   gap: 10px;
 `;
 
@@ -59,12 +61,18 @@ const Select = styled.select`
   background-repeat: no-repeat;
 `;
 
-export default function DropDownOptions({}) {
+export default function DropDownOptions({
+  text = 'Sub-Accounts :'
+}) {
+
   return (
     <Cont>
         <form id="make_checkbox_select">
-            <Label>Source:</Label>
-            <Select name="sources">
+          <div>
+            <Label>{text}</Label>
+          </div>
+          <div>
+            <Select name="Sub-Accounts">
                 <option data-count="1" value="Min's Tech">Min's Tech</option>
                 <option data-count="2" value="Vio Coffee">Vio Coffee</option>
                 <option data-count="3" value="Brick it OFF">Brick it off</option>
@@ -72,6 +80,7 @@ export default function DropDownOptions({}) {
 
 
             </Select>
+            </div>
 
 {/* <input type="submit" /> */}
 

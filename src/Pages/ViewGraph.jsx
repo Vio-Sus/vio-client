@@ -49,19 +49,23 @@ const DropdownCont = styled.div`
   flex-direction: row ;
   justify-content: flex-start;
   width: 80vw;
-  /* background-color: red; */
 `;
+
 
 const GraphMainCont = styled.div`
   width:100vw;
   display:flex;
   flex-direction: row;
-  /* background-color:green ; */
   justify-content: space-evenly ;
 `;
 
 const GraphCont = styled.div`
   width: 60vw;
+`;
+
+const DropCont = styled.div`
+  display:flex;
+  flex-direction: column ;
 `;
 // div end
 
@@ -111,6 +115,8 @@ const Label = styled.label`
   font-size: 10px;
   color: #464646;
 `;
+
+
 
 
 
@@ -169,38 +175,49 @@ const ViewGraphPage = () => {
 
       </HeaderCont>
       <DropdownCont>
-          <MultipleSelectCheckmarks/>
-          <MultipleSelectCheckmarks/>
-          <MultipleSelectCheckmarks/>
 
-          <DropDownOptions/>
-          Filter by Date Range:
-          <Label for="startDate">Start Date</Label>
-      <DateInput
-        type="date"
-        name="startDate"
-        id="startDate"
-        value={startDate}
-        max={today}
-        onChange={(e) => {
-          setStartDate(e.target.value);
-          // dateRangeFilter();
-        }}
-      />
+          <DropDownOptions text="Sub-Accounts"/>
+          <DropDownOptions text="Materials"/>
+          <DropCont>
+            <div>
+              <Label for="startDate">Start Date</Label>
+              </div>
+            <div>
+              <DateInput
+                type="date"
+                name="startDate"
+                id="startDate"
+                value={startDate}
+                max={today}
+                onChange={(e) => {
+                  setStartDate(e.target.value);
+                  // dateRangeFilter();
+                }}
+              />
+            </div>
+            </DropCont>
+          
 
-
-      <Label for="endDate">End Date</Label>
-      <DateInput
-        type="date"
-        name="endDate"
-        id="endDate"
-        value={endDate}
-        max={today}
-        onChange={(e) => {
-          setEndDate(e.target.value);
-          // dateRangeFilter();
-        }}
-      />
+          <DropCont>
+            <div>
+            <Label for="endDate">End Date</Label>
+            </div>
+            <div>
+            <DateInput
+              type="date"
+              name="endDate"
+              id="endDate"
+              value={endDate}
+              max={today}
+              onChange={(e) => {
+                setEndDate(e.target.value);
+                // dateRangeFilter();
+              }}
+              />
+              </div>
+      
+           
+            </DropCont>  
       </DropdownCont>
 
      <GraphMainCont>
