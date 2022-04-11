@@ -116,7 +116,7 @@ export default function EntriesList({ selectEntry, sources, items }) {
 
   return (
     <>
-      {/* {(startDate, endDate, today) && (
+      {(startDate, endDate, today) && (
         <DateFilter
           startDate={startDate}
           endDate={endDate}
@@ -128,7 +128,7 @@ export default function EntriesList({ selectEntry, sources, items }) {
             setEndDate(e.target.value);
           }}
         />
-      )}{' '} */}
+      )}{' '} 
       {/* Filter by Date Range: */}
       <Cont>
       <FilterCont>

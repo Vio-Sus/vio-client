@@ -3,6 +3,127 @@ import { postEntries } from '../../common/network';
 import { handleValidation } from '../../common/validation';
 import AddSourceModal from '../Source/AddSourceModal';
 import AddItemModal from '../Item/AddItemModal';
+import React from 'react';
+import styled from "styled-components";
+
+const MainCont = styled.div`
+  display: flex;
+  width: 500px;
+  background-color:none;
+`;
+
+const Headings = styled.text`
+  font-size:12px;
+`;
+
+const SourceCont=styled.div`
+  margin-bottom: 5%;
+  /* background-color: #fad; */
+`;
+
+const DateCont=styled.div`
+  background-color: none;
+  /* background-color: red; */
+`;
+
+const ItemCont=styled.div`
+  margin-left:10%;
+ //background-color: green;
+
+`;
+
+//issues here
+const WeightCont=styled.div`
+  margin-left:10%;
+  //background-color: yellow;
+`;
+
+const DateItemWeightCont = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 600px;
+  //background-color: pink;
+`;
+
+// here
+const Inputs = styled.input`
+  width: 152px;
+  height: 35px;
+  background-color: #fff;
+  border:1px solid #CBCBCB;
+  border-radius:7px;
+  text-align: center;
+`;
+
+const Select = styled.select`
+  width: 152px;
+  height: 38px;
+  background-color: #fff;
+  border-color: #CBCBCB;
+  border-radius:10px;
+  text-align: left;
+  height: 36px;
+  padding: 5px;
+  border-radius: 7px;
+  border: 0.5px solid #cbcbcb;
+  box-shadow: 0px 2px 4px 0px #7474741a;
+  cursor: pointer;
+  appearance: none;
+  &:focus {
+    outline: none;
+  }
+  background-image:
+    linear-gradient(45deg, transparent 50%, #80CF76 50%),
+    linear-gradient(135deg, #80CF76 50%, transparent 50%),
+    radial-gradient(#F1FAF0 70%, transparent 72%);
+  background-position:
+    119px 16px,
+    124px 16px,
+    114px 8px;
+  background-size:
+    5px 5px,
+    5px 5px,
+    1.5em 1.5em;
+  background-repeat: no-repeat;
+`;
+
+const AddItemButton = styled.button`
+  display: flex;
+  justify-content: center;
+  height: 20px;
+  width: 20px;
+  background-color: #e6e3e3;
+  border:1px solid #CBCBCB;
+  border-radius: 120px;
+`;
+
+const AddItemButCont = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 125%;
+  margin-top: 5%;
+`;
+
+const SaveButton = styled.button`
+  width:126px;
+  height:40px;
+  background-color: #EFEFEF;
+  font-size: 13px;
+  color:black;
+  border: none;
+  border-radius: 10px;
+`;
+
+const ButtonCont = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 125%;
+  margin-top:-3%;
+`;
+
+const ItemWeightCont = styled.div`
+ display: flex;
+`;
 
 const newEntryWeight = () => ({
   id: Date.now(),
@@ -83,18 +204,14 @@ export default function Form({ items, sources }) {
   };
 
   return (
-    <>
+    <MainCont>
       <div onClick={handleCancel}>
         <form onSubmit={handleSubmit} id="input-form" noValidate>
-          <label>Date:</label>
-          <input
-            name="created"
-            type="date"
-            onChange={(e) => handleFormValues(e)}
-          ></input>
-          <br />
-          <label>Source</label>
-          <select name="source_id" onChange={(e) => handleFormValues(e)}>
+
+      <SourceCont>
+        <Headings>Source</Headings>
+          <br/>
+          <Select name="source_id" onChange={(e) => handleFormValues(e)}>
             <option hidden>Select Source</option>
             {sources.map((source, key) => (
               <option key={key} value={source.source_id}>
@@ -102,12 +219,32 @@ export default function Form({ items, sources }) {
               </option>
             ))}
             <option value="add_source">Add Source...</option>
-          </select>
-          <br />
+          </Select>
+          <br/>
+      </SourceCont>
+
+
+          
+
+      <DateItemWeightCont>
+          <DateCont>
+            <Headings>Date:</Headings>
+            <br/>
+            {/* here */}
+              <Inputs
+                name="created"
+                type="date"
+                onChange={(e) => handleFormValues(e)}
+              />
+          </DateCont>
+
           {entryWeights.map((element, index) => (
             <div className="form-inline" key={element.id}>
-              <label>Item</label>
-              <select
+              <ItemWeightCont>
+              <ItemCont>
+              <Headings>Item</Headings>
+              <br/>
+              <Select
                 name="item_id"
                 onChange={(e) => {
                   e.target.value === 'add_item'
@@ -122,15 +259,21 @@ export default function Form({ items, sources }) {
                   </option>
                 ))}
                 <option value="add_item">Add Item...</option>
-              </select>
-              <label>Weight</label>
-              <input
+              </Select>
+              </ItemCont>
+
+              <WeightCont>
+              <Headings>Weight</Headings>
+              <br/>
+              <Inputs
                 type="number"
                 name="weight"
                 onChange={(e) => {
                   element.weight = Number(e.target.value);
                 }}
               />
+              </WeightCont>
+              </ItemWeightCont>
 
               {!!index && (
                 <button
@@ -141,27 +284,50 @@ export default function Form({ items, sources }) {
                   -
                 </button>
               )}
+ 
             </div>
+            
           ))}
+       </DateItemWeightCont>  
+
           <div className="error-messages">
             {errorMsgs.map((msg, key) => (
               <span key={key}>{msg}</span>
             ))}
           </div>
+          
+               
 
           <div className="button-section">
-            <button
+          <AddItemButCont>
+            <AddItemButton
               className="button add"
               type="button"
               onClick={() => addFormFields()}
             >
               +
-            </button>
+            </AddItemButton>
+          </AddItemButCont>
             <br />
             <br />
-            <button className="button submit" type="submit">
-              Save Entry
-            </button>
+
+            {/* needs onclick to graphs */}
+            {/* <Button 
+            className="button submit" 
+            type="submit"
+            buttoncolor = "#EFEFEF"
+            fontsize = "13px"
+            textcolor="black"
+            textweight="medium"
+            buttontext="Save Entry"
+            buttonwidth = '126px'
+            buttonheight=  '40px'
+            /> */}
+            <ButtonCont>
+            <SaveButton className="button submit" 
+            type="submit">Save Entry</SaveButton>
+            </ButtonCont>
+              
           </div>
         </form>
       </div>
@@ -169,6 +335,6 @@ export default function Form({ items, sources }) {
         <AddSourceModal setIsAddingSource={setIsAddingSource} />
       )}
       {isAddingItem && <AddItemModal setIsAddingItem={setIsAddingItem} />}
-    </>
+    </MainCont>
   );
 }

@@ -47,15 +47,17 @@ export default function AddItemModal({ setIsAddingItem }) {
     left: '50%',
     top: '50%',
     transform: 'translate(-50%, -50%)',
-    backgroundColor: (0, 0, 0),
+    backgroundColor: 'white',
     display: 'flex',
     allignItems: 'center',
     justifyContent: 'center',
   };
 
   const modalContent = {
-    width: '600px',
-    height: '250px',
+    minWidth: 'fit-content',
+    width: '25%',
+    height: 'fit-content',
+    padding: '0 2em 1em',
     boxShadow: '5px 10px 18px #888888',
     borderRadius: '10px',
   };
