@@ -2,10 +2,9 @@ import EntriesList from '../components/Entry/EntriesList';
 import DeleteConfirmation from '../components/Entry/DeleteEntryConfirmation';
 import EditForm from '../components/Entry/EditEntryForm';
 import { useEffect, useState } from 'react';
-import Summary from '../components/Summary/Summary';
+// import Summary from '../components/Summary/Summary';
 import { dateToYMD } from '../common/date';
 import styled from 'styled-components';
-
 
 import Button from '../components/Button';
 import AllButton from '../components/AllButton';

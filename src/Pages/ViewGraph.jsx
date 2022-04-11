@@ -147,50 +147,6 @@ const ViewGraphPage = () => {
 
 
   return (
-<<<<<<< HEAD
-    <>
-      <h1>Graph</h1>
-      {(startDate, endDate, today) && (
-        <DateFilter
-          startDate={startDate}
-          endDate={endDate}
-          today={today}
-          setStartDate={(e) => {
-            setStartDate(e.target.value);
-          }}
-          setEndDate={(e) => {
-            setEndDate(e.target.value);
-          }}
-        />
-      )}{' '}
-      Filter by Date Range:
-      <label for="startDate">Start Date</label>
-      <input
-        type="date"
-        name="startDate"
-        id="startDate"
-        value={startDate}
-        max={today}
-        onChange={(e) => {
-          setStartDate(e.target.value);
-          // dateRangeFilter();
-        }}
-      />
-      <label for="endDate">End Date</label>
-      <input
-        type="date"
-        name="endDate"
-        id="endDate"
-        value={endDate}
-        max={today}
-        onChange={(e) => {
-          setEndDate(e.target.value);
-          // dateRangeFilter();
-        }}
-      />
-      <LineGraph sourceName={'source 1'} />
-    </>
-=======
     <Maincont>
       <HeaderCont>
         <HeaderTextcont>
@@ -276,7 +232,6 @@ const ViewGraphPage = () => {
      </GraphMainCont>
 
     </Maincont>
->>>>>>> 58aca576330c6eeb0b780b4daf72c6bd26c2cd16
   );
 };
 
