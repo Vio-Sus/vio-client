@@ -53,7 +53,6 @@ const NavbarUI = styled.div`
 
 const Logo = styled.img`
   cursor: pointer;
-
 `;
 
 const Navigation = styled.div`
@@ -89,7 +88,6 @@ const ButtonUI = styled.button`
   border: none;
   transition: 0.1s ease;
   cursor: pointer;
-
   &:hover {
     background-color:#ffffff;
     ;
@@ -101,7 +99,7 @@ export default function NavBarLogIn({
 }){
   return (
     <NavbarUI>
-      <Logo src="./logo.png" onClick={onClick} style={{ width: 80 }}></Logo>
+      <Logo src="../logo.png" onClick={onClick} style={{ width: 80 }}></Logo>
       <Navigation>
        <LinkUI onClick={onClick}>Dashboard</LinkUI>
        <LinkUI onClick={onClick}>ViewData</LinkUI>
@@ -111,5 +109,3 @@ export default function NavBarLogIn({
     </NavbarUI>
   );
 }
-
-

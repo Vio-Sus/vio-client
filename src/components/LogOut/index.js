@@ -55,4 +55,3 @@ return (
 
   
   export default LogOut;
-  
