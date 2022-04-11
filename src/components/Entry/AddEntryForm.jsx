@@ -31,7 +31,7 @@ const ItemCont=styled.div`
 `;
 
 const WeightCont=styled.div`
-background-color: none;
+background-color: yellow;
 `;
 
 const DateItemWeightCont = styled.div`
