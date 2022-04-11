@@ -5,7 +5,6 @@ const Cont = styled.div`
     width: 109px;
     height: 37px;
     margin: 10px;
-    background-color: yellow;
 `;
 
 const Dot = styled.div`

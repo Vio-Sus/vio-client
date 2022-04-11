@@ -16,7 +16,7 @@ const Maincont = styled.div`
   flex-direction: column;
   justify-content: space-between ;
   width: 100vw;
-  background-color:#fad ;
+  /* background-color:#fad ; */
   align-items: center;
 `;
 
@@ -25,7 +25,7 @@ const HeaderCont = styled.div`
   flex-direction: row ;
   justify-content: space-between;
   width: 80vw;
-  background-color: red;
+  /* background-color: red; */
 `;
 
 const HeaderTextcont = styled.div`
@@ -35,7 +35,7 @@ const HeaderTextcont = styled.div`
 `;
 
 const ButtonCont = styled.div`
-  background-color: green ;
+  /* background-color: green ; */
   display:flex;
   flex-direction: row;
 `;
@@ -48,14 +48,14 @@ const DropdownCont = styled.div`
   flex-direction: row ;
   justify-content: flex-start;
   width: 80vw;
-  background-color: red;
+  /* background-color: red; */
 `;
 
 const GraphMainCont = styled.div`
   width:100vw;
   display:flex;
   flex-direction: row;
-  background-color:green ;
+  /* background-color:green ; */
   justify-content: space-evenly ;
 `;
 
@@ -102,13 +102,22 @@ const ViewGraphPage = () => {
         </HeaderTextcont>
               <ButtonCont>
                 <EachButtonCont> 
-                  <Button/>
+                  <Button 
+                  buttoncolor="#4A4A4A"
+                  buttontext="LIST VIEW"
+                  
+                  />
                 </EachButtonCont>
                 <EachButtonCont> 
-                  <Button/>
+                  <Button
+                  buttoncolor="#4A4A4A"
+                  buttontext="EXPORT"
+                  />
                 </EachButtonCont>
                 <EachButtonCont> 
-                  <Button/>
+                  <Button
+                  buttontext="Add New Entry"
+                  />
                 </EachButtonCont>
               </ButtonCont>
 
