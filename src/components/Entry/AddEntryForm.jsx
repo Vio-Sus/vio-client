@@ -18,30 +18,31 @@ const Headings = styled.text`
 
 const SourceCont=styled.div`
   margin-bottom: 5%;
-  background-color: #fad;
+  /* background-color: #fad; */
 `;
 
 const DateCont=styled.div`
   background-color: none;
-  background-color: red;
+  /* background-color: red; */
 `;
 
 const ItemCont=styled.div`
   margin-left:10%;
- background-color: green;
+ //background-color: green;
+
 `;
 
 //issues here
 const WeightCont=styled.div`
   margin-left:10%;
-  background-color: yellow;
+  //background-color: yellow;
 `;
 
 const DateItemWeightCont = styled.div`
   display: flex;
   flex-direction: row;
   width: 600px;
-  background-color: pink;
+  //background-color: pink;
 `;
 
 // here
