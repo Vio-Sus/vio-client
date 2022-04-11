@@ -1,7 +1,7 @@
 import Form from "../components/Entry/AddEntryForm";
 import React from 'react';
 import styled from "styled-components";
-import NavBarLogin from "../components/NavBarLogIn";
+
 
 const MainCont= styled.div`
 display: flex;
@@ -33,7 +33,7 @@ const RightCont = styled.div`
 const NewEntryPage = ({ sources, items }) => {
   return (
     <>
-    <NavBarLogin/>
+    
 
     <MainCont>
       <LeftCont>

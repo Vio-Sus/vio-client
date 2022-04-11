@@ -45,10 +45,10 @@ const DateItemWeightCont = styled.div`
 // here
 const Inputs = styled.input`
   width: 152px;
-  height: 36px;
+  height: 35px;
   background-color: #fff;
   border:1px solid #CBCBCB;
-  border-radius:10px;
+  border-radius:7px;
   text-align: center;
 `;
 
@@ -92,7 +92,6 @@ const AddItemButton = styled.button`
   background-color: #e6e3e3;
   border:1px solid #CBCBCB;
   border-radius: 120px;
-  
 `;
 
 const AddItemButCont = styled.div`
