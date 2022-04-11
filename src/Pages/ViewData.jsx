@@ -10,6 +10,7 @@ import styled from 'styled-components';
 import Button from '../components/Button';
 import AllButton from '../components/AllButton';
 
+
 const ViewDataPage = ({ sources, items }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [selectedEntry, setSelectedEntry] = useState(null);

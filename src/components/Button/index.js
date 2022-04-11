@@ -9,6 +9,7 @@ const Cont = styled.div`
     background-color: ${props => props.bgColor};
     border-radius: 7px;
     border:${props => props.border};
+    box-shadow: 0px 2px 4px 0px #7474741a;
     display: flex;
     align-items:center;
     justify-content: center;
