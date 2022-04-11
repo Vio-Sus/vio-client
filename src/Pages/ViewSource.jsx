@@ -122,7 +122,7 @@ const Heading = styled.text`
 
 const Subheading = styled.text`
   font-size:12px;
-  font-weight:400
+  font-weight:400;
   line-height:14px;
   color: #888888;
 `

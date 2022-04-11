@@ -42,7 +42,7 @@ function App() {
       {user && (
         <div className="App">
           <NavBar user={user} />
-          <NavBarLogIn/>
+          
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<DashboardPage />}></Route>
