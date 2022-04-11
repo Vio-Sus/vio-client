@@ -162,7 +162,7 @@ const SaveSource = styled.button`
               onChange={(e) => handleChange(e)}
             ></Input>
             <br />
-            <Label>Contact Number</Label>
+            <Label>Phone Number</Label>
             <br />
             <Input
               type="text"
