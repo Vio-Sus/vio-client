@@ -8,9 +8,10 @@ import Button from '../components/Button';
 import MultipleSelectCheckmarks from '../components/Materialtest';
 import GraphRightSideKey from '../components/GraphRightSideKey';
 import GraphLeftSideFilter from '../components/GraphLeftSideFilter';
+import DropDownOptions from '../components/DropDownOptions';
 
-//page styling
 
+//divs
 const Maincont = styled.div`
   display:flex;
   flex-direction: column;
@@ -62,6 +63,10 @@ const GraphMainCont = styled.div`
 const GraphCont = styled.div`
   width: 60vw;
 `;
+// div end
+
+
+//texts
 
 const Header = styled.text`
   font-size: 24px;
@@ -71,6 +76,43 @@ const Subheader = styled.text`
   font-size: 12px;
   color: #888888;
 `;
+
+//dropdown styling
+const DateInput = styled.input`
+  height: 36px;
+  max-width: 141px;
+  padding: 0 5px;
+  border-radius: 7px;
+  border: 0.5px solid #cbcbcb;
+  box-shadow: 0px 2px 4px 0px #7474741a;
+  cursor: pointer;
+  &:focus {
+    outline: none;
+  }
+  &::-webkit-calendar-picker-indicator {
+    opacity: 0;
+  }
+  background-image:
+    linear-gradient(45deg, transparent 50%, #80CF76 50%),
+    linear-gradient(135deg, #80CF76 50%, transparent 50%),
+    radial-gradient(#F1FAF0 70%, transparent 72%);
+  background-position:
+    120px 16px,
+    125px 16px,
+    115px 8px;
+  background-size:
+    5px 5px,
+    5px 5px,
+    1.5em 1.5em;
+  background-repeat: no-repeat;
+`;
+
+const Label = styled.label`
+  font-size: 10px;
+  color: #464646;
+`;
+
+
 
 
 const ViewGraphPage = () => {
@@ -83,6 +125,9 @@ const ViewGraphPage = () => {
   const todayDate = dateToYMD(todayObj);
   const defaultStartDate = dateToYMD(todayMinus100);
 
+  //for dropdown
+
+
   useEffect(() => {
     (async () => {
       try {
@@ -92,6 +137,7 @@ const ViewGraphPage = () => {
       } catch {}
     })();
   }, []);
+
 
   return (
     <Maincont>
@@ -126,9 +172,11 @@ const ViewGraphPage = () => {
           <MultipleSelectCheckmarks/>
           <MultipleSelectCheckmarks/>
           <MultipleSelectCheckmarks/>
+
+          <DropDownOptions/>
           Filter by Date Range:
-          <label for="startDate">Start Date</label>
-      <input
+          <Label for="startDate">Start Date</Label>
+      <DateInput
         type="date"
         name="startDate"
         id="startDate"
@@ -141,8 +189,8 @@ const ViewGraphPage = () => {
       />
 
 
-      <label for="endDate">End Date</label>
-      <input
+      <Label for="endDate">End Date</Label>
+      <DateInput
         type="date"
         name="endDate"
         id="endDate"
