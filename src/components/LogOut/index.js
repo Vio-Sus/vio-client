@@ -19,7 +19,7 @@ const Avatar = styled.img`
 const Username = styled.div`
   font-weight:400;
   color: #000000;
-  line-height;15.07px;
+  line-height:15.07px;
   font-size:11px;
 `
 

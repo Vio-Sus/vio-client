@@ -29,7 +29,7 @@ const LinkUI = styled.div`
   font-weight: 300;
   &:hover {
     color:#489CED;
-    ;
+  };
 `;
 
 
