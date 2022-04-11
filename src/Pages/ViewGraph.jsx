@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import LineGraph from '../components/Graph/LineGraph';
 import { dateToYMD } from '../common/date';
-import DateFilter from '../components/filter/DateFilter';
+import DateFilter from '../components/Filter/DateFilter';
 
 const ViewGraphPage = () => {
   const [startDate, setStartDate] = useState('');

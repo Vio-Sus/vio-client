@@ -7,6 +7,7 @@ const MainCont= styled.div`
 display: flex;
 justify-content: space-between;
 margin:10%;
+/* background-color: blue; */
 `;
 
 const Heading = styled.text`
@@ -17,6 +18,8 @@ display: flex;
 
 const LeftCont = styled.div`
   margin: 10px;
+  width: 50%;
+  /* background-color: aliceblue; */
 `;
 
 const RightCont = styled.div`

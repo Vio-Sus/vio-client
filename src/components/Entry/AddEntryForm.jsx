@@ -5,7 +5,6 @@ import AddSourceModal from '../Source/AddSourceModal';
 import AddItemModal from '../Item/AddItemModal';
 import React from 'react';
 import styled from "styled-components";
-import Button from '../Button'
 
 const MainCont = styled.div`
   display: flex;
@@ -22,23 +21,25 @@ const SourceCont=styled.div`
 `;
 
 const DateCont=styled.div`
-  height: 50px;
   background-color: none;
 `;
 
 const ItemCont=styled.div`
+  margin-left:10%;
  background-color: none;
 `;
 
+//issues here
 const WeightCont=styled.div`
-background-color: yellow;
+  margin-left:10%;
+  /* background-color: yellow; */
 `;
 
 const DateItemWeightCont = styled.div`
   display: flex;
   flex-wrap: none;
   width: 500px;
-  background-color: aliceblue;
+  /* background-color: aliceblue; */
 `;
 
 // here
@@ -57,14 +58,65 @@ const Select = styled.select`
   background-color: #fff;
   border-color: #CBCBCB;
   border-radius:10px;
-  text-align: center;
+  text-align: left;
+  height: 36px;
+  padding: 5px;
+  border-radius: 7px;
+  border: 0.5px solid #cbcbcb;
+  box-shadow: 0px 2px 4px 0px #7474741a;
+  cursor: pointer;
+  appearance: none;
+  &:focus {
+    outline: none;
+  }
+  background-image:
+    linear-gradient(45deg, transparent 50%, #80CF76 50%),
+    linear-gradient(135deg, #80CF76 50%, transparent 50%),
+    radial-gradient(#F1FAF0 70%, transparent 72%);
+  background-position:
+    119px 16px,
+    124px 16px,
+    114px 8px;
+  background-size:
+    5px 5px,
+    5px 5px,
+    1.5em 1.5em;
+  background-repeat: no-repeat;
 `;
 
 const AddItemButton = styled.button`
+  display: flex;
+  justify-content: center;
+  height: 20px;
+  width: 20px;
   background-color: #e6e3e3;
   border:1px solid #CBCBCB;
-  border-radius: 100px;
+  border-radius: 120px;
   
+`;
+
+const AddItemButCont = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 125%;
+  margin-top: 5%;
+`;
+
+const SaveButton = styled.button`
+  width:126px;
+  height:40px;
+  background-color: #EFEFEF;
+  font-size: 13px;
+  color:black;
+  border: none;
+  border-radius: 10px;
+`;
+
+const ButtonCont = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 125%;
+  margin-top:-3%;
 `;
 
 const newEntryWeight = () => ({
@@ -204,9 +256,6 @@ export default function Form({ items, sources }) {
               </Select>
               </ItemCont>
 
-
-          
-              
               <WeightCont>
               <Headings>Weight</Headings>
               <br/>
@@ -243,6 +292,7 @@ export default function Form({ items, sources }) {
                
 
           <div className="button-section">
+          <AddItemButCont>
             <AddItemButton
               className="button add"
               type="button"
@@ -250,12 +300,12 @@ export default function Form({ items, sources }) {
             >
               +
             </AddItemButton>
-
+          </AddItemButCont>
             <br />
             <br />
 
             {/* needs onclick to graphs */}
-            <Button 
+            {/* <Button 
             className="button submit" 
             type="submit"
             buttoncolor = "#EFEFEF"
@@ -265,7 +315,11 @@ export default function Form({ items, sources }) {
             buttontext="Save Entry"
             buttonwidth = '126px'
             buttonheight=  '40px'
-            />
+            /> */}
+            <ButtonCont>
+            <SaveButton className="button submit" 
+            type="submit">Save Entry</SaveButton>
+            </ButtonCont>
               
           </div>
         </form>
