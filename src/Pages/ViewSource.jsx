@@ -6,8 +6,6 @@ import EditSourceForm from '../components/Source/EditSourceForm';
 // import AddSourceForm from '../components/Source/AddSourceForm';
 import AddSourceModal from '../components/Source/AddSourceModal';
 
-import ContactInputHeadings from '../components/ContactInputHeadings';
-import ContactInputData from '../components/ContactInputData';
 import Materialtest from '../components/Materialtest';
 import Button from '../components/Button';
 import BotListNav from '../components/BotListNav';
@@ -34,7 +32,7 @@ const ViewSourcePage = ({ sources, items }) => {
 
   return (
     <>
-
+      <Page>
       <Top>
         <HeadingWrap>
           <Heading>View Sources</Heading>
@@ -42,16 +40,20 @@ const ViewSourcePage = ({ sources, items }) => {
         </HeadingWrap>
 
         <ButtonWrap>
+          <EachButtonCont>
           <Button buttoncolor = "#4A4A4A" buttontext="EXPORT" fontsize="12px" buttonwidth='126px' buttonheight='40px'></Button>
+          </EachButtonCont>
+          <EachButtonCont>
           <AddSourceButton onClick={addSource} src="PlusIcon.svg">Add New Source</AddSourceButton>
+          </EachButtonCont>
         </ButtonWrap>
         </Top>
 
         <DropDownWrap>
         <Materialtest></Materialtest>
-        <ClearWrap>
+        {/* <ClearWrap>
         <Button buttoncolor = "#FFFFFF" textcolor="000000"buttontext="Clear" fontsize="12px" buttonwidth='135px' buttonheight='36px' borderweight="1px solid grey" ></Button>
-       </ClearWrap>
+       </ClearWrap> */}
         </DropDownWrap>
         
        <Mid>
@@ -75,6 +77,7 @@ const ViewSourcePage = ({ sources, items }) => {
       </BotNavWrap>
 
       <Footer></Footer>
+      </Page>
     </>
   );
 };
@@ -101,12 +104,20 @@ display:flex;
 flex-direction:column;
 align-items:center;
 `
+const Page = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+`;
 
 const Top = styled.div`
+  margin-top: 10vh;
   display:flex;
-  margin-top:45px;
-  margin-left: 233px;
-  margin-right:233px;
+  flex-direction: row ;
+  justify-content: space-between;
+  width: 80vw;
 `
 
 const HeadingWrap = styled.div`
@@ -127,28 +138,29 @@ const Subheading = styled.text`
   color: #888888;
 `
 const ButtonWrap = styled.div`
-  justify-content: left;
-  justify-content:space-around;
-  display:flex;
-  width:300px;
-  position: relative;
-  left:47%;
-`
+  justify-content:space-evenly;
+  display: flex;
+  flex-direction: row;
+`;
+
+const EachButtonCont = styled.div`
+  margin: .3rem;
+`;
 
 const DropDownWrap = styled.div`
-margin-left: 225px;
-  margin-top:22px;
-  width:300px;
-  display:flex;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 80vw;
 `
-const ContactHeadingWrap = styled.div`
-  margin-top:15px;
-  margin-bottom:15px;
-`
-const ClearWrap = styled.div`
-margin-top:8px;
-margin-left:12px;
-`
+// const ContactHeadingWrap = styled.div`
+//   margin-top:15px;
+//   margin-bottom:15px;
+// `
+// const ClearWrap = styled.div`
+// margin-top:8px;
+// margin-left:12px;
+// `
 
 const Mid = styled.div`
 display:flex;
@@ -163,3 +175,4 @@ margin-top:400px;
 margin-bottom:100px;
 align-items:center;
 `
+
