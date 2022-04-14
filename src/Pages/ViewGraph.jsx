@@ -84,7 +84,8 @@ const Subheader = styled.text`
 //dropdown styling
 const DateInput = styled.input`
   height: 36px;
-  max-width: 141px;
+  width: 141px;
+  //change accordingly
   padding: 0 5px;
   border-radius: 7px;
   border: 0.5px solid #cbcbcb;

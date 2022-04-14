@@ -37,6 +37,7 @@ const DropDownBox = styled.select`
 
 const Select = styled.select`
   height: 36px;
+  width: 141px;
   padding: 5px;
   border-radius: 7px;
   border: 0.5px solid #cbcbcb;
