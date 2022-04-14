@@ -139,12 +139,9 @@ const Subheading = styled.text`
 `;
 
 const ButtonWrap = styled.div`
-  justify-content: left;
-  justify-content:space-around;
-  display:flex;
-  width:300px;
-  position: relative;
-  left:47%;
+  justify-content:space-evenly;
+  display: flex;
+  flex-direction: row;
 `;
 
 const ClearWrap = styled.div`

@@ -7,17 +7,21 @@ import React from 'react';
 import styled from 'styled-components';
 
 const MainCont = styled.div`
-  background-color: grey;
+  /* background-color: grey; */
 `;
 
 const Headings = styled.text`
+  display: flex;
+  margin-bottom: 5px;
   font-size: 12px;
+
 `;
 
 const SourceCont = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: pink;
+  margin-bottom: 3%;
+  /* background-color: pink; */
 `;
 
 const DateCont = styled.div`
@@ -25,7 +29,7 @@ const DateCont = styled.div`
   flex-direction: column;
   grid-column: 1;
   grid-row: 1;
-  background-color: red;
+  /* background-color: red; */
 `;
 
 const ItemCont = styled.div`
@@ -33,18 +37,22 @@ const ItemCont = styled.div`
   flex-direction: column;
   grid-column: 1;
   grid-row: 1;
-  background-color: green;
+  /* background-color: green; */
 `;
 
 const WeightCont = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 55px;
   grid-column: 2;
   grid-row: 1;
-  background-color: yellow;
+  /* background-color: yellow; */
 `;
 
 const ItemWeightPair = styled.div`
   display: grid;
   gap: 10px;
+  margin-bottom: 10px;
   grid-template-columns: 1fr 1fr 30px;
 `;
 
@@ -96,12 +104,13 @@ const Select = styled.select`
 `;
 
 const AddItemButton = styled.button`
-  justify-content: center;
   height: 20px;
   width: 20px;
   background-color: #e6e3e3;
   border: 1px solid #cbcbcb;
   border-radius: 120px;
+  margin-top:3%;
+  margin-bottom:3%;
 `;
 
 const SaveButton = styled.button`
@@ -115,6 +124,7 @@ const SaveButton = styled.button`
 `;
 
 const ButtonCont = styled.div`
+  display:flex;
   justify-content: center;
 `;
 
