@@ -23,7 +23,7 @@ export default function EntriesList({ selectEntry, sources, items }) {
   };
 
   const todayObj = new Date(new Date().toString());
-  const todayMinus100 = new Date(new Date().setDate(todayObj.getDate() - 100));
+  const todayMinus100 = new Date(new Date().setDate(todayObj.getDate() - 60));
   // useEffect(() => {
   //   getListOfEntries().then((result) => {
   //     console.log(result);
@@ -108,7 +108,7 @@ export default function EntriesList({ selectEntry, sources, items }) {
 
   return (
     <>
-      {/* {(startDate, endDate, today) && (
+      {(startDate, endDate, today) && (
         <DateFilter
           startDate={startDate}
           endDate={endDate}
@@ -120,32 +120,7 @@ export default function EntriesList({ selectEntry, sources, items }) {
             setEndDate(e.target.value);
           }}
         />
-      )}{' '} */}
-      Filter by Date Range:
-      <label for="startDate">Start Date</label>
-      <input
-        type="date"
-        name="startDate"
-        id="startDate"
-        value={startDate}
-        max={today}
-        onChange={(e) => {
-          setStartDate(e.target.value);
-          // dateRangeFilter();
-        }}
-      />
-      <label for="endDate">End Date</label>
-      <input
-        type="date"
-        name="endDate"
-        id="endDate"
-        value={endDate}
-        max={today}
-        onChange={(e) => {
-          setEndDate(e.target.value);
-          // dateRangeFilter();
-        }}
-      />
+      )}{' '}
       <br></br>
       Filter by source:
       <select id="sourceSelection" onChange={(e) => updateFilter()}>

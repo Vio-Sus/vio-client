@@ -1,36 +1,34 @@
 import { useState, useEffect } from 'react';
 
-export default function DateFilter(
-  startDate,
-  today,
-  endDate,
-  setStartDate,
-  setEndDate
-) {
-  const [thisStartDate, setThisStartDate] = useState(startDate);
-  const [thisEndDate, setThisEndDate] = useState(endDate);
-  const [thisToday, setThisToday] = useState(today);
+export default function DateFilter(props) {
+  const [thisStartDate, setThisStartDate] = useState(props.startDate);
+  const [thisEndDate, setThisEndDate] = useState(props.endDate);
+  const [thisToday, setThisToday] = useState(props.today);
 
   useEffect(() => {
-    setThisStartDate(startDate);
-    setThisEndDate(endDate);
-    setThisToday(today);
+    setThisStartDate(props.startDate);
+    setThisEndDate(props.endDate);
+    setThisToday(props.today);
+  }, []);
+
+  useEffect(() => {
+    setThisStartDate(props.startDate);
+    setThisEndDate(props.endDate);
+    setThisToday(props.today);
   }, [
     setThisStartDate,
     setThisEndDate,
     setThisToday,
-    startDate,
-    endDate,
-    today,
+    props.startDate,
+    props.endDate,
+    props.today,
   ]);
 
   console.log(
-    'inside dateFilter Component',
+    'inside dateFilter Component: ',
     thisStartDate,
     thisEndDate,
-    thisToday,
-    setStartDate,
-    setEndDate
+    thisToday
   );
 
   return (
@@ -44,7 +42,7 @@ export default function DateFilter(
           id="startDate"
           value={thisStartDate}
           max={thisToday}
-          onChange={setStartDate}
+          onChange={props.setStartDate}
         />
         <label for="endDate">End Date</label>
         <input
@@ -53,7 +51,7 @@ export default function DateFilter(
           id="endDate"
           value={thisEndDate}
           max={thisToday}
-          onChange={setEndDate}
+          onChange={props.setEndDate}
         />
       </>
     )

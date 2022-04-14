@@ -53,5 +53,7 @@ export async function getTotalWeights(startDate, endDate) {
 
 // graphs
 export async function getGraphDataset(startDate, endDate) {
-  return (await axios.get(`/api/graph/line/${startDate}/${endDate}`)).data;
+  let res = await axios.get(`/api/graph/line/${startDate}/${endDate}`);
+  return res;
+  // return (await axios.get(`/api/graph/line/${startDate}/${endDate}`)).data;
 }

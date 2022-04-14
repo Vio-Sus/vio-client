@@ -32,7 +32,7 @@ const ViewDataPage = ({ sources, items }) => {
   };
 
   const todayObj = new Date(new Date().toString());
-  const todayMinus100 = new Date(new Date().setDate(todayObj.getDate() - 100));
+  const todayMinus100 = new Date(new Date().setDate(todayObj.getDate() - 60));
   //set up dates for date input
   const todayDate = dateToYMD(todayObj);
   const defaultStartDate = dateToYMD(todayMinus100);

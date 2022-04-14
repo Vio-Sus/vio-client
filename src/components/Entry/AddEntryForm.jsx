@@ -18,11 +18,12 @@ export default function Form({ items, sources }) {
   const [isAddingItem, setIsAddingItem] = useState(false);
 
   const addSource = () => {
-    console.log('adding..........');
+    console.log('adding..........source');
     setIsAddingSource(true);
   };
 
   const addItem = () => {
+    console.log('adding..........item');
     setIsAddingItem(true);
   };
 
@@ -31,6 +32,7 @@ export default function Form({ items, sources }) {
     let newFormValues = formValues;
     // adding onto the copy
     if (e.target.value === 'add_source') {
+      handleCancel();
       addSource();
     } else if (e.target.name === 'created') {
       newFormValues[e.target.name] = e.target.value;
@@ -80,11 +82,20 @@ export default function Form({ items, sources }) {
   const handleCancel = () => {
     setIsAddingSource(false);
     setIsAddingItem(false);
+    return true;
   };
+
+  let suffix = null;
+  if (isAddingSource) {
+    suffix = <AddSourceModal setIsAddingSource={setIsAddingSource} />;
+  } else if (isAddingItem) {
+    suffix = <AddItemModal setIsAddingItem={setIsAddingItem} />;
+  }
+  console.log('get suffixed', suffix);
 
   return (
     <>
-      <div onClick={handleCancel}>
+      <div>
         <form onSubmit={handleSubmit} id="input-form" noValidate>
           <label>Date:</label>
           <input
@@ -111,7 +122,7 @@ export default function Form({ items, sources }) {
                 name="item_id"
                 onChange={(e) => {
                   e.target.value === 'add_item'
-                    ? addItem()
+                    ? handleCancel() && addItem()
                     : (element.item_id = Number(e.target.value));
                 }}
               >
@@ -165,10 +176,13 @@ export default function Form({ items, sources }) {
           </div>
         </form>
       </div>
+      {suffix}
+      {/* {isAddingSource && console.log('farts')}
       {isAddingSource && (
         <AddSourceModal setIsAddingSource={setIsAddingSource} />
       )}
-      {isAddingItem && <AddItemModal setIsAddingItem={setIsAddingItem} />}
+      <AddSourceModal setIsAddingSource={setIsAddingSource} />
+      {isAddingItem && <AddItemModal setIsAddingItem={setIsAddingItem} />} */}
     </>
   );
 }

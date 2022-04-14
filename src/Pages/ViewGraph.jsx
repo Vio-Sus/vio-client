@@ -4,6 +4,7 @@ import LineGraph from '../components/Graph/LineGraph';
 import { graphApi } from '../common/mockData';
 import { dateToYMD } from '../common/date';
 import { getGraphDataset} from '../common/network';
+import DateFilter from '../components/Filter/DateFilter';
 
 const ViewGraphPage = () => {
   // const [startDate, setStartDate] = useState('2022-03-01');
@@ -13,7 +14,7 @@ const ViewGraphPage = () => {
   const [today, setToday] = useState([]);
 
   const todayObj = new Date(new Date().toString());
-  const todayMinus100 = new Date(new Date().setDate(todayObj.getDate() - 100));
+  const todayMinus100 = new Date(new Date().setDate(todayObj.getDate() - 60));
   const todayDate = dateToYMD(todayObj);
   const defaultStartDate = dateToYMD(todayMinus100);
   const [xAxisLabels, setXAxisLabels] = useState([
@@ -39,6 +40,30 @@ const ViewGraphPage = () => {
     //   borderColor: 'rgb(53, 162, 235)',
     //   backgroundColor: 'rgba(53, 162, 235, 0.5)',
     // },
+    // {
+    //   label: 'Coffee Pods',
+    //   data: [10],
+    //   borderColor: 'rgb(53, 162, 235)',
+    //   backgroundColor: 'rgba(53, 162, 235, 0.5)',
+    // },
+    // {
+    //   label: 'Coffee Chaffs',
+    //   data: [50],
+    //   borderColor: 'rgb(53, 162, 235)',
+    //   backgroundColor: 'rgba(53, 162, 235, 0.5)',
+    // },
+    // {
+    //   label: 'Love',
+    //   data: [5],
+    //   borderColor: 'rgb(53, 162, 235)',
+    //   backgroundColor: 'rgba(53, 162, 235, 0.5)',
+    // },
+    // {
+    //   label: 'Sadness',
+    //   data: [null, null, null, null, null, null, null, null, 1000],
+    //   borderColor: 'rgb(53, 162, 235)',
+    //   backgroundColor: 'rgba(53, 162, 235, 0.5)',
+    // },
   ]);
 
   useEffect(() => {
@@ -51,20 +76,20 @@ const ViewGraphPage = () => {
         // need to have sums and the date
         // parse the response
         // set x AxisLabels
-        let labels = await generateXAxis('2022-01-01', '2022-03-16');
+        let labels = await generateXAxis(startDate, endDate);
         setXAxisLabels(labels);
         // make request for data from api
-        let sums = await getGraphDataset('2022-01-01', '2022-03-16');
+        let sums = await getGraphDataset(startDate, endDate);
         console.log('sums: ', sums);
         // parse data -> filter it by source
-        let sorted = await filterEntriesBySource(sums);
-        console.log('sorted: ', sorted);
-        // make datasets to give to each graph
-        let formated = await generateDataset(sorted, labels);
-        console.log('SOME RANDOM SHIIIIIIIIIT');
-        console.log('formatted: ', formated);
+        // let sorted = await filterEntriesBySource(sums);
+        // console.log('sorted: ', sorted);
+        // // make datasets to give to each graph
+        // let formated = await generateDataset(sorted, labels);
+        // console.log('SOME RANDOM SHIIIIIIIIIT');
+        // console.log('formatted: ', formated);
         // set something
-        setDatasets(formated);
+        setDatasets(sums['Cafe 1']);
       } catch {}
     })();
   }, []);
@@ -93,31 +118,19 @@ const ViewGraphPage = () => {
   return (
     <>
       <h1>Graph</h1>
-      Filter by Date Range:
-      <label for="startDate">Start Date</label>
-      <input
-        type="date"
-        name="startDate"
-        id="startDate"
-        value={startDate}
-        max={today}
-        onChange={(e) => {
-          setStartDate(e.target.value);
-          // dateRangeFilter();
-        }}
-      />
-      <label for="endDate">End Date</label>
-      <input
-        type="date"
-        name="endDate"
-        id="endDate"
-        value={endDate}
-        max={today}
-        onChange={(e) => {
-          setEndDate(e.target.value);
-          // dateRangeFilter();
-        }}
-      />
+      {(startDate, endDate, today) && (
+        <DateFilter
+          startDate={startDate}
+          endDate={endDate}
+          today={today}
+          setStartDate={(e) => {
+            setStartDate(e.target.value);
+          }}
+          setEndDate={(e) => {
+            setEndDate(e.target.value);
+          }}
+        />
+      )}{' '}
       {xAxisLabels && datasets ? (
         <LineGraph
           sourceName={'source 1'}
