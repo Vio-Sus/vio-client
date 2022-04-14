@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import React from 'react';
 import { motion } from "framer-motion";
 
+
 const Cont = styled(motion.div)`
     width:100px;
     height:25px;

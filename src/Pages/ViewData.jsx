@@ -9,7 +9,7 @@ import styled from 'styled-components';
 
 import Button from '../components/Button';
 import AllButton from '../components/AllButton';
-
+import EditEntryPopup from '../components/EditEntryPopup';
 
 const ViewDataPage = ({ sources, items }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -60,6 +60,7 @@ const ViewDataPage = ({ sources, items }) => {
     endDate && (
       <>
       <Page>
+      <Top>
       <HeaderCont>
         <HeaderTextcont>
                 <Header>List View</Header>
@@ -85,40 +86,39 @@ const ViewDataPage = ({ sources, items }) => {
                 </EachButtonCont>
               </ButtonCont>
       </HeaderCont>
-
+      </Top>
       <Spacer />
-
         {/* <TextCont>
           <Heading>List View</Heading>
           <SubHead>Here's an overview of the performance</SubHead>
         </TextCont> */}
-        <FilterCont>
-          <EntriesList
-            selectEntry={selectEntry}
-            sources={sources}
-            items={items}
-          ></EntriesList>
-          {isEditing && (
-            <EditForm
-              entry={selectedEntry}
-              setIsEditing={setIsEditing}
+        <Mid>
+        
+            <EntriesList
+              selectEntry={selectEntry}
               sources={sources}
               items={items}
-            />
-          )}
-          {isDeleting && (
-            <DeleteConfirmation
-              entry={selectedEntry}
-              setIsDeleting={setIsDeleting}
-              sources={sources}
-              items={items}
-            />
-          )}
-          <AllButtonCont>
+            >   
+            </EntriesList>
+            {isEditing && (
+              <EditForm
+                entry={selectedEntry}
+                setIsEditing={setIsEditing}
+                sources={sources}
+                items={items}
+              />
+            )}
+            {isDeleting && (
+              <DeleteConfirmation
+                entry={selectedEntry}
+                setIsDeleting={setIsDeleting}
+                sources={sources}
+                items={items}
+              />
+            )}
 
-          <AllButton/>
-          </AllButtonCont>
-        </FilterCont>
+
+        </Mid>
         {/* <Summary startDate={startDate} endDate={endDate} />
         <Summary startDate={'2022-01-01'} endDate={'2022-03-10'} /> */}
       </Page>
@@ -131,17 +131,29 @@ export default ViewDataPage;
 
 
 // styled components
+const Top = styled.div`
+  display:flex;
+  margin-top:45px;
+  margin-left: 233px;
+  margin-right:233px;
+`
+
+const Mid = styled.div`
+display:flex;
+flex-direction:column;
+align-items:center;
+`
 
 const Header = styled.text`
   font-size: 36px;
   font-weight: 300;
-  color: black; 
+  color: black;
 `;
 
 const Subheader = styled.text`
   font-size: 18px;
   font-weight: 400;
-  color: black; 
+  color: #888888;
 `;
 
 const Page = styled.div`
@@ -162,8 +174,7 @@ const HeaderCont = styled.div`
 
 const HeaderTextcont = styled.div`
   display:flex;
-  flex-direction: column ;
-
+  flex-direction: column;
 `;
 
 const ButtonCont = styled.div`
