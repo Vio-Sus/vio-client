@@ -21,12 +21,16 @@ const SourceCont = styled.div`
 `;
 
 const DateCont = styled.div`
+  display: flex;
+  flex-direction: column;
   grid-column: 1;
   grid-row: 1;
   background-color: red;
 `;
 
 const ItemCont = styled.div`
+  display: flex;
+  flex-direction: column;
   grid-column: 1;
   grid-row: 1;
   background-color: green;
