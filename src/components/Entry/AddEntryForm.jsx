@@ -270,11 +270,13 @@ export default function Form({ items, sources }) {
                   {!!index && (
                     <button
                       type="button"
+                      // src="delete.svg"
                       className="button remove"
                       onClick={() => removeFormFields(element)}
-                    >
-                      -
+                    > 
+                    -
                     </button>
+              
                   )}
                 </ItemWeightPair>
               ))}
