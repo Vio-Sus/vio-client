@@ -24,6 +24,7 @@ ChartJS.register(
 export default function LineGraph({ sourceName, xAxisLabels, datasets }) {
   const options = {
     responsive: true,
+    spanGaps: true,
     plugins: {
       legend: {
         position: 'top',

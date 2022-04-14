@@ -1,9 +1,13 @@
 import { useState, useEffect } from 'react';
-import { generateXAxis, filterEntriesBySource, generateDataset } from '../common/chartHelpers';
+import {
+  generateXAxis,
+  filterEntriesBySource,
+  generateDataset,
+} from '../common/chartHelpers';
 import LineGraph from '../components/Graph/LineGraph';
 import { graphApi } from '../common/mockData';
 import { dateToYMD } from '../common/date';
-import { getGraphDataset} from '../common/network';
+import { getGraphDataset } from '../common/network';
 import DateFilter from '../components/Filter/DateFilter';
 
 const ViewGraphPage = () => {
@@ -77,10 +81,13 @@ const ViewGraphPage = () => {
         // parse the response
         // set x AxisLabels
         let labels = await generateXAxis(startDate, endDate);
+        console.log(
+          `this is start date ${startDate} and i am end date ${endDate}`
+        );
         setXAxisLabels(labels);
         // make request for data from api
-        let sums = await getGraphDataset(startDate, endDate);
-        console.log('sums: ', sums);
+        let sums = await getGraphDataset(defaultStartDate, todayDate);
+        console.log('sums: ', sums.data);
         // parse data -> filter it by source
         // let sorted = await filterEntriesBySource(sums);
         // console.log('sorted: ', sorted);
@@ -89,7 +96,7 @@ const ViewGraphPage = () => {
         // console.log('SOME RANDOM SHIIIIIIIIIT');
         // console.log('formatted: ', formated);
         // set something
-        setDatasets(sums['Cafe 1']);
+        setDatasets(sums.data['Cafe 1']);
       } catch {}
     })();
   }, []);
@@ -101,9 +108,11 @@ const ViewGraphPage = () => {
         try {
           let labels = await generateXAxis(startDate, endDate);
           setXAxisLabels(labels);
+          console.log('labels are', labels);
+          let sums = await getGraphDataset(startDate, endDate);
+          setDatasets(sums.data['Cafe 1']);
         } catch {}
       } else {
-
       }
     })();
   }, [startDate, endDate]);
