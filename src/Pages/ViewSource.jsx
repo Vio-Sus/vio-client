@@ -100,11 +100,6 @@ const AddSourceButton = styled.div`
 `;
 
 const SourceListCont = styled.div`
-<<<<<<< HEAD
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-=======
 display:flex;
 flex-direction:column;
 align-items:center;
@@ -115,23 +110,15 @@ const Page = styled.div`
   align-items: center;
   width: 100vw;
   height: 100vh;
->>>>>>> 2574870682b4745794665e9e7f93391a89e1686a
 `;
 
 const Top = styled.div`
   margin-top: 10vh;
   display:flex;
-<<<<<<< HEAD
-  margin-top:45px;
-  margin-left: 233px;
-  margin-right:233px;
-`;
-=======
   flex-direction: row ;
   justify-content: space-between;
   width: 80vw;
 `
->>>>>>> 2574870682b4745794665e9e7f93391a89e1686a
 
 const HeadingWrap = styled.div`
   display:flex;
@@ -160,17 +147,9 @@ const ButtonWrap = styled.div`
   left:47%;
 `;
 
-const DropDownWrap = styled.div`
-  margin-left: 225px;
-  margin-top:22px;
-  width:300px;
-  display:flex;
-`;
-
 const ClearWrap = styled.div`
-  margin-top:8px;
-  margin-left:12px;
-`;
+  /* margin-top:8px;
+  margin-left:12px; */
   justify-content:space-evenly;
   display: flex;
   flex-direction: row;
