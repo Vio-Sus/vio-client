@@ -1,5 +1,121 @@
 import { useState, useEffect } from 'react';
 import { getEntry, updateEntry } from '../../common/network';
+import styled from 'styled-components';
+
+const EditFormCont = styled.form`
+  display: grid;
+  max-width: 300px;
+  grid-template-columns: 47% 47%;
+  gap: 20px;
+  font-size: 12px;
+`;
+
+const Cont = styled.div`
+  display: grid;
+  gap: 10px;
+`;
+
+const Label = styled.label`
+  font-size: 10px;
+  color: #464646;
+`;
+
+const DateInput = styled.input`
+  height: 36px;
+  max-width: 141px;
+  padding: 0 5px;
+  border-radius: 7px;
+  border: 0.5px solid #cbcbcb;
+  box-shadow: 0px 2px 4px 0px #7474741a;
+  cursor: pointer;
+  &:focus {
+    outline: none;
+  }
+  &::-webkit-calendar-picker-indicator {
+    opacity: 0;
+  }
+  background-image:
+    linear-gradient(45deg, transparent 50%, #80CF76 50%),
+    linear-gradient(135deg, #80CF76 50%, transparent 50%),
+    radial-gradient(#F1FAF0 70%, transparent 72%);
+  background-position:
+    120px 16px,
+    125px 16px,
+    115px 8px;
+  background-size:
+    5px 5px,
+    5px 5px,
+    1.5em 1.5em;
+  background-repeat: no-repeat;
+`;
+
+const Select = styled.select`
+  height: 36px;
+  padding: 5px;
+  border-radius: 7px;
+  border: 0.5px solid #cbcbcb;
+  box-shadow: 0px 2px 4px 0px #7474741a;
+  cursor: pointer;
+  appearance: none;
+  &:focus {
+    outline: none;
+  }
+  background-image:
+    linear-gradient(45deg, transparent 50%, #80CF76 50%),
+    linear-gradient(135deg, #80CF76 50%, transparent 50%),
+    radial-gradient(#F1FAF0 70%, transparent 72%);
+  background-position:
+    119px 16px,
+    124px 16px,
+    114px 8px;
+  background-size:
+    5px 5px,
+    5px 5px,
+    1.5em 1.5em;
+  background-repeat: no-repeat;
+`;
+
+const InputCont = styled.div`
+  height: 36px;
+  display: flex;
+  align-items: center;
+  max-width: 141px;
+  padding-left: 10px;
+  border-radius: 7px;
+  border: 0.5px solid #cbcbcb;
+  box-shadow: 0px 2px 4px 0px #7474741a;
+`;
+
+const WeightInput = styled.input`
+  max-width: 100px;
+  border: none;
+  background-color: transparent;
+  &:focus {
+    outline: none;
+  }
+`;
+
+const Suffix = styled.div`
+  position: relative;
+  color: #464646;
+  padding: 15px 15px 15px 0;
+`;
+
+const ButtonCont = styled.div`
+  margin: 20px;
+  grid-column-start: 1;
+  grid-column-end: 3;
+  gap: 40px;
+  display: flex;
+  justify-content: center;
+`;
+
+const Button = styled.button`
+  height: 30px;
+  width: 120px;
+  font-size: 12px;
+  cursor: pointer;
+`;
 
 export default function EditForm({ entry, setIsEditing, items, sources }) {
   // selected entry data
@@ -81,57 +197,62 @@ export default function EditForm({ entry, setIsEditing, items, sources }) {
 
   return (
     <>
-      <h3>Edit Single Item in Entry</h3>
-      <form id="edit-form">
-        <label>Collection date:</label>
-        <br />
-        <input
-          name="date"
-          type="date"
-          value={date}
-          onChange={(e) => handleChange(e)}
-        ></input>
-        <br />
-        <label>Source:</label>
-        <br />
-        <select
-          value={sourceId}
-          name="source"
-          onChange={(e) => handleChange(e)}
-        >
-          <option hidden>Select Source</option>
-          {sources.map((source, key) => (
-            <option key={key} value={source.source_id}>
-              {source.name}
-            </option>
-          ))}
-        </select>
-        <br />
-        <label>Item:</label>
-        <br />
-        <select value={itemId} name="item" onChange={(e) => handleChange(e)}>
-          <option hidden>Select Item</option>
-          {items.map((item, key) => (
-            <option key={key} value={item.item_id}>
-              {item.name}
-            </option>
-          ))}
-        </select>
-        <br />
-        <label>Weight:</label>
-        <br />
-        <input
-          type="number"
-          name="weight"
-          value={weight}
-          onInput={(e) => handleChange(e)}
-        />
-        <br />
-        <button type="button" onClick={handleSubmit}>
-          Save Edit
-        </button>
-        <button onClick={handleCancel}>Cancel</button>
-      </form>
+      <h3>Edit a Single Item in Entry</h3>
+      <EditFormCont id="edit-form">
+        <Cont>
+          <Label>Source:</Label>
+          <Select
+            value={sourceId}
+            name="source"
+            onChange={(e) => handleChange(e)}
+          >
+            <option hidden>Select Source</option>
+            {sources.map((source, key) => (
+              <option key={key} value={source.source_id}>
+                {source.name}
+              </option>
+            ))}
+          </Select>
+        </Cont>
+        <Cont>
+          <Label>Collection date:</Label>
+          <DateInput
+            name="date"
+            type="date"
+            value={date}
+            onChange={(e) => handleChange(e)}
+          ></DateInput>
+        </Cont>
+        <Cont>
+          <Label>Item:</Label>
+          <Select value={itemId} name="item" onChange={(e) => handleChange(e)}>
+            <option hidden>Select Item</option>
+            {items.map((item, key) => (
+              <option key={key} value={item.item_id}>
+                {item.name}
+              </option>
+            ))}
+          </Select>
+        </Cont>
+        <Cont>
+          <Label>Weight:</Label>
+          <InputCont>
+            <WeightInput
+              type="number"
+              name="weight"
+              value={weight}
+              onInput={(e) => handleChange(e)}
+            />
+            <Suffix>kg</Suffix>
+          </InputCont>
+        </Cont>
+        <ButtonCont>
+          <Button type="button" onClick={handleSubmit}>
+            Save Edits
+          </Button>
+          <Button onClick={handleCancel}>Cancel Edits</Button>
+        </ButtonCont>
+      </EditFormCont>
     </>
   );
 }

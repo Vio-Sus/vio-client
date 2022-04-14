@@ -1,4 +1,5 @@
-import React from 'react'
+import React, {useState, useEffect } from 'react'
+import { getSources } from '../../common/network';
 import styled from "styled-components";
 import { Checkbox } from 'semantic-ui-react'
 import ContactInputHeadings from '../ContactInputHeadings';
@@ -8,7 +9,7 @@ display:flex;
 flex-direction: row;
 background-color:${props=>props.bgcolor};
 height: 66px;
-width:90vw;
+width:1208px;
 `
 //name
 const UniqueCont = styled.div`
@@ -144,7 +145,17 @@ const ContactInputData = ({
     onClickDelete = () => {},
 
 }) => {
+    const [sources, setSources] = useState([]);
+    useEffect(() => {
+        (async () => {
+          try {
+            let [sources] = await Promise.all([getSources()]); // returns new promise with all data
+            setSources(sources || []);
+          } catch {}
+        })();
+      }, []);
     return <Cont bgcolor={bgcolor}>
+        
         <UniqueCont>
             <UniqueContLeft>
                 <Checkbox />
