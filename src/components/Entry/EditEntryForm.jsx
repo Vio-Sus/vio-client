@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { getEntry, updateEntry } from '../../common/network';
 import styled from 'styled-components';
+import CancelIcon from '@mui/icons-material/Cancel';
+
+import Button from '../Button';
 
 const EditFormCont = styled.form`
   display: grid;
@@ -15,14 +18,9 @@ const Cont = styled.div`
   gap: 10px;
 `;
 
-const Label = styled.label`
-  font-size: 10px;
-  color: #464646;
-`;
-
 const DateInput = styled.input`
-  height: 36px;
-  max-width: 141px;
+  height: 35px;
+  width: 150px;
   padding: 0 5px;
   border-radius: 7px;
   border: 0.5px solid #cbcbcb;
@@ -39,9 +37,9 @@ const DateInput = styled.input`
     linear-gradient(135deg, #80CF76 50%, transparent 50%),
     radial-gradient(#F1FAF0 70%, transparent 72%);
   background-position:
-    120px 16px,
-    125px 16px,
-    115px 8px;
+    139px 13px,
+    144px 13px,
+    134px 5px;
   background-size:
     5px 5px,
     5px 5px,
@@ -50,7 +48,8 @@ const DateInput = styled.input`
 `;
 
 const Select = styled.select`
-  height: 36px;
+  height: 35px;
+  width: 150px;
   padding: 5px;
   border-radius: 7px;
   border: 0.5px solid #cbcbcb;
@@ -65,9 +64,9 @@ const Select = styled.select`
     linear-gradient(135deg, #80CF76 50%, transparent 50%),
     radial-gradient(#F1FAF0 70%, transparent 72%);
   background-position:
-    119px 16px,
-    124px 16px,
-    114px 8px;
+    129px 13px,
+    134px 13px,
+    124px 5px;
   background-size:
     5px 5px,
     5px 5px,
@@ -76,7 +75,8 @@ const Select = styled.select`
 `;
 
 const InputCont = styled.div`
-  height: 36px;
+  height: 35px;
+  width: 150px;
   display: flex;
   align-items: center;
   max-width: 141px;
@@ -110,11 +110,48 @@ const ButtonCont = styled.div`
   justify-content: center;
 `;
 
-const Button = styled.button`
-  height: 30px;
-  width: 120px;
-  font-size: 12px;
-  cursor: pointer;
+const PopupWrap = styled.form `
+  display:flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items:center;
+  background-color: #F9F9F9;
+  box-shadow: 0px 2px 4px 0px #7474741a;
+  border: solid grey 2px;
+  position: absolute;
+  border-radius: 10px;
+  width: 40vw;
+  height: 35vh;
+`;
+
+const Label = styled.label`
+  font-size:12px;
+`;
+
+const CancelButton = styled.div `
+  display: flex;
+  justify-content: flex-end;
+  width: 40vw;
+  margin-right:  35px;
+  :hover {
+        cursor: pointer;
+    }
+`;
+
+const Spacer = styled.div `
+  display: flex;
+  justify-content: flex-end;
+  height: 25px;
+`;
+
+const Heading = styled.div`
+  font-size:24px;
+  font-weight:400;
+  width: 100%;
+  color:black;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 `;
 
 export default function EditForm({ entry, setIsEditing, items, sources }) {
@@ -197,62 +234,90 @@ export default function EditForm({ entry, setIsEditing, items, sources }) {
 
   return (
     <>
-      <h3>Edit a Single Item in Entry</h3>
-      <EditFormCont id="edit-form">
-        <Cont>
-          <Label>Source:</Label>
-          <Select
-            value={sourceId}
-            name="source"
-            onChange={(e) => handleChange(e)}
-          >
-            <option hidden>Select Source</option>
-            {sources.map((source, key) => (
-              <option key={key} value={source.source_id}>
-                {source.name}
-              </option>
-            ))}
-          </Select>
-        </Cont>
-        <Cont>
-          <Label>Collection date:</Label>
-          <DateInput
-            name="date"
-            type="date"
-            value={date}
-            onChange={(e) => handleChange(e)}
-          ></DateInput>
-        </Cont>
-        <Cont>
-          <Label>Item:</Label>
-          <Select value={itemId} name="item" onChange={(e) => handleChange(e)}>
-            <option hidden>Select Item</option>
-            {items.map((item, key) => (
-              <option key={key} value={item.item_id}>
-                {item.name}
-              </option>
-            ))}
-          </Select>
-        </Cont>
-        <Cont>
-          <Label>Weight:</Label>
-          <InputCont>
-            <WeightInput
-              type="number"
-              name="weight"
-              value={weight}
-              onInput={(e) => handleChange(e)}
+    <PopupWrap>
+      <CancelButton>
+          <CancelIcon 
+            sx={{ color: "#C4C4C4" }} 
+            onClick={handleCancel}>
+            Cancel
+            </CancelIcon>
+          </CancelButton>
+          <Heading>Edit Entry:</Heading>
+          <Spacer/>
+        <EditFormCont id="edit-form">
+          <Cont>
+            <Label>Sub Account:</Label>
+            <Select
+              value={sourceId}
+              name="source"
+              onChange={(e) => handleChange(e)}
+            >
+              <option hidden>Select Source</option>
+              {sources.map((source, key) => (
+                <option key={key} value={source.source_id}>
+                  {source.name}
+                </option>
+              ))}
+            </Select>
+          </Cont>
+          <Cont>
+            <Label>Collection date:</Label>
+            <DateInput
+              name="date"
+              type="date"
+              value={date}
+              onChange={(e) => handleChange(e)}
+            ></DateInput>
+          </Cont>
+          <Cont>
+            <Label>Material:</Label>
+            <Select value={itemId} name="item" onChange={(e) => handleChange(e)}>
+              <option hidden>Select Item</option>
+              {items.map((item, key) => (
+                <option key={key} value={item.item_id}>
+                  {item.name}
+                </option>
+              ))}
+            </Select>
+          </Cont>
+          <Cont>
+            <Label>Weight:</Label>
+            <InputCont>
+              <WeightInput
+                type="number"
+                name="weight"
+                value={weight}
+                onInput={(e) => handleChange(e)}
+              />
+              <Suffix>kg</Suffix>
+            </InputCont>
+          </Cont>
+          <ButtonCont>
+            <Button 
+              onClick={handleSubmit}
+              buttonwidth="150px"
+              buttonheight="30px"
+              buttoncolor='#80CF76'
+              textcolor='white'
+              buttontext="Save"
+              fontsize="14px"
+              textweight='450'
+              borderweight='solid #80CF76 1px'
             />
-            <Suffix>kg</Suffix>
-          </InputCont>
-        </Cont>
-        <ButtonCont>
-          <Button type="button" onClick={handleSubmit}>
-            Save Edits
-          </Button>
-          <Button onClick={handleCancel}>Cancel Edits</Button>
-        </ButtonCont>
-      </EditFormCont>
+            <Button 
+              onClick={handleCancel}
+              buttonwidth="150px"
+              buttonheight="30px"
+              buttontext="Cancel"
+              fontsize="14px"
+              textweight='500'
+              textcolor='#80CF76'
+              buttoncolor='white'
+              borderweight='solid lightgrey 1px'
+            />
+          </ButtonCont>
+        </EditFormCont>
+      </PopupWrap>
     </>
   );
 }

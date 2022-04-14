@@ -2,13 +2,15 @@ import { useState, useEffect } from 'react';
 import { getListOfEntries, getEntriesByDateRange } from '../../common/network';
 import styled from 'styled-components';
 // import Summary from '../Summary/Summary';
-// import DateFilter from '../filter/DateFilter';
+import DateFilter from '../filter/DateFilter';
 
 import IconButton from '@mui/material/IconButton';
 import CancelIcon from '@mui/icons-material/Cancel';
 import Delete from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AddCircle from '@mui/icons-material/AddCircle';
+import AllButton from '../AllButton';
+
 
 
 export default function EntriesList({ selectEntry, sources, items }) {
@@ -116,7 +118,7 @@ export default function EntriesList({ selectEntry, sources, items }) {
 
   return (
     <>
-      {(startDate, endDate, today) && (
+      {/* {(startDate, endDate, today) && (
         <DateFilter
           startDate={startDate}
           endDate={endDate}
@@ -128,10 +130,11 @@ export default function EntriesList({ selectEntry, sources, items }) {
             setEndDate(e.target.value);
           }}
         />
-      )}{' '} 
+      )}{' '}  */}
       {/* Filter by Date Range: */}
       <Cont>
       <FilterCont>
+
       <FilterType>
           <FilterText>Sub Accounts</FilterText>
           <Select id="sourceSelection" onChange={(e) => updateFilter()}>
@@ -144,12 +147,12 @@ export default function EntriesList({ selectEntry, sources, items }) {
           </Select>
         </FilterType>
 
-        <FilterType>
+        {/* <FilterType>
           <FilterText>Processor</FilterText>
           <Select>
             <option>All</option>
           </Select>
-        </FilterType>
+        </FilterType> */}
 
         <FilterType>
           <FilterText>Materials</FilterText>
@@ -194,24 +197,30 @@ export default function EntriesList({ selectEntry, sources, items }) {
             }}
           />
         </FilterType>
+        <AllButtonCont>
+          <AllButton/>
+        </AllButtonCont>
 
+{/* 
         <FilterType>
           <FilterText>Status</FilterText>
           <Select >
             <option>All</option>
           </Select>
-        </FilterType>
+        </FilterType> */}
+
       </FilterCont>
       
       <Table>
         <HeadingWrap>
           <DataRow>
+            <DivCont/>
             <TH> SUB ACCOUNTS</TH>
-            <TH> PROCESSOR </TH>
+            {/* <TH> PROCESSOR </TH> */}
             <TH> MATERIALS </TH>
             <TH> DATE </TH>
             <TH> WEIGHT </TH>
-            <TH> STATUS </TH>
+            {/* <TH> STATUS </TH> */}
             <TH></TH>
           </DataRow>
         </HeadingWrap>
@@ -220,14 +229,14 @@ export default function EntriesList({ selectEntry, sources, items }) {
             ? filteredEntries.map((entry, index) => (
                 <TR key={index}>
                   <DataRow>
-                    <TD> {entry.source_name}</TD>
-                    <TD> P1 </TD>
+                  <DivCont><SelectDiv/></DivCont>
+                    <TD>{entry.source_name}</TD>
+                    {/* <TD> P1 </TD> */}
                     <TD> {entry.item_name} </TD>
                     <TD> {entry.entry_date} </TD>
                     <TD> {entry.entry_weight} kg </TD>
-                    <TD> Processed </TD>
+                    {/* <TD> Processed </TD> */}
                   <TD>
-
                     <IconButton onClick={() => selectEntry(entry, 'edit')}>
                         <EditIcon/>
                     </IconButton>
@@ -285,6 +294,15 @@ const Select = styled.select`
   background-repeat: no-repeat;
 `;
 
+const AllButtonCont = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: -75px;
+  width: 150px;
+  height: 50px;
+`;
+
 const DateInput = styled.input`
   height: 30px;
   width: 153px;
@@ -314,11 +332,26 @@ const DateInput = styled.input`
   background-repeat: no-repeat;
 `;
 
+const DivCont = styled.div`
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 20px;  
+  margin-left: 15px;
+` 
+const SelectDiv = styled.div`
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  background-color: grey;
+`;
+
 const FilterCont = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 70vw;
+  width: 80vw;
 `;
 
 const Cont = styled.div`
