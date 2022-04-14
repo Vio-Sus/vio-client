@@ -66,7 +66,7 @@ const ViewSourcePage = ({ sources, items }) => {
       )}
       {isAddingSource && (
         <AddSourceModal setIsAddingSource={setIsAddingSource} />
-      )}
+      )} 
       </SourceListCont>
       </Mid> 
 
@@ -84,35 +84,35 @@ export default ViewSourcePage;
 //styled components 
 
 const AddSourceButton = styled.div`
-background-color: #80CF76;
-font-size: 12px;
-width: 135px;
-height:40px;
-border-radius:7px;
-display:flex;
-align-items:center;
-justify-content: center;
-color: white;
-font-weight:bold;
-`
+  background-color: #80CF76;
+  font-size: 12px;
+  width: 135px;
+  height:40px;
+  border-radius:7px;
+  display:flex;
+  align-items:center;
+  justify-content: center;
+  color: white;
+  font-weight:bold;
+`;
 
 const SourceListCont = styled.div`
-display:flex;
-flex-direction:column;
-align-items:center;
-`
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+`;
 
 const Top = styled.div`
   display:flex;
   margin-top:45px;
   margin-left: 233px;
   margin-right:233px;
-`
+`;
 
 const HeadingWrap = styled.div`
   display:flex;
   flex-direction:column;
-`
+`;
 
 const Heading = styled.text`
   font-size:24px;
@@ -125,7 +125,8 @@ const Subheading = styled.text`
   font-weight:400;
   line-height:14px;
   color: #888888;
-`
+`;
+
 const ButtonWrap = styled.div`
   justify-content: left;
   justify-content:space-around;
@@ -133,33 +134,30 @@ const ButtonWrap = styled.div`
   width:300px;
   position: relative;
   left:47%;
-`
+`;
 
 const DropDownWrap = styled.div`
-margin-left: 225px;
+  margin-left: 225px;
   margin-top:22px;
   width:300px;
   display:flex;
-`
-const ContactHeadingWrap = styled.div`
-  margin-top:15px;
-  margin-bottom:15px;
-`
+`;
+
 const ClearWrap = styled.div`
-margin-top:8px;
-margin-left:12px;
-`
+  margin-top:8px;
+  margin-left:12px;
+`;
 
 const Mid = styled.div`
-display:flex;
-flex-direction:column;
-align-items:center;
-`
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+`;
 
 const BotNavWrap = styled.div`
-//position:sticky;
-display:flex;
-margin-top:400px;
-margin-bottom:100px;
-align-items:center;
-`
+  position:sticky;
+  display:flex;
+  margin-top:400px;
+  margin-bottom:100px;
+  align-items:center;
+`;
