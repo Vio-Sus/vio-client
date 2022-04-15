@@ -31,8 +31,7 @@ const ViewSourcePage = ({ sources, items }) => {
   };
 
   return (
-    <>
-      <Page>
+    <Page>
       <Top>
         <HeadingWrap>
           <Heading>View Sources</Heading>
@@ -75,16 +74,22 @@ const ViewSourcePage = ({ sources, items }) => {
         <BotNavWrap>
       <BotListNav></BotListNav>
       </BotNavWrap>
-
+      <Space></Space>
       <Footer></Footer>
-      </Page>
-    </>
+    </Page>
   );
 };
 
 export default ViewSourcePage;
 
 //styled components 
+const Page = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+`;
 
 const AddSourceButton = styled.div`
 background-color: #80CF76;
@@ -104,13 +109,7 @@ display:flex;
 flex-direction:column;
 align-items:center;
 `
-const Page = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-`;
+
 
 const Top = styled.div`
   margin-top: 10vh;
@@ -170,11 +169,14 @@ flex-direction:column;
 align-items:center;
 `
 
+const Space = styled.div`
+  display:flex;
+  margin-top:100px;
+`
+
 const BotNavWrap = styled.div`
-//position:sticky;
-display:flex;
-margin-top:400px;
-margin-bottom:100px;
+position:absolute;
+margin-top:770px;
 align-items:center;
 `
 
