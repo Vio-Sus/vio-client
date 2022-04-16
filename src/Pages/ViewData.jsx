@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 // import Summary from '../components/Summary/Summary';
 import { dateToYMD } from '../common/date';
 import styled from 'styled-components';
+import { Routes, Route, Link } from "react-router-dom";
 
 import Button from '../components/Button';
 import AllButton from '../components/AllButton';
@@ -62,15 +63,17 @@ const ViewDataPage = ({ sources, items }) => {
       <Top>
       <HeaderCont>
         <HeaderTextcont>
-                <Header>List View</Header>
+                <Header>Your Entries</Header>
                 <Subheader>Here’s an overview of the performance.</Subheader>
         </HeaderTextcont>
               <ButtonCont>
-                <EachButtonCont> 
-                  <Button 
-                    buttontext='Graph View'
-                    buttoncolor='#4A4A4A'
-                  />
+                <EachButtonCont>
+                  <StyledLink to='/viewGraph'>
+                    <Button
+                      buttontext='Graph View'
+                      buttoncolor='#4A4A4A'
+                    />
+                  </StyledLink>
                 </EachButtonCont>
                 <EachButtonCont> 
                   <Button
@@ -78,10 +81,12 @@ const ViewDataPage = ({ sources, items }) => {
                     buttoncolor='#4A4A4A'
                   />
                 </EachButtonCont>
-                <EachButtonCont> 
-                  <Button
-                    buttontext='Add New Entry'
-                  />
+                <EachButtonCont>
+                  <StyledLink to='/NewEntry'> 
+                    <Button
+                      buttontext='New Entry'
+                    />
+                  </StyledLink>
                 </EachButtonCont>
               </ButtonCont>
       </HeaderCont>
@@ -132,16 +137,22 @@ export default ViewDataPage;
 // styled components
 const Top = styled.div`
   display:flex;
-  margin-top:45px;
+  margin-top: 7vh;
   margin-left: 233px;
   margin-right:233px;
-`
+`;
+
+const StyledLink = styled(Link)`
+  color: none;
+  text-decoration: none;
+  position: relative;
+`;
 
 const Mid = styled.div`
-display:flex;
-flex-direction:column;
-align-items:center;
-`
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+`;
 
 const Header = styled.text`
   font-size: 36px;
@@ -164,7 +175,6 @@ const Page = styled.div`
 `;
 
 const HeaderCont = styled.div`
-  margin-top: 10vh;
   display:flex;
   flex-direction: row ;
   justify-content: space-between;
@@ -183,24 +193,10 @@ const ButtonCont = styled.div`
 
 const Spacer = styled.div`
   display: flex;
-  height: 10%;
-`
+  height: 50px;
+`;
 
-const FilterCont = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 80vw;
-`
 const EachButtonCont = styled.div`
   margin: .3rem;
 `;
 
-const AllButtonCont = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-left: -75px;
-  width: 150px;
-  height: 50px;
-`;

@@ -2,13 +2,12 @@ import { useState, useEffect } from 'react';
 import { getListOfEntries, getEntriesByDateRange } from '../../common/network';
 import styled from 'styled-components';
 // import Summary from '../Summary/Summary';
-import DateFilter from '../filter/DateFilter';
+// import DateFilter from '../Filter/DateFilter';
 
 import IconButton from '@mui/material/IconButton';
-import CancelIcon from '@mui/icons-material/Cancel';
 import Delete from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import AddCircle from '@mui/icons-material/AddCircle';
+// import AddCircle from '@mui/icons-material/AddCircle';
 import AllButton from '../AllButton';
 
 
@@ -227,6 +226,7 @@ export default function EntriesList({ selectEntry, sources, items }) {
         <TBody>
           {filteredEntries
             ? filteredEntries.map((entry, index) => (
+              <EntryColumn>
                 <TR key={index}>
                   <DataRow>
                   <DivCont><SelectDiv/></DivCont>
@@ -245,8 +245,8 @@ export default function EntriesList({ selectEntry, sources, items }) {
                     </IconButton>
                     </TD>
                     </DataRow>
-       
                 </TR>
+              </EntryColumn>
               ))
             : null}
         </TBody>
@@ -337,14 +337,15 @@ const DivCont = styled.div`
   align-items: center;
   justify-content: center;
   height: 100%;
-  width: 20px;  
+  width: 25px;  
   margin-left: 15px;
 ` 
 const SelectDiv = styled.div`
   width: 20px;
   height: 20px;
   border-radius: 5px;
-  background-color: grey;
+  border: solid grey 2px;
+  background-color: white;
 `;
 
 const FilterCont = styled.div`
@@ -387,11 +388,19 @@ const DataRow = styled.tr`
   width: 80vw;
 `;
 
+const EntryColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 80vw;
+`;
+
 const TR = styled.tr`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   width: 80vw;
+  margin-top: 5px;
   background-color: #ECFAEE;
 `;
 
@@ -403,7 +412,6 @@ const TH = styled.th`
 `;
 
 const TD = styled.td`
-
   width: 200px;
   height: 40px;
   display: flex;
@@ -413,6 +421,6 @@ const TD = styled.td`
 
 const TBody = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
 `;

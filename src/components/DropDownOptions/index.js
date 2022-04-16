@@ -11,7 +11,8 @@ const Cont = styled.div`
 `;
 
 const Label = styled.label`
-  font-size: 10px;
+  font-size: 14px;
+  font-weight: 500;
   color: #464646;
 `;
 
@@ -36,8 +37,8 @@ const DropDownBox = styled.select`
 `;
 
 const Select = styled.select`
-  height: 36px;
-  width: 141px;
+  height: 30px;
+  width: 153px;
   padding: 5px;
   border-radius: 7px;
   border: 0.5px solid #cbcbcb;
@@ -52,9 +53,9 @@ const Select = styled.select`
     linear-gradient(135deg, #80CF76 50%, transparent 50%),
     radial-gradient(#F1FAF0 70%, transparent 72%);
   background-position:
-    119px 16px,
-    124px 16px,
-    114px 8px;
+    129px 13px,
+    134px 13px,
+    124px 5px;
   background-size:
     5px 5px,
     5px 5px,

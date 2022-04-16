@@ -4,25 +4,81 @@ import styled from 'styled-components';
 import EditIcon from '@mui/icons-material/Edit';
 import Delete from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
+import { TableBody } from 'semantic-ui-react';
 
 const T = styled.table`
   width: 80vw;
   margin-top:25px;
 `;
 
-const HeadingWrap = styled.thead`
+const EntryColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   width: 80vw;
-  color:#606F89;
-  font-size:12px;
-  font-weight:600;
 `;
 
-const TD = styled.td`
-background-color:#ECFAEE;
-width: 1000px;
-color:##2E3B52;
-`
+// const TD = styled.td`
+//   background-color:#ECFAEE;
+//   width: 80vw;
+//   color:##2E3B52;
+// `;
 
+const TD = styled.td`
+  width: 250px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const DataRow = styled.tr`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 80vw;
+  margin-top: 5px;
+  background-color: #ECFAEE;
+`;
+
+const HeadingWrap = styled.thead`
+  width: 80vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const Cont = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 80vw;
+`;
+
+const TH = styled.th`
+  font-size: 14px;
+  color: #606F89;
+  text-transform: uppercase;
+  width:250px;
+`;
+
+const TR = styled.tr`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 80vw;
+  margin-top: 5px;
+  background-color: #ECFAEE;
+`;
+
+const Table = styled.table`
+  width: 80vw;
+`;
+
+const TBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
 
 export default function SourceList({ selectSource }) {
   const [sources, setSources] = useState([]);
@@ -42,17 +98,19 @@ export default function SourceList({ selectSource }) {
   }, []);
 
   return (
-    <T>
-      <HeadingWrap>
-        <tr>
-          <th> SOURCE </th>
-          <th> ADDRESS </th>
-          <th> PHONE NUMBER</th>
-        </tr>
-      </HeadingWrap> 
-      <tbody>
+    <Cont>
+    <Table>
+        <HeadingWrap>
+          <TH> SOURCE </TH>
+          <TH> ADDRESS </TH>
+          <TH> PHONE NUMBER</TH>
+          <TH></TH>
+        </HeadingWrap>
+    <TBody>
+      <EntryColumn>
+        <TBody>
         {sources.map((source, index) => (
-          <tr key={index}>
+          <DataRow key={index}>
             <TD> {source.name} </TD>
             <TD> {source.address} </TD>
             <TD> {source.phone_number} </TD>
@@ -64,9 +122,12 @@ export default function SourceList({ selectSource }) {
                 <Delete sx={{ color: "#7D90B2" }}/>
               </IconButton>
             </TD>
-          </tr>
+          </DataRow>
         ))}
-      </tbody>
-    </T>
+        </TBody>
+      </EntryColumn>
+     </TBody>
+    </Table>
+    </Cont>
   );
 }

@@ -2,6 +2,69 @@ import { useState } from 'react';
 import { postSource } from '../../common/network';
 import styled from 'styled-components';
 import CancelIcon from '@mui/icons-material/Cancel';
+import Button from '../Button';
+
+const Label = styled.label`
+  font-size:14px;
+`;
+
+const PopupWrap = styled.form `
+  display:flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items:center;
+  background-color: #F9F9F9;
+  box-shadow: 0px 2px 4px 0px #7474741a;
+  border: solid grey 2px;
+  position: absolute;
+  border-radius: 10px;
+  width: 40vw;
+  height: 35vh;
+`;
+
+const Input = styled.input`
+  height: 35px;
+  width: 350px;
+  padding: 0 5px;
+  margin-bottom: 5%;
+  border-radius: 7px;
+  border: 0.5px solid #cbcbcb;
+  box-shadow: 0px 2px 4px 0px #7474741a;
+  cursor: pointer;
+  &:focus {
+    outline: none;
+  }
+  &::-webkit-calendar-picker-indicator {
+    opacity: 0;
+  }
+`;
+
+const ButtonCont = styled.div`
+  gap: 40px;
+  display: flex;
+  justify-content: center;
+`;
+
+const Heading = styled.text`
+  font-size:25px;
+  font-weight:400;
+  color:black;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+`;
+
+  const modalHeader = {
+    padding: '10px',
+  };
+
+  const modalBody = {
+    display:'flex',
+    alignItems:'center',
+    justifyContent:'center',
+    padding: '10px',
+  };
+
 
 export default function AddSourceModal({ setIsAddingSource }) {
   const [name, setName] = useState('');
@@ -54,133 +117,66 @@ export default function AddSourceModal({ setIsAddingSource }) {
     setIsAddingSource(false);
   };
 
-  const PopupWrap = styled.form `
-  display:flex;
-  justify-content:center;
-  align-items:center;
-`
-
-const CancelButton = styled.div `
-  margin-left:310px;
-  margin-top:2px;
-`
-
-const Heading = styled.text`
-  font-size:25px;
-  font-weight:400;
-  color:black;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-`;
-
-const Label = styled.label`
-  font-size:12px;
-`
-
-const Input = styled.input`
-width:193.01px;
-height:39.39px;
-border-radius:3.94px;
-border:0.79px solid #B1B1B1;
-margin-top:8px;
-margin-bottom:8px;
-`;
-
-const SaveSource = styled.button`
-  height: 30px;
-  width: 120px;
-  font-size: 12px;
-  cursor: pointer;
-`;
-  const modal = {
-    position: 'absolute',
-    left: '50%',
-    top: '50%',
-    transform: 'translate(-50%, -50%)',
-    backgroundColor: "#F9F9F9",
-    display: 'flex',
-    allignItems: 'center',
-    justifyContent: 'center',
-    zIndex:6,
-    border:'0.79px solid #B1B1B1',
-    borderRadius: '7.8px',
-
-  };
-  const modalContent = {
-    width:'360px',
-    height: '390px',
-    // boxShadow: "5px 10px 18px #888888",
-    border: 'solid 1 #B1B1B1',
-    borderRadius: '10px',
-  };
-
-  const modalHeader = {
-    padding: '10px',
-  };
-
-  const modalBody = {
-    display:'flex',
-    alignItems:'center',
-    justifyContent:'center',
-    padding: '10px',
-  };
-
-  const ButtonSection = {
-    display:'flex',
-    alignItems:'center',
-    justifyContent:'center',
-    padding: '10px',
-  };
-  
   return (
     <PopupWrap>
-    <div className="modal" style={modal}>
-      <div className="modalContent" style={modalContent}>
-        <div className="modalHeader" style={modalHeader}>
-          <CancelButton>
-        <CancelIcon sx={{ color: "#C4C4C4" }} onClick={handleCancel}>Cancel</CancelIcon>
-        </CancelButton>
+      <div className="modalHeader" style={modalHeader}>
         <Heading>Add a New Source</Heading>
-          
-        </div>
+      </div>
         <div className="modalBody" style={modalBody}>
-          <form onSubmit={handleSubmit} id="new-source-form" noValidate>
-            <Label>Name</Label>
-            <br />
-            <Input
-              name="name"
-              type="text"
-              onChange={(e) => handleChange(e)}
-            ></Input>
-            <br />
-            <Label>Address</Label>
-            <br />
-            <Input
-              name="address"
-              type="text"
-              onChange={(e) => handleChange(e)}
-            ></Input>
-            <br />
-            <Label>Phone Number</Label>
-            <br />
-            <Input
-              type="text"
-              name="phoneNumber"
-              onChange={(e) => handleChange(e)}
-            />
-
-            <div className="ButtonSection" style={ButtonSection}>
-              <SaveSource className="button submit" type="submit">
-                Save Source
-              </SaveSource>
-              <br />
-              {msg}
-            </div>
+          <form onSubmit={handleSubmit} id="new-source-form" >
+              <Label>Name</Label>
+                <br/>
+              <Input
+                name="name"
+                type="text"
+                value={name}
+                onChange={(e) => handleChange(e)}
+              />
+                <br/>
+              <Label>Address</Label>
+                <br/>
+              <Input
+                name="address"
+                type="text"
+                value={address}
+                onChange={(e) => handleChange(e)}
+              />
+                <br/>
+              <Label>Phone Number</Label>
+                <br/>
+              <Input
+                type="text"
+                name="phoneNumber"
+                value={phoneNumber}
+                onChange={(e) => handleChange(e)}
+              />
+              <ButtonCont>
+                <Button 
+                  onClick={handleSubmit}
+                  buttonwidth="150px"
+                  buttonheight="30px"
+                  buttoncolor='#80CF76'
+                  textcolor='white'
+                  buttontext="Add"
+                  fontsize="14px"
+                  textweight='450'
+                  borderweight='solid #80CF76 1px'
+                />
+                <Button 
+                  onClick={handleCancel}
+                  buttonwidth="150px"
+                  buttonheight="30px"
+                  buttontext="Cancel"
+                  fontsize="14px"
+                  textweight='500'
+                  textcolor='#80CF76'
+                  buttoncolor='white'
+                  borderweight='solid lightgrey 1px'
+                />
+              </ButtonCont>
+             <br/>
           </form>
         </div>
-      </div>
-    </div>
     </PopupWrap>
   );
 }

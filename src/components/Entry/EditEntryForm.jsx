@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
-import { getEntry, updateEntry } from '../../common/network';
+import { updateEntry } from '../../common/network';
 import styled from 'styled-components';
-import CancelIcon from '@mui/icons-material/Cancel';
+
 
 import Button from '../Button';
 
 const EditFormCont = styled.form`
   display: grid;
-  max-width: 300px;
+  max-width: 500px;
   grid-template-columns: 47% 47%;
   gap: 20px;
   font-size: 12px;
@@ -15,6 +15,7 @@ const EditFormCont = styled.form`
 
 const Cont = styled.div`
   display: grid;
+  justify-content:center;
   gap: 10px;
 `;
 
@@ -53,7 +54,7 @@ const Select = styled.select`
   padding: 5px;
   border-radius: 7px;
   border: 0.5px solid #cbcbcb;
-  box-shadow: 0px 2px 4px 0px #7474741a;
+  box-shadow: 0px 2px 4px 0px #747474;
   cursor: pointer;
   appearance: none;
   &:focus {
@@ -125,17 +126,7 @@ const PopupWrap = styled.form `
 `;
 
 const Label = styled.label`
-  font-size:12px;
-`;
-
-const CancelButton = styled.div `
-  display: flex;
-  justify-content: flex-end;
-  width: 40vw;
-  margin-right:  35px;
-  :hover {
-        cursor: pointer;
-    }
+  font-size: 14px;
 `;
 
 const Spacer = styled.div `
@@ -235,13 +226,6 @@ export default function EditForm({ entry, setIsEditing, items, sources }) {
   return (
     <>
     <PopupWrap>
-      <CancelButton>
-          <CancelIcon 
-            sx={{ color: "#C4C4C4" }} 
-            onClick={handleCancel}>
-            Cancel
-            </CancelIcon>
-          </CancelButton>
           <Heading>Edit Entry:</Heading>
           <Spacer/>
         <EditFormCont id="edit-form">

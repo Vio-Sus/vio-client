@@ -4,6 +4,7 @@ import { dateToYMD } from '../common/date';
 import DateFilter from '../components/filter/DateFilter'
 import styled from 'styled-components';
 import React from 'react';
+import { Routes, Route, Link } from "react-router-dom";
 
 import Button from '../components/Button';
 import MultipleSelectCheckmarks from '../components/Materialtest';
@@ -22,34 +23,19 @@ const Maincont = styled.div`
   align-items: center;
 `;
 
-const HeaderCont = styled.div`
-  display:flex;
-  flex-direction: row ;
-  justify-content: space-between;
-  width: 80vw;
-  /* background-color: red; */
-`;
-
-const HeaderTextcont = styled.div`
-  display:flex;
-  flex-direction: column ;
-
-`;
-
-const ButtonCont = styled.div`
-  /* background-color: green ; */
-  display:flex;
-  flex-direction: row;
-`;
-const EachButtonCont = styled.div`
-    margin: .3rem;
-`;
 
 const DropdownCont = styled.div`
   display:flex;
   flex-direction: row ;
-  justify-content: flex-start;
+  justify-content: space-between;
   width: 80vw;
+  
+`;
+
+const StyledLink = styled(Link)`
+  color: none;
+  text-decoration: none;
+  position: relative;
 `;
 
 
@@ -57,6 +43,7 @@ const GraphMainCont = styled.div`
   width:100vw;
   display:flex;
   flex-direction: row;
+  margin-top: 35px;
   justify-content: space-evenly ;
 `;
 
@@ -73,25 +60,17 @@ const DropCont = styled.div`
 
 //texts
 
-const Header = styled.text`
-  font-size: 24px;
-`;
-
-const Subheader = styled.text`
-  font-size: 12px;
-  color: #888888;
-`;
 
 //dropdown styling
 const DateInput = styled.input`
-  height: 36px;
-  width: 141px;
-  //change accordingly
-  padding: 0 5px;
+  height: 20px;
+  width: 153px;
+  padding: 5px;
   border-radius: 7px;
   border: 0.5px solid #cbcbcb;
   box-shadow: 0px 2px 4px 0px #7474741a;
   cursor: pointer;
+  appearance: none;
   &:focus {
     outline: none;
   }
@@ -103,9 +82,9 @@ const DateInput = styled.input`
     linear-gradient(135deg, #80CF76 50%, transparent 50%),
     radial-gradient(#F1FAF0 70%, transparent 72%);
   background-position:
-    120px 16px,
-    125px 16px,
-    115px 8px;
+    139px 13px,
+    144px 13px,
+    134px 5px;
   background-size:
     5px 5px,
     5px 5px,
@@ -114,12 +93,63 @@ const DateInput = styled.input`
 `;
 
 const Label = styled.label`
-  font-size: 10px;
+  font-size: 14px;
+  font-weight: 500;
   color: #464646;
 `;
 
+const Page = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+`;
 
+const Header = styled.text`
+  font-size: 36px;
+  font-weight: 300;
+  color: black;
+`;
 
+const Subheader = styled.text`
+  font-size: 18px;
+  font-weight: 400;
+  color: #888888;
+`;
+
+const HeaderCont = styled.div`
+  display:flex;
+  flex-direction: row ;
+  justify-content: space-between;
+  width: 80vw;
+`;
+
+const HeaderTextcont = styled.div`
+  display:flex;
+  flex-direction: column;
+`;
+
+const ButtonCont = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const Spacer = styled.div`
+  display: flex;
+  height: 50px;
+`;
+
+const EachButtonCont = styled.div`
+  margin: .3rem;
+`;
+
+const Top = styled.div`
+  display:flex;
+  margin-top: 7vh;
+  margin-left: 233px;
+  margin-right:233px;
+`;
 
 
 
@@ -148,37 +178,42 @@ const ViewGraphPage = () => {
 
 
   return (
+  <Page>
     <Maincont>
-      <HeaderCont>
-        <HeaderTextcont>
-                <Header>Graph View</Header>
-                <Subheader>Here’s an overview of the performance.</Subheader>
-        </HeaderTextcont>
-              <ButtonCont>
-                <EachButtonCont> 
-                  <Button 
-                  buttoncolor="#4A4A4A"
-                  buttontext="LIST VIEW"
-                  
-                  />
-                </EachButtonCont>
-                <EachButtonCont> 
-                  <Button
-                  buttoncolor="#4A4A4A"
-                  buttontext="EXPORT"
-                  />
-                </EachButtonCont>
-                <EachButtonCont> 
-                  <Button
-                  buttontext="Add New Entry"
-                  />
-                </EachButtonCont>
-              </ButtonCont>
-
-      </HeaderCont>
+      <Top>
+        <HeaderCont>
+          <HeaderTextcont>
+              <Header>Your Entries</Header>
+              <Subheader>Here’s an overview of the performance.</Subheader>
+          </HeaderTextcont>
+                <ButtonCont>
+                  <EachButtonCont>
+                    <StyledLink to='/viewData'>
+                      <Button 
+                        buttoncolor="#4A4A4A"
+                        buttontext="List View"
+                      />
+                    </StyledLink>
+                  </EachButtonCont>
+                  <EachButtonCont> 
+                    <Button
+                      buttoncolor="#4A4A4A"
+                      buttontext="Export"
+                    />
+                  </EachButtonCont>
+                  <EachButtonCont>
+                    <StyledLink to='/newEntry'>
+                      <Button
+                        buttontext="New Entry"
+                      />
+                    </StyledLink>
+                  </EachButtonCont>
+                </ButtonCont>
+        </HeaderCont>
+      </Top>
+      <Spacer></Spacer>
       <DropdownCont>
-
-          <DropDownOptions text="Sub-Accounts"/>
+          <DropDownOptions text="Sub Accounts"/>
           <DropDownOptions text="Materials"/>
           <DropCont>
             <div>
@@ -233,6 +268,7 @@ const ViewGraphPage = () => {
      </GraphMainCont>
 
     </Maincont>
+  </Page>
   );
 };
 
