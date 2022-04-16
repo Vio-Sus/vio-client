@@ -1,69 +1,49 @@
 import { useState, useEffect } from 'react';
 import { updateSource } from '../../common/network';
 import styled from 'styled-components';
-import CancelIcon from '@mui/icons-material/Cancel';
+
+import Button from '../Button';
+
+const Label = styled.label`
+  font-size:14px;
+`;
 
 const PopupWrap = styled.form `
   display:flex;
+  flex-direction: column;
   justify-content:center;
   align-items:center;
-`
-
-const CancelButton = styled.div `
-  margin-left:310px;
-  margin-top:2px;
-`
-
-const Heading = styled.text`
-  font-size:25px;
-  font-weight:400;
-  color:black;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  background-color: #F9F9F9;
+  box-shadow: 0px 2px 4px 0px #7474741a;
+  border: solid grey 2px;
+  position: absolute;
+  border-radius: 10px;
+  width: 40vw;
+  height: 35vh;
 `;
-
-const Label = styled.label`
-  font-size:12px;
-`
 
 const Input = styled.input`
-width:193.01px;
-height:39.39px;
-border-radius:3.94px;
-border:0.79px solid #B1B1B1;
-margin-top:8px;
-margin-bottom:8px;
-`;
-
-const SaveButton = styled.button`
-  height: 30px;
-  width: 120px;
-  font-size: 12px;
+  height: 35px;
+  width: 350px;
+  padding: 0 5px;
+  margin-bottom: 5%;
+  border-radius: 7px;
+  border: 0.5px solid #cbcbcb;
+  box-shadow: 0px 2px 4px 0px #7474741a;
   cursor: pointer;
+  &:focus {
+    outline: none;
+  }
+  &::-webkit-calendar-picker-indicator {
+    opacity: 0;
+  }
 `;
 
-const edit = {
-  position: 'absolute',
-  left: '50%',
-  top: '50%',
-  transform: 'translate(-50%, -50%)',
-  backgroundColor: "#F9F9F9",
-  display: 'flex',
-  allignItems: 'center',
-  justifyContent: 'center',
-  zIndex:6,
-  border:'0.79px solid #B1B1B1',
-  borderRadius: '7.8px',
-
-};
-const editContent = {
-  width:'360px',
-  height: '390px',
-  // boxShadow: "5px 10px 18px #888888",
-  border: 'solid 1 #B1B1B1',
-  borderRadius: '10px',
-};
+const ButtonCont = styled.div`
+  gap: 40px;
+  display: flex;
+  justify-content: center;
+`;
 
 const editHeader = {
   padding: '10px',
@@ -76,12 +56,15 @@ const editBody = {
   padding: '10px',
 };
 
-const ButtonSection = {
-  display:'flex',
-  alignItems:'center',
-  justifyContent:'center',
-  padding: '10px',
-};
+const Heading = styled.div`
+  font-size:24px;
+  font-weight:400;
+  width: 100%;
+  color:black;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+`;
 
 export default function EditSourceForm({ source, setIsEditing }) {
   // selected entry data
@@ -158,54 +141,64 @@ export default function EditSourceForm({ source, setIsEditing }) {
 
   return (
     <PopupWrap>
-      <div className="edit" style={edit}>
-      <div className="editContent" style={editContent}>
-        <div className="editHeader" style={editHeader}>
-       <CancelButton>
-        <CancelIcon sx={{ color: "#C4C4C4" }} onClick={handleCancel}>Cancel</CancelIcon>
-        </CancelButton>
-      <Heading>Edit Source</Heading>
-
+      <div className="editHeader" style={editHeader}>
+        <Heading>Edit Source</Heading>
       </div>
         <div className="editBody" style={editBody}>
-      <form id="edit-form">
-        <Label>Name</Label>
-        <br />
-        <Input
-          name="name"
-          type="text"
-          value={name}
-          onChange={(e) => handleChange(e)}
-        ></Input>
-        <br />
-        <Label>Address</Label>
-        <br />
-        <Input
-          type="text"
-          name="address"
-          value={address}
-          onInput={(e) => handleChange(e)}
-        />
-        <br />
-        <Label>Phone Number</Label>
-        <br />
-        <Input
-          type="text"
-          name="phoneNumber"
-          value={phoneNumber}
-          onInput={(e) => handleChange(e)}
-        />
-        
-        <div className="ButtonSection" style={ButtonSection}>
-        <SaveButton buttontext="save" onClick={handleSubmit}>
-          Save Edit
-        </SaveButton>
-        <br />
-            </div>
+        <form id="edit-form">
+          <Label>Name</Label>
+            <br/>
+          <Input
+            name="name"
+            type="text"
+            value={name}
+            onChange={(e) => handleChange(e)}
+          />
+            <br/>
+          <Label>Address</Label>
+            <br/>
+          <Input
+            type="text"
+            name="address"
+            value={address}
+            onInput={(e) => handleChange(e)}
+          />
+            <br/>
+          <Label>Phone Number</Label>
+            <br/>
+          <Input
+            type="text"
+            name="phoneNumber"
+            value={phoneNumber}
+            onInput={(e) => handleChange(e)}
+          />
+          <ButtonCont>
+              <Button 
+                onClick={handleSubmit}
+                buttonwidth="150px"
+                buttonheight="30px"
+                buttoncolor='#80CF76'
+                textcolor='white'
+                buttontext="Save"
+                fontsize="14px"
+                textweight='450'
+                borderweight='solid #80CF76 1px'
+              />
+              <Button 
+                onClick={handleCancel}
+                buttonwidth="150px"
+                buttonheight="30px"
+                buttontext="Cancel"
+                fontsize="14px"
+                textweight='500'
+                textcolor='#80CF76'
+                buttoncolor='white'
+                borderweight='solid lightgrey 1px'
+              />
+            </ButtonCont>
+            <br/>
           </form>
         </div>
-      </div>
-    </div>
     </PopupWrap>
   );
 }

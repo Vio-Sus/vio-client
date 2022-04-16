@@ -14,9 +14,9 @@ const Cont = styled.div`
     justify-content: center;
     align-items: center;
     margin: 20px;
+    box-shadow: 0px 2px 10px 0px black;
     border: 1px solid darkgray;
 `;
-
 
 const DeleteCont = styled.div`
     display: flex;
@@ -73,13 +73,6 @@ const Li = styled.text`
 
 const Bold = styled.text`
     font-weight: 600;
-`;
-
-const Buttons = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    margin-top: 20px;
 `;
 
 const ButtonCont = styled.div`

@@ -4,8 +4,8 @@ import PersonIcon from '@mui/icons-material/Person';
 
 const NavbarUI = styled.div`
   padding: 0 3%;
-  height: 100px;
-  background-color: #e9e9e9;
+  height: 80px;
+  background-color: #e1eedd;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -26,8 +26,10 @@ const Logo = styled.img`
 
 const ListUI = styled.ul`
   display: flex;
+  justify-content: flex-end;
+  margin-right: 5%;
   min-width: 600px;
-  gap: 3%;
+  gap: 5%;
   @media (max-width: 900px) {
     display: contents;
   }
@@ -79,17 +81,17 @@ const NavBar = ({ user }) => {
             <AnchorUI href="newEntry">New Entry</AnchorUI>
           </LinkUI>
           <LinkUI>
-            <AnchorUI href="viewData">View Data</AnchorUI>
+            <AnchorUI href="viewData">Data</AnchorUI>
           </LinkUI>
           <LinkUI>
-            <AnchorUI href="viewSource">View Sources</AnchorUI>
+            <AnchorUI href="viewSource">Sources</AnchorUI>
           </LinkUI>
           <LinkUI>
-            <AnchorUI href="viewItem">View Items</AnchorUI>
+            <AnchorUI href="viewItem">Items</AnchorUI>
           </LinkUI>
-          <LinkUI>
+          {/* <LinkUI>
             <AnchorUI href="viewGraph">View Graph</AnchorUI>
-          </LinkUI>
+          </LinkUI> */}
         </ListUI>
         <UserUI>
           <User>

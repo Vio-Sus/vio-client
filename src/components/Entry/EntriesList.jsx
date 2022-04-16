@@ -2,13 +2,12 @@ import { useState, useEffect } from 'react';
 import { getListOfEntries, getEntriesByDateRange } from '../../common/network';
 import styled from 'styled-components';
 // import Summary from '../Summary/Summary';
-import DateFilter from '../filter/DateFilter';
+// import DateFilter from '../Filter/DateFilter';
 
 import IconButton from '@mui/material/IconButton';
-import CancelIcon from '@mui/icons-material/Cancel';
 import Delete from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import AddCircle from '@mui/icons-material/AddCircle';
+// import AddCircle from '@mui/icons-material/AddCircle';
 import AllButton from '../AllButton';
 
 
@@ -338,14 +337,15 @@ const DivCont = styled.div`
   align-items: center;
   justify-content: center;
   height: 100%;
-  width: 20px;  
+  width: 25px;  
   margin-left: 15px;
 ` 
 const SelectDiv = styled.div`
   width: 20px;
   height: 20px;
   border-radius: 5px;
-  background-color: grey;
+  border: solid grey 2px;
+  background-color: white;
 `;
 
 const FilterCont = styled.div`
@@ -412,7 +412,6 @@ const TH = styled.th`
 `;
 
 const TD = styled.td`
-
   width: 200px;
   height: 40px;
   display: flex;

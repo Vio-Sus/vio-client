@@ -5,16 +5,18 @@ import AddSourceModal from '../Source/AddSourceModal';
 import AddItemModal from '../Item/AddItemModal';
 import React from 'react';
 import styled from 'styled-components';
+import Button from '../Button';
 
 const MainCont = styled.div`
   /* background-color: grey; */
 `;
 
-const Headings = styled.text`
+const TH = styled.div`
   display: flex;
-  margin-bottom: 5px;
-  font-size: 12px;
-
+  justify-content: flex-start;
+  font-size: 14px;
+  font-weight: 500;
+  color: #464646;
 `;
 
 const SourceCont = styled.div`
@@ -111,6 +113,8 @@ const AddItemButton = styled.button`
   border-radius: 120px;
   margin-top:3%;
   margin-bottom:3%;
+  display:flex;
+  justify-content: center;
 `;
 
 const SaveButton = styled.button`
@@ -126,6 +130,8 @@ const SaveButton = styled.button`
 const ButtonCont = styled.div`
   display:flex;
   justify-content: center;
+  align-items: center;
+  text-align: center;
 `;
 
 const newEntryWeight = () => ({
@@ -212,7 +218,7 @@ export default function Form({ items, sources }) {
         <form onSubmit={handleSubmit} id="input-form" noValidate>
           <MainCont>
             <SourceCont>
-              <Headings>Source</Headings>
+              <TH>Source</TH>
               <Select name="source_id" onChange={(e) => handleFormValues(e)}>
                 <option hidden>Select Source</option>
                 {sources.map((source, key) => (
@@ -226,7 +232,7 @@ export default function Form({ items, sources }) {
 
             <DateItemWeightCont>
               <DateCont>
-                <Headings>Date:</Headings>
+                <TH>Date:</TH>
                 <Inputs
                   name="created"
                   type="date"
@@ -237,7 +243,7 @@ export default function Form({ items, sources }) {
               {entryWeights.map((element, index) => (
                 <ItemWeightPair className="form-inline" key={element.id}>
                   <ItemCont>
-                    <Headings>Item</Headings>
+                    <TH>Item</TH>
                     <Select
                       name="item_id"
                       onChange={(e) => {
@@ -257,7 +263,7 @@ export default function Form({ items, sources }) {
                   </ItemCont>
 
                   <WeightCont>
-                    <Headings>Weight</Headings>
+                    <TH>Weight</TH>
                     <Inputs
                       type="number"
                       name="weight"
@@ -313,9 +319,10 @@ export default function Form({ items, sources }) {
             buttonheight=  '40px'
             /> */}
               <ButtonCont>
-                <SaveButton className="button submit" type="submit">
+                <Button buttontext='Save Entry' className="button submit" type="submit"/>
+                {/* <SaveButton className="button submit" type="submit">
                   Save Entry
-                </SaveButton>
+                </SaveButton> */}
               </ButtonCont>
             </div>
           </MainCont>
