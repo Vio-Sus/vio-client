@@ -99,16 +99,16 @@ const Page = styled.div`
 `;
 
 const AddSourceButton = styled.div`
-  background-color: #80cf76;
+  background-color: #80CF76;
   font-size: 12px;
   width: 135px;
-  height: 40px;
-  border-radius: 7px;
-  display: flex;
-  align-items: center;
+  height:40px;
+  border-radius:7px;
+  display:flex;
+  align-items:center;
   justify-content: center;
   color: white;
-  font-weight: bold;
+  font-weight:bold;
 `;
 
 const SourceListCont = styled.div`
@@ -126,8 +126,8 @@ const Top = styled.div`
 `;
 
 const HeadingWrap = styled.div`
-  display: flex;
-  flex-direction: column;
+  display:flex;
+  flex-direction:column;
 `;
 
 const Heading = styled.text`
@@ -138,12 +138,21 @@ const Heading = styled.text`
 
 const Subheading = styled.text`
   font-size:12px;
-  font-weight:400
+  font-weight:400;
   line-height:14px;
   color: #888888;
 `;
+
 const ButtonWrap = styled.div`
   justify-content: space-evenly;
+  display: flex;
+  flex-direction: row;
+`;
+
+const ClearWrap = styled.div`
+  /* margin-top:8px;
+  margin-left:12px; */
+  justify-content:space-evenly;
   display: flex;
   flex-direction: row;
 `;

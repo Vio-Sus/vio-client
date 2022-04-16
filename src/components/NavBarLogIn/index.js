@@ -42,6 +42,7 @@ import React from 'react';
 
 const NavbarUI = styled.div`
   padding: 0 3%;
+  /* width:100vw; */
   height: 100px;
   background-color:#E9E9E9;
   display: flex;
@@ -83,7 +84,7 @@ const ButtonUI = styled.button`
   font-weight:300;
   color:#000000;
   border-radius: 7.88px;
-  height: 27.57pxpx;
+  height: 27.57px;
   width: 83.51px;
   border: none;
   transition: 0.1s ease;

@@ -28,8 +28,8 @@ const LinkUI = styled.div`
   color: #000000;
   font-weight: 300;
   &:hover {
-    color:#489CED};
-    ;
+    color:#489CED;
+  };
 `;
 
 
@@ -47,4 +47,5 @@ export default function Footer({
     </FooterUI>
   );
 }
-  
+
+
