@@ -45,17 +45,23 @@ export default function SourceList({ selectSource }) {
     <T>
       <HeadingWrap>
         <tr>
-          <th> SOURCE </th>
-          <th> ADDRESS </th>
+          <th> NAME </th>
+          <th> TYPE </th>
           <th> PHONE NUMBER</th>
+          <th> ADDRESS </th>
+          <th> EMAIL </th>
+          <th> NOTES </th>
         </tr>
       </HeadingWrap> 
       <tbody>
         {sources.map((source, index) => (
           <tr key={index}>
             <TD> {source.name} </TD>
-            <TD> {source.address} </TD>
+            <TD> {source.type} </TD>
             <TD> {source.phone_number} </TD>
+            <TD> {source.address} </TD>
+            <TD> {source.email} </TD>
+            <TD> {source.notes} </TD>
             <TD>
               <IconButton onClick={() => selectSource(source)}>
               <EditIcon sx={{ color: "#7D90B2" }} ></EditIcon>

@@ -35,6 +35,10 @@ const DropDownBox = styled.select`
   }
 `;
 
+const Option = styled.option`
+background-color: #464646;
+`
+
 const Select = styled.select`
   height: 36px;
   width: 141px;
@@ -63,7 +67,7 @@ const Select = styled.select`
 `;
 
 export default function DropDownOptions({
-  text = 'Sub-Accounts :'
+  text = 'Type :'
 }) {
 
   return (
@@ -74,10 +78,9 @@ export default function DropDownOptions({
           </div>
           <div>
             <Select name="Sub-Accounts">
-                <option data-count="1" value="Min's Tech">Min's Tech</option>
-                <option data-count="2" value="Vio Coffee">Vio Coffee</option>
-                <option data-count="3" value="Brick it OFF">Brick it off</option>
-                <option data-count="4" value="Textile">Textile Refresh</option>
+                <Option data-count="1" value="All">All</Option>
+                <Option data-count="2" value="Source">Source</Option>
+                <Option data-count="3" value="Processor">Processor</Option>
 
 
             </Select>

@@ -1,16 +1,15 @@
 import { useState } from 'react';
-import React from 'react'
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 import SourcesList from '../components/Source/SourcesList';
 import EditSourceForm from '../components/Source/EditSourceForm';
 // import AddSourceForm from '../components/Source/AddSourceForm';
 import AddSourceModal from '../components/Source/AddSourceModal';
 
 import Button from '../components/Button';
-import Materialtest from '../components/Materialtest';
 import BotListNav from '../components/BotListNav';
 import Footer from '../components/Footer';
-
+import TypeDropDown from '../components/TypeDropDown';
 
 const ViewSourcePage = ({ sources, items }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -40,39 +39,47 @@ const ViewSourcePage = ({ sources, items }) => {
 
         <ButtonWrap>
           <EachButtonCont>
-          <Button buttoncolor = "#4A4A4A" buttontext="EXPORT" fontsize="12px" buttonwidth='126px' buttonheight='40px'></Button>
+            <Button
+              buttoncolor="#4A4A4A"
+              buttontext="EXPORT"
+              fontsize="12px"
+              buttonwidth="126px"
+              buttonheight="40px"
+            ></Button>
           </EachButtonCont>
           <EachButtonCont>
-          <AddSourceButton onClick={addSource} src="PlusIcon.svg">Add New Source</AddSourceButton>
+            <AddSourceButton onClick={addSource} src="PlusIcon.svg">
+              Add New Source
+            </AddSourceButton>
           </EachButtonCont>
         </ButtonWrap>
-        </Top>
+      </Top>
 
-        <DropDownWrap>
-        <Materialtest></Materialtest>
+        <DropdownCont>
+          <TypeDropDown text="Type" />
+        </DropdownCont>
         {/* <ClearWrap>
         <Button buttoncolor = "#FFFFFF" textcolor="000000"buttontext="Clear" fontsize="12px" buttonwidth='135px' buttonheight='36px' borderweight="1px solid grey" ></Button>
        </ClearWrap> */}
-        </DropDownWrap>
-        
-       <Mid>
-       <SourceListCont>
-      <SourcesList selectSource={selectSource}></SourcesList>
-      {isEditing && (
-        <EditSourceForm
-          source={selectedSource}
-          setIsEditing={setIsEditing}
-          setIsAddingSource={setIsAddingSource}
-        />
-      )}
-      {isAddingSource && (
-        <AddSourceModal setIsAddingSource={setIsAddingSource} />
-      )}
-      </SourceListCont>
-      </Mid> 
 
-        <BotNavWrap>
-      <BotListNav></BotListNav>
+      <Mid>
+        <SourceListCont>
+          <SourcesList selectSource={selectSource}></SourcesList>
+          {isEditing && (
+            <EditSourceForm
+              source={selectedSource}
+              setIsEditing={setIsEditing}
+              setIsAddingSource={setIsAddingSource}
+            />
+          )}
+          {isAddingSource && (
+            <AddSourceModal setIsAddingSource={setIsAddingSource} />
+          )}
+        </SourceListCont>
+      </Mid>
+
+      <BotNavWrap>
+        <BotListNav></BotListNav>
       </BotNavWrap>
       <Space></Space>
       <Footer></Footer>
@@ -82,7 +89,7 @@ const ViewSourcePage = ({ sources, items }) => {
 
 export default ViewSourcePage;
 
-//styled components 
+//styled components
 const Page = styled.div`
   display: flex;
   flex-direction: column;
@@ -92,42 +99,41 @@ const Page = styled.div`
 `;
 
 const AddSourceButton = styled.div`
-background-color: #80CF76;
-font-size: 12px;
-width: 135px;
-height:40px;
-border-radius:7px;
-display:flex;
-align-items:center;
-justify-content: center;
-color: white;
-font-weight:bold;
-`
+  background-color: #80cf76;
+  font-size: 12px;
+  width: 135px;
+  height: 40px;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+`;
 
 const SourceListCont = styled.div`
-display:flex;
-flex-direction:column;
-align-items:center;
-`
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 const Top = styled.div`
   margin-top: 10vh;
-  display:flex;
-  flex-direction: row ;
+  display: flex;
+  flex-direction: row;
   justify-content: space-between;
   width: 80vw;
-`
+`;
 
 const HeadingWrap = styled.div`
-  display:flex;
-  flex-direction:column;
-`
+  display: flex;
+  flex-direction: column;
+`;
 
 const Heading = styled.text`
-  font-size:24px;
-  font-weight:400;
-  color:black;
+  font-size: 24px;
+  font-weight: 400;
+  color: black;
 `;
 
 const Subheading = styled.text`
@@ -135,48 +141,67 @@ const Subheading = styled.text`
   font-weight:400
   line-height:14px;
   color: #888888;
-`
+`;
 const ButtonWrap = styled.div`
-  justify-content:space-evenly;
+  justify-content: space-evenly;
   display: flex;
   flex-direction: row;
 `;
 
 const EachButtonCont = styled.div`
-  margin: .3rem;
+  margin: 0.3rem;
 `;
 
-const DropDownWrap = styled.div`
+
+const DropdownCont = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-start;
   width: 80vw;
-`
+`;
 
+const DropCont = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
-// const ContactHeadingWrap = styled.div`
-//   margin-top:15px;
-//   margin-bottom:15px;
-// `
-// const ClearWrap = styled.div`
-// margin-top:8px;
-// margin-left:12px;
-// `
+//dropdown styling
+const DateInput = styled.input`
+  height: 36px;
+  width: 141px;
+  //change accordingly
+  padding: 0 5px;
+  border-radius: 7px;
+  border: 0.5px solid #cbcbcb;
+  box-shadow: 0px 2px 4px 0px #7474741a;
+  cursor: pointer;
+  &:focus {
+    outline: none;
+  }
+  &::-webkit-calendar-picker-indicator {
+    opacity: 0;
+  }
+  background-image: linear-gradient(45deg, transparent 50%, #80cf76 50%),
+    linear-gradient(135deg, #80cf76 50%, transparent 50%),
+    radial-gradient(#f1faf0 70%, transparent 72%);
+  background-position: 120px 16px, 125px 16px, 115px 8px;
+  background-size: 5px 5px, 5px 5px, 1.5em 1.5em;
+  background-repeat: no-repeat;
+`;
 
 const Mid = styled.div`
-display:flex;
-flex-direction:column;
-align-items:center;
-`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 const Space = styled.div`
-  display:flex;
-  margin-top:100px;
-`
+  display: flex;
+  margin-top: 100px;
+`;
 
 const BotNavWrap = styled.div`
-position:absolute;
-margin-top:770px;
-align-items:center;
-`
-
+  position: absolute;
+  margin-top: 770px;
+  align-items: center;
+`;
