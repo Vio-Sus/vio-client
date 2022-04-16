@@ -11,7 +11,9 @@ import ViewSourcePage from './Pages/ViewSource';
 import ViewItemPage from './Pages/ViewItem';
 import ViewGraphPage from './Pages/ViewGraph';
 import BluetoothPage from './Pages/Bluetooth';
+
 import NavBarLogIn from './components/NavBarLogIn';
+import { NavigateBeforeTwoTone } from '@mui/icons-material';
 
 function App() {
   const [sources, setSources] = useState([]);
@@ -42,7 +44,6 @@ function App() {
       {user && (
         <div className="App">
           <NavBar user={user} />
-          
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<DashboardPage />}></Route>

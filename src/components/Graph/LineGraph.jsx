@@ -23,11 +23,20 @@ ChartJS.register(
 );
 
 export default function LineGraph({ sourceName }) {
+
+
   const options = {
     responsive: true,
     plugins: {
       legend: {
-        position: 'top',
+        position: 'right',
+        labels: {
+          usePointStyle:true,
+          boxWidth: 6,
+          boxHeight: 6,
+          padding: 20,
+          //legend styling
+        }
       },
       title: {
         display: true,
@@ -54,6 +63,7 @@ export default function LineGraph({ sourceName }) {
         data: [1, 2, 3, 4, 5, 6, 7, 8],
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
+  
       },
       {
         label: 'Dataset 2',
@@ -63,6 +73,10 @@ export default function LineGraph({ sourceName }) {
       },
     ],
   };
+
+  
+
+  
 
   return <Line options={options} data={data} />;
 }
