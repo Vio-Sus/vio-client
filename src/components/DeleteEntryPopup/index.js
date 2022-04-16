@@ -82,6 +82,15 @@ const Buttons = styled.div`
     margin-top: 20px;
 `;
 
+const ButtonCont = styled.div`
+  margin: 20px;
+  grid-column-start: 1;
+  grid-column-end: 3;
+  gap: 40px;
+  display: flex;
+  justify-content: center;
+`;
+
 export default function DeleteEntryPopup({
    date = "03/05/2022",
    source = "VIO Coffee Shop",
@@ -111,7 +120,7 @@ export default function DeleteEntryPopup({
                     <Li><Bold>Processor: </Bold>{processor}</Li>
             </List>
 
-            <Buttons>
+            <ButtonCont>
                 <Button 
                     borderweight="solid 1px darkgray" 
                     textweight="regular" 
@@ -128,7 +137,7 @@ export default function DeleteEntryPopup({
                     buttontext="Delete"
                     onClick={onClickDelete}
                     />
-            </Buttons>
+            </ButtonCont>
         </Cont>
     );
 } 

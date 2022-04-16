@@ -227,6 +227,7 @@ export default function EntriesList({ selectEntry, sources, items }) {
         <TBody>
           {filteredEntries
             ? filteredEntries.map((entry, index) => (
+              <EntryColumn>
                 <TR key={index}>
                   <DataRow>
                   <DivCont><SelectDiv/></DivCont>
@@ -245,8 +246,8 @@ export default function EntriesList({ selectEntry, sources, items }) {
                     </IconButton>
                     </TD>
                     </DataRow>
-       
                 </TR>
+              </EntryColumn>
               ))
             : null}
         </TBody>
@@ -387,11 +388,19 @@ const DataRow = styled.tr`
   width: 80vw;
 `;
 
+const EntryColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 80vw;
+`;
+
 const TR = styled.tr`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   width: 80vw;
+  margin-top: 5px;
   background-color: #ECFAEE;
 `;
 
@@ -413,6 +422,6 @@ const TD = styled.td`
 
 const TBody = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
 `;
