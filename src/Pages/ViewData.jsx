@@ -6,54 +6,8 @@ import DeleteConfirmation from '../components/Entry/DeleteEntryConfirmation';
 import EditForm from '../components/Entry/EditEntryForm';
 import Button from '../components/Button';
 // import Summary from '../components/Summary/Summary';
-import { dateToYMD } from '../common/date';
-import styled from 'styled-components';
 import { Routes, Route, Link } from "react-router-dom";
 
-const Mid = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const Header = styled.text`
-  font-size: 36px;
-  font-weight: 300;
-  color: black;
-`;
-
-const Subheader = styled.text`
-  font-size: 18px;
-  font-weight: 400;
-  color: #888888;
-`;
-
-const Page = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-bottom: 10vh;
-`;
-
-const HeaderCont = styled.div`
-  margin: 10vh 0 5vh 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 80vw;
-`;
-
-const HeaderTextcont = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const ButtonCont = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: end;
-  gap: 10px;
-`;
 
 const ViewDataPage = ({ sources, items }) => {
   const [isEditing, setIsEditing] = useState(false);

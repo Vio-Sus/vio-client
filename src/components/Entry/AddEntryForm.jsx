@@ -5,29 +5,26 @@ import AddSourceModal from '../Source/AddSourceModal';
 import AddItemModal from '../Item/AddItemModal';
 import React from 'react';
 import styled from 'styled-components';
-<<<<<<< HEAD
 import Button from '../Button';
+import IconButton from '@mui/material/IconButton';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import Delete from '@mui/icons-material/Delete';
 
 const MainCont = styled.div`
   /* background-color: grey; */
 `;
-=======
-import IconButton from '@mui/material/IconButton';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import Delete from '@mui/icons-material/Delete';
->>>>>>> 429469aa830cec0ddbc3931535bc0d503094786c
+
+const Headings = styled.text``;
+
 
 const TH = styled.div`
   display: flex;
-<<<<<<< HEAD
   justify-content: flex-start;
   font-size: 14px;
   font-weight: 500;
   color: #464646;
-=======
   margin-bottom: 5px;
   font-size: 12px;
->>>>>>> 429469aa830cec0ddbc3931535bc0d503094786c
 `;
 
 const SourceCont = styled.div`
@@ -154,15 +151,10 @@ const AddItemButton = styled.button`
   background-color: #e6e3e3;
   border: 1px solid #cbcbcb;
   border-radius: 120px;
-<<<<<<< HEAD
   margin-top:3%;
   margin-bottom:3%;
   display:flex;
   justify-content: center;
-=======
-  margin-top: 3%;
-  margin-bottom: 3%;
->>>>>>> 429469aa830cec0ddbc3931535bc0d503094786c
 `;
 
 const SaveButton = styled.button`
@@ -280,67 +272,14 @@ export default function Form({ items, sources }) {
 
             <DateItemWeightCont>
               <DateCont>
-<<<<<<< HEAD
-                <TH>Date:</TH>
-                <Inputs
-=======
                 <Headings>Date:</Headings>
                 <DateInput
->>>>>>> 429469aa830cec0ddbc3931535bc0d503094786c
                   name="created"
                   type="date"
                   onChange={(e) => handleFormValues(e)}
                 />
               </DateCont>
               <ItemWeightCont>
-<<<<<<< HEAD
-              {entryWeights.map((element, index) => (
-                <ItemWeightPair className="form-inline" key={element.id}>
-                  <ItemCont>
-                    <TH>Item</TH>
-                    <Select
-                      name="item_id"
-                      onChange={(e) => {
-                        e.target.value === 'add_item'
-                          ? addItem()
-                          : (element.item_id = Number(e.target.value));
-                      }}
-                    >
-                      <option hidden>Select Item</option>
-                      {items.map((item) => (
-                        <option key={item.item_id} value={item.item_id}>
-                          {item.name}
-                        </option>
-                      ))}
-                      <option value="add_item">Add Item...</option>
-                    </Select>
-                  </ItemCont>
-
-                  <WeightCont>
-                    <TH>Weight</TH>
-                    <Inputs
-                      type="number"
-                      name="weight"
-                      onChange={(e) => {
-                        element.weight = Number(e.target.value);
-                      }}
-                    />
-                  </WeightCont>
-
-                  {!!index && (
-                    <button
-                      type="button"
-                      // src="delete.svg"
-                      className="button remove"
-                      onClick={() => removeFormFields(element)}
-                    > 
-                    -
-                    </button>
-              
-                  )}
-                </ItemWeightPair>
-              ))}
-=======
                 {entryWeights.map((element, index) => (
                   <ItemWeightPair className="form-inline" key={element.id}>
                     <ItemCont>
@@ -388,7 +327,6 @@ export default function Form({ items, sources }) {
                     )}
                   </ItemWeightPair>
                 ))}
->>>>>>> 429469aa830cec0ddbc3931535bc0d503094786c
               </ItemWeightCont>
             </DateItemWeightCont>
 

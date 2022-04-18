@@ -112,20 +112,13 @@ const Top = styled.div`
   flex-direction: row ;
   justify-content: space-between;
   width: 80vw;
-<<<<<<< HEAD
 `
 const Header = styled.text`
   font-size: 36px;
   font-weight: 300;
   color: black;
-=======
 `;
 
-const HeadingWrap = styled.div`
-  display:flex;
-  flex-direction:column;
->>>>>>> 429469aa830cec0ddbc3931535bc0d503094786c
-`;
 
 const Subheader = styled.text`
   font-size: 18px;

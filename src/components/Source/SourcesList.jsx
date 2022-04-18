@@ -6,11 +6,6 @@ import Delete from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import { TableBody } from 'semantic-ui-react';
 
-const Table = styled.table`
-  width: 80vw;
-  margin-top: 25px;
-`;
-
 const EntryColumn = styled.div`
   display: flex;
   flex-direction: column;
