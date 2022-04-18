@@ -37,10 +37,7 @@ const Header = styled.text`
 const LeftCont = styled.div`
   margin: 10px;
   width: 50%;
-<<<<<<< HEAD
   // background-color: aliceblue;
-=======
->>>>>>> 429469aa830cec0ddbc3931535bc0d503094786c
 `;
 
 const RightCont = styled.div`
@@ -49,13 +46,9 @@ const RightCont = styled.div`
   border-radius: 10px;
   background-color: #e9e9e9;
   text-align: center;
-<<<<<<< HEAD
   display: flex;
   justify-content: center;
   align-items: center;
-=======
-  padding: 20px;
->>>>>>> 429469aa830cec0ddbc3931535bc0d503094786c
 `;
 
 const NewEntryPage = ({ sources, items }) => {

@@ -98,7 +98,6 @@ export default function SourceList({ selectSource }) {
   }, []);
 
   return (
-<<<<<<< HEAD
     <Cont>
     <Table>
         <HeadingWrap>
@@ -116,30 +115,12 @@ export default function SourceList({ selectSource }) {
             <TD> {source.address} </TD>
             <TD> {source.phone_number} </TD>
             <TD>
-=======
-    <Table>
-      <HeadingWrap>
-        <tr>
-          <th> SOURCE </th>
-          <th> ADDRESS </th>
-          <th> PHONE NUMBER</th>
-        </tr>
-      </HeadingWrap>
-      <tbody>
-        {sources.map((source, index) => (
-          <TR key={index}>
-            <td> {source.name} </td>
-            <td> {source.address} </td>
-            <td> {source.phone_number} </td>
-            <td>
->>>>>>> 429469aa830cec0ddbc3931535bc0d503094786c
               <IconButton onClick={() => selectSource(source)}>
                 <EditIcon sx={{ color: '#7D90B2' }}></EditIcon>
               </IconButton>
               <IconButton onClick={() => selectSource(source, 'delete')}>
                 <Delete sx={{ color: '#7D90B2' }} />
               </IconButton>
-<<<<<<< HEAD
             </TD>
           </DataRow>
         ))}
@@ -148,12 +129,5 @@ export default function SourceList({ selectSource }) {
      </TBody>
     </Table>
     </Cont>
-=======
-            </td>
-          </TR>
-        ))}
-      </tbody>
-    </Table>
->>>>>>> 429469aa830cec0ddbc3931535bc0d503094786c
   );
 }

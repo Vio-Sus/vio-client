@@ -6,12 +6,9 @@ import DeleteConfirmation from '../components/Entry/DeleteEntryConfirmation';
 import EditForm from '../components/Entry/EditEntryForm';
 import Button from '../components/Button';
 // import Summary from '../components/Summary/Summary';
-<<<<<<< HEAD
 import { dateToYMD } from '../common/date';
 import styled from 'styled-components';
 import { Routes, Route, Link } from "react-router-dom";
-=======
->>>>>>> 429469aa830cec0ddbc3931535bc0d503094786c
 
 const Mid = styled.div`
   display: flex;
