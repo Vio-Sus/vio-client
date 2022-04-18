@@ -39,26 +39,18 @@ const ViewSourcePage = ({ sources, items }) => {
 
         <ButtonWrap>
           <EachButtonCont>
-            <Button
-              buttoncolor="#4A4A4A"
-              buttontext="EXPORT"
-              fontsize="12px"
-              buttonwidth="126px"
-              buttonheight="40px"
-            ></Button>
+            <Button buttontext="Export" buttoncolor="#4A4A4A" />
           </EachButtonCont>
           <EachButtonCont>
-            <AddSourceButton onClick={addSource} src="PlusIcon.svg">
-              Add New Source
-            </AddSourceButton>
+            <Button buttontext="Add New Entry" onClick={addSource} />
           </EachButtonCont>
         </ButtonWrap>
       </Top>
 
-        <DropdownCont>
-          <TypeDropDown text="Type" />
-        </DropdownCont>
-        {/* <ClearWrap>
+      <DropdownCont>
+        <TypeDropDown text="Type" />
+      </DropdownCont>
+      {/* <ClearWrap>
         <Button buttoncolor = "#FFFFFF" textcolor="000000"buttontext="Clear" fontsize="12px" buttonwidth='135px' buttonheight='36px' borderweight="1px solid grey" ></Button>
        </ClearWrap> */}
 
@@ -99,16 +91,19 @@ const Page = styled.div`
 `;
 
 const AddSourceButton = styled.div`
-  background-color: #80CF76;
+  background-color: #80cf76;
   font-size: 12px;
   width: 135px;
-  height:40px;
-  border-radius:7px;
-  display:flex;
-  align-items:center;
+  height: 40px;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
   justify-content: center;
   color: white;
-  font-weight:bold;
+  font-weight: bold;
+  :hover {
+    cursor: pointer;
+  }
 `;
 
 const SourceListCont = styled.div`
@@ -126,8 +121,8 @@ const Top = styled.div`
 `;
 
 const HeadingWrap = styled.div`
-  display:flex;
-  flex-direction:column;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Heading = styled.text`
@@ -137,9 +132,9 @@ const Heading = styled.text`
 `;
 
 const Subheading = styled.text`
-  font-size:12px;
-  font-weight:400;
-  line-height:14px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14px;
   color: #888888;
 `;
 
@@ -152,7 +147,7 @@ const ButtonWrap = styled.div`
 const ClearWrap = styled.div`
   /* margin-top:8px;
   margin-left:12px; */
-  justify-content:space-evenly;
+  justify-content: space-evenly;
   display: flex;
   flex-direction: row;
 `;
@@ -160,7 +155,6 @@ const ClearWrap = styled.div`
 const EachButtonCont = styled.div`
   margin: 0.3rem;
 `;
-
 
 const DropdownCont = styled.div`
   display: flex;

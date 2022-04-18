@@ -51,22 +51,46 @@ padding: 10px;
 
 export default function AddSourceModal({ setIsAddingSource }) {
   const [name, setName] = useState('');
-  const [address, setAddress] = useState('');
+  const [type, setType] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [address, setAddress] = useState('');
+  const [email, setEmail] = useState('');
+  // const [notes, setNotes] = useState('');
   const [msg, setMsg] = useState('');
   const handleChange = (e) => {
     let inputName = e.target.name;
     console.log('inputName: ', inputName, 'inputValue: ', e.target.value);
     switch (inputName) {
       case 'name':
+        console.log('name before', name);
         setName(e.target.value);
+        console.log('name after', name);
+        break;
+        case 'type':
+        console.log('type before', type);
+        setType(e.target.value);
+        console.log('type after', type);
+        break;
+        case 'phoneNumber':
+        console.log('phoneNumber before', phoneNumber);
+        setPhoneNumber(e.target.value);
+        console.log('phoneNumber after', phoneNumber);
         break;
       case 'address':
+        console.log('address before', address);
         setAddress(e.target.value);
+        console.log('address after', address);
         break;
-      case 'phoneNumber':
-        setPhoneNumber(e.target.value);
+        case 'email':
+        console.log('email before', email);
+        setEmail(e.target.value);
+        console.log('email after', email);
         break;
+        // case 'notes':
+        // console.log('notes before', notes);
+        // setNotes(e.target.value);
+        // console.log('notes after', notes);
+        // break;
       default:
         return;
     }
@@ -77,8 +101,10 @@ export default function AddSourceModal({ setIsAddingSource }) {
     let form = document.getElementById('new-source-form');
     let formContent = {
       name,
-      address,
+      type,
       phoneNumber,
+      address,
+      email,
     };
     console.log(name.length);
     if (name.length == '' || address.length == '') {
@@ -116,7 +142,7 @@ export default function AddSourceModal({ setIsAddingSource }) {
 
   const modalContent = {
     width: '360px',
-    height: '390px',
+    height: '520px',
     // boxShadow: "5px 10px 18px #888888",
     border: 'solid 1 #B1B1B1',
     borderRadius: '10px',
@@ -134,7 +160,7 @@ export default function AddSourceModal({ setIsAddingSource }) {
   };
 
   const modalBody = {
-    padding: '10px',
+    padding: '2px',
   };
 
 
@@ -152,24 +178,45 @@ export default function AddSourceModal({ setIsAddingSource }) {
         </div>
         <div className="modalBody" style={modalBody}>
           <Form onSubmit={handleSubmit} id="new-source-form" noValidate>
+           
             <Label>Name</Label>
             <Input
               name="name"
               type="text"
               onChange={(e) => handleChange(e)}
             ></Input>
+            <Label>Type</Label>
+            <Input
+              name="type"
+              type="text"
+              onChange={(e) => handleChange(e)}
+            ></Input>
+          
+            <Label>Phone Number</Label>
+            <Input
+              type="text"
+              name="phoneNumber"
+              onChange={(e) => handleChange(e)}
+            />
             <Label>Address</Label>
             <Input
               name="address"
               type="text"
               onChange={(e) => handleChange(e)}
             ></Input>
-            <Label>Contact Number</Label>
+          
+            <Label>Email</Label>
             <Input
+              name="email"
               type="text"
-              name="phoneNumber"
               onChange={(e) => handleChange(e)}
-            />
+            ></Input>
+            {/* <Label>Notes</Label>
+            <Input
+              name="notes"
+              type="text"
+              onChange={(e) => handleChange(e)}
+            ></Input> */}
               <SaveSource> Save Source</SaveSource>
               <br />
           </Form>
