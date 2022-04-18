@@ -19,44 +19,61 @@ import Footer from './components/Footer/index'
 import LogOut from './components/LogOut/index'
 import SubAccountPopUp from './components/SubAccountPopUp'
 
-
 import ContactsListDetailPopup from './components/ContactsListDetailPopup/index';
 import EditContactPopup from './components/EditContactPopup';
 import GraphRightSideKey from './components/GraphRightSideKey';
 import GraphLeftSideFilter from './components/GraphLeftSideFilter';
 
+import DeleteContactPopup from './components/DeleteContactPopup';
+import DeleteMultipleEntries from './components/DeleteMultipleEntries';
+import AllButton from './components/AllButton';
+import ListInputData from './components/ListInputData'
+import ContactInputHeadings from './components/ContactInputHeadings'
+import ContactInputData from './components/ContactInputData'
+import EditEntryPopop from './components/EditEntryPopup'
+
+
+
 
 ReactDOM.render(
   <React.StrictMode>
     <App />
-
-    {/* <SubAccountPopUp/>
-    <SubAccountPopUp text="Edit"/> */}
   
-    {/* //alicia */}
-    {/* <BotListNav/>
+    {/* //alicia
+     <BotListNav/>
     <Button/>
     <TextInputBox/>
     <DeleteEntryPopup/>
-
-    <EditEntryPopup/>
-
     <ContactsListDetailPopup/>
     <EditContactPopup/>
-    <GraphRightSideKey/>
-    <GraphLeftSideFilter/> */}
+    <GraphLeftSideFilter/>
+    <GraphRightSideKey/> */}
+
+    {/* Jurgen */}
+    {/* <DeleteEntryPopup/>
+    <DeleteContactPopup/>
+    <DeleteMultipleEntries/>
+    <AllButton/> */}
 
 
-    {/* Min
-    <ListInputHeadings/>
-    <BasicSelect/>
+    {/* Min */}
+    {/* <BasicSelect/>
     <DropDownOptions/>
+    <SubAccountPopUp/>
+    <SubAccountPopUp text="Edit"/> */}
 
-    {/* Jess */}
+    {/* Jess  */}
     {/* <NavBarLogin/>
     <Footer/>
-    <LogOut/> */} 
-   
+    <LogOut/>
+    <ListInputHeadings/>
+    <ListInputData/>
+    <ContactInputHeadings/>
+    <ContactInputData/> */}
+
+    {/* Catherine */}
+   {/* <EditEntryPopop/> */}
+
     
 
 
