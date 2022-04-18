@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getListOfEntries, getEntriesByDateRange } from '../../common/network';
 import Summary from '../Summary/Summary';
-import DateFilter from '../filter/DateFilter';
+import DateFilter from '../Filter/DateFilter';
 import styled from 'styled-components';
 // import Summary from '../Summary/Summary';
 // import DateFilter from '../Filter/DateFilter';
