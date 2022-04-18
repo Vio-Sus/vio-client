@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { getListOfEntries, getEntriesByDateRange } from '../../common/network';
 import styled from 'styled-components';
 // import Summary from '../Summary/Summary';
-import DateFilter from '../filter/DateFilter';
+import DateFilter from '../Filter/DateFilter';
 
 import IconButton from '@mui/material/IconButton';
 import CancelIcon from '@mui/icons-material/Cancel';
