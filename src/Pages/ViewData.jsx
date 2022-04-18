@@ -1,15 +1,62 @@
+import { useEffect, useState } from 'react';
+import { dateToYMD } from '../common/date';
+import styled from 'styled-components';
 import EntriesList from '../components/Entry/EntriesList';
 import DeleteConfirmation from '../components/Entry/DeleteEntryConfirmation';
 import EditForm from '../components/Entry/EditEntryForm';
-import { useEffect, useState } from 'react';
+import Button from '../components/Button';
 // import Summary from '../components/Summary/Summary';
+<<<<<<< HEAD
 import { dateToYMD } from '../common/date';
 import styled from 'styled-components';
 import { Routes, Route, Link } from "react-router-dom";
+=======
+>>>>>>> 429469aa830cec0ddbc3931535bc0d503094786c
 
-import Button from '../components/Button';
-import AllButton from '../components/AllButton';
-import EditEntryPopup from '../components/EditEntryPopup';
+const Mid = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const Header = styled.text`
+  font-size: 36px;
+  font-weight: 300;
+  color: black;
+`;
+
+const Subheader = styled.text`
+  font-size: 18px;
+  font-weight: 400;
+  color: #888888;
+`;
+
+const Page = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 10vh;
+`;
+
+const HeaderCont = styled.div`
+  margin: 10vh 0 5vh 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 80vw;
+`;
+
+const HeaderTextcont = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const ButtonCont = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+  gap: 10px;
+`;
 
 const ViewDataPage = ({ sources, items }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -59,51 +106,24 @@ const ViewDataPage = ({ sources, items }) => {
     startDate &&
     endDate && (
       <>
-      <Page>
-      <Top>
-      <HeaderCont>
-        <HeaderTextcont>
-                <Header>Your Entries</Header>
-                <Subheader>Here’s an overview of the performance.</Subheader>
-        </HeaderTextcont>
-              <ButtonCont>
-                <EachButtonCont>
-                  <StyledLink to='/viewGraph'>
-                    <Button
-                      buttontext='Graph View'
-                      buttoncolor='#4A4A4A'
-                    />
-                  </StyledLink>
-                </EachButtonCont>
-                <EachButtonCont> 
-                  <Button
-                    buttontext='Export'
-                    buttoncolor='#4A4A4A'
-                  />
-                </EachButtonCont>
-                <EachButtonCont>
-                  <StyledLink to='/NewEntry'> 
-                    <Button
-                      buttontext='New Entry'
-                    />
-                  </StyledLink>
-                </EachButtonCont>
-              </ButtonCont>
-      </HeaderCont>
-      </Top>
-      <Spacer />
-        {/* <TextCont>
-          <Heading>List View</Heading>
-          <SubHead>Here's an overview of the performance</SubHead>
-        </TextCont> */}
-        <Mid>
-        
+        <Page>
+          <HeaderCont>
+            <HeaderTextcont>
+              <Header>List View</Header>
+              <Subheader>Here’s an overview of the performance.</Subheader>
+            </HeaderTextcont>
+            <ButtonCont>
+              <Button buttontext="Graph View" buttoncolor="#4A4A4A" />
+              <Button buttontext="Export" buttoncolor="#4A4A4A" />
+              <Button buttontext="Add New Entry" />
+            </ButtonCont>
+          </HeaderCont>
+          <Mid>
             <EntriesList
               selectEntry={selectEntry}
               sources={sources}
               items={items}
-            >   
-            </EntriesList>
+            ></EntriesList>
             {isEditing && (
               <EditForm
                 entry={selectedEntry}
@@ -120,12 +140,10 @@ const ViewDataPage = ({ sources, items }) => {
                 items={items}
               />
             )}
-
-
-        </Mid>
-        {/* <Summary startDate={startDate} endDate={endDate} />
+          </Mid>
+          {/* <Summary startDate={startDate} endDate={endDate} />
         <Summary startDate={'2022-01-01'} endDate={'2022-03-10'} /> */}
-      </Page>
+        </Page>
       </>
     )
   );

@@ -129,12 +129,6 @@ const Label = styled.label`
   font-size: 14px;
 `;
 
-const Spacer = styled.div `
-  display: flex;
-  justify-content: flex-end;
-  height: 25px;
-`;
-
 const Heading = styled.div`
   font-size:24px;
   font-weight:400;
@@ -227,7 +221,6 @@ export default function EditForm({ entry, setIsEditing, items, sources }) {
     <>
     <PopupWrap>
           <Heading>Edit Entry:</Heading>
-          <Spacer/>
         <EditFormCont id="edit-form">
           <Cont>
             <Label>Sub Account:</Label>

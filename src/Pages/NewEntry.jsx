@@ -1,6 +1,6 @@
-import Form from "../components/Entry/AddEntryForm";
+import Form from '../components/Entry/AddEntryForm';
 import React from 'react';
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const Page = styled.div`
   display: flex;
@@ -37,18 +37,25 @@ const Header = styled.text`
 const LeftCont = styled.div`
   margin: 10px;
   width: 50%;
+<<<<<<< HEAD
   // background-color: aliceblue;
+=======
+>>>>>>> 429469aa830cec0ddbc3931535bc0d503094786c
 `;
 
 const RightCont = styled.div`
   width: 382px;
   height: 606px;
   border-radius: 10px;
-  background-color: #E9E9E9;
+  background-color: #e9e9e9;
   text-align: center;
+<<<<<<< HEAD
   display: flex;
   justify-content: center;
   align-items: center;
+=======
+  padding: 20px;
+>>>>>>> 429469aa830cec0ddbc3931535bc0d503094786c
 `;
 
 const NewEntryPage = ({ sources, items }) => {

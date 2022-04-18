@@ -56,7 +56,7 @@ const ViewSourcePage = ({ sources, items }) => {
        </ClearWrap> */}
         {/* </DropDownWrap> */}
         
-       <Mid>
+       <div>
        <SourceListCont>
       <SourcesList selectSource={selectSource}></SourcesList>
       {isEditing && (
@@ -70,7 +70,7 @@ const ViewSourcePage = ({ sources, items }) => {
         <AddSourceModal setIsAddingSource={setIsAddingSource} />
       )} 
       </SourceListCont>
-      </Mid> 
+      </div> 
 
         {/* <BotNavWrap>
       <BotListNav></BotListNav>
@@ -112,11 +112,19 @@ const Top = styled.div`
   flex-direction: row ;
   justify-content: space-between;
   width: 80vw;
+<<<<<<< HEAD
 `
 const Header = styled.text`
   font-size: 36px;
   font-weight: 300;
   color: black;
+=======
+`;
+
+const HeadingWrap = styled.div`
+  display:flex;
+  flex-direction:column;
+>>>>>>> 429469aa830cec0ddbc3931535bc0d503094786c
 `;
 
 const Subheader = styled.text`
@@ -149,10 +157,10 @@ const EachButtonCont = styled.div`
 // margin-left:12px;
 // `
 
-const Mid = styled.div`
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-`;
+// const Mid = styled.div`
+//   display:flex;
+//   flex-direction:column;
+//   align-items:center;
+// `;
 
 
