@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getListOfEntries, getEntriesByDateRange } from '../../common/network';
 import styled from 'styled-components';
-// import Summary from '../Summary/Summary';
 import DateFilter from '../Filter/DateFilter';
 
 import IconButton from '@mui/material/IconButton';
@@ -248,24 +247,13 @@ export default function EntriesList({ selectEntry, sources, items }) {
        
                 </TR>
               ))
-            : null}
+              : null}
         </TBody>
       </Table>
       </Cont>
-      {/* <Summary startDate={'2022-01-01'} endDate={'2022-03-10'} /> */}
-      {/* <Summary startDate={startDate} endDate={endDate} /> */}
     </>
   );
 }
-
-// const Select = styled.select`
-//   width: 152px;
-//   height: 30px;
-//   background-color: #fff;
-//   border-color: #CBCBCB;
-//   border-radius:7px;
-//   text-align: flex-start;
-// `;
 
 const Select = styled.select`
   height: 30px;
@@ -393,6 +381,9 @@ const TR = styled.tr`
   justify-content: space-between;
   width: 80vw;
   background-color: #ECFAEE;
+  &:nth-child(even) {
+    background-color: white;
+  }
 `;
 
 const TH = styled.th`
@@ -403,7 +394,6 @@ const TH = styled.th`
 `;
 
 const TD = styled.td`
-
   width: 200px;
   height: 40px;
   display: flex;
@@ -413,6 +403,6 @@ const TD = styled.td`
 
 const TBody = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
 `;

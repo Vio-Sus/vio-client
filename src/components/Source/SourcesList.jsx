@@ -5,24 +5,23 @@ import EditIcon from '@mui/icons-material/Edit';
 import Delete from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 
-const T = styled.table`
+const Table = styled.table`
   width: 80vw;
-  margin-top:25px;
+  margin-top: 25px;
 `;
 
 const HeadingWrap = styled.thead`
-  width: 80vw;
-  color:#606F89;
-  font-size:12px;
-  font-weight:600;
+  color: #606f89;
+  font-size: 12px;
+  font-weight: 600;
 `;
 
-const TD = styled.td`
-background-color:#ECFAEE;
-width: 1000px;
-color:##2E3B52;
-`
-
+const TR = styled.tr`
+  background-color: #ecfaee;
+  &:nth-child(even) {
+    background-color: white;
+  }
+`;
 
 export default function SourceList({ selectSource }) {
   const [sources, setSources] = useState([]);
@@ -42,31 +41,31 @@ export default function SourceList({ selectSource }) {
   }, []);
 
   return (
-    <T>
+    <Table>
       <HeadingWrap>
         <tr>
           <th> SOURCE </th>
           <th> ADDRESS </th>
           <th> PHONE NUMBER</th>
         </tr>
-      </HeadingWrap> 
+      </HeadingWrap>
       <tbody>
         {sources.map((source, index) => (
-          <tr key={index}>
-            <TD> {source.name} </TD>
-            <TD> {source.address} </TD>
-            <TD> {source.phone_number} </TD>
-            <TD>
+          <TR key={index}>
+            <td> {source.name} </td>
+            <td> {source.address} </td>
+            <td> {source.phone_number} </td>
+            <td>
               <IconButton onClick={() => selectSource(source)}>
-              <EditIcon sx={{ color: "#7D90B2" }} ></EditIcon>
-             </IconButton>
-             <IconButton onClick={() => selectSource(source, 'delete')}>
-                <Delete sx={{ color: "#7D90B2" }}/>
+                <EditIcon sx={{ color: '#7D90B2' }}></EditIcon>
               </IconButton>
-            </TD>
-          </tr>
+              <IconButton onClick={() => selectSource(source, 'delete')}>
+                <Delete sx={{ color: '#7D90B2' }} />
+              </IconButton>
+            </td>
+          </TR>
         ))}
       </tbody>
-    </T>
+    </Table>
   );
 }
