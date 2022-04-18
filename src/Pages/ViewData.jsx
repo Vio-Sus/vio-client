@@ -7,6 +7,12 @@ import EditForm from '../components/Entry/EditEntryForm';
 import Button from '../components/Button';
 // import Summary from '../components/Summary/Summary';
 
+const Mid = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 const Header = styled.text`
   font-size: 36px;
   font-weight: 300;
@@ -106,7 +112,7 @@ const ViewDataPage = ({ sources, items }) => {
               <Button buttontext="Add New Entry" />
             </ButtonCont>
           </HeaderCont>
-          <div>
+          <Mid>
             <EntriesList
               selectEntry={selectEntry}
               sources={sources}
@@ -128,7 +134,7 @@ const ViewDataPage = ({ sources, items }) => {
                 items={items}
               />
             )}
-          </div>
+          </Mid>
           {/* <Summary startDate={startDate} endDate={endDate} />
         <Summary startDate={'2022-01-01'} endDate={'2022-03-10'} /> */}
         </Page>
