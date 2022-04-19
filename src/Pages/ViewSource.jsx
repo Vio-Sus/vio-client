@@ -71,10 +71,10 @@ const ViewSourcePage = ({ sources, items }) => {
       </Mid>
 
       <BotNavWrap>
-        <BotListNav></BotListNav>
+        {/* <BotListNav></BotListNav> */}
       </BotNavWrap>
       <Space></Space>
-      <Footer></Footer>
+      {/* <Footer></Footer> */}
     </Page>
   );
 };
