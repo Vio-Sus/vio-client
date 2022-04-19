@@ -10,13 +10,6 @@ import IconButton from '@mui/material/IconButton';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Delete from '@mui/icons-material/Delete';
 
-const MainCont = styled.div`
-  /* background-color: grey; */
-`;
-
-const Headings = styled.text``;
-
-
 const TH = styled.div`
   display: flex;
   justify-content: flex-start;
@@ -61,7 +54,7 @@ const WeightSubCont = styled.div`
 
 const ItemWeightPair = styled.div`
   display: grid;
-  gap: 10px;
+  gap: 20px;
   margin-bottom: 10px;
   grid-template-columns: 1fr 1fr 30px;
 `;
@@ -76,7 +69,8 @@ const DateItemWeightCont = styled.div`
   display: grid;
   grid-template-columns: 1fr 2fr;
   grid-template-rows: auto;
-  gap: 20px 10px;
+  gap: 20px 0;
+  max-width: 515px;
 `;
 
 const Inputs = styled.input`
@@ -151,9 +145,9 @@ const AddItemButton = styled.button`
   background-color: #e6e3e3;
   border: 1px solid #cbcbcb;
   border-radius: 120px;
-  margin-top:3%;
-  margin-bottom:3%;
-  display:flex;
+  margin-top: 3%;
+  margin-bottom: 3%;
+  display: flex;
   justify-content: center;
 `;
 
@@ -272,7 +266,7 @@ export default function Form({ items, sources }) {
 
             <DateItemWeightCont>
               <DateCont>
-                <Headings>Date:</Headings>
+                <h4>Date</h4>
                 <DateInput
                   name="created"
                   type="date"
@@ -283,7 +277,7 @@ export default function Form({ items, sources }) {
                 {entryWeights.map((element, index) => (
                   <ItemWeightPair className="form-inline" key={element.id}>
                     <ItemCont>
-                      <Headings>Item</Headings>
+                      <h4>Item</h4>
                       <Select
                         name="item_id"
                         onChange={(e) => {
@@ -303,7 +297,7 @@ export default function Form({ items, sources }) {
                     </ItemCont>
 
                     <WeightCont>
-                      <Headings>Weight</Headings>
+                      <h4>Weight</h4>
                       <WeightSubCont>
                         <WeightInput
                           type="number"
@@ -356,7 +350,11 @@ export default function Form({ items, sources }) {
             buttonheight=  '40px'
             /> */}
               <ButtonCont>
-                <Button buttontext='Save Entry' className="button submit" type="submit"/>
+                <Button
+                  buttontext="Save Entry"
+                  className="button submit"
+                  type="submit"
+                />
                 {/* <SaveButton className="button submit" type="submit">
                   Save Entry
                 </SaveButton> */}
