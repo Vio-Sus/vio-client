@@ -64,7 +64,9 @@ const ViewDataPage = ({ sources, items }) => {
               <Subheader>Here’s an overview of the performance.</Subheader>
             </HeaderTextcont>
             <ButtonCont>
+            <StyledLink to='/viewGraph'>
               <Button buttontext="Graph View" buttoncolor="#4A4A4A" />
+            </StyledLink>
               <Button buttontext="Export" buttoncolor="#4A4A4A" />
               <Button buttontext="Add New Entry" />
             </ButtonCont>
