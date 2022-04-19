@@ -1,13 +1,15 @@
-import { useEffect, useState } from 'react';
-import { dateToYMD } from '../common/date';
-import styled from 'styled-components';
 import EntriesList from '../components/Entry/EntriesList';
 import DeleteConfirmation from '../components/Entry/DeleteEntryConfirmation';
 import EditForm from '../components/Entry/EditEntryForm';
-import Button from '../components/Button';
+import { useEffect, useState } from 'react';
 // import Summary from '../components/Summary/Summary';
+import { dateToYMD } from '../common/date';
+import styled from 'styled-components';
 import { Routes, Route, Link } from "react-router-dom";
 
+import Button from '../components/Button';
+import AllButton from '../components/AllButton';
+import EditEntryPopup from '../components/EditEntryPopup';
 
 const ViewDataPage = ({ sources, items }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -57,26 +59,51 @@ const ViewDataPage = ({ sources, items }) => {
     startDate &&
     endDate && (
       <>
-        <Page>
-          <HeaderCont>
-            <HeaderTextcont>
-              <Header>List View</Header>
-              <Subheader>Here’s an overview of the performance.</Subheader>
-            </HeaderTextcont>
-            <ButtonCont>
-            <StyledLink to='/viewGraph'>
-              <Button buttontext="Graph View" buttoncolor="#4A4A4A" />
-            </StyledLink>
-              <Button buttontext="Export" buttoncolor="#4A4A4A" />
-              <Button buttontext="Add New Entry" />
-            </ButtonCont>
-          </HeaderCont>
-          <Mid>
+      <Page>
+      <Top>
+      <HeaderCont>
+        <HeaderTextcont>
+                <Header>Your Entries</Header>
+                <Subheader>Here’s an overview of the performance.</Subheader>
+        </HeaderTextcont>
+              <ButtonCont>
+                <EachButtonCont>
+                  <StyledLink to='/viewGraph'>
+                    <Button
+                      buttontext='Graph View'
+                      buttoncolor='#4A4A4A'
+                    />
+                  </StyledLink>
+                </EachButtonCont>
+                <EachButtonCont> 
+                  <Button
+                    buttontext='Export'
+                    buttoncolor='#4A4A4A'
+                  />
+                </EachButtonCont>
+                <EachButtonCont>
+                  <StyledLink to='/NewEntry'> 
+                    <Button
+                      buttontext='New Entry'
+                    />
+                  </StyledLink>
+                </EachButtonCont>
+              </ButtonCont>
+      </HeaderCont>
+      </Top>
+      <Spacer />
+        {/* <TextCont>
+          <Heading>List View</Heading>
+          <SubHead>Here's an overview of the performance</SubHead>
+        </TextCont> */}
+        <Mid>
+        
             <EntriesList
               selectEntry={selectEntry}
               sources={sources}
               items={items}
-            ></EntriesList>
+            >   
+            </EntriesList>
             {isEditing && (
               <EditForm
                 entry={selectedEntry}
@@ -93,10 +120,12 @@ const ViewDataPage = ({ sources, items }) => {
                 items={items}
               />
             )}
-          </Mid>
-          {/* <Summary startDate={startDate} endDate={endDate} />
+
+
+        </Mid>
+        {/* <Summary startDate={startDate} endDate={endDate} />
         <Summary startDate={'2022-01-01'} endDate={'2022-03-10'} /> */}
-        </Page>
+      </Page>
       </>
     )
   );
@@ -170,4 +199,3 @@ const Spacer = styled.div`
 const EachButtonCont = styled.div`
   margin: .3rem;
 `;
-
