@@ -10,6 +10,15 @@ import IconButton from '@mui/material/IconButton';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Delete from '@mui/icons-material/Delete';
 
+// import ReactDOM from "react-dom";
+// import {
+//   BrowserRouter as Router,
+//   Switch,
+//   Route,
+//   Link
+// } from "react-router-dom";
+// import ViewData from "../../Pages/ViewData"
+
 const TH = styled.div`
   display: flex;
   justify-content: flex-start;
@@ -166,7 +175,12 @@ const ButtonCont = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
+
 `;
+
+const linkStyle =  {
+  textDecoration: "none",
+}
 
 const newEntryWeight = () => ({
   id: Date.now(),
@@ -350,11 +364,17 @@ export default function Form({ items, sources }) {
             buttonheight=  '40px'
             /> */}
               <ButtonCont>
+                {/* <Link 
+                to="../../Pages/ViewGraph.jsx"
+                style={linkStyle}
+                > */}
                 <Button
+                  to='../../Pages/ViewData.jsx'
                   buttontext="Save Entry"
                   className="button submit"
                   type="submit"
                 />
+                {/* </Link> */}
                 {/* <SaveButton className="button submit" type="submit">
                   Save Entry
                 </SaveButton> */}

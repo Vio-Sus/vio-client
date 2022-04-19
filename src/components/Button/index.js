@@ -25,6 +25,7 @@ const ButtonText = styled.text`
     color: ${props => props.color};
     font-size:${props => props.fontSize};
     font-weight: ${props => props.fontWeight};
+
 `;
 
 export default function Button({
