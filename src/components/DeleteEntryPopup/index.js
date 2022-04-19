@@ -14,9 +14,9 @@ const Cont = styled.div`
     justify-content: center;
     align-items: center;
     margin: 20px;
+    box-shadow: 0px 2px 10px 0px black;
     border: 1px solid darkgray;
 `;
-
 
 const DeleteCont = styled.div`
     display: flex;
@@ -75,11 +75,13 @@ const Bold = styled.text`
     font-weight: 600;
 `;
 
-const Buttons = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    margin-top: 20px;
+const ButtonCont = styled.div`
+  margin: 20px;
+  grid-column-start: 1;
+  grid-column-end: 3;
+  gap: 40px;
+  display: flex;
+  justify-content: center;
 `;
 
 export default function DeleteEntryPopup({
@@ -111,7 +113,7 @@ export default function DeleteEntryPopup({
                     <Li><Bold>Processor: </Bold>{processor}</Li>
             </List>
 
-            <Buttons>
+            <ButtonCont>
                 <Button 
                     borderweight="solid 1px darkgray" 
                     textweight="regular" 
@@ -128,7 +130,7 @@ export default function DeleteEntryPopup({
                     buttontext="Delete"
                     onClick={onClickDelete}
                     />
-            </Buttons>
+            </ButtonCont>
         </Cont>
     );
 } 

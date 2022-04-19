@@ -31,6 +31,7 @@ import ListInputData from './components/ListInputData'
 import ContactInputHeadings from './components/ContactInputHeadings'
 import ContactInputData from './components/ContactInputData'
 import EditEntryPopop from './components/EditEntryPopup'
+import { BrowserRouter } from 'react-router-dom';
 
 
 

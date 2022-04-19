@@ -6,6 +6,8 @@ import CancelIcon from '@mui/icons-material/Cancel';
 
 import Button from '../Button';
 
+
+
 const PopupWrap = styled.form `
   display:flex;
   flex-direction: column;
@@ -22,20 +24,9 @@ const PopupWrap = styled.form `
 
 const EditFormCont = styled.form`
   display: grid;
-  max-width: 300px;
+  max-width: 500px;
   grid-template-columns: 47% 47%;
   gap: 20px;
-`;
-
-const CancelButton = styled.div `
-  display: flex;
-  justify-content: flex-end;
-  width: 40vw;
-  margin-right:  35px;
-
-  :hover {
-        cursor: pointer;
-    }
 `;
 
 const Heading = styled.div`
@@ -50,7 +41,6 @@ const Heading = styled.div`
 `;
 
 const ButtonCont = styled.div`
-  margin: 20px;
   grid-column-start: 1;
   grid-column-end: 3;
   gap: 40px;
@@ -61,7 +51,8 @@ const ButtonCont = styled.div`
 const EntryCont = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 `;
 
 const EntryRow = styled.div`
@@ -131,19 +122,13 @@ export default function DeleteConfirmation({
   return (
     <>
     <PopupWrap>
-    <CancelButton>
-        <CancelIcon 
-          sx={{ color: "#C4C4C4" }} 
-          onClick={handleCancel}>
-            Cancel
-        </CancelIcon>
-    </CancelButton>
       <Heading>Are you sure you want to delete the following entry?</Heading>
         <EntryCont>
+            <EntryRow>Sub Account: {sourceId}</EntryRow>
+            <EntryRow>Materials: {itemId}</EntryRow>
             <EntryRow>Date: {date}</EntryRow>
-            <EntryRow>Item: {itemId}</EntryRow>
             <EntryRow>Weight: {weight} kg</EntryRow>
-            <EntryRow>Source: {sourceId}</EntryRow>
+
         </EntryCont>
           <EditFormCont>
             <ButtonCont>
@@ -153,7 +138,7 @@ export default function DeleteConfirmation({
                   buttonheight="30px"
                   buttoncolor='#F86E6E'
                   textcolor='white'
-                  buttontext="Save"
+                  buttontext="Delete"
                   fontsize="14px"
                   textweight='450'
                   borderweight='solid #F86E6E 1px'
@@ -163,7 +148,7 @@ export default function DeleteConfirmation({
                   buttonwidth="150px"
                   buttonheight="30px"
                   buttontext="Cancel"
-                  ontsize="14px"
+                  fontsize="14px"
                   textweight='500'
                   textcolor='#F86E6E'
                   buttoncolor='white'

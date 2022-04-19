@@ -5,53 +5,56 @@ import AddSourceModal from '../Source/AddSourceModal';
 import AddItemModal from '../Item/AddItemModal';
 import React from 'react';
 import styled from 'styled-components';
+import Button from '../Button';
+import IconButton from '@mui/material/IconButton';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import Delete from '@mui/icons-material/Delete';
 
-const MainCont = styled.div`
-  /* background-color: grey; */
-`;
-
-const Headings = styled.text`
+const TH = styled.div`
   display: flex;
+  justify-content: flex-start;
+  font-size: 14px;
+  font-weight: 500;
+  color: #464646;
   margin-bottom: 5px;
   font-size: 12px;
-
 `;
 
 const SourceCont = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 3%;
-  /* background-color: pink; */
 `;
 
 const DateCont = styled.div`
-  display: flex;
-  flex-direction: column;
   grid-column: 1;
   grid-row: 1;
-  /* background-color: red; */
 `;
 
 const ItemCont = styled.div`
-  display: flex;
-  flex-direction: column;
   grid-column: 1;
   grid-row: 1;
-  /* background-color: green; */
 `;
 
 const WeightCont = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 55px;
   grid-column: 2;
   grid-row: 1;
-  /* background-color: yellow; */
+`;
+
+const WeightSubCont = styled.div`
+  display: flex;
+  align-items: center;
+  height: 35px;
+  max-width: 140px;
+  padding-left: 10px;
+  border-radius: 7px;
+  border: 0.5px solid #cbcbcb;
+  box-shadow: 0px 2px 4px 0px #7474741a;
 `;
 
 const ItemWeightPair = styled.div`
   display: grid;
-  gap: 10px;
+  gap: 20px;
   margin-bottom: 10px;
   grid-template-columns: 1fr 1fr 30px;
 `;
@@ -66,7 +69,8 @@ const DateItemWeightCont = styled.div`
   display: grid;
   grid-template-columns: 1fr 2fr;
   grid-template-rows: auto;
-  gap: 20px 10px;
+  gap: 20px 0;
+  max-width: 515px;
 `;
 
 const Inputs = styled.input`
@@ -78,14 +82,31 @@ const Inputs = styled.input`
   text-align: center;
 `;
 
+const DateInput = styled.input`
+  height: 35px;
+  width: 140px;
+  padding: 0 5px;
+  border-radius: 7px;
+  border: 0.5px solid #cbcbcb;
+  box-shadow: 0px 2px 4px 0px #7474741a;
+  cursor: pointer;
+  &:focus {
+    outline: none;
+  }
+  &::-webkit-calendar-picker-indicator {
+    opacity: 0;
+  }
+  background-image: linear-gradient(45deg, transparent 50%, #80cf76 50%),
+    linear-gradient(135deg, #80cf76 50%, transparent 50%),
+    radial-gradient(#f1faf0 70%, transparent 72%);
+  background-position: 129px 15px, 134px 15px, 124px 7px;
+  background-size: 5px 5px, 5px 5px, 1.5em 1.5em;
+  background-repeat: no-repeat;
+`;
+
 const Select = styled.select`
-  width: 152px;
-  height: 38px;
-  background-color: #fff;
-  border-color: #cbcbcb;
-  border-radius: 10px;
-  text-align: left;
-  height: 36px;
+  height: 35px;
+  width: 150px;
   padding: 5px;
   border-radius: 7px;
   border: 0.5px solid #cbcbcb;
@@ -98,9 +119,24 @@ const Select = styled.select`
   background-image: linear-gradient(45deg, transparent 50%, #80cf76 50%),
     linear-gradient(135deg, #80cf76 50%, transparent 50%),
     radial-gradient(#f1faf0 70%, transparent 72%);
-  background-position: 119px 16px, 124px 16px, 114px 8px;
+  background-position: 129px 13px, 134px 13px, 124px 5px;
   background-size: 5px 5px, 5px 5px, 1.5em 1.5em;
   background-repeat: no-repeat;
+`;
+
+const WeightInput = styled.input`
+  max-width: 100px;
+  border: none;
+  background-color: transparent;
+  &:focus {
+    outline: none;
+  }
+`;
+
+const Suffix = styled.div`
+  position: relative;
+  color: #464646;
+  padding: 15px 15px 15px 0;
 `;
 
 const AddItemButton = styled.button`
@@ -109,8 +145,10 @@ const AddItemButton = styled.button`
   background-color: #e6e3e3;
   border: 1px solid #cbcbcb;
   border-radius: 120px;
-  margin-top:3%;
-  margin-bottom:3%;
+  margin-top: 3%;
+  margin-bottom: 3%;
+  display: flex;
+  justify-content: center;
 `;
 
 const SaveButton = styled.button`
@@ -124,8 +162,10 @@ const SaveButton = styled.button`
 `;
 
 const ButtonCont = styled.div`
-  display:flex;
+  display: flex;
   justify-content: center;
+  align-items: center;
+  text-align: center;
 `;
 
 const newEntryWeight = () => ({
@@ -210,9 +250,9 @@ export default function Form({ items, sources }) {
     <>
       <div onClick={handleCancel}>
         <form onSubmit={handleSubmit} id="input-form" noValidate>
-          <MainCont>
+          <div>
             <SourceCont>
-              <Headings>Source</Headings>
+              <TH>Source</TH>
               <Select name="source_id" onChange={(e) => handleFormValues(e)}>
                 <option hidden>Select Source</option>
                 {sources.map((source, key) => (
@@ -226,60 +266,61 @@ export default function Form({ items, sources }) {
 
             <DateItemWeightCont>
               <DateCont>
-                <Headings>Date:</Headings>
-                <Inputs
+                <h4>Date</h4>
+                <DateInput
                   name="created"
                   type="date"
                   onChange={(e) => handleFormValues(e)}
                 />
               </DateCont>
               <ItemWeightCont>
-              {entryWeights.map((element, index) => (
-                <ItemWeightPair className="form-inline" key={element.id}>
-                  <ItemCont>
-                    <Headings>Item</Headings>
-                    <Select
-                      name="item_id"
-                      onChange={(e) => {
-                        e.target.value === 'add_item'
-                          ? addItem()
-                          : (element.item_id = Number(e.target.value));
-                      }}
-                    >
-                      <option hidden>Select Item</option>
-                      {items.map((item) => (
-                        <option key={item.item_id} value={item.item_id}>
-                          {item.name}
-                        </option>
-                      ))}
-                      <option value="add_item">Add Item...</option>
-                    </Select>
-                  </ItemCont>
+                {entryWeights.map((element, index) => (
+                  <ItemWeightPair className="form-inline" key={element.id}>
+                    <ItemCont>
+                      <h4>Item</h4>
+                      <Select
+                        name="item_id"
+                        onChange={(e) => {
+                          e.target.value === 'add_item'
+                            ? addItem()
+                            : (element.item_id = Number(e.target.value));
+                        }}
+                      >
+                        <option hidden>Select Item</option>
+                        {items.map((item) => (
+                          <option key={item.item_id} value={item.item_id}>
+                            {item.name}
+                          </option>
+                        ))}
+                        <option value="add_item">Add Item...</option>
+                      </Select>
+                    </ItemCont>
 
-                  <WeightCont>
-                    <Headings>Weight</Headings>
-                    <Inputs
-                      type="number"
-                      name="weight"
-                      onChange={(e) => {
-                        element.weight = Number(e.target.value);
-                      }}
-                    />
-                  </WeightCont>
+                    <WeightCont>
+                      <h4>Weight</h4>
+                      <WeightSubCont>
+                        <WeightInput
+                          type="number"
+                          name="weight"
+                          placeholder="0"
+                          onChange={(e) => {
+                            element.weight = Number(e.target.value);
+                          }}
+                        />
+                        <Suffix>kg</Suffix>
+                      </WeightSubCont>
+                    </WeightCont>
 
-                  {!!index && (
-                    <button
-                      type="button"
-                      // src="delete.svg"
-                      className="button remove"
-                      onClick={() => removeFormFields(element)}
-                    > 
-                    -
-                    </button>
-              
-                  )}
-                </ItemWeightPair>
-              ))}
+                    {!!index && (
+                      <IconButton
+                        onClick={() => removeFormFields(element)}
+                        sx={{ marginTop: 2 }}
+                      >
+                        <Delete sx={{ '&:hover': { color: '#80cf76' } }} />
+                      </IconButton>
+                    )}
+                  </ItemWeightPair>
+                ))}
               </ItemWeightCont>
             </DateItemWeightCont>
 
@@ -291,13 +332,9 @@ export default function Form({ items, sources }) {
 
             <div className="button-section">
               <ButtonCont>
-                <AddItemButton
-                  className="button add"
-                  type="button"
-                  onClick={() => addFormFields()}
-                >
-                  +
-                </AddItemButton>
+                <IconButton onClick={() => addFormFields()}>
+                  <AddCircleIcon sx={{ '&:hover': { color: '#80cf76' } }} />
+                </IconButton>
               </ButtonCont>
 
               {/* needs onclick to graphs */}
@@ -313,12 +350,17 @@ export default function Form({ items, sources }) {
             buttonheight=  '40px'
             /> */}
               <ButtonCont>
-                <SaveButton className="button submit" type="submit">
+                <Button
+                  buttontext="Save Entry"
+                  className="button submit"
+                  type="submit"
+                />
+                {/* <SaveButton className="button submit" type="submit">
                   Save Entry
-                </SaveButton>
+                </SaveButton> */}
               </ButtonCont>
             </div>
-          </MainCont>
+          </div>
         </form>
       </div>
       {isAddingSource && (
