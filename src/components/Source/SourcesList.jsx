@@ -33,7 +33,10 @@ const DataRow = styled.tr`
   justify-content: space-between;
   width: 80vw;
   margin-top: 5px;
-  background-color: #ECFAEE;
+  background-color: #ecfaee;
+  &:nth-child(even) {
+    background-color: white;
+  }
 `;
 
 const HeadingWrap = styled.thead`
@@ -51,18 +54,9 @@ const Cont = styled.div`
 
 const TH = styled.th`
   font-size: 14px;
-  color: #606F89;
+  color: #606f89;
   text-transform: uppercase;
-  width:250px;
-`;
-
-const TR = styled.tr`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 80vw;
-  margin-top: 5px;
-  background-color: #ECFAEE;
+  width: 250px;
 `;
 
 const Table = styled.table`
@@ -94,35 +88,35 @@ export default function SourceList({ selectSource }) {
 
   return (
     <Cont>
-    <Table>
+      <Table>
         <HeadingWrap>
           <TH> SOURCE </TH>
           <TH> ADDRESS </TH>
           <TH> PHONE NUMBER</TH>
           <TH></TH>
         </HeadingWrap>
-    <TBody>
-      <EntryColumn>
         <TBody>
-        {sources.map((source, index) => (
-          <DataRow key={index}>
-            <TD> {source.name} </TD>
-            <TD> {source.address} </TD>
-            <TD> {source.phone_number} </TD>
-            <TD>
-              <IconButton onClick={() => selectSource(source)}>
-                <EditIcon sx={{ color: '#7D90B2' }}></EditIcon>
-              </IconButton>
-              <IconButton onClick={() => selectSource(source, 'delete')}>
-                <Delete sx={{ color: '#7D90B2' }} />
-              </IconButton>
-            </TD>
-          </DataRow>
-        ))}
+          <EntryColumn>
+            <TBody>
+              {sources.map((source, index) => (
+                <DataRow key={index}>
+                  <TD> {source.name} </TD>
+                  <TD> {source.address} </TD>
+                  <TD> {source.phone_number} </TD>
+                  <TD>
+                    <IconButton onClick={() => selectSource(source)}>
+                      <EditIcon sx={{ color: '#7D90B2' }}></EditIcon>
+                    </IconButton>
+                    <IconButton onClick={() => selectSource(source, 'delete')}>
+                      <Delete sx={{ color: '#7D90B2' }} />
+                    </IconButton>
+                  </TD>
+                </DataRow>
+              ))}
+            </TBody>
+          </EntryColumn>
         </TBody>
-      </EntryColumn>
-     </TBody>
-    </Table>
+      </Table>
     </Cont>
   );
 }
