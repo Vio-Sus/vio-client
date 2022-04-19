@@ -59,7 +59,7 @@ const edit = {
 };
 const editContent = {
   width: '360px',
-  height: '520px',
+  height: '550px',
   // boxShadow: "5px 10px 18px #888888",
   border: 'solid 1 #B1B1B1',
   borderRadius: '10px',

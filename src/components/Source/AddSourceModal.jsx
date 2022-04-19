@@ -19,7 +19,7 @@ const Heading = styled.text`
 
 const Label = styled.label`
   font-size: 12px;
-  width:60%;
+  width: 60%;
 `;
 
 const Input = styled.input`
@@ -35,19 +35,18 @@ const SaveSource = styled.button`
   height: 30px;
   width: 120px;
   font-size: 12px;
-  margin-top:3%;
+  margin-top: 3%;
   cursor: pointer;
 `;
 
-const Form = styled.form `
+const Form = styled.form`
 display:flex;
 align-items:center;
 justify-content:center;
 flex-direction:column;
 padding: 10px;
 };
-`
-
+`;
 
 export default function AddSourceModal({ setIsAddingSource }) {
   const [name, setName] = useState('');
@@ -55,42 +54,26 @@ export default function AddSourceModal({ setIsAddingSource }) {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [address, setAddress] = useState('');
   const [email, setEmail] = useState('');
-  // const [notes, setNotes] = useState('');
   const [msg, setMsg] = useState('');
   const handleChange = (e) => {
     let inputName = e.target.name;
     console.log('inputName: ', inputName, 'inputValue: ', e.target.value);
     switch (inputName) {
       case 'name':
-        console.log('name before', name);
         setName(e.target.value);
-        console.log('name after', name);
         break;
-        case 'type':
-        console.log('type before', type);
+      case 'type':
         setType(e.target.value);
-        console.log('type after', type);
         break;
-        case 'phoneNumber':
-        console.log('phoneNumber before', phoneNumber);
+      case 'phoneNumber':
         setPhoneNumber(e.target.value);
-        console.log('phoneNumber after', phoneNumber);
         break;
       case 'address':
-        console.log('address before', address);
         setAddress(e.target.value);
-        console.log('address after', address);
         break;
-        case 'email':
-        console.log('email before', email);
+      case 'email':
         setEmail(e.target.value);
-        console.log('email after', email);
         break;
-        // case 'notes':
-        // console.log('notes before', notes);
-        // setNotes(e.target.value);
-        // console.log('notes after', notes);
-        // break;
       default:
         return;
     }
@@ -101,10 +84,8 @@ export default function AddSourceModal({ setIsAddingSource }) {
     let form = document.getElementById('new-source-form');
     let formContent = {
       name,
-      type,
-      phoneNumber,
       address,
-      email,
+      phoneNumber,
     };
     console.log(name.length);
     if (name.length == '' || address.length == '') {
@@ -142,7 +123,7 @@ export default function AddSourceModal({ setIsAddingSource }) {
 
   const modalContent = {
     width: '360px',
-    height: '520px',
+    height: '550px',
     // boxShadow: "5px 10px 18px #888888",
     border: 'solid 1 #B1B1B1',
     borderRadius: '10px',
@@ -156,29 +137,27 @@ export default function AddSourceModal({ setIsAddingSource }) {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: '-25px',
     padding: '10px',
   };
 
   const modalBody = {
-    padding: '2px',
+    padding: '10px',
   };
-
-
 
   return (
     <div className="modal" style={modal}>
       <div className="modalContent" style={modalContent}>
         <div className="modalHeader" style={modalHeader}>
-        <CancelButton>
-              <CancelIcon sx={{ color: '#C4C4C4' }} onClick={handleCancel}>
-                Cancel
-              </CancelIcon>
-            </CancelButton>
-            <Heading>Add a New Source</Heading>
+          <CancelButton>
+            <CancelIcon sx={{ color: '#C4C4C4' }} onClick={handleCancel}>
+              Cancel
+            </CancelIcon>
+          </CancelButton>
+          <Heading>Add a New Source</Heading>
         </div>
         <div className="modalBody" style={modalBody}>
           <Form onSubmit={handleSubmit} id="new-source-form" noValidate>
-           
             <Label>Name</Label>
             <Input
               name="name"
@@ -191,7 +170,6 @@ export default function AddSourceModal({ setIsAddingSource }) {
               type="text"
               onChange={(e) => handleChange(e)}
             ></Input>
-          
             <Label>Phone Number</Label>
             <Input
               type="text"
@@ -204,25 +182,18 @@ export default function AddSourceModal({ setIsAddingSource }) {
               type="text"
               onChange={(e) => handleChange(e)}
             ></Input>
-          
-            <Label>Email</Label>
+             <Label>Email</Label>
             <Input
+              type="text"
               name="email"
-              type="text"
               onChange={(e) => handleChange(e)}
-            ></Input>
-            {/* <Label>Notes</Label>
-            <Input
-              name="notes"
-              type="text"
-              onChange={(e) => handleChange(e)}
-            ></Input> */}
-              <SaveSource> Save Source</SaveSource>
-              <br />
+            />
+            <SaveSource> Save Source</SaveSource>
+            <br />
           </Form>
         </div>
         <div className="modalFooter" style={modalFooter}>
-        {msg}
+          {msg}
         </div>
       </div>
     </div>
