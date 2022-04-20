@@ -5,10 +5,10 @@ import AddSourceModal from '../Source/AddSourceModal';
 import AddItemModal from '../Item/AddItemModal';
 import React from 'react';
 import styled from 'styled-components';
-import Button from '../Button';
 import IconButton from '@mui/material/IconButton';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Delete from '@mui/icons-material/Delete';
+import { Routes, Route, Link } from "react-router-dom";
 
 const TH = styled.div`
   display: flex;
@@ -73,15 +73,6 @@ const DateItemWeightCont = styled.div`
   max-width: 515px;
 `;
 
-const Inputs = styled.input`
-  width: 152px;
-  height: 35px;
-  background-color: #fff;
-  border: 1px solid #cbcbcb;
-  border-radius: 7px;
-  text-align: center;
-`;
-
 const DateInput = styled.input`
   height: 35px;
   width: 140px;
@@ -139,26 +130,19 @@ const Suffix = styled.div`
   padding: 15px 15px 15px 0;
 `;
 
-const AddItemButton = styled.button`
-  height: 20px;
-  width: 20px;
-  background-color: #e6e3e3;
-  border: 1px solid #cbcbcb;
-  border-radius: 120px;
-  margin-top: 3%;
-  margin-bottom: 3%;
-  display: flex;
-  justify-content: center;
-`;
-
 const SaveButton = styled.button`
-  width: 126px;
-  height: 40px;
-  background-color: #efefef;
-  font-size: 13px;
-  color: black;
+  width: 100px;
+  height: 30px;
+  background-color: #80cf76;
+  font-size: 12px;
+  color: white;
+  font-weight: bold;
   border: none;
-  border-radius: 10px;
+  border-radius: 5px;
+  box-shadow: 0px 2px 4px 0px #7474741a;
+  :hover {
+    cursor: pointer;
+  }
 `;
 
 const ButtonCont = styled.div`
@@ -166,6 +150,12 @@ const ButtonCont = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
+`;
+
+const StyledLink = styled(Link)`
+  color: none;
+  text-decoration: none;
+  position: relative;
 `;
 
 const newEntryWeight = () => ({
@@ -336,29 +326,11 @@ export default function Form({ items, sources }) {
                   <AddCircleIcon sx={{ '&:hover': { color: '#80cf76' } }} />
                 </IconButton>
               </ButtonCont>
-
-              {/* needs onclick to graphs */}
-              {/* <Button 
-            className="button submit" 
-            type="submit"
-            buttoncolor = "#EFEFEF"
-            fontsize = "13px"
-            textcolor="black"
-            textweight="medium"
-            buttontext="Save Entry"
-            buttonwidth = '126px'
-            buttonheight=  '40px'
-            /> */}
-              <ButtonCont>
-                <Button
-                  buttontext="Save Entry"
-                  className="button submit"
-                  type="submit"
-                />
-                {/* <SaveButton className="button submit" type="submit">
+              <StyledLink to='/viewData'>
+                <SaveButton buttontext="Save Entry" className="button submit">
                   Save Entry
-                </SaveButton> */}
-              </ButtonCont>
+                </SaveButton>
+              </StyledLink>
             </div>
           </div>
         </form>
