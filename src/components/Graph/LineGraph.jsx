@@ -27,7 +27,14 @@ export default function LineGraph({ sourceName, xAxisLabels, datasets }) {
     spanGaps: true,
     plugins: {
       legend: {
-        position: 'top',
+        position: 'right',
+        labels: {
+          usePointStyle:true,
+          boxWidth: 6,
+          boxHeight: 6,
+          padding: 20,
+          //legend styling
+        }
       },
       title: {
         display: true,
@@ -40,6 +47,10 @@ export default function LineGraph({ sourceName, xAxisLabels, datasets }) {
     labels: xAxisLabels,
     datasets: datasets,
   };
+
+
+
+
 
   return <Line options={options} data={data} />;
 }

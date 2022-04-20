@@ -1,5 +1,17 @@
+/* 
+  Table of Contents: highlight section and Ctrl+F
+    page and header styling
+    button styling
+    table styling
+    select and input styling
+    popup modal styling
+*/
+
+/* page and header styling start */
+
 body {
   margin: 0;
+  overflow-x: hidden;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -11,3 +23,185 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.pageCont {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+header {
+  width: 80vw;
+  margin: 3em 0;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+}
+
+/* used for page names */
+h1 {
+  font-size: 36px;
+  font-weight: 300;
+  color: black;
+  margin: 0;
+}
+
+/* used for popup headings */
+h2 {
+  font-size: 30px;
+  font-weight: 300;
+  color: #464646;
+  margin-bottom: 10px;
+}
+
+/* used for description under page names */
+h3 {
+  font-size: 18px;
+  font-weight: 400;
+  color: #888888;
+  margin: 0;
+}
+
+/* page and header styling end */
+
+/* button styling start */
+
+.buttonCont {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.submitButton {
+  width: 100px;
+  height: 30px;
+  margin: 6em;
+  background-color: #80cf76;
+  font-size: 12px;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0px 2px 4px 0px #7474741a;
+  transition: all 0.2s ease-in-out;
+}
+
+.submitButton:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+/* button styling end */
+
+/* table styling start */
+
+.tableCont {
+  display: flex;
+  flex-direction: column;
+  width: 80vw;
+}
+
+table {
+  border-collapse: collapse;
+  text-align: center;
+}
+
+th {
+  font-size: 14px;
+  color: #606f89;
+  text-transform: uppercase;
+}
+
+tr > th {
+  background-color: white;
+}
+
+tr:nth-child(odd) {
+  background-color: #ecfaee;
+}
+
+/* table styling end */
+
+/* select and input styling start */
+
+label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #464646;
+  line-height: normal;
+  margin: 10px 0 6px 0;
+}
+
+select {
+  height: 35px;
+  width: 155px;
+  margin-top: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 0.5px solid #cbcbcb;
+  box-shadow: 0px 2px 4px 0px #7474741a;
+  cursor: pointer;
+  appearance: none;
+}
+
+select:focus,
+input:focus {
+  outline: none;
+  cursor: pointer;
+}
+
+input {
+  height: 35px;
+  width: 145px;
+  margin-top: 5px;
+  padding: 0 10px;
+  border-radius: 5px;
+  border: 0.5px solid #cbcbcb;
+  box-shadow: 0px 2px 4px 0px #7474741a;
+  cursor: pointer;
+}
+
+input[type="date"] {
+  width: 135px;
+}
+
+.dropdown {
+  background-image: linear-gradient(45deg, transparent 50%, #80cf76 50%),
+    linear-gradient(135deg, #80cf76 50%, transparent 50%),
+    radial-gradient(#f1faf0 70%, transparent 72%);
+  background-position: 128px 15px, 133px 15px, 123px 7px;
+  background-size: 5px 5px, 5px 5px, 1.5em 1.5em;
+  background-repeat: no-repeat;
+}
+
+input::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  cursor: pointer;
+}
+
+.weightInputCont {
+  display: flex;
+  align-items: center;
+  height: 35px;
+  margin-top: 5px;
+  border-radius: 5px;
+  border: 0.5px solid #cbcbcb;
+  box-shadow: 0px 2px 4px 0px #7474741a;
+}
+
+.weightInput {
+  margin: 0;
+  max-width: 80px;
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
+}
+
+.weightSuffix {
+  position: relative;
+  color: #464646;
+  padding: 15px 15px 15px 0;
+}
+
+/* input and select styling end */

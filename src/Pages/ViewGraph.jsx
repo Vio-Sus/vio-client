@@ -1,14 +1,47 @@
 import { useState, useEffect } from 'react';
 import {
   generateXAxis,
-  filterEntriesBySource,
-  generateDataset,
 } from '../common/chartHelpers';
-import LineGraph from '../components/Graph/LineGraph';
+
 import { graphApi } from '../common/mockData';
 import { dateToYMD } from '../common/date';
 import { getGraphDataset } from '../common/network';
+import { Link } from 'react-router-dom';
+import React from 'react';
+import styled from 'styled-components';
+import LineGraph from '../components/Graph/LineGraph';
 import DateFilter from '../components/Filter/DateFilter';
+import Button from '../components/Button';
+import GraphRightSideKey from '../components/GraphRightSideKey';
+import GraphLeftSideFilter from '../components/GraphLeftSideFilter';
+import DropDownOptions from '../components/DropDownOptions';
+
+//divs
+const DropdownCont = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 80vw;
+`;
+
+const StyledLink = styled(Link)`
+  color: none;
+  text-decoration: none;
+  position: relative;
+`;
+
+const GraphMainCont = styled.div`
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  margin-top: 35px;
+  justify-content: space-evenly;
+`;
+
+const GraphCont = styled.div`
+  width: 60vw;
+`;
+
 
 const ViewGraphPage = ({ sources }) => {
   // const [startDate, setStartDate] = useState('2022-03-01');
@@ -27,6 +60,8 @@ const ViewGraphPage = ({ sources }) => {
   const [datasets, setDatasets] = useState([]);
 
   // changes date range when startdate and enddate are changed
+  //for dropdown
+
   useEffect(() => {
     (async () => {
       if (startDate && endDate) {
@@ -42,10 +77,45 @@ const ViewGraphPage = ({ sources }) => {
     })();
   }, [startDate, endDate]);
 
+  const handlePrint = () => {
+    window.print();
+  };
+
+  const handleSourceSelect = (e) => {
+          setSelectedSource(e.target.value);
+          console.log('NOTHING', datasets);
+        }
+
   return (
     <>
-      <h1>Graph</h1>
-      {(startDate, endDate, today) && (
+      <div class="pageCont">
+        <header>
+          <div class="headerCont">
+            <h1>Your Entries</h1>
+            <h3>Here’s an overview of the performance.</h3>
+          </div>
+          <div class="buttonCont">
+            <StyledLink to="/viewData">
+              <Button buttoncolor="#4A4A4A" buttontext="List View" />
+            </StyledLink>
+
+  {/* TODO: Export data to a PDF or Excel */}
+            <Button
+              buttoncolor="#4A4A4A"
+              buttontext="Export"
+              onClick={handlePrint}
+            />
+
+            <StyledLink to="/newEntry">
+              <Button buttontext="New Entry" />
+            </StyledLink>
+          </div>
+        </header>
+        <DropdownCont>
+          <DropDownOptions text="Sub Accounts" array={sources} handleChange={handleSourceSelect}/>
+          {/* TODO: Add the ability to show a graph for quantity of items across multiple sources */}
+          {/* <DropDownOptions text="Materials" /> */}
+          {(startDate, endDate, today) && (
         <DateFilter
           startDate={startDate}
           endDate={endDate}
@@ -57,21 +127,14 @@ const ViewGraphPage = ({ sources }) => {
             setEndDate(e.target.value);
           }}
         />
-      )}{' '}
-      <select
-        onChange={(e) => {
-          setSelectedSource(e.target.value);
-          console.log('NOTHING', datasets);
-        }}
-      >
-        <option hidden>Select Source</option>
-        {sources.map((source, key) => (
-          <option key={key} value={source.name}>
-            {source.name}
-          </option>
-        ))}
-      </select>
-      {xAxisLabels && datasets && selectedSource ? (
+      )}
+        </DropdownCont>
+
+        <GraphMainCont>
+          {/* <GraphLeftSideFilter /> */}
+          {/* give width & put it in div */}
+          <GraphCont>
+            {xAxisLabels && datasets && selectedSource ? (
         <LineGraph
           sourceName={selectedSource}
           xAxisLabels={xAxisLabels}
@@ -80,6 +143,11 @@ const ViewGraphPage = ({ sources }) => {
       ) : (
         <p>'Select a source to view...'</p>
       )}
+          </GraphCont>
+          {/* <GraphRightSideKey /> */}
+          {/* give width & put it in div */}
+        </GraphMainCont>
+      </div>
     </>
   );
 };

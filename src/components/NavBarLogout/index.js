@@ -4,11 +4,12 @@ import PersonIcon from '@mui/icons-material/Person';
 
 const NavbarUI = styled.div`
   padding: 0 3%;
-  height: 80px;
-  background-color: #e1eedd;
+  height: 100px;
+  background-color: #e9e9e9;
   display: flex;
   align-items: center;
-  @media screen and (max-width: 600px) {
+  justify-content: flex-end;
+  @media (max-width: 900px) {
     flex-direction: column;
     height: auto;
     gap: 10px;
@@ -18,23 +19,23 @@ const NavbarUI = styled.div`
 const Logo = styled.img`
   cursor: pointer;
   margin-right: auto;
-  @media screen and (max-width: 600px) {
+  @media (max-width: 900px) {
     margin: auto;
   }
 `;
 
 const ListUI = styled.ul`
   display: flex;
-  min-width: 330px;
-  padding: 0;
-  gap: 5%;
+  min-width: 600px;
+  gap: 3%;
+  @media (max-width: 900px) {
+    display: contents;
+  }
 `;
 
 const LinkUI = styled.li`
   cursor: pointer;
-  color: #000;
-  margin: 0;
-  padding: 0;
+  color: #000000;
   list-style: none;
   color: ${(props) => (props.selected ? '#004384' : '#000000')};
   font-weight: ${(props) => (props.selected ? '500' : '300')};
@@ -44,7 +45,7 @@ const LinkUI = styled.li`
 `;
 
 const AnchorUI = styled.a`
-  color: #000;
+  color: #000000;
   text-decoration: none;
   &:visited {
     color: black;
@@ -63,11 +64,8 @@ const User = styled.div`
 
 const UserUI = styled(User)`
   flex-direction: column;
-  margin-left: 10%;
-  @media screen and (max-width: 600px) {
-    margin: auto;
-  }
 `;
+
 
 const NavBar = ({ user }) => {
   return (
@@ -82,13 +80,16 @@ const NavBar = ({ user }) => {
             <AnchorUI href="newEntry">New Entry</AnchorUI>
           </LinkUI>
           <LinkUI>
-            <AnchorUI href="viewData">Data</AnchorUI>
+            <AnchorUI href="viewData">View Data</AnchorUI>
           </LinkUI>
           <LinkUI>
-            <AnchorUI href="viewSource">Sources</AnchorUI>
+            <AnchorUI href="viewSource">View Sources</AnchorUI>
           </LinkUI>
           <LinkUI>
-            <AnchorUI href="viewItem">Items</AnchorUI>
+            <AnchorUI href="viewItem">View Items</AnchorUI>
+          </LinkUI>
+          <LinkUI>
+            <AnchorUI href="viewGraph">View Graph</AnchorUI>
           </LinkUI>
         </ListUI>
         <UserUI>

@@ -12,6 +12,9 @@ import ViewItemPage from './Pages/ViewItem';
 import ViewGraphPage from './Pages/ViewGraph';
 import BluetoothPage from './Pages/Bluetooth';
 
+import NavBarLogIn from './components/NavBarLogIn';
+import { NavigateBeforeTwoTone } from '@mui/icons-material';
+
 function App() {
   const [sources, setSources] = useState([]);
   const [items, setItems] = useState([]);
