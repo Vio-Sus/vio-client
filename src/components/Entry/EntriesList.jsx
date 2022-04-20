@@ -3,12 +3,9 @@ import { getListOfEntries, getEntriesByDateRange } from '../../common/network';
 import styled from 'styled-components';
 // import Summary from '../Summary/Summary';
 // import DateFilter from '../Filter/DateFilter';
-
 import IconButton from '@mui/material/IconButton';
 import Delete from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-// import AddCircle from '@mui/icons-material/AddCircle';
-import AllButton from '../AllButton';
 
 export default function EntriesList({ selectEntry, sources, items }) {
   const [entries, setEntries] = useState([]);
@@ -129,7 +126,7 @@ export default function EntriesList({ selectEntry, sources, items }) {
         />
       )}{' '}  */}
       {/* Filter by Date Range: */}
-      <Cont>
+      <div class="tableCont">
         <FilterCont>
           <FilterType>
             <FilterText>Sub Accounts</FilterText>
@@ -206,50 +203,42 @@ export default function EntriesList({ selectEntry, sources, items }) {
         </FilterType> */}
         </FilterCont>
 
-        <Table>
-          <HeadingWrap>
-            <DataRow>
-              {/* <DivCont/> */}
-              <TH> SUB ACCOUNTS</TH>
-              {/* <TH> PROCESSOR </TH> */}
-              <TH> MATERIALS </TH>
-              <TH> DATE </TH>
-              <TH> WEIGHT </TH>
-              {/* <TH> STATUS </TH> */}
-              <TH></TH>
-            </DataRow>
-          </HeadingWrap>
-          <TBody>
+        <table>
+          <thead>
+            <tr>
+              <th> SUB ACCOUNTS</th>
+              {/* <th> PROCESSOR </th> */}
+              <th> MATERIALS </th>
+              <th> DATE </th>
+              <th> WEIGHT </th>
+              {/* <th> STATUS </th> */}
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
             {filteredEntries
               ? filteredEntries.map((entry, index) => (
-                    <TR key={index}>
-                      <DataRow>
-                        {/* <DivCont><SelectDiv/></DivCont> */}
-                        <TD>{entry.source_name}</TD>
-                        {/* <TD> P1 </TD> */}
-                        <TD> {entry.item_name} </TD>
-                        <TD> {entry.entry_date} </TD>
-                        <TD> {entry.entry_weight} kg </TD>
-                        {/* <TD> Processed </TD> */}
-                        <TD>
-                          <IconButton
-                            onClick={() => selectEntry(entry, 'edit')}
-                          >
-                            <EditIcon />
-                          </IconButton>
-                          <IconButton
-                            onClick={() => selectEntry(entry, 'delete')}
-                          >
-                            <Delete fontSize="small" />
-                          </IconButton>
-                        </TD>
-                      </DataRow>
-                    </TR>
+                  <tr key={index}>
+                    <td>{entry.source_name}</td>
+                    {/* <td> P1 </td> */}
+                    <td> {entry.item_name} </td>
+                    <td> {entry.entry_date} </td>
+                    <td> {entry.entry_weight} kg </td>
+                    {/* <td> Processed </td> */}
+                    <td>
+                      <IconButton onClick={() => selectEntry(entry, 'edit')}>
+                        <EditIcon sx={{ color: '#606f89' }} />
+                      </IconButton>
+                      <IconButton onClick={() => selectEntry(entry, 'delete')}>
+                        <Delete sx={{ color: '#606f89' }} />
+                      </IconButton>
+                    </td>
+                  </tr>
                 ))
               : null}
-          </TBody>
-        </Table>
-      </Cont>
+          </tbody>
+        </table>
+      </div>
       {/* <Summary startDate={'2022-01-01'} endDate={'2022-03-10'} /> */}
       {/* <Summary startDate={startDate} endDate={endDate} /> */}
     </>
@@ -305,12 +294,6 @@ const FilterCont = styled.div`
   width: 80vw;
 `;
 
-const Cont = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 80vw;
-`;
-
 const FilterType = styled.div`
   display: flex;
   flex-direction: column;
@@ -320,53 +303,4 @@ const FilterText = styled.text`
   font-size: 14px;
   font-weight: 500;
   color: #464646;
-`;
-
-const Table = styled.table`
-  margin-top: 50px;
-  width: 80vw;
-`;
-
-const HeadingWrap = styled.thead`
-  width: 80vw;
-`;
-
-const DataRow = styled.tr`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 80vw;
-`;
-
-const TR = styled.tr`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 80vw;
-  margin-top: 5px;
-  background-color: #ecfaee;
-  &:nth-child(even) {
-    background-color: white;
-  }
-`;
-
-const TH = styled.th`
-  font-size: 14px;
-  color: #606f89;
-  text-transform: uppercase;
-  width: 200px;
-`;
-
-const TD = styled.td`
-  width: 200px;
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const TBody = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 `;

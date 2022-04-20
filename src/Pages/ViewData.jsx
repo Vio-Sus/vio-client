@@ -1,15 +1,18 @@
-import EntriesList from '../components/Entry/EntriesList';
-import DeleteConfirmation from '../components/Entry/DeleteEntryConfirmation';
-import EditForm from '../components/Entry/EditEntryForm';
 import { useEffect, useState } from 'react';
-// import Summary from '../components/Summary/Summary';
 import { dateToYMD } from '../common/date';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Routes, Route, Link } from "react-router-dom";
-
+import EntriesList from '../components/Entry/EntriesList';
+import EditForm from '../components/Entry/EditEntryForm';
+import DeleteConfirmation from '../components/Entry/DeleteEntryConfirmation';
+// import Summary from '../components/Summary/Summary';
 import Button from '../components/Button';
-import AllButton from '../components/AllButton';
-import EditEntryPopup from '../components/EditEntryPopup';
+
+const StyledLink = styled(Link)`
+  color: none;
+  text-decoration: none;
+  position: relative;
+`;
 
 const ViewDataPage = ({ sources, items }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -55,55 +58,42 @@ const ViewDataPage = ({ sources, items }) => {
     })();
   }, []);
 
+  const handlePrint = () => {
+    window.print();
+  };
+
   return (
     startDate &&
     endDate && (
       <>
-      <Page>
-      <Top>
-      <HeaderCont>
-        <HeaderTextcont>
-                <Header>Your Entries</Header>
-                <Subheader>Here’s an overview of the performance.</Subheader>
-        </HeaderTextcont>
-              <ButtonCont>
-                <EachButtonCont>
-                  <StyledLink to='/viewGraph'>
-                    <Button
-                      buttontext='Graph View'
-                      buttoncolor='#4A4A4A'
-                    />
-                  </StyledLink>
-                </EachButtonCont>
-                <EachButtonCont> 
-                  <Button
-                    buttontext='Export'
-                    buttoncolor='#4A4A4A'
-                  />
-                </EachButtonCont>
-                <EachButtonCont>
-                  <StyledLink to='/NewEntry'> 
-                    <Button
-                      buttontext='New Entry'
-                    />
-                  </StyledLink>
-                </EachButtonCont>
-              </ButtonCont>
-      </HeaderCont>
-      </Top>
-      <Spacer />
-        {/* <TextCont>
-          <Heading>List View</Heading>
-          <SubHead>Here's an overview of the performance</SubHead>
-        </TextCont> */}
-        <Mid>
-        
+        <div class="pageCont">
+          <header>
+            <div class="headingCont">
+              <h1>Your Entries</h1>
+              <h3>Here’s an overview of the performance.</h3>
+            </div>
+            <div class="buttonCont">
+              <StyledLink to="/viewGraph">
+                <Button buttontext="Graph View" buttoncolor="#4A4A4A" />
+              </StyledLink>
+
+              <Button
+                buttontext="Export"
+                buttoncolor="#4A4A4A"
+                onClick={handlePrint}
+              />
+
+              <StyledLink to="/NewEntry">
+                <Button buttontext="New Entry" />
+              </StyledLink>
+            </div>
+          </header>
+          <div class="pageCont">
             <EntriesList
               selectEntry={selectEntry}
               sources={sources}
               items={items}
-            >   
-            </EntriesList>
+            ></EntriesList>
             {isEditing && (
               <EditForm
                 entry={selectedEntry}
@@ -120,82 +110,13 @@ const ViewDataPage = ({ sources, items }) => {
                 items={items}
               />
             )}
-
-
-        </Mid>
-        {/* <Summary startDate={startDate} endDate={endDate} />
+          </div>
+          {/* <Summary startDate={startDate} endDate={endDate} />
         <Summary startDate={'2022-01-01'} endDate={'2022-03-10'} /> */}
-      </Page>
+        </div>
       </>
     )
   );
 };
 
 export default ViewDataPage;
-
-
-// styled components
-const Top = styled.div`
-  display:flex;
-  margin-top: 7vh;
-  margin-left: 233px;
-  margin-right:233px;
-`;
-
-const StyledLink = styled(Link)`
-  color: none;
-  text-decoration: none;
-  position: relative;
-`;
-
-const Mid = styled.div`
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-`;
-
-const Header = styled.text`
-  font-size: 36px;
-  font-weight: 300;
-  color: black;
-`;
-
-const Subheader = styled.text`
-  font-size: 18px;
-  font-weight: 400;
-  color: #888888;
-`;
-
-const Page = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-`;
-
-const HeaderCont = styled.div`
-  display:flex;
-  flex-direction: row ;
-  justify-content: space-between;
-  width: 80vw;
-`;
-
-const HeaderTextcont = styled.div`
-  display:flex;
-  flex-direction: column;
-`;
-
-const ButtonCont = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-
-const Spacer = styled.div`
-  display: flex;
-  height: 50px;
-`;
-
-const EachButtonCont = styled.div`
-  margin: .3rem;
-`;

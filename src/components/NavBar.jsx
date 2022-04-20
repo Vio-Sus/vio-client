@@ -8,8 +8,7 @@ const NavbarUI = styled.div`
   background-color: #e1eedd;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  @media (max-width: 900px) {
+  @media screen and (max-width: 600px) {
     flex-direction: column;
     height: auto;
     gap: 10px;
@@ -19,25 +18,23 @@ const NavbarUI = styled.div`
 const Logo = styled.img`
   cursor: pointer;
   margin-right: auto;
-  @media (max-width: 900px) {
+  @media screen and (max-width: 600px) {
     margin: auto;
   }
 `;
 
 const ListUI = styled.ul`
   display: flex;
-  justify-content: flex-end;
-  margin-right: 5%;
-  min-width: 600px;
+  min-width: 330px;
+  padding: 0;
   gap: 5%;
-  @media (max-width: 900px) {
-    display: contents;
-  }
 `;
 
 const LinkUI = styled.li`
   cursor: pointer;
-  color: #000000;
+  color: #000;
+  margin: 0;
+  padding: 0;
   list-style: none;
   color: ${(props) => (props.selected ? '#004384' : '#000000')};
   font-weight: ${(props) => (props.selected ? '500' : '300')};
@@ -47,7 +44,7 @@ const LinkUI = styled.li`
 `;
 
 const AnchorUI = styled.a`
-  color: #000000;
+  color: #000;
   text-decoration: none;
   &:visited {
     color: black;
@@ -66,6 +63,10 @@ const User = styled.div`
 
 const UserUI = styled(User)`
   flex-direction: column;
+  margin-left: 10%;
+  @media screen and (max-width: 600px) {
+    margin: auto;
+  }
 `;
 
 const NavBar = ({ user }) => {
@@ -89,9 +90,6 @@ const NavBar = ({ user }) => {
           <LinkUI>
             <AnchorUI href="viewItem">Items</AnchorUI>
           </LinkUI>
-          {/* <LinkUI>
-            <AnchorUI href="viewGraph">View Graph</AnchorUI>
-          </LinkUI> */}
         </ListUI>
         <UserUI>
           <User>

@@ -1,35 +1,21 @@
 import { useState, useEffect } from 'react';
-import LineGraph from '../components/Graph/LineGraph';
 import { dateToYMD } from '../common/date';
-import DateFilter from '../components/Filter/DateFilter'
-import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import React from 'react';
-import { Routes, Route, Link } from "react-router-dom";
-
+import styled from 'styled-components';
+import LineGraph from '../components/Graph/LineGraph';
+import DateFilter from '../components/Filter/DateFilter';
 import Button from '../components/Button';
-import MultipleSelectCheckmarks from '../components/Materialtest';
 import GraphRightSideKey from '../components/GraphRightSideKey';
 import GraphLeftSideFilter from '../components/GraphLeftSideFilter';
 import DropDownOptions from '../components/DropDownOptions';
 
-
 //divs
-const Maincont = styled.div`
-  display:flex;
-  flex-direction: column;
-  justify-content: space-between ;
-  width: 100vw;
-  /* background-color:#fad ; */
-  align-items: center;
-`;
-
-
 const DropdownCont = styled.div`
-  display:flex;
-  flex-direction: row ;
+  display: flex;
+  flex-direction: row;
   justify-content: space-between;
   width: 80vw;
-  
 `;
 
 const StyledLink = styled(Link)`
@@ -38,13 +24,12 @@ const StyledLink = styled(Link)`
   position: relative;
 `;
 
-
 const GraphMainCont = styled.div`
-  width:100vw;
-  display:flex;
+  width: 100vw;
+  display: flex;
   flex-direction: row;
   margin-top: 35px;
-  justify-content: space-evenly ;
+  justify-content: space-evenly;
 `;
 
 const GraphCont = styled.div`
@@ -52,14 +37,10 @@ const GraphCont = styled.div`
 `;
 
 const DropCont = styled.div`
-  display:flex;
-  flex-direction: column ;
+  display: flex;
+  flex-direction: column;
 `;
 // div end
-
-
-//texts
-
 
 //dropdown styling
 const DateInput = styled.input`
@@ -77,18 +58,11 @@ const DateInput = styled.input`
   &::-webkit-calendar-picker-indicator {
     opacity: 0;
   }
-  background-image:
-    linear-gradient(45deg, transparent 50%, #80CF76 50%),
-    linear-gradient(135deg, #80CF76 50%, transparent 50%),
-    radial-gradient(#F1FAF0 70%, transparent 72%);
-  background-position:
-    139px 13px,
-    144px 13px,
-    134px 5px;
-  background-size:
-    5px 5px,
-    5px 5px,
-    1.5em 1.5em;
+  background-image: linear-gradient(45deg, transparent 50%, #80cf76 50%),
+    linear-gradient(135deg, #80cf76 50%, transparent 50%),
+    radial-gradient(#f1faf0 70%, transparent 72%);
+  background-position: 139px 13px, 144px 13px, 134px 5px;
+  background-size: 5px 5px, 5px 5px, 1.5em 1.5em;
   background-repeat: no-repeat;
 `;
 
@@ -97,61 +71,6 @@ const Label = styled.label`
   font-weight: 500;
   color: #464646;
 `;
-
-const Page = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-`;
-
-const Header = styled.text`
-  font-size: 36px;
-  font-weight: 300;
-  color: black;
-`;
-
-const Subheader = styled.text`
-  font-size: 18px;
-  font-weight: 400;
-  color: #888888;
-`;
-
-const HeaderCont = styled.div`
-  display:flex;
-  flex-direction: row ;
-  justify-content: space-between;
-  width: 80vw;
-`;
-
-const HeaderTextcont = styled.div`
-  display:flex;
-  flex-direction: column;
-`;
-
-const ButtonCont = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-
-const Spacer = styled.div`
-  display: flex;
-  height: 50px;
-`;
-
-const EachButtonCont = styled.div`
-  margin: .3rem;
-`;
-
-const Top = styled.div`
-  display:flex;
-  margin-top: 7vh;
-  margin-left: 233px;
-  margin-right:233px;
-`;
-
-
 
 const ViewGraphPage = () => {
   const [startDate, setStartDate] = useState('');
@@ -165,7 +84,6 @@ const ViewGraphPage = () => {
 
   //for dropdown
 
-
   useEffect(() => {
     (async () => {
       try {
@@ -176,49 +94,41 @@ const ViewGraphPage = () => {
     })();
   }, []);
 
+  const handlePrint = () => {
+    window.print();
+  };
 
   return (
-  <Page>
-    <Maincont>
-      <Top>
-        <HeaderCont>
-          <HeaderTextcont>
-              <Header>Your Entries</Header>
-              <Subheader>Here’s an overview of the performance.</Subheader>
-          </HeaderTextcont>
-                <ButtonCont>
-                  <EachButtonCont>
-                    <StyledLink to='/viewData'>
-                      <Button 
-                        buttoncolor="#4A4A4A"
-                        buttontext="List View"
-                      />
-                    </StyledLink>
-                  </EachButtonCont>
-                  <EachButtonCont> 
-                    <Button
-                      buttoncolor="#4A4A4A"
-                      buttontext="Export"
-                    />
-                  </EachButtonCont>
-                  <EachButtonCont>
-                    <StyledLink to='/newEntry'>
-                      <Button
-                        buttontext="New Entry"
-                      />
-                    </StyledLink>
-                  </EachButtonCont>
-                </ButtonCont>
-        </HeaderCont>
-      </Top>
-      <Spacer></Spacer>
-      <DropdownCont>
-          <DropDownOptions text="Sub Accounts"/>
-          <DropDownOptions text="Materials"/>
+    <>
+      <div class="pageCont">
+        <header>
+          <div class="headerCont">
+            <h1>Your Entries</h1>
+            <h3>Here’s an overview of the performance.</h3>
+          </div>
+          <div class="buttonCont">
+            <StyledLink to="/viewData">
+              <Button buttoncolor="#4A4A4A" buttontext="List View" />
+            </StyledLink>
+
+            <Button
+              buttoncolor="#4A4A4A"
+              buttontext="Export"
+              onClick={handlePrint}
+            />
+
+            <StyledLink to="/newEntry">
+              <Button buttontext="New Entry" />
+            </StyledLink>
+          </div>
+        </header>
+        <DropdownCont>
+          <DropDownOptions text="Sub Accounts" />
+          <DropDownOptions text="Materials" />
           <DropCont>
             <div>
               <Label for="startDate">Start Date</Label>
-              </div>
+            </div>
             <div>
               <DateInput
                 type="date"
@@ -232,43 +142,39 @@ const ViewGraphPage = () => {
                 }}
               />
             </div>
-            </DropCont>
-          
+          </DropCont>
 
           <DropCont>
             <div>
-            <Label for="endDate">End Date</Label>
+              <Label for="endDate">End Date</Label>
             </div>
             <div>
-            <DateInput
-              type="date"
-              name="endDate"
-              id="endDate"
-              value={endDate}
-              max={today}
-              onChange={(e) => {
-                setEndDate(e.target.value);
-                // dateRangeFilter();
-              }}
+              <DateInput
+                type="date"
+                name="endDate"
+                id="endDate"
+                value={endDate}
+                max={today}
+                onChange={(e) => {
+                  setEndDate(e.target.value);
+                  // dateRangeFilter();
+                }}
               />
-              </div>
-      
-           
-            </DropCont>  
-      </DropdownCont>
+            </div>
+          </DropCont>
+        </DropdownCont>
 
-     <GraphMainCont>
-      <GraphLeftSideFilter/>
-      {/* give width & put it in div */}
-        <GraphCont>
-          <LineGraph sourceName={'source 1'} />
-        </GraphCont>
-      <GraphRightSideKey/>
-            {/* give width & put it in div */}
-     </GraphMainCont>
-
-    </Maincont>
-  </Page>
+        <GraphMainCont>
+          <GraphLeftSideFilter />
+          {/* give width & put it in div */}
+          <GraphCont>
+            <LineGraph sourceName={'source 1'} />
+          </GraphCont>
+          <GraphRightSideKey />
+          {/* give width & put it in div */}
+        </GraphMainCont>
+      </div>
+    </>
   );
 };
 

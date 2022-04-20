@@ -1,24 +1,14 @@
+import React from 'react';
+import styled from 'styled-components';
 import { useState } from 'react';
 import { postEntries } from '../../common/network';
 import { handleValidation } from '../../common/validation';
+import { Link } from 'react-router-dom';
 import AddSourceModal from '../Source/AddSourceModal';
 import AddItemModal from '../Item/AddItemModal';
-import React from 'react';
-import styled from 'styled-components';
 import IconButton from '@mui/material/IconButton';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Delete from '@mui/icons-material/Delete';
-import { Routes, Route, Link } from "react-router-dom";
-
-const TH = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  font-size: 14px;
-  font-weight: 500;
-  color: #464646;
-  margin-bottom: 5px;
-  font-size: 12px;
-`;
 
 const SourceCont = styled.div`
   display: flex;
@@ -133,6 +123,7 @@ const Suffix = styled.div`
 const SaveButton = styled.button`
   width: 100px;
   height: 30px;
+  margin: 6em;
   background-color: #80cf76;
   font-size: 12px;
   color: white;
@@ -240,79 +231,85 @@ export default function Form({ items, sources }) {
     <>
       <div onClick={handleCancel}>
         <form onSubmit={handleSubmit} id="input-form" noValidate>
-          <div>
-            <SourceCont>
-              <TH>Source</TH>
-              <Select name="source_id" onChange={(e) => handleFormValues(e)}>
-                <option hidden>Select Source</option>
-                {sources.map((source, key) => (
-                  <option key={key} value={source.source_id}>
-                    {source.name}
-                  </option>
-                ))}
-                <option value="add_source">Add Source...</option>
-              </Select>
-            </SourceCont>
+          <SourceCont>
+            <h4>Source</h4>
+            <Select name="source_id" onChange={(e) => handleFormValues(e)}>
+              <option hidden>Select Source</option>
+              {sources.map((source, key) => (
+                <option key={key} value={source.source_id}>
+                  {source.name}
+                </option>
+              ))}
+              <option value="add_source">Add Source...</option>
+            </Select>
+          </SourceCont>
 
-            <DateItemWeightCont>
-              <DateCont>
-                <h4>Date</h4>
-                <DateInput
-                  name="created"
-                  type="date"
-                  onChange={(e) => handleFormValues(e)}
-                />
-              </DateCont>
-              <ItemWeightCont>
-                {entryWeights.map((element, index) => (
-                  <ItemWeightPair className="form-inline" key={element.id}>
-                    <ItemCont>
-                      <h4>Item</h4>
-                      <Select
-                        name="item_id"
+          <DateItemWeightCont>
+            <DateCont>
+              <h4>Date</h4>
+              <DateInput
+                name="created"
+                type="date"
+                onChange={(e) => handleFormValues(e)}
+              />
+            </DateCont>
+            <ItemWeightCont>
+              {entryWeights.map((element, index) => (
+                <ItemWeightPair className="form-inline" key={element.id}>
+                  <ItemCont>
+                    <h4>Item</h4>
+                    <Select
+                      name="item_id"
+                      onChange={(e) => {
+                        e.target.value === 'add_item'
+                          ? addItem()
+                          : (element.item_id = Number(e.target.value));
+                      }}
+                    >
+                      <option hidden>Select Item</option>
+                      {items.map((item) => (
+                        <option key={item.item_id} value={item.item_id}>
+                          {item.name}
+                        </option>
+                      ))}
+                      <option value="add_item">Add Item...</option>
+                    </Select>
+                  </ItemCont>
+
+                  <WeightCont>
+                    <h4>Weight</h4>
+                    <WeightSubCont>
+                      <WeightInput
+                        type="number"
+                        name="weight"
+                        placeholder="0"
                         onChange={(e) => {
-                          e.target.value === 'add_item'
-                            ? addItem()
-                            : (element.item_id = Number(e.target.value));
+                          element.weight = Number(e.target.value);
                         }}
-                      >
-                        <option hidden>Select Item</option>
-                        {items.map((item) => (
-                          <option key={item.item_id} value={item.item_id}>
-                            {item.name}
-                          </option>
-                        ))}
-                        <option value="add_item">Add Item...</option>
-                      </Select>
-                    </ItemCont>
+                      />
+                      <Suffix>kg</Suffix>
+                    </WeightSubCont>
+                  </WeightCont>
 
-                    <WeightCont>
-                      <h4>Weight</h4>
-                      <WeightSubCont>
-                        <WeightInput
-                          type="number"
-                          name="weight"
-                          placeholder="0"
-                          onChange={(e) => {
-                            element.weight = Number(e.target.value);
-                          }}
-                        />
-                        <Suffix>kg</Suffix>
-                      </WeightSubCont>
-                    </WeightCont>
+                  {!!index && (
+                    <IconButton
+                      onClick={() => removeFormFields(element)}
+                      sx={{ marginTop: 2 }}
+                    >
+                      <Delete sx={{ '&:hover': { color: '#80cf76' } }} />
+                    </IconButton>
+                  )}
+                </ItemWeightPair>
+              ))}
+            </ItemWeightCont>
+          </DateItemWeightCont>
 
-                    {!!index && (
-                      <IconButton
-                        onClick={() => removeFormFields(element)}
-                        sx={{ marginTop: 2 }}
-                      >
-                        <Delete sx={{ '&:hover': { color: '#80cf76' } }} />
-                      </IconButton>
-                    )}
-                  </ItemWeightPair>
-                ))}
-              </ItemWeightCont>
-            </DateItemWeightCont>
+          <div className="button-section">
+            <ButtonCont>
+              <IconButton onClick={() => addFormFields()}>
+                <AddCircleIcon sx={{ '&:hover': { color: '#80cf76' } }} />
+              </IconButton>
+            </ButtonCont>
 
             <div className="error-messages">
               {errorMsgs.map((msg, key) => (
@@ -320,18 +317,14 @@ export default function Form({ items, sources }) {
               ))}
             </div>
 
-            <div className="button-section">
-              <ButtonCont>
-                <IconButton onClick={() => addFormFields()}>
-                  <AddCircleIcon sx={{ '&:hover': { color: '#80cf76' } }} />
-                </IconButton>
-              </ButtonCont>
-              <StyledLink to='/viewData'>
-                <SaveButton buttontext="Save Entry" className="button submit">
-                  Save Entry
-                </SaveButton>
-              </StyledLink>
-            </div>
+            <ButtonCont>
+              {/* uncommenting StyledLink will disable the error messages */}
+              {/* <StyledLink to="/viewData"> */}
+              <SaveButton buttontext="Save Entry" className="button submit">
+                Save Entry
+              </SaveButton>
+              {/* </StyledLink> */}
+            </ButtonCont>
           </div>
         </form>
       </div>

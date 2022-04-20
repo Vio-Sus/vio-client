@@ -1,73 +1,8 @@
 import { useState, useEffect } from 'react';
 import { getSources } from '../../common/network';
-import styled from 'styled-components';
 import EditIcon from '@mui/icons-material/Edit';
 import Delete from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
-import { TableBody } from 'semantic-ui-react';
-
-const EntryColumn = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 80vw;
-`;
-
-// const TD = styled.td`
-//   background-color:#ECFAEE;
-//   width: 80vw;
-//   color:##2E3B52;
-// `;
-
-const TD = styled.td`
-  width: 250px;
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const DataRow = styled.tr`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 80vw;
-  margin-top: 5px;
-  background-color: #ecfaee;
-  &:nth-child(even) {
-    background-color: white;
-  }
-`;
-
-const HeadingWrap = styled.thead`
-  width: 80vw;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
-const Cont = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 80vw;
-`;
-
-const TH = styled.th`
-  font-size: 14px;
-  color: #606f89;
-  text-transform: uppercase;
-  width: 250px;
-`;
-
-const Table = styled.table`
-  width: 80vw;
-`;
-
-const TBody = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`;
 
 export default function SourceList({ selectSource }) {
   const [sources, setSources] = useState([]);
@@ -87,36 +22,35 @@ export default function SourceList({ selectSource }) {
   }, []);
 
   return (
-    <Cont>
-      <Table>
-        <HeadingWrap>
-          <TH> SOURCE </TH>
-          <TH> ADDRESS </TH>
-          <TH> PHONE NUMBER</TH>
-          <TH></TH>
-        </HeadingWrap>
-        <TBody>
-          <EntryColumn>
-            <TBody>
-              {sources.map((source, index) => (
-                <DataRow key={index}>
-                  <TD> {source.name} </TD>
-                  <TD> {source.address} </TD>
-                  <TD> {source.phone_number} </TD>
-                  <TD>
-                    <IconButton onClick={() => selectSource(source)}>
-                      <EditIcon sx={{ color: '#7D90B2' }}></EditIcon>
-                    </IconButton>
-                    <IconButton onClick={() => selectSource(source, 'delete')}>
-                      <Delete sx={{ color: '#7D90B2' }} />
-                    </IconButton>
-                  </TD>
-                </DataRow>
-              ))}
-            </TBody>
-          </EntryColumn>
-        </TBody>
-      </Table>
-    </Cont>
+    <div class="tableCont">
+      <table>
+        <thead>
+          <tr>
+            <th> SOURCE </th>
+            <th> ADDRESS </th>
+            <th> PHONE NUMBER</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {sources.map((source, index) => (
+            <tr key={index}>
+              <td> {source.name} </td>
+              <td> {source.address} </td>
+              <td> {source.phone_number} </td>
+              <td>
+                <IconButton onClick={() => selectSource(source)}>
+                  <EditIcon sx={{ color: '#606f89' }}></EditIcon>
+                </IconButton>
+                {/* Need to add deleteItem function: */}
+                {/* <IconButton onClick={() => selectSource(source, 'delete')}>
+                  <Delete sx={{ color: '#606f89' }} />
+                </IconButton> */}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
