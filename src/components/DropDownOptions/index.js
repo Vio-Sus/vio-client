@@ -77,7 +77,7 @@ export default function DropDownOptions({
           </div>
           <div>
           <Select name={text} onChange={handleChange} >
-            <option hidden>Select...</option>
+            {/* <option hidden>Select...</option> */}
             {array.map((item, key) => (
               <option data-count={key} value={item.name}>{item.name}</option>
             ))}
