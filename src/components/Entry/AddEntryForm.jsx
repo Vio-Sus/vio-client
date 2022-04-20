@@ -31,17 +31,6 @@ const WeightCont = styled.div`
   grid-row: 1;
 `;
 
-const WeightSubCont = styled.div`
-  display: flex;
-  align-items: center;
-  height: 35px;
-  max-width: 140px;
-  padding-left: 10px;
-  border-radius: 7px;
-  border: 0.5px solid #cbcbcb;
-  box-shadow: 0px 2px 4px 0px #7474741a;
-`;
-
 const ItemWeightPair = styled.div`
   display: grid;
   gap: 20px;
@@ -61,86 +50,6 @@ const DateItemWeightCont = styled.div`
   grid-template-rows: auto;
   gap: 20px 0;
   max-width: 515px;
-`;
-
-const DateInput = styled.input`
-  height: 35px;
-  width: 140px;
-  padding: 0 5px;
-  border-radius: 7px;
-  border: 0.5px solid #cbcbcb;
-  box-shadow: 0px 2px 4px 0px #7474741a;
-  cursor: pointer;
-  &:focus {
-    outline: none;
-  }
-  &::-webkit-calendar-picker-indicator {
-    opacity: 0;
-  }
-  background-image: linear-gradient(45deg, transparent 50%, #80cf76 50%),
-    linear-gradient(135deg, #80cf76 50%, transparent 50%),
-    radial-gradient(#f1faf0 70%, transparent 72%);
-  background-position: 129px 15px, 134px 15px, 124px 7px;
-  background-size: 5px 5px, 5px 5px, 1.5em 1.5em;
-  background-repeat: no-repeat;
-`;
-
-const Select = styled.select`
-  height: 35px;
-  width: 150px;
-  padding: 5px;
-  border-radius: 7px;
-  border: 0.5px solid #cbcbcb;
-  box-shadow: 0px 2px 4px 0px #7474741a;
-  cursor: pointer;
-  appearance: none;
-  &:focus {
-    outline: none;
-  }
-  background-image: linear-gradient(45deg, transparent 50%, #80cf76 50%),
-    linear-gradient(135deg, #80cf76 50%, transparent 50%),
-    radial-gradient(#f1faf0 70%, transparent 72%);
-  background-position: 129px 13px, 134px 13px, 124px 5px;
-  background-size: 5px 5px, 5px 5px, 1.5em 1.5em;
-  background-repeat: no-repeat;
-`;
-
-const WeightInput = styled.input`
-  max-width: 100px;
-  border: none;
-  background-color: transparent;
-  &:focus {
-    outline: none;
-  }
-`;
-
-const Suffix = styled.div`
-  position: relative;
-  color: #464646;
-  padding: 15px 15px 15px 0;
-`;
-
-const SaveButton = styled.button`
-  width: 100px;
-  height: 30px;
-  margin: 6em;
-  background-color: #80cf76;
-  font-size: 12px;
-  color: white;
-  font-weight: bold;
-  border: none;
-  border-radius: 5px;
-  box-shadow: 0px 2px 4px 0px #7474741a;
-  :hover {
-    cursor: pointer;
-  }
-`;
-
-const ButtonCont = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
 `;
 
 const StyledLink = styled(Link)`
@@ -232,8 +141,13 @@ export default function Form({ items, sources }) {
       <div onClick={handleCancel}>
         <form onSubmit={handleSubmit} id="input-form" noValidate>
           <SourceCont>
-            <h4>Source</h4>
-            <Select name="source_id" onChange={(e) => handleFormValues(e)}>
+            <label for="selectSource">Source</label>
+            <select
+              name="source_id"
+              class="dropdown"
+              id="selectSource"
+              onChange={(e) => handleFormValues(e)}
+            >
               <option hidden>Select Source</option>
               {sources.map((source, key) => (
                 <option key={key} value={source.source_id}>
@@ -241,13 +155,15 @@ export default function Form({ items, sources }) {
                 </option>
               ))}
               <option value="add_source">Add Source...</option>
-            </Select>
+            </select>
           </SourceCont>
 
           <DateItemWeightCont>
             <DateCont>
-              <h4>Date</h4>
-              <DateInput
+              <label for="inputNewDate">Date</label>
+              <input
+                class="dropdown"
+                id="inputNewDate"
                 name="created"
                 type="date"
                 onChange={(e) => handleFormValues(e)}
@@ -255,10 +171,12 @@ export default function Form({ items, sources }) {
             </DateCont>
             <ItemWeightCont>
               {entryWeights.map((element, index) => (
-                <ItemWeightPair className="form-inline" key={element.id}>
+                <ItemWeightPair key={element.id}>
                   <ItemCont>
-                    <h4>Item</h4>
-                    <Select
+                    <label for="selectNewItem">Item</label>
+                    <select
+                      class="dropdown"
+                      id="selectNewItem"
                       name="item_id"
                       onChange={(e) => {
                         e.target.value === 'add_item'
@@ -273,28 +191,31 @@ export default function Form({ items, sources }) {
                         </option>
                       ))}
                       <option value="add_item">Add Item...</option>
-                    </Select>
+                    </select>
                   </ItemCont>
 
                   <WeightCont>
-                    <h4>Weight</h4>
-                    <WeightSubCont>
-                      <WeightInput
+                    <label for="inputNewWeight">Weight</label>
+                    <div class="weightInputCont">
+                      <input
+                        class="weightInput"
+                        id="inputNewWeight"
                         type="number"
                         name="weight"
                         placeholder="0"
+                        min="0"
                         onChange={(e) => {
                           element.weight = Number(e.target.value);
                         }}
                       />
-                      <Suffix>kg</Suffix>
-                    </WeightSubCont>
+                      <span class="weightSuffix">kg</span>
+                    </div>
                   </WeightCont>
 
                   {!!index && (
                     <IconButton
                       onClick={() => removeFormFields(element)}
-                      sx={{ marginTop: 2 }}
+                      sx={{ width: 2, marginTop: 3, '&:hover': { backgroundColor: 'transparent', transform: 'scale(1.1)' } }}
                     >
                       <Delete sx={{ '&:hover': { color: '#80cf76' } }} />
                     </IconButton>
@@ -304,27 +225,27 @@ export default function Form({ items, sources }) {
             </ItemWeightCont>
           </DateItemWeightCont>
 
-          <div className="button-section">
-            <ButtonCont>
-              <IconButton onClick={() => addFormFields()}>
+          <div>
+            <div class="buttonCont">
+              <IconButton onClick={() => addFormFields()}
+              sx={{ '&:hover': { backgroundColor: 'transparent', transform: 'scale(1.1)' } }}
+              >
                 <AddCircleIcon sx={{ '&:hover': { color: '#80cf76' } }} />
               </IconButton>
-            </ButtonCont>
+            </div>
 
-            <div className="error-messages">
+            <div class="errorMessages">
               {errorMsgs.map((msg, key) => (
                 <span key={key}>{msg}</span>
               ))}
             </div>
 
-            <ButtonCont>
-              {/* uncommenting StyledLink will disable the error messages */}
+            <div class="buttonCont">
+              {/* uncommenting StyledLink will disable the form's error messages */}
               {/* <StyledLink to="/viewData"> */}
-              <SaveButton buttontext="Save Entry" className="button submit">
-                Save Entry
-              </SaveButton>
+              <button class="submitButton">Save Entry</button>
               {/* </StyledLink> */}
-            </ButtonCont>
+            </div>
           </div>
         </form>
       </div>
