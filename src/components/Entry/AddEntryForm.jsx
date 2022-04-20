@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { postEntries } from '../../common/network';
 import { handleValidation } from '../../common/validation';
 import AddSourceModal from '../Source/AddSourceModal';
@@ -16,6 +16,14 @@ export default function Form({ items, sources }) {
   const [errorMsgs, setErrorMsgs] = useState([]);
   const [isAddingSource, setIsAddingSource] = useState(false);
   const [isAddingItem, setIsAddingItem] = useState(false);
+  const [sourcesList, setSourcesList] = useState([]);
+  const [itemsList, setItemsList] = useState([]);
+
+  useEffect(() => {
+    console.log('this is the add stuff ', sources);
+    setSourcesList(sources);
+    setItemsList(items);
+  }, [isAddingSource, isAddingItem]);
 
   const addSource = () => {
     console.log('adding..........');
@@ -72,7 +80,7 @@ export default function Form({ items, sources }) {
       const res = await postEntries(formContent);
       console.log(res);
       form.reset();
-      window.location.reload();
+      // window.location.reload();
     }
   };
 

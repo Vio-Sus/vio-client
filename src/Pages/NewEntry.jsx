@@ -1,4 +1,7 @@
 import Form from "../components/Entry/AddEntryForm";
+
+
+
 const NewEntryPage = ({ sources, items }) => {
   return (
     <>
