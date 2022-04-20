@@ -46,7 +46,11 @@ function App() {
           <NavBar user={user} />
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<DashboardPage />}></Route>
+              {/* <Route path="/" element={<DashboardPage />}></Route> */}
+              <Route
+                path="/"
+                element={<ViewDataPage sources={sources} items={items} />}
+              ></Route>
               <Route
                 path="newEntry"
                 element={<NewEntryPage sources={sources} items={items} />}
