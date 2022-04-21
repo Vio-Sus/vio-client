@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { postItem } from '../../common/network';
+import IconButton from '@mui/material/IconButton';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 export default function AddItemModal({ setIsAddingItem }) {
   const [name, setName] = useState('');
@@ -42,69 +44,33 @@ export default function AddItemModal({ setIsAddingItem }) {
     setIsAddingItem(false);
   };
 
-  const modal = {
-    position: 'absolute',
-    left: '50%',
-    top: '50%',
-    transform: 'translate(-50%, -50%)',
-    backgroundColor: 'white',
-    display: 'flex',
-    allignItems: 'center',
-    justifyContent: 'center',
-  };
-
-  const modalContent = {
-    minWidth: 'fit-content',
-    width: '25%',
-    height: 'fit-content',
-    padding: '0 2em 1em',
-    boxShadow: '5px 10px 18px #888888',
-    borderRadius: '10px',
-  };
-
-  const modalHeader = {
-    padding: '10px',
-  };
-
-  const modalFooter = {
-    padding: '10px',
-  };
-
-  const modalBody = {
-    padding: '10px',
-    borderTop: '1px solid black',
-    borderBottom: '1px solid black',
-  };
-
   return (
-    <div className="modal" style={modal}>
-      <div className="modalContent" style={modalContent}>
-        <div className="modalHeader" style={modalHeader}>
-          <h2>Add a New Item</h2>
+    <div class="modal">
+      <div class="modalContent">
+        <div class="modalClose">
+          <IconButton
+            onClick={handleCancel}
+            sx={{
+              '&:hover': {
+                backgroundColor: 'transparent',
+                transform: 'scale(1.1)',
+              },
+            }}
+          >
+            <CancelIcon />
+          </IconButton>
         </div>
-        <div className="modalBody" style={modalBody}>
-          <form onSubmit={handleSubmit} id="new-item-form" noValidate>
-            <label>Name:</label>
-            <br />
-            <input
-              name="name"
-              type="text"
-              onChange={(e) => handleChange(e)}
-            ></input>
-            <br />
-
-            <div className="button-section">
-              <button className="button submit" type="submit">
-                Save Item
-              </button>
-              <br />
-              {msg}
-            </div>
-          </form>
-        </div>
-        <div className="modalFooter" style={modalFooter}>
-          <button onClick={handleCancel}>Close</button>
-        </div>
+        <h2>Add a New Item</h2>
+        <form onSubmit={handleSubmit} id="new-item-form" noValidate>
+          <div class="flexColumn">
+            <label>Name</label>
+            <input name="name" type="text" onChange={(e) => handleChange(e)} />
+            {msg}
+          </div>
+          <button class="submitButton" type="submit">
+            Save Item
+          </button>
+        </form>
       </div>
     </div>
   );
