@@ -75,9 +75,9 @@ const NavBar = ({ user }) => {
       <NavbarUI>
         <Logo src="./logo.png" style={{ width: 80 }} />
         <ListUI>
-          <LinkUI>
+          {/* <LinkUI>
             <AnchorUI href="/">Dashboard</AnchorUI>
-          </LinkUI>
+          </LinkUI> */}
           <LinkUI>
             <AnchorUI href="newEntry">New Entry</AnchorUI>
           </LinkUI>

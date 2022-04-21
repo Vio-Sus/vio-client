@@ -1,5 +1,11 @@
 import { useState, useEffect } from 'react';
+import {
+  generateXAxis,
+} from '../common/chartHelpers';
+
+import { graphApi } from '../common/mockData';
 import { dateToYMD } from '../common/date';
+import { getGraphDataset } from '../common/network';
 import { Link } from 'react-router-dom';
 import React from 'react';
 import styled from 'styled-components';
@@ -36,67 +42,49 @@ const GraphCont = styled.div`
   width: 60vw;
 `;
 
-const DropCont = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-// div end
 
-//dropdown styling
-const DateInput = styled.input`
-  height: 20px;
-  width: 153px;
-  padding: 5px;
-  border-radius: 7px;
-  border: 0.5px solid #cbcbcb;
-  box-shadow: 0px 2px 4px 0px #7474741a;
-  cursor: pointer;
-  appearance: none;
-  &:focus {
-    outline: none;
-  }
-  &::-webkit-calendar-picker-indicator {
-    opacity: 0;
-  }
-  background-image: linear-gradient(45deg, transparent 50%, #80cf76 50%),
-    linear-gradient(135deg, #80cf76 50%, transparent 50%),
-    radial-gradient(#f1faf0 70%, transparent 72%);
-  background-position: 139px 13px, 144px 13px, 134px 5px;
-  background-size: 5px 5px, 5px 5px, 1.5em 1.5em;
-  background-repeat: no-repeat;
-`;
-
-const Label = styled.label`
-  font-size: 14px;
-  font-weight: 500;
-  color: #464646;
-`;
-
-const ViewGraphPage = () => {
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [today, setToday] = useState([]);
+const ViewGraphPage = ({ sources }) => {
+  // const [startDate, setStartDate] = useState('2022-03-01');
+  // const [endDate, setEndDate] = useState('2022-03-11');
+  const [selectedSource, setSelectedSource] = useState(null);
 
   const todayObj = new Date(new Date().toString());
-  const todayMinus100 = new Date(new Date().setDate(todayObj.getDate() - 100));
+  const todayMinus100 = new Date(new Date().setDate(todayObj.getDate() - 60));
   const todayDate = dateToYMD(todayObj);
+  const [endDate, setEndDate] = useState(todayDate);
+  const [today, setToday] = useState(todayDate);
   const defaultStartDate = dateToYMD(todayMinus100);
+  const [startDate, setStartDate] = useState(defaultStartDate);
+  const [xAxisLabels, setXAxisLabels] = useState([]);
 
+  const [datasets, setDatasets] = useState([]);
+
+  // changes date range when startdate and enddate are changed
   //for dropdown
 
   useEffect(() => {
     (async () => {
-      try {
-        setToday(todayDate);
-        setStartDate(defaultStartDate);
-        setEndDate(todayDate);
-      } catch {}
+      if (startDate && endDate) {
+        try {
+          let labels = await generateXAxis(startDate, endDate);
+          setXAxisLabels(labels);
+          console.log('labels are', labels);
+          let sums = await getGraphDataset(startDate, endDate);
+          setDatasets(sums.data);
+        } catch {}
+      } else {
+      }
     })();
-  }, []);
+  }, [startDate, endDate]);
 
   const handlePrint = () => {
     window.print();
   };
+
+  const handleSourceSelect = (e) => {
+          setSelectedSource(e.target.value);
+          console.log('NOTHING', datasets);
+        }
 
   return (
     <>
@@ -111,6 +99,7 @@ const ViewGraphPage = () => {
               <Button buttoncolor="#4A4A4A" buttontext="List View" />
             </StyledLink>
 
+  {/* TODO: Export data to a PDF or Excel */}
             <Button
               buttoncolor="#4A4A4A"
               buttontext="Export"
@@ -123,82 +112,39 @@ const ViewGraphPage = () => {
           </div>
         </header>
         <DropdownCont>
-          <div class="flexColumn">
-            <label for="selectSource">Source</label>
-            <select
-            // name="source_id"
-            // id="selectSource"
-            // onChange={(e) => handleFormValues(e)}
-            >
-              <option hidden>Select Source</option>
-              {/* {sources.map((source, key) => (
-                <option key={key} value={source.source_id}>
-                  {source.name}
-                </option>
-              ))} */}
-              {/* <option value="add_source">Add Source...</option> */}
-            </select>
-          </div>
-
-          <div class="flexColumn">
-            <label for="selectNewItem">Item</label>
-            <select
-              // id="selectNewItem"
-              // name="item_id"
-              // onChange={(e) => {
-              //   e.target.value === 'add_item'
-              //     ? addItem()
-              //     : (element.item_id = Number(e.target.value));
-              // }}
-            >
-              <option hidden>Select Item</option>
-              {/* {items.map((item) => (
-                <option key={item.item_id} value={item.item_id}>
-                  {item.name}
-                </option>
-              ))} */}
-              {/* <option value="add_item">Add Item...</option> */}
-            </select>
-          </div>
-
-          <div class="flexColumn">
-            <label for="startDate">Start Date</label>
-            <input
-              type="date"
-              name="startDate"
-              id="startDate"
-              value={startDate}
-              max={today}
-              onChange={(e) => {
-                setStartDate(e.target.value);
-                // dateRangeFilter();
-              }}
-            />
-          </div>
-
-          <div class="flexColumn">
-            <label for="endDate">End Date</label>
-            <input
-              type="date"
-              name="endDate"
-              id="endDate"
-              value={endDate}
-              max={today}
-              onChange={(e) => {
-                setEndDate(e.target.value);
-                // dateRangeFilter();
-              }}
-            />
-          </div>
+          <DropDownOptions text="Sub Accounts" array={sources} handleChange={handleSourceSelect}/>
+          {/* TODO: Add the ability to show a graph for quantity of items across multiple sources */}
+          {/* <DropDownOptions text="Materials" /> */}
+          {(startDate, endDate, today) && (
+        <DateFilter
+          startDate={startDate}
+          endDate={endDate}
+          today={today}
+          setStartDate={(e) => {
+            setStartDate(e.target.value);
+          }}
+          setEndDate={(e) => {
+            setEndDate(e.target.value);
+          }}
+        />
+      )}
         </DropdownCont>
 
         <GraphMainCont>
-          <GraphLeftSideFilter />
+          {/* <GraphLeftSideFilter /> */}
           {/* give width & put it in div */}
           <GraphCont>
-            <LineGraph sourceName={'source 1'} />
+            {xAxisLabels && datasets && selectedSource ? (
+        <LineGraph
+          sourceName={selectedSource}
+          xAxisLabels={xAxisLabels}
+          datasets={datasets[selectedSource]}
+        />
+      ) : (
+        <p>'Select a source to view...'</p>
+      )}
           </GraphCont>
-          <GraphRightSideKey />
+          {/* <GraphRightSideKey /> */}
           {/* give width & put it in div */}
         </GraphMainCont>
       </div>

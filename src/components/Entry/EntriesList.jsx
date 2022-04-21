@@ -27,7 +27,7 @@ export default function EntriesList({ selectEntry, sources, items }) {
   };
 
   const todayObj = new Date(new Date().toString());
-  const todayMinus100 = new Date(new Date().setDate(todayObj.getDate() - 100));
+  const todayMinus100 = new Date(new Date().setDate(todayObj.getDate() - 60));
   // useEffect(() => {
   //   getListOfEntries().then((result) => {
   //     console.log(result);

@@ -64,7 +64,9 @@ const Select = styled.select`
 `;
 
 export default function DropDownOptions({
-  text = 'Sub-Accounts :'
+  text,
+  array,
+  handleChange
 }) {
 
   return (
@@ -74,13 +76,11 @@ export default function DropDownOptions({
             <Label>{text}</Label>
           </div>
           <div>
-            <Select name="Sub-Accounts">
-                <option data-count="1" value="Min's Tech">Min's Tech</option>
-                <option data-count="2" value="Vio Coffee">Vio Coffee</option>
-                <option data-count="3" value="Brick it OFF">Brick it off</option>
-                <option data-count="4" value="Textile">Textile Refresh</option>
-
-
+          <Select name={text} onChange={handleChange} >
+            {/* <option hidden>Select...</option> */}
+            {array.map((item, key) => (
+              <option data-count={key} value={item.name}>{item.name}</option>
+            ))}
             </Select>
             </div>
 

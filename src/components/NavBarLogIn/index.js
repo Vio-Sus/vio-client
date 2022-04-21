@@ -102,7 +102,7 @@ export default function NavBarLogIn({
     <NavbarUI>
       <Logo src="../logo.png" onClick={onClick} style={{ width: 80 }}></Logo>
       <Navigation>
-       <LinkUI onClick={onClick}>Dashboard</LinkUI>
+       {/* <LinkUI onClick={onClick}>Dashboard</LinkUI> */}
        <LinkUI onClick={onClick}>ViewData</LinkUI>
        <LinkUI onClick={onClick}>Subaccounts</LinkUI>
        <ButtonUI onClick={onClick}> Login</ButtonUI>
