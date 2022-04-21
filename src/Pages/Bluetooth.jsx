@@ -1,19 +1,20 @@
 import BluetoothConnection from '../components/BluetoothConnection';
 
 import { useState, useEffect } from 'react';
+import BluetoothEntryModal from '../components/BluetoothEntryForm';
 
 const BluetoothPage = ({ sources, items }) => {
-  const [weight, setWeight] = useState(0);
   const [array, setArray] = useState([]);
   const [savedWeight, setSavedWeight] = useState(0);
-  const [average, setAverage] = useState(0);
   const [btWeight, setBtWeight] = useState(0);
   const [isWeighing, setIsWeighing] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+    const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
 
     let arr = array.slice(-100);
-    arr.push(btWeight);
+    arr.push(btWeight /2.2);
     setArray(arr);
 
   }, [btWeight]);
@@ -22,11 +23,15 @@ const BluetoothPage = ({ sources, items }) => {
     return arr.reduce((prev, curr) => prev + curr, 0) / arr.length;
   }
   const saveWeight = () => {
-    console.log('arrraaay before avereage: ', array);
+
     setSavedWeight(avg(array).toFixed(3));
     console.log('arrraaay after avereage: ', array);
     setIsWeighing(false);
     console.log('saved weight: ', savedWeight)
+    setShowForm(true);
+  };
+  const toggleIsWeighing = () => {
+    setIsWeighing(true);
   };
   return (
     <>
@@ -34,17 +39,34 @@ const BluetoothPage = ({ sources, items }) => {
       <BluetoothConnection
         setBtWeight={setBtWeight}
         setIsWeighing={setIsWeighing}
+        setIsConnected={setIsConnected}
+        isConnected={isConnected}
       />
-      <p>bt weight: {btWeight}</p>
-      {isWeighing ? 'true' : 'false'}
-      {isWeighing ? (
-        <input type="number" value={btWeight}></input>
+      {isConnected ? (
+        <div>
+          <input
+            type="number"
+            value={isWeighing ? (btWeight / 2.2).toFixed(3) : savedWeight}
+          ></input>
+          {isWeighing ? (
+            <button onClick={saveWeight}>Save</button>
+          ) : (
+            <button onClick={toggleIsWeighing}>Weigh</button>
+          )}
+        </div>
       ) : (
-        <input type="number" value={savedWeight}></input>
+        <div></div>
       )}
-      <button onClick={saveWeight}>SAVE</button>
-      Saved weight:
-      <input type="number" value={savedWeight}></input>
+      {showForm && (
+        <BluetoothEntryModal
+          setShowForm={setShowForm}
+          sources={sources}
+          items={items}
+          savedWeight={savedWeight}
+        />
+      )}
+      <br></br>
+      Saved weight: {savedWeight}
     </>
   );
 };

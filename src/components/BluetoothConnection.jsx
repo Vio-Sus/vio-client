@@ -4,10 +4,10 @@ import { connectBT, disconnectBT } from '../bluetooth';
 export default function BluetoothConnection({
   setBtWeight,
   setIsWeighing,
+  isConnected,
+  setIsConnected,
 }) {
-
-  const [isConnected, setIsConnected] = useState(false);
-
+  // const [isConnected, setIsConnected] = useState(false);
 
   const handleWeighing = () => {
     if (!isConnected) {
@@ -22,7 +22,8 @@ export default function BluetoothConnection({
 
   return (
     <div>
-      Bluetooth scale: {!isConnected ? (
+      Bluetooth scale:{' '}
+      {!isConnected ? (
         <button onClick={handleWeighing}>Connect</button>
       ) : (
         <button onClick={handleWeighing}>Disconnect</button>
