@@ -3,7 +3,11 @@ import { postItem } from '../../common/network';
 import IconButton from '@mui/material/IconButton';
 import CancelIcon from '@mui/icons-material/Cancel';
 
-export default function AddItemModal({ setIsAddingItem }) {
+export default function AddItemModal({
+  setIsAddingItem,
+  addedSomething,
+  setAddedSomething,
+}) {
   const [name, setName] = useState('');
   const [msg, setMsg] = useState('');
   const handleChange = (e) => {
@@ -33,10 +37,13 @@ export default function AddItemModal({ setIsAddingItem }) {
         let res = await postItem(formContent);
         console.log(res);
         form.reset();
-        window.location.reload();
+        // window.location.reload();
       } catch (error) {
         console.log(error);
       }
+      setAddedSomething(!addedSomething);
+      setName(null);
+      setIsAddingItem(false);
     }
   };
 

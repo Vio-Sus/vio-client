@@ -25,7 +25,7 @@ const Logo = styled.img`
 
 const ListUI = styled.ul`
   display: flex;
-  min-width: 330px;
+  min-width: 343px;
   padding: 0;
   gap: 5%;
 `;
@@ -89,6 +89,9 @@ const NavBar = ({ user }) => {
           </LinkUI>
           <LinkUI>
             <AnchorUI href="viewItem">Items</AnchorUI>
+          </LinkUI>
+          <LinkUI>
+            <AnchorUI href="bluetooth">Bluetooth</AnchorUI>
           </LinkUI>
         </ListUI>
         <UserUI>

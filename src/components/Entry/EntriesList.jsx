@@ -129,7 +129,7 @@ export default function EntriesList({ selectEntry, sources, items }) {
       <div class="tableCont">
         <div class="flexRow">
           <div class="flexColumn">
-            <label>Sub Accounts</label>
+            <label>Sources</label>
             <select id="sourceSelection" onChange={(e) => updateFilter()}>
               <option value="allSources">All</option>
               {sources.map((source, key) => (
@@ -200,7 +200,7 @@ export default function EntriesList({ selectEntry, sources, items }) {
         <table>
           <thead>
             <tr>
-              <th> SUB ACCOUNTS</th>
+              <th> SOURCES</th>
               {/* <th> PROCESSOR </th> */}
               <th> MATERIALS </th>
               <th> DATE </th>

@@ -1,18 +1,33 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { connectBT, disconnectBT } from '../bluetooth';
-import Form from '../components/Entry/AddEntryForm';
 
-export default function BluetoothConnection() {
-  const [weight, setWeight] = useState(0);
+export default function BluetoothConnection({
+  setBtWeight,
+  setIsWeighing,
+  isConnected,
+  setIsConnected,
+}) {
+  // const [isConnected, setIsConnected] = useState(false);
+
+  const handleWeighing = () => {
+    if (!isConnected) {
+      if (connectBT(setBtWeight, setIsConnected)) {
+        setIsWeighing(true);
+      }
+    } else {
+      disconnectBT(setIsConnected);
+      setIsWeighing(false);
+    }
+  };
 
   return (
     <div>
-      <p>{weight}</p>
-      <input type="number" value={weight}></input>
-      <br></br>
-      <button onClick={() => connectBT(setWeight)}>CONNECT BLUETOOTH</button>
-      <button onClick={disconnectBT}>DISCONNECT BLUETOOTH</button>
-      <Form></Form>
+      Bluetooth scale:{' '}
+      {!isConnected ? (
+        <button onClick={handleWeighing}>Connect</button>
+      ) : (
+        <button onClick={handleWeighing}>Disconnect</button>
+      )}
     </div>
   );
 }

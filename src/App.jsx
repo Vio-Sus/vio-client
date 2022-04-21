@@ -19,6 +19,9 @@ function App() {
   const [sources, setSources] = useState([]);
   const [items, setItems] = useState([]);
   const [user, setUser] = useState(null);
+  const [addedSomething, setAddedSomething] = useState(false);
+  //
+  // let addedSomething = false;
 
   useEffect(() => {
     (async () => {
@@ -33,11 +36,13 @@ function App() {
           setSources(sources);
           setItems(items);
         }
-
         console.log(user, sources, items);
+        setAddedSomething(false);
       } catch {}
     })();
-  }, []);
+    console.log("app's useEffect was called");
+    console.log('addSomething from app', addedSomething);
+  }, [addedSomething]);
 
   return (
     <>
@@ -53,7 +58,14 @@ function App() {
               ></Route>
               <Route
                 path="newEntry"
-                element={<NewEntryPage sources={sources} items={items} />}
+                element={
+                  <NewEntryPage
+                    sources={sources}
+                    items={items}
+                    setAddedSomething={setAddedSomething}
+                    addedSomething={addedSomething}
+                  />
+                }
               ></Route>
               <Route
                 path="viewData"
@@ -71,7 +83,10 @@ function App() {
                 path="viewGraph"
                 element={<ViewGraphPage sources={sources} />}
               ></Route>
-              <Route path="bluetooth" element={<BluetoothPage />}></Route>
+              <Route
+                path="bluetooth"
+                element={<BluetoothPage sources={sources} items={items} />}
+              ></Route>
             </Routes>
           </BrowserRouter>
         </div>
