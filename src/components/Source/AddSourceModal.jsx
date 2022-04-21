@@ -1,7 +1,11 @@
 import { useState } from 'react';
 import { postSource } from '../../common/network';
 
-export default function AddSourceModal({ setIsAddingSource }) {
+export default function AddSourceModal({
+  setIsAddingSource,
+  setAddedSomething,
+  addedSomething,
+}) {
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -41,10 +45,15 @@ export default function AddSourceModal({ setIsAddingSource }) {
         let res = await postSource(formContent);
         console.log(res);
         form.reset();
-        window.location.reload();
+        // window.location.reload();
       } catch (error) {
         console.log(error);
       }
+      setAddedSomething(!addedSomething);
+      setName(null);
+      setAddress(null);
+      setPhoneNumber(null);
+      setIsAddingSource(false);
     }
   };
 
@@ -57,17 +66,18 @@ export default function AddSourceModal({ setIsAddingSource }) {
     left: '50%',
     top: '50%',
     transform: 'translate(-50%, -50%)',
-    backgroundColor: (0, 0, 0),
+    backgroundColor: 'white',
     display: 'flex',
     allignItems: 'center',
-      justifyContent: 'center',
- 
+    justifyContent: 'center',
   };
 
   const modalContent = {
-    width: '600px',
-    height: '350px',
-    boxShadow: "5px 10px 18px #888888",
+    minWidth: 'fit-content',
+    width: '25%',
+    height: 'fit-content',
+    padding: '0 2em 1em',
+    boxShadow: '5px 10px 18px #888888',
     borderRadius: '10px',
   };
 

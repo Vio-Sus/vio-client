@@ -1,7 +1,11 @@
 import { useState } from 'react';
 import { postItem } from '../../common/network';
 
-export default function AddItemModal({ setIsAddingItem }) {
+export default function AddItemModal({
+  setIsAddingItem,
+  addedSomething,
+  setAddedSomething,
+}) {
   const [name, setName] = useState('');
   const [msg, setMsg] = useState('');
   const handleChange = (e) => {
@@ -31,10 +35,13 @@ export default function AddItemModal({ setIsAddingItem }) {
         let res = await postItem(formContent);
         console.log(res);
         form.reset();
-        window.location.reload();
+        // window.location.reload();
       } catch (error) {
         console.log(error);
       }
+      setAddedSomething(!addedSomething);
+      setName(null);
+      setIsAddingItem(false);
     }
   };
 
@@ -47,15 +54,17 @@ export default function AddItemModal({ setIsAddingItem }) {
     left: '50%',
     top: '50%',
     transform: 'translate(-50%, -50%)',
-    backgroundColor: (0, 0, 0),
+    backgroundColor: 'white',
     display: 'flex',
     allignItems: 'center',
     justifyContent: 'center',
   };
 
   const modalContent = {
-    width: '600px',
-    height: '250px',
+    minWidth: 'fit-content',
+    width: '25%',
+    height: 'fit-content',
+    padding: '0 2em 1em',
     boxShadow: '5px 10px 18px #888888',
     borderRadius: '10px',
   };

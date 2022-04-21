@@ -1,8 +1,97 @@
 import { useState, useEffect } from 'react';
 import { postEntries } from '../../common/network';
 import { handleValidation } from '../../common/validation';
+import EntryDropdown from './EntryDropdown';
 import AddSourceModal from '../Source/AddSourceModal';
 import AddItemModal from '../Item/AddItemModal';
+import React from 'react';
+import styled from 'styled-components';
+
+const MainCont = styled.div`
+  display: flex;
+  width: 500px;
+  background-color: none;
+`;
+
+const Headings = styled.text`
+  font-size: 12px;
+`;
+
+const SourceCont = styled.div`
+  margin-bottom: 5%;
+  /* background-color: #fad; */
+`;
+
+const DateCont = styled.div`
+  background-color: none;
+  /* background-color: red; */
+`;
+
+const ItemCont = styled.div`
+  margin-left: 10%;
+  //background-color: green;
+`;
+
+//issues here
+const WeightCont = styled.div`
+  margin-left: 10%;
+  //background-color: yellow;
+`;
+
+const DateItemWeightCont = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 600px;
+  //background-color: pink;
+`;
+
+// here
+const Inputs = styled.input`
+  width: 152px;
+  height: 35px;
+  background-color: #fff;
+  border: 1px solid #cbcbcb;
+  border-radius: 7px;
+  text-align: center;
+`;
+
+const AddItemButton = styled.button`
+  display: flex;
+  justify-content: center;
+  height: 20px;
+  width: 20px;
+  background-color: #e6e3e3;
+  border: 1px solid #cbcbcb;
+  border-radius: 120px;
+`;
+
+const AddItemButCont = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 125%;
+  margin-top: 5%;
+`;
+
+const SaveButton = styled.button`
+  width: 126px;
+  height: 40px;
+  background-color: #efefef;
+  font-size: 13px;
+  color: black;
+  border: none;
+  border-radius: 10px;
+`;
+
+const ButtonCont = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 125%;
+  margin-top: -3%;
+`;
+
+const ItemWeightCont = styled.div`
+  display: flex;
+`;
 
 const newEntryWeight = () => ({
   id: Date.now(),
@@ -10,7 +99,12 @@ const newEntryWeight = () => ({
   weight: '',
 });
 
-export default function Form({ items, sources }) {
+export default function Form({
+  items,
+  sources,
+  setAddedSomething,
+  addedSomething,
+}) {
   const [entryWeights, setEntryWeights] = useState([newEntryWeight()]);
   const [formValues, setFormValues] = useState({});
   const [errorMsgs, setErrorMsgs] = useState([]);
@@ -23,7 +117,7 @@ export default function Form({ items, sources }) {
     console.log('this is the add stuff ', sources);
     setSourcesList(sources);
     setItemsList(items);
-  }, [isAddingSource, isAddingItem]);
+  }, [items, sources]);
 
   const addSource = () => {
     console.log('adding..........');
@@ -91,92 +185,150 @@ export default function Form({ items, sources }) {
   };
 
   return (
-    <>
-      <div onClick={handleCancel}>
-        <form onSubmit={handleSubmit} id="input-form" noValidate>
-          <label>Date:</label>
-          <input
-            name="created"
-            type="date"
-            onChange={(e) => handleFormValues(e)}
-          ></input>
-          <br />
-          <label>Source</label>
-          <select name="source_id" onChange={(e) => handleFormValues(e)}>
-            <option hidden>Select Source</option>
-            {sources.map((source, key) => (
-              <option key={key} value={source.source_id}>
-                {source.name}
-              </option>
-            ))}
-            <option value="add_source">Add Source...</option>
-          </select>
-          <br />
-          {entryWeights.map((element, index) => (
-            <div className="form-inline" key={element.id}>
-              <label>Item</label>
-              <select
-                name="item_id"
-                onChange={(e) => {
-                  e.target.value === 'add_item'
-                    ? addItem()
-                    : (element.item_id = Number(e.target.value));
-                }}
-              >
-                <option hidden>Select Item</option>
-                {items.map((item) => (
-                  <option key={item.item_id} value={item.item_id}>
-                    {item.name}
-                  </option>
-                ))}
-                <option value="add_item">Add Item...</option>
-              </select>
-              <label>Weight</label>
-              <input
-                type="number"
-                name="weight"
-                onChange={(e) => {
-                  element.weight = Number(e.target.value);
-                }}
-              />
+    sourcesList &&
+    itemsList && (
+      <MainCont>
+        <div onClick={handleCancel}>
+          <form onSubmit={handleSubmit} id="input-form" noValidate>
+            <SourceCont>
+              <Headings>Source</Headings>
+              <br />
+              <EntryDropdown
+                objects={sourcesList}
+                entryFor="Source"
+                handleFormValues={(e) => handleFormValues(e)}
+                setAddedSomething={setAddedSomething}
+                addedSomething={addedSomething}
+              ></EntryDropdown>
+              <br />
+            </SourceCont>
 
-              {!!index && (
-                <button
-                  type="button"
-                  className="button remove"
-                  onClick={() => removeFormFields(element)}
-                >
-                  -
-                </button>
-              )}
+            <DateItemWeightCont>
+              <DateCont>
+                <Headings>Date:</Headings>
+                <br />
+                {/* here */}
+                <Inputs
+                  name="created"
+                  type="date"
+                  onChange={(e) => handleFormValues(e)}
+                />
+              </DateCont>
+
+              {entryWeights.map((element, index) => (
+                <div className="form-inline" key={element.id}>
+                  <ItemWeightCont>
+                    <ItemCont>
+                      <Headings>Item</Headings>
+                      <br />
+                      <EntryDropdown
+                        name="item_id"
+                        objects={itemsList}
+                        entryFor="Item"
+                        handleFormValues={(e) => {
+                          e.target.value === 'add_item'
+                            ? addItem()
+                            : (element.item_id = Number(e.target.value));
+                        }}
+                        setAddedSomething={setAddedSomething}
+                        addedSomething={addedSomething}
+                      ></EntryDropdown>
+                      {/* <Select
+                        name="item_id"
+                        onChange={(e) => {
+                          e.target.value === 'add_item'
+                            ? addItem()
+                            : (element.item_id = Number(e.target.value));
+                        }}
+                      >
+                        <option hidden>Select Item</option>
+                        {items.map((item) => (
+                          <option key={item.item_id} value={item.item_id}>
+                            {item.name}
+                          </option>
+                        ))}
+                        <option value="add_item">Add Item...</option>
+                      </Select> */}
+                    </ItemCont>
+
+                    <WeightCont>
+                      <Headings>Weight</Headings>
+                      <br />
+                      <Inputs
+                        type="number"
+                        name="weight"
+                        onChange={(e) => {
+                          element.weight = Number(e.target.value);
+                        }}
+                      />
+                    </WeightCont>
+                  </ItemWeightCont>
+
+                  {!!index && (
+                    <button
+                      type="button"
+                      className="button remove"
+                      onClick={() => removeFormFields(element)}
+                    >
+                      -
+                    </button>
+                  )}
+                </div>
+              ))}
+            </DateItemWeightCont>
+
+            <div className="error-messages">
+              {errorMsgs.map((msg, key) => (
+                <span key={key}>{msg}</span>
+              ))}
             </div>
-          ))}
-          <div className="error-messages">
-            {errorMsgs.map((msg, key) => (
-              <span key={key}>{msg}</span>
-            ))}
-          </div>
 
-          <div className="button-section">
-            <button
-              className="button add"
-              type="button"
-              onClick={() => addFormFields()}
-            >
-              +
-            </button>
-            <br />
-            <br />
-            <button className="button submit" type="submit">
-              Save Entry
-            </button>
-          </div>
-        </form>
-      </div>
-      {isAddingSource && (
-        <AddSourceModal setIsAddingSource={setIsAddingSource} />
-      )}
-      {isAddingItem && <AddItemModal setIsAddingItem={setIsAddingItem} />}
-    </>
+            <div className="button-section">
+              <AddItemButCont>
+                <AddItemButton
+                  className="button add"
+                  type="button"
+                  onClick={() => addFormFields()}
+                >
+                  +
+                </AddItemButton>
+              </AddItemButCont>
+              <br />
+              <br />
+
+              {/* needs onclick to graphs */}
+              {/* <Button 
+            className="button submit" 
+            type="submit"
+            buttoncolor = "#EFEFEF"
+            fontsize = "13px"
+            textcolor="black"
+            textweight="medium"
+            buttontext="Save Entry"
+            buttonwidth = '126px'
+            buttonheight=  '40px'
+            /> */}
+              <ButtonCont>
+                <SaveButton className="button submit" type="submit">
+                  Save Entry
+                </SaveButton>
+              </ButtonCont>
+            </div>
+          </form>
+        </div>
+        {isAddingSource && (
+          <AddSourceModal
+            setIsAddingSource={setIsAddingSource}
+            setAddedSomething={setAddedSomething}
+          />
+        )}
+        {isAddingItem && (
+          <AddItemModal
+            setIsAddingItem={setIsAddingItem}
+            setAddedSomething={setAddedSomething}
+          />
+        )}
+      </MainCont>
+    )
   );
 }
