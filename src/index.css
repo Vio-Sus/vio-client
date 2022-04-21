@@ -137,6 +137,10 @@ tr:nth-child(odd) {
   background-color: #ecfaee;
 }
 
+td {
+  padding-left: 10px;
+}
+
 /* table styling end */
 
 /* select and input styling start */
