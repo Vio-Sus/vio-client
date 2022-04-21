@@ -8,7 +8,7 @@ export const generateXAxis = (startDate, endDate) => {
     start = new Date(start.setDate(start.getDate() + 1));
     XAxisArray.push(dateToYMD(start));
   } while (dateToYMD(start) != dateToYMD(end));
-  console.log(XAxisArray);
+  // console.log(XAxisArray);
   return XAxisArray;
 };
 

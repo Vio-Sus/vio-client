@@ -69,6 +69,8 @@ export default function DropDownOptions({
   handleChange
 }) {
 
+  console.log('arrraaaaayyyy', array)
+
   return (
     <Cont>
         <form id="make_checkbox_select">
@@ -77,9 +79,9 @@ export default function DropDownOptions({
           </div>
           <div>
           <Select name={text} onChange={handleChange} >
-            {/* <option hidden>Select...</option> */}
+            <option hidden>Select...</option>
             {array.map((item, key) => (
-              <option data-count={key} value={item.name}>{item.name}</option>
+              <option data-count={key} value={item.name} >{item.name} </option>
             ))}
             </Select>
             </div>

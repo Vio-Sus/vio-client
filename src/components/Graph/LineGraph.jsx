@@ -10,6 +10,16 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: ${(props) => (props.selected ? '#004384' : '#000000')};
+  font-weight: ${(props) => (props.selected ? '500' : '300')};
+  &:hover {
+    color: #489ced;
+`;
 
 ChartJS.register(
   CategoryScale,
@@ -51,6 +61,11 @@ export default function LineGraph({ sourceName, xAxisLabels, datasets }) {
 
 
 
-
-  return <Line options={options} data={data} />;
+  return datasets ? (
+    <Line options={options} data={data} />
+  ) : (
+    <>
+      There are no entries made for this source. <StyledLink to="/newEntry">Add some entries.</StyledLink>
+    </>
+  );
 }
