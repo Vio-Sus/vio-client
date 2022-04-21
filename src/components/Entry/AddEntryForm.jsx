@@ -221,7 +221,7 @@ export default function Form({ items, sources }) {
                         },
                       }}
                     >
-                      <Delete sx={{ '&:hover': { color: '#80cf76' } }} />
+                      <Delete />
                     </IconButton>
                   )}
                 </ItemWeightPair>
@@ -240,7 +240,7 @@ export default function Form({ items, sources }) {
                   },
                 }}
               >
-                <AddCircleIcon sx={{ '&:hover': { color: '#80cf76' } }} />
+                <AddCircleIcon />
               </IconButton>
             </div>
 

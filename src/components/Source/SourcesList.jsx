@@ -39,12 +39,28 @@ export default function SourceList({ selectSource }) {
               <td> {source.address} </td>
               <td> {source.phone_number} </td>
               <td>
-                <IconButton onClick={() => selectSource(source)}>
-                  <EditIcon sx={{ color: '#606f89' }}></EditIcon>
+                <IconButton
+                  onClick={() => selectSource(source)}
+                  sx={{
+                    '&:hover': {
+                      backgroundColor: 'transparent',
+                      transform: 'scale(1.1)',
+                    },
+                  }}
+                >
+                  <EditIcon sx={{ color: '#888' }}></EditIcon>
                 </IconButton>
                 {/* Need to add deleteItem function: */}
-                {/* <IconButton onClick={() => selectSource(source, 'delete')}>
-                  <Delete sx={{ color: '#606f89' }} />
+                {/* <IconButton
+                  onClick={() => selectSource(source, 'delete')}
+                  sx={{
+                    '&:hover': {
+                      backgroundColor: 'transparent',
+                      transform: 'scale(1.1)',
+                    },
+                  }}
+                >
+                  <Delete sx={{ color: '#888' }} />
                 </IconButton> */}
               </td>
             </tr>

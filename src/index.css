@@ -53,7 +53,7 @@ header {
 h1 {
   font-size: 36px;
   font-weight: 300;
-  color: black;
+  color: #4a4a4a;
   margin: 0;
 }
 
@@ -61,7 +61,7 @@ h1 {
 h2 {
   font-size: 30px;
   font-weight: 300;
-  color: #464646;
+  color: #4a4a4a;
   margin-bottom: 10px;
 }
 
@@ -69,7 +69,7 @@ h2 {
 h3 {
   font-size: 18px;
   font-weight: 400;
-  color: #888888;
+  color: #888;
   margin: 0;
 }
 
@@ -125,7 +125,7 @@ table {
 
 th {
   font-size: 14px;
-  color: #606f89;
+  color: #888;
   text-transform: uppercase;
 }
 
@@ -148,7 +148,7 @@ td {
 label {
   font-size: 14px;
   font-weight: 500;
-  color: #464646;
+  color: #4a4a4a;
   line-height: normal;
   margin: 10px 0 6px 0;
 }
@@ -168,7 +168,6 @@ select {
 select:focus,
 input:focus {
   outline: none;
-  cursor: pointer;
 }
 
 input {
@@ -179,7 +178,7 @@ input {
   border-radius: 5px;
   border: 0.5px solid #cbcbcb;
   box-shadow: 0px 2px 4px 0px #7474741a;
-  cursor: pointer;
+  cursor: text;
 }
 
 input[type="date"] {
@@ -223,7 +222,7 @@ input::-webkit-calendar-picker-indicator {
 
 .weightSuffix {
   position: relative;
-  color: #464646;
+  color: #4a4a4a;
   padding: 15px 15px 15px 0;
 }
 
@@ -245,11 +244,12 @@ input::-webkit-calendar-picker-indicator {
 }
 
 .modalContent {
+  background-color: white;
   min-width: fit-content;
   width: 25%;
   height: fit-content;
   padding: 0 3em 2em 2em;
-  box-shadow: 5px 10px 18px #888888;
+  box-shadow: 5px 10px 18px #888;
   border-radius: 10px;
 }
 

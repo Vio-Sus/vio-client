@@ -220,11 +220,27 @@ export default function EntriesList({ selectEntry, sources, items }) {
                     <td> {entry.entry_weight} kg </td>
                     {/* <td> Processed </td> */}
                     <td>
-                      <IconButton onClick={() => selectEntry(entry, 'edit')}>
-                        <EditIcon sx={{ color: '#606f89' }} />
+                      <IconButton
+                        onClick={() => selectEntry(entry, 'edit')}
+                        sx={{
+                          '&:hover': {
+                            backgroundColor: 'transparent',
+                            transform: 'scale(1.1)',
+                          },
+                        }}
+                      >
+                        <EditIcon sx={{ color: '#888' }} />
                       </IconButton>
-                      <IconButton onClick={() => selectEntry(entry, 'delete')}>
-                        <Delete sx={{ color: '#606f89' }} />
+                      <IconButton
+                        onClick={() => selectEntry(entry, 'delete')}
+                        sx={{
+                          '&:hover': {
+                            backgroundColor: 'transparent',
+                            transform: 'scale(1.1)',
+                          },
+                        }}
+                      >
+                        <Delete sx={{ color: '#888' }} />
                       </IconButton>
                     </td>
                   </tr>

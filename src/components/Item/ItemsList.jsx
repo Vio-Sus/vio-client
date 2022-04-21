@@ -27,12 +27,28 @@ export default function ItemList({ selectItem }) {
           <tr key={index}>
             <td> {item.name} </td>
             <td>
-              <IconButton onClick={() => selectItem(item)}>
-                <EditIcon />
+              <IconButton
+                onClick={() => selectItem(item)}
+                sx={{
+                  '&:hover': {
+                    backgroundColor: 'transparent',
+                    transform: 'scale(1.1)',
+                  },
+                }}
+              >
+                <EditIcon sx={{ color: '#888' }} />
               </IconButton>
               {/* Need to add deleteItem function: */}
-              {/* <IconButton onClick={() => deleteItem(item)}>
-                <Delete />
+              {/* <IconButton
+                onClick={() => deleteItem(item)}
+                sx={{
+                  '&:hover': {
+                    backgroundColor: 'transparent',
+                    transform: 'scale(1.1)',
+                  },
+                }}
+              >
+                <Delete sx={{ color: '#888' }} />
               </IconButton> */}
             </td>
           </tr>

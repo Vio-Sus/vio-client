@@ -148,6 +148,7 @@ export default function EditForm({ entry, setIsEditing, items, sources }) {
                   class="weightInput"
                   type="number"
                   name="weight"
+                  min="0"
                   value={weight}
                   onInput={(e) => handleChange(e)}
                 />
