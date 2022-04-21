@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { getSources } from '../../common/network';
+import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import Delete from '@mui/icons-material/Delete';
-import IconButton from '@mui/material/IconButton';
 
 export default function SourceList({ selectSource }) {
   const [sources, setSources] = useState([]);

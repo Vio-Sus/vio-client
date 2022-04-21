@@ -1,13 +1,7 @@
 import { useState, useEffect } from 'react';
 import { updateItem } from '../../common/network';
-import styled from 'styled-components';
-import Button from '../Button';
-
-const ButtonCont = styled.div`
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-`;
+import IconButton from '@mui/material/IconButton';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 export default function EditItemForm({ item, setIsEditing }) {
   // selected entry data
@@ -55,31 +49,37 @@ export default function EditItemForm({ item, setIsEditing }) {
   };
 
   return (
-    <>
-      <h2>Edit Item</h2>
-      <form id="edit-form">
-        <label>Name</label>
-        <input
-          name="name"
-          type="text"
-          value={name}
-          onChange={(e) => handleChange(e)}
-        ></input>
-        <ButtonCont>
-          <Button
-            onClick={handleSubmit}
-            buttontext="Save Edit"
-            borderweight="solid #80CF76 1px"
-          />
-          <Button
+    <div class="modal">
+      <div class="modalContent">
+        <div class="modalClose">
+          <IconButton
             onClick={handleCancel}
-            buttontext="Cancel"
-            textcolor="#80CF76"
-            buttoncolor="white"
-            borderweight="solid lightgrey 1px"
-          />
-        </ButtonCont>
-      </form>
-    </>
+            sx={{
+              '&:hover': {
+                backgroundColor: 'transparent',
+                transform: 'scale(1.1)',
+              },
+            }}
+          >
+            <CancelIcon />
+          </IconButton>
+        </div>
+        <h2>Edit Item</h2>
+        <form onSubmit={handleSubmit} id="edit-form">
+          <div class="flexColumn">
+            <label>Name</label>
+            <input
+              name="name"
+              type="text"
+              value={name}
+              onChange={(e) => handleChange(e)}
+            ></input>
+            <button class="submitButton" type="submit">
+              Save Edits
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 }

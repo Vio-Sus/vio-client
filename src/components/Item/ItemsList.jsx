@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { getItems } from '../../common/network';
-import styled from 'styled-components';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import Delete from '@mui/icons-material/Delete';
@@ -16,11 +15,6 @@ export default function ItemList({ selectItem }) {
     })();
   }, []);
 
-  const itemName = {
-    textAlign: 'left',
-    paddingLeft: '1em',
-  };
-
   return (
     <table>
       <thead>
@@ -31,7 +25,7 @@ export default function ItemList({ selectItem }) {
       <tbody>
         {items.map((item, index) => (
           <tr key={index}>
-            <td style={itemName}> {item.name} </td>
+            <td> {item.name} </td>
             <td>
               <IconButton onClick={() => selectItem(item)}>
                 <EditIcon />

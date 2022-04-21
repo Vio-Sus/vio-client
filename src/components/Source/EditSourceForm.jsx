@@ -93,7 +93,6 @@ export default function EditSourceForm({ source, setIsEditing }) {
           </IconButton>
         </div>
         <h2>Edit Source</h2>
-        <div>
           <form id="edit-form">
             <div class="flexColumn">
               <label>Name</label>
@@ -127,7 +126,6 @@ export default function EditSourceForm({ source, setIsEditing }) {
               </div>
             </div>
           </form>
-        </div>
       </div>
     </div>
   );
