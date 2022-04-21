@@ -127,42 +127,41 @@ export default function EntriesList({ selectEntry, sources, items }) {
       )}{' '}  */}
       {/* Filter by Date Range: */}
       <div class="tableCont">
-        <FilterCont>
-          <FilterType>
-            <FilterText>Sub Accounts</FilterText>
-            <Select id="sourceSelection" onChange={(e) => updateFilter()}>
+        <div class="flexRow">
+          <div class="flexColumn">
+            <label>Sub Accounts</label>
+            <select id="sourceSelection" onChange={(e) => updateFilter()}>
               <option value="allSources">All</option>
               {sources.map((source, key) => (
                 <option key={key} value={source.source_id}>
                   {source.name}
                 </option>
               ))}
-            </Select>
-          </FilterType>
+            </select>
+          </div>
 
-          {/* <FilterType>
-          <FilterText>Processor</FilterText>
-          <Select>
-            <option>All</option>
-          </Select>
-        </FilterType> */}
+          {/* <div class="flexColumn">
+            <label>Processor</label>
+            <select>
+              <option>All</option>
+            </select>
+          </div> */}
 
-          <FilterType>
-            <FilterText>Materials</FilterText>
-            <Select id="itemSelection" onChange={(e) => updateFilter()}>
+          <div class="flexColumn">
+            <label>Materials</label>
+            <select id="itemSelection" onChange={(e) => updateFilter()}>
               <option value="allItems">All</option>
               {items.map((item, key) => (
                 <option key={key} value={item.item_id}>
                   {item.name}
                 </option>
               ))}
-            </Select>
-          </FilterType>
+            </select>
+          </div>
 
-          <FilterType>
-            <FilterText>Start Date</FilterText>
-            {/* <label for="startDate">Start Date</label> */}
-            <DateInput
+          <div class="flexColumn">
+            <label for="startDate">Start Date</label>
+            <input
               type="date"
               name="startDate"
               id="startDate"
@@ -173,12 +172,11 @@ export default function EntriesList({ selectEntry, sources, items }) {
                 // dateRangeFilter();
               }}
             />
-          </FilterType>
+          </div>
 
-          <FilterType>
-            <FilterText>End Date</FilterText>
-            {/* <label for="endDate">End Date</label> */}
-            <DateInput
+          <div class="flexColumn">
+            <label for="endDate">End Date</label>
+            <input
               type="date"
               name="endDate"
               id="endDate"
@@ -189,19 +187,15 @@ export default function EntriesList({ selectEntry, sources, items }) {
                 // dateRangeFilter();
               }}
             />
-          </FilterType>
-          {/* <AllButtonCont>
-          <AllButton/>
-        </AllButtonCont> */}
+          </div>
 
-          {/* 
-        <FilterType>
-          <FilterText>Status</FilterText>
-          <Select >
-            <option>All</option>
-          </Select>
-        </FilterType> */}
-        </FilterCont>
+          {/* <div class="flexColumn">
+            <label>Status</label>
+            <select>
+              <option>All</option>
+            </select>
+          </div> */}
+        </div>
 
         <table>
           <thead>
@@ -244,63 +238,3 @@ export default function EntriesList({ selectEntry, sources, items }) {
     </>
   );
 }
-
-const Select = styled.select`
-  height: 30px;
-  width: 153px;
-  padding: 5px;
-  border-radius: 7px;
-  border: 0.5px solid #cbcbcb;
-  box-shadow: 0px 2px 4px 0px #7474741a;
-  cursor: pointer;
-  appearance: none;
-  &:focus {
-    outline: none;
-  }
-  background-image: linear-gradient(45deg, transparent 50%, #80cf76 50%),
-    linear-gradient(135deg, #80cf76 50%, transparent 50%),
-    radial-gradient(#f1faf0 70%, transparent 72%);
-  background-position: 129px 13px, 134px 13px, 124px 5px;
-  background-size: 5px 5px, 5px 5px, 1.5em 1.5em;
-  background-repeat: no-repeat;
-`;
-
-const DateInput = styled.input`
-  height: 30px;
-  width: 153px;
-  padding: 0 5px;
-  border-radius: 7px;
-  border: 0.5px solid #cbcbcb;
-  box-shadow: 0px 2px 4px 0px #7474741a;
-  cursor: pointer;
-  &:focus {
-    outline: none;
-  }
-  &::-webkit-calendar-picker-indicator {
-    opacity: 0;
-  }
-  background-image: linear-gradient(45deg, transparent 50%, #80cf76 50%),
-    linear-gradient(135deg, #80cf76 50%, transparent 50%),
-    radial-gradient(#f1faf0 70%, transparent 72%);
-  background-position: 139px 13px, 144px 13px, 134px 5px;
-  background-size: 5px 5px, 5px 5px, 1.5em 1.5em;
-  background-repeat: no-repeat;
-`;
-
-const FilterCont = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 80vw;
-`;
-
-const FilterType = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const FilterText = styled.text`
-  font-size: 14px;
-  font-weight: 500;
-  color: #464646;
-`;

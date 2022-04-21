@@ -144,7 +144,6 @@ export default function Form({ items, sources }) {
             <label for="selectSource">Source</label>
             <select
               name="source_id"
-              class="dropdown"
               id="selectSource"
               onChange={(e) => handleFormValues(e)}
             >
@@ -162,7 +161,6 @@ export default function Form({ items, sources }) {
             <DateCont>
               <label for="inputNewDate">Date</label>
               <input
-                class="dropdown"
                 id="inputNewDate"
                 name="created"
                 type="date"
@@ -175,7 +173,6 @@ export default function Form({ items, sources }) {
                   <ItemCont>
                     <label for="selectNewItem">Item</label>
                     <select
-                      class="dropdown"
                       id="selectNewItem"
                       name="item_id"
                       onChange={(e) => {
@@ -215,7 +212,14 @@ export default function Form({ items, sources }) {
                   {!!index && (
                     <IconButton
                       onClick={() => removeFormFields(element)}
-                      sx={{ width: 2, marginTop: 3, '&:hover': { backgroundColor: 'transparent', transform: 'scale(1.1)' } }}
+                      sx={{
+                        width: 2,
+                        marginTop: 3,
+                        '&:hover': {
+                          backgroundColor: 'transparent',
+                          transform: 'scale(1.1)',
+                        },
+                      }}
                     >
                       <Delete sx={{ '&:hover': { color: '#80cf76' } }} />
                     </IconButton>
@@ -227,8 +231,14 @@ export default function Form({ items, sources }) {
 
           <div>
             <div class="buttonCont">
-              <IconButton onClick={() => addFormFields()}
-              sx={{ '&:hover': { backgroundColor: 'transparent', transform: 'scale(1.1)' } }}
+              <IconButton
+                onClick={() => addFormFields()}
+                sx={{
+                  '&:hover': {
+                    backgroundColor: 'transparent',
+                    transform: 'scale(1.1)',
+                  },
+                }}
               >
                 <AddCircleIcon sx={{ '&:hover': { color: '#80cf76' } }} />
               </IconButton>

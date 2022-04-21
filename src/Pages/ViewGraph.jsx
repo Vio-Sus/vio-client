@@ -123,45 +123,73 @@ const ViewGraphPage = () => {
           </div>
         </header>
         <DropdownCont>
-          <DropDownOptions text="Sub Accounts" />
-          <DropDownOptions text="Materials" />
-          <DropCont>
-            <div>
-              <Label for="startDate">Start Date</Label>
-            </div>
-            <div>
-              <DateInput
-                type="date"
-                name="startDate"
-                id="startDate"
-                value={startDate}
-                max={today}
-                onChange={(e) => {
-                  setStartDate(e.target.value);
-                  // dateRangeFilter();
-                }}
-              />
-            </div>
-          </DropCont>
+          <div class="flexColumn">
+            <label for="selectSource">Source</label>
+            <select
+            // name="source_id"
+            // id="selectSource"
+            // onChange={(e) => handleFormValues(e)}
+            >
+              <option hidden>Select Source</option>
+              {/* {sources.map((source, key) => (
+                <option key={key} value={source.source_id}>
+                  {source.name}
+                </option>
+              ))} */}
+              {/* <option value="add_source">Add Source...</option> */}
+            </select>
+          </div>
 
-          <DropCont>
-            <div>
-              <Label for="endDate">End Date</Label>
-            </div>
-            <div>
-              <DateInput
-                type="date"
-                name="endDate"
-                id="endDate"
-                value={endDate}
-                max={today}
-                onChange={(e) => {
-                  setEndDate(e.target.value);
-                  // dateRangeFilter();
-                }}
-              />
-            </div>
-          </DropCont>
+          <div class="flexColumn">
+            <label for="selectNewItem">Item</label>
+            <select
+              // id="selectNewItem"
+              // name="item_id"
+              // onChange={(e) => {
+              //   e.target.value === 'add_item'
+              //     ? addItem()
+              //     : (element.item_id = Number(e.target.value));
+              // }}
+            >
+              <option hidden>Select Item</option>
+              {/* {items.map((item) => (
+                <option key={item.item_id} value={item.item_id}>
+                  {item.name}
+                </option>
+              ))} */}
+              {/* <option value="add_item">Add Item...</option> */}
+            </select>
+          </div>
+
+          <div class="flexColumn">
+            <label for="startDate">Start Date</label>
+            <input
+              type="date"
+              name="startDate"
+              id="startDate"
+              value={startDate}
+              max={today}
+              onChange={(e) => {
+                setStartDate(e.target.value);
+                // dateRangeFilter();
+              }}
+            />
+          </div>
+
+          <div class="flexColumn">
+            <label for="endDate">End Date</label>
+            <input
+              type="date"
+              name="endDate"
+              id="endDate"
+              value={endDate}
+              max={today}
+              onChange={(e) => {
+                setEndDate(e.target.value);
+                // dateRangeFilter();
+              }}
+            />
+          </div>
         </DropdownCont>
 
         <GraphMainCont>

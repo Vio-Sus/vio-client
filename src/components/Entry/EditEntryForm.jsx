@@ -1,143 +1,7 @@
 import { useState, useEffect } from 'react';
 import { updateEntry } from '../../common/network';
-import styled from 'styled-components';
-
-
-import Button from '../Button';
-
-const EditFormCont = styled.form`
-  display: grid;
-  max-width: 500px;
-  grid-template-columns: 47% 47%;
-  gap: 20px;
-  font-size: 12px;
-`;
-
-const Cont = styled.div`
-  display: grid;
-  justify-content:center;
-  gap: 10px;
-`;
-
-const DateInput = styled.input`
-  height: 35px;
-  width: 150px;
-  padding: 0 5px;
-  border-radius: 7px;
-  border: 0.5px solid #cbcbcb;
-  box-shadow: 0px 2px 4px 0px #7474741a;
-  cursor: pointer;
-  &:focus {
-    outline: none;
-  }
-  &::-webkit-calendar-picker-indicator {
-    opacity: 0;
-  }
-  background-image:
-    linear-gradient(45deg, transparent 50%, #80CF76 50%),
-    linear-gradient(135deg, #80CF76 50%, transparent 50%),
-    radial-gradient(#F1FAF0 70%, transparent 72%);
-  background-position:
-    139px 13px,
-    144px 13px,
-    134px 5px;
-  background-size:
-    5px 5px,
-    5px 5px,
-    1.5em 1.5em;
-  background-repeat: no-repeat;
-`;
-
-const Select = styled.select`
-  height: 35px;
-  width: 150px;
-  padding: 5px;
-  border-radius: 7px;
-  border: 0.5px solid #cbcbcb;
-  box-shadow: 0px 2px 4px 0px #747474;
-  cursor: pointer;
-  appearance: none;
-  &:focus {
-    outline: none;
-  }
-  background-image:
-    linear-gradient(45deg, transparent 50%, #80CF76 50%),
-    linear-gradient(135deg, #80CF76 50%, transparent 50%),
-    radial-gradient(#F1FAF0 70%, transparent 72%);
-  background-position:
-    129px 13px,
-    134px 13px,
-    124px 5px;
-  background-size:
-    5px 5px,
-    5px 5px,
-    1.5em 1.5em;
-  background-repeat: no-repeat;
-`;
-
-const InputCont = styled.div`
-  height: 35px;
-  width: 150px;
-  display: flex;
-  align-items: center;
-  max-width: 141px;
-  padding-left: 10px;
-  border-radius: 7px;
-  border: 0.5px solid #cbcbcb;
-  box-shadow: 0px 2px 4px 0px #7474741a;
-`;
-
-const WeightInput = styled.input`
-  max-width: 100px;
-  border: none;
-  background-color: transparent;
-  &:focus {
-    outline: none;
-  }
-`;
-
-const Suffix = styled.div`
-  position: relative;
-  color: #464646;
-  padding: 15px 15px 15px 0;
-`;
-
-const ButtonCont = styled.div`
-  margin: 20px;
-  grid-column-start: 1;
-  grid-column-end: 3;
-  gap: 40px;
-  display: flex;
-  justify-content: center;
-`;
-
-const PopupWrap = styled.form `
-  display:flex;
-  flex-direction: column;
-  justify-content:center;
-  align-items:center;
-  background-color: #F9F9F9;
-  box-shadow: 0px 2px 4px 0px #7474741a;
-  border: solid grey 2px;
-  position: absolute;
-  border-radius: 10px;
-  width: 40vw;
-  height: 35vh;
-`;
-
-const Label = styled.label`
-  font-size: 14px;
-`;
-
-const Heading = styled.div`
-  font-size:24px;
-  font-weight:400;
-  width: 100%;
-  color:black;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-`;
+import IconButton from '@mui/material/IconButton';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 export default function EditForm({ entry, setIsEditing, items, sources }) {
   // selected entry data
@@ -218,83 +82,86 @@ export default function EditForm({ entry, setIsEditing, items, sources }) {
   };
 
   return (
-    <>
-    <PopupWrap>
-          <Heading>Edit Entry:</Heading>
-        <EditFormCont id="edit-form">
-          <Cont>
-            <Label>Sub Account:</Label>
-            <Select
-              value={sourceId}
-              name="source"
-              onChange={(e) => handleChange(e)}
-            >
-              <option hidden>Select Source</option>
-              {sources.map((source, key) => (
-                <option key={key} value={source.source_id}>
-                  {source.name}
-                </option>
-              ))}
-            </Select>
-          </Cont>
-          <Cont>
-            <Label>Collection date:</Label>
-            <DateInput
-              name="date"
-              type="date"
-              value={date}
-              onChange={(e) => handleChange(e)}
-            ></DateInput>
-          </Cont>
-          <Cont>
-            <Label>Material:</Label>
-            <Select value={itemId} name="item" onChange={(e) => handleChange(e)}>
-              <option hidden>Select Item</option>
-              {items.map((item, key) => (
-                <option key={key} value={item.item_id}>
-                  {item.name}
-                </option>
-              ))}
-            </Select>
-          </Cont>
-          <Cont>
-            <Label>Weight:</Label>
-            <InputCont>
-              <WeightInput
-                type="number"
-                name="weight"
-                value={weight}
-                onInput={(e) => handleChange(e)}
-              />
-              <Suffix>kg</Suffix>
-            </InputCont>
-          </Cont>
-          <ButtonCont>
-            <Button 
-              onClick={handleSubmit}
-              buttonwidth="150px"
-              buttonheight="30px"
-              buttoncolor='#80CF76'
-              textcolor='white'
-              buttontext="Save"
-              fontsize="14px"
-              textweight='450'
-              borderweight='solid #80CF76 1px'
-            />
-            <Button 
-              onClick={handleCancel}
-              buttonwidth="150px"
-              buttonheight="30px"
-              buttontext="Cancel"
-              fontsize="14px"
-              textweight='500'
-              textcolor='#80CF76'
-              buttoncolor='white'
-              borderweight='solid lightgrey 1px'
-            />
-          </ButtonCont>
-        </EditFormCont>
-      </PopupWrap>
-    </>
+    <div class="modal">
+      <div class="modalContent">
+        <div class="modalClose">
+          <IconButton
+            onClick={handleCancel}
+            sx={{
+              '&:hover': {
+                backgroundColor: 'transparent',
+                transform: 'scale(1.1)',
+              },
+            }}
+          >
+            <CancelIcon />
+          </IconButton>
+        </div>
+        <h2>Edit Entry</h2>
+        <form id="edit-form">
+          <div class="dropdownCont">
+            <div class="flexColumn">
+              <label>Sub Account:</label>
+              <select
+                value={sourceId}
+                name="source"
+                onChange={(e) => handleChange(e)}
+              >
+                <option hidden>Select Source</option>
+                {sources.map((source, key) => (
+                  <option key={key} value={source.source_id}>
+                    {source.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div class="flexColumn">
+              <label>Collection date:</label>
+              <input
+                name="date"
+                type="date"
+                value={date}
+                onChange={(e) => handleChange(e)}
+              ></input>
+            </div>
+          </div>
+          <div class="dropdownCont">
+            <div class="flexColumn">
+              <label>Material:</label>
+              <select
+                value={itemId}
+                name="item"
+                onChange={(e) => handleChange(e)}
+              >
+                <option hidden>Select Item</option>
+                {items.map((item, key) => (
+                  <option key={key} value={item.item_id}>
+                    {item.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div class="flexColumn">
+              <label>Weight:</label>
+              <div class="weightInputCont">
+                <input
+                  class="weightInput"
+                  type="number"
+                  name="weight"
+                  value={weight}
+                  onInput={(e) => handleChange(e)}
+                />
+                <span class="weightSuffix">kg</span>
+              </div>
+            </div>
+          </div>
+          <div class="buttonCont">
+            <button onClick={handleSubmit} class="submitButton">
+              Save Edits
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 }
