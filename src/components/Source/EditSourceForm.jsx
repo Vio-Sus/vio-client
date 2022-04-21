@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { updateSource } from '../../common/network';
+import IconButton from '@mui/material/IconButton';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 export default function EditSourceForm({ source, setIsEditing }) {
   // selected entry data
@@ -75,41 +77,58 @@ export default function EditSourceForm({ source, setIsEditing }) {
   };
 
   return (
-    <>
-      <h2>Edit Source</h2>
-      <form id="edit-form">
-        <label>Name:</label>
-        <br />
-        <input
-          name="name"
-          type="text"
-          value={name}
-          onChange={(e) => handleChange(e)}
-        ></input>
-        <br />
-        <label>Address:</label>
-        <br />
-        <input
-          type="text"
-          name="address"
-          value={address}
-          onInput={(e) => handleChange(e)}
-        />
-        <br />
-        <label>Phone Number:</label>
-        <br />
-        <input
-          type="text"
-          name="phoneNumber"
-          value={phoneNumber}
-          onInput={(e) => handleChange(e)}
-        />
-        <br />
-        <button type="button" onClick={handleSubmit}>
-          Save Edit
-        </button>
-        <button onClick={handleCancel}>Cancel</button>
-      </form>
-    </>
+    <div class="modal">
+      <div class="modalContent">
+        <div class="modalClose">
+          <IconButton
+            onClick={handleCancel}
+            sx={{
+              '&:hover': {
+                backgroundColor: 'transparent',
+                transform: 'scale(1.1)',
+              },
+            }}
+          >
+            <CancelIcon />
+          </IconButton>
+        </div>
+        <h2>Edit Source</h2>
+        <div>
+          <form id="edit-form">
+            <div class="flexColumn">
+              <label>Name</label>
+              <input
+                name="name"
+                type="text"
+                value={name}
+                onChange={(e) => handleChange(e)}
+              />
+
+              <label>Address</label>
+              <input
+                type="text"
+                name="address"
+                value={address}
+                onInput={(e) => handleChange(e)}
+              />
+
+              <label>Phone Number</label>
+              <input
+                type="text"
+                name="phoneNumber"
+                value={phoneNumber}
+                onInput={(e) => handleChange(e)}
+              />
+
+              <div class="buttonCont">
+                <button onClick={handleSubmit} class="submitButton">
+                  Save Edits
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 }

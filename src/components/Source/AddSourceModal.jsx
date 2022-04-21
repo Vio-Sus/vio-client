@@ -1,7 +1,76 @@
 import { useState } from 'react';
 import { postSource } from '../../common/network';
+import styled from 'styled-components';
+import CancelIcon from '@mui/icons-material/Cancel';
+import Button from '../Button';
 
-export default function AddSourceModal({ setIsAddingSource }) {
+const Label = styled.label`
+  font-size:14px;
+`;
+
+const PopupWrap = styled.form `
+  display:flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items:center;
+  background-color: #F9F9F9;
+  box-shadow: 0px 2px 4px 0px #7474741a;
+  border: solid grey 2px;
+  position: absolute;
+  border-radius: 10px;
+  width: 40vw;
+  height: 35vh;
+`;
+
+const Input = styled.input`
+  height: 35px;
+  width: 350px;
+  padding: 0 5px;
+  margin-bottom: 5%;
+  border-radius: 7px;
+  border: 0.5px solid #cbcbcb;
+  box-shadow: 0px 2px 4px 0px #7474741a;
+  cursor: pointer;
+  &:focus {
+    outline: none;
+  }
+  &::-webkit-calendar-picker-indicator {
+    opacity: 0;
+  }
+`;
+
+const ButtonCont = styled.div`
+  gap: 40px;
+  display: flex;
+  justify-content: center;
+`;
+
+const Heading = styled.text`
+  font-size:25px;
+  font-weight:400;
+  color:black;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+`;
+
+  const modalHeader = {
+    padding: '10px',
+  };
+
+  const modalBody = {
+    display:'flex',
+    alignItems:'center',
+    justifyContent:'center',
+    padding: '10px',
+  };
+
+
+export default function AddSourceModal({
+  setIsAddingSource,
+  setAddedSomething,
+  addedSomething,
+}) {
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -41,10 +110,15 @@ export default function AddSourceModal({ setIsAddingSource }) {
         let res = await postSource(formContent);
         console.log(res);
         form.reset();
-        window.location.reload();
+        // window.location.reload();
       } catch (error) {
         console.log(error);
       }
+      setAddedSomething(!addedSomething);
+      setName(null);
+      setAddress(null);
+      setPhoneNumber(null);
+      setIsAddingSource(false);
     }
   };
 
@@ -52,86 +126,66 @@ export default function AddSourceModal({ setIsAddingSource }) {
     setIsAddingSource(false);
   };
 
-  const modal = {
-    position: 'absolute',
-    left: '50%',
-    top: '50%',
-    transform: 'translate(-50%, -50%)',
-    backgroundColor: 'white',
-    display: 'flex',
-    allignItems: 'center',
-      justifyContent: 'center',
-
-  };
-
-  const modalContent = {
-    minWidth: 'fit-content',
-    width: '25%',
-    height: 'fit-content',
-    padding: '0 2em 1em',
-    boxShadow: '5px 10px 18px #888888',
-    borderRadius: '10px',
-  };
-
-  const modalHeader = {
-    padding: '10px',
-  };
-
-  const modalFooter = {
-    padding: '10px',
-  };
-
-  const modalBody = {
-    padding: '10px',
-    borderTop: '1px solid black',
-    borderBottom: '1px solid black',
-  };
-
   return (
-    <div className="modal" style={modal}>
-      <div className="modalContent" style={modalContent}>
-        <div className="modalHeader" style={modalHeader}>
-          <h2>Add a New Source</h2>
-        </div>
+    <PopupWrap>
+      <div className="modalHeader" style={modalHeader}>
+        <Heading>Add a New Source</Heading>
+      </div>
         <div className="modalBody" style={modalBody}>
-          <form onSubmit={handleSubmit} id="new-source-form" noValidate>
-            <label>Name:</label>
-            <br />
-            <input
-              name="name"
-              type="text"
-              onChange={(e) => handleChange(e)}
-            ></input>
-            <br />
-            <label>Address:</label>
-            <br />
-            <input
-              name="address"
-              type="text"
-              onChange={(e) => handleChange(e)}
-            ></input>
-            <br />
-            <label>Contact Number:</label>
-            <br />
-            <input
-              type="text"
-              name="phoneNumber"
-              onChange={(e) => handleChange(e)}
-            />
-
-            <div className="button-section">
-              <button className="button submit" type="submit">
-                Save Source
-              </button>
-              <br />
-              {msg}
-            </div>
+          <form onSubmit={handleSubmit} id="new-source-form" >
+              <Label>Name</Label>
+                <br/>
+              <Input
+                name="name"
+                type="text"
+                value={name}
+                onChange={(e) => handleChange(e)}
+              />
+                <br/>
+              <Label>Address</Label>
+                <br/>
+              <Input
+                name="address"
+                type="text"
+                value={address}
+                onChange={(e) => handleChange(e)}
+              />
+                <br/>
+              <Label>Phone Number</Label>
+                <br/>
+              <Input
+                type="text"
+                name="phoneNumber"
+                value={phoneNumber}
+                onChange={(e) => handleChange(e)}
+              />
+              <ButtonCont>
+                <Button 
+                  onClick={handleSubmit}
+                  buttonwidth="150px"
+                  buttonheight="30px"
+                  buttoncolor='#80CF76'
+                  textcolor='white'
+                  buttontext="Add"
+                  fontsize="14px"
+                  textweight='450'
+                  borderweight='solid #80CF76 1px'
+                />
+                <Button 
+                  onClick={handleCancel}
+                  buttonwidth="150px"
+                  buttonheight="30px"
+                  buttontext="Cancel"
+                  fontsize="14px"
+                  textweight='500'
+                  textcolor='#80CF76'
+                  buttoncolor='white'
+                  borderweight='solid lightgrey 1px'
+                />
+              </ButtonCont>
+             <br/>
           </form>
         </div>
-        <div className="modalFooter" style={modalFooter}>
-          <button onClick={handleCancel}>Close</button>
-        </div>
-      </div>
-    </div>
+    </PopupWrap>
   );
 }

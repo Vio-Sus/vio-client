@@ -1,5 +1,13 @@
 import { useState, useEffect } from 'react';
 import { updateItem } from '../../common/network';
+import styled from 'styled-components';
+import Button from '../Button';
+
+const ButtonCont = styled.div`
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+`;
 
 export default function EditItemForm({ item, setIsEditing }) {
   // selected entry data
@@ -39,7 +47,7 @@ export default function EditItemForm({ item, setIsEditing }) {
     } catch (error) {
       console.log(error);
     }
-    window.location.reload();
+    // window.location.reload();
   };
 
   const handleCancel = () => {
@@ -50,19 +58,27 @@ export default function EditItemForm({ item, setIsEditing }) {
     <>
       <h2>Edit Item</h2>
       <form id="edit-form">
-        <label>Name:</label>
-        <br />
+        <label>Name</label>
         <input
           name="name"
           type="text"
           value={name}
           onChange={(e) => handleChange(e)}
         ></input>
-        <br />
-        <button type="button" onClick={handleSubmit}>
-          Save Edit
-        </button>
-        <button onClick={handleCancel}>Cancel</button>
+        <ButtonCont>
+          <Button
+            onClick={handleSubmit}
+            buttontext="Save Edit"
+            borderweight="solid #80CF76 1px"
+          />
+          <Button
+            onClick={handleCancel}
+            buttontext="Cancel"
+            textcolor="#80CF76"
+            buttoncolor="white"
+            borderweight="solid lightgrey 1px"
+          />
+        </ButtonCont>
       </form>
     </>
   );

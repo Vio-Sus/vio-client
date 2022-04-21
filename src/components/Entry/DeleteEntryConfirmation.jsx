@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { deleteEntry, getEntry } from '../../common/network';
 import { findItem, findSource } from '../../setIdToNames';
+import IconButton from '@mui/material/IconButton';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 export default function DeleteConfirmation({
   entry,
@@ -58,17 +60,32 @@ export default function DeleteConfirmation({
   };
 
   return (
-    <>
-      <h3>Are you sure you want to delete this entry?</h3>
-      <p>
-        Date: {date} <br />
-        Item: {itemId} <br />
-        Weight: {weight} kg
-        <br />
-        Source: {sourceId} <br />
-      </p>
-      <button onClick={handleDelete}>Delete</button>
-      <button onClick={handleCancel}>Cancel</button>
-    </>
+    <div class="modal">
+    <div class="modalContent">
+      <div class="modalClose">
+      <IconButton
+            onClick={handleCancel}
+            sx={{
+              '&:hover': {
+                backgroundColor: 'transparent',
+                transform: 'scale(1.1)',
+              },
+            }}
+          >
+            <CancelIcon />
+          </IconButton>
+      </div>
+      <h2>Are you sure you want to delete the following entry?</h2>
+            <p>Sub Account: {sourceId}</p>
+            <p>Materials: {itemId}</p>
+            <p>Date: {date}</p>
+            <p>Weight: {weight} kg</p>
+          <div class="buttonCont">
+            <button onClick={handleDelete} class="submitButton red">
+              Delete Entry
+            </button>
+          </div>
+      </div>
+    </div>
   );
 }

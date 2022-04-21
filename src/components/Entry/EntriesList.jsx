@@ -1,6 +1,11 @@
 import { useState, useEffect } from 'react';
 import { getListOfEntries, getEntriesByDateRange } from '../../common/network';
-import Summary from '../Summary/Summary';
+import styled from 'styled-components';
+// import Summary from '../Summary/Summary';
+// import DateFilter from '../Filter/DateFilter';
+import IconButton from '@mui/material/IconButton';
+import Delete from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 export default function EntriesList({ selectEntry, sources, items }) {
   const [entries, setEntries] = useState([]);
@@ -12,7 +17,6 @@ export default function EntriesList({ selectEntry, sources, items }) {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [today, setToday] = useState([]);
-  const [defaultStart, setDefaultStart] = useState([]);
 
   // grabbed from binibin-repo
   const dateToYMD = (date) => {
@@ -23,7 +27,7 @@ export default function EntriesList({ selectEntry, sources, items }) {
   };
 
   const todayObj = new Date(new Date().toString());
-  const todayMinus100 = new Date(new Date().setDate(todayObj.getDate() - 100));
+  const todayMinus100 = new Date(new Date().setDate(todayObj.getDate() - 60));
   // useEffect(() => {
   //   getListOfEntries().then((result) => {
   //     console.log(result);
@@ -39,7 +43,6 @@ export default function EntriesList({ selectEntry, sources, items }) {
         // const todayDate = dateToYMD(todayObj);
         // const defaultStartDate = dateToYMD(todayMinus100);
         setToday(todayDate);
-        setDefaultStart(defaultStartDate);
         setStartDate(defaultStartDate);
         setEndDate(todayDate);
 
@@ -109,83 +112,127 @@ export default function EntriesList({ selectEntry, sources, items }) {
 
   return (
     <>
-      Filter by Date Range:
-      <label for="startDate">Start Date</label>
-      <input
-        type="date"
-        name="startDate"
-        id="startDate"
-        value={startDate}
-        max={today}
-        onChange={(e) => {
-          setStartDate(e.target.value);
-          // dateRangeFilter();
-        }}
-      />
-      <label for="endDate">End Date</label>
-      <input
-        type="date"
-        name="endDate"
-        id="endDate"
-        value={endDate}
-        max={today}
-        onChange={(e) => {
-          setEndDate(e.target.value);
-          // dateRangeFilter();
-        }}
-      />
-      <br></br>
-      Filter by source:
-      <select id="sourceSelection" onChange={(e) => updateFilter()}>
-        <option value="allSources">All</option>
-        {sources.map((source, key) => (
-          <option key={key} value={source.source_id}>
-            {source.name}
-          </option>
-        ))}
-      </select>
-      Filter by item:
-      <select id="itemSelection" onChange={(e) => updateFilter()}>
-        <option value="allItems">All</option>
-        {items.map((item, key) => (
-          <option key={key} value={item.item_id}>
-            {item.name}
-          </option>
-        ))}
-      </select>
-      <table>
-        <thead>
-          <tr>
-            <th> Entry Date </th>
-            <th> Source </th>
-            <th> Item Name </th>
-            <th> Weight </th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredEntries
-            ? filteredEntries.map((entry, index) => (
-                <tr key={index}>
-                  <td> {entry.entry_date} </td>
-                  <td> {entry.source_name}</td>
-                  <td> {entry.item_name} </td>
-                  <td> {entry.entry_weight} kg </td>
-                  <td>
-                    <button onClick={() => selectEntry(entry, 'edit')}>
-                      Edit
-                    </button>
-                  </td>
+      {/* {(startDate, endDate, today) && (
+        <DateFilter
+          startDate={startDate}
+          endDate={endDate}
+          today={today}
+          setStartDate={(e) => {
+            setStartDate(e.target.value);
+          }}
+          setEndDate={(e) => {
+            setEndDate(e.target.value);
+          }}
+        />
+      )}{' '}  */}
+      {/* Filter by Date Range: */}
+      <div class="tableCont">
+        <div class="flexRow">
+          <div class="flexColumn">
+            <label>Sub Accounts</label>
+            <select id="sourceSelection" onChange={(e) => updateFilter()}>
+              <option value="allSources">All</option>
+              {sources.map((source, key) => (
+                <option key={key} value={source.source_id}>
+                  {source.name}
+                </option>
+              ))}
+            </select>
+          </div>
 
-                  <td>
-                    <button onClick={() => selectEntry(entry, 'delete')}>
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))
-            : null}
-        </tbody>
-      </table>
+          {/* <div class="flexColumn">
+            <label>Processor</label>
+            <select>
+              <option>All</option>
+            </select>
+          </div> */}
+
+          <div class="flexColumn">
+            <label>Materials</label>
+            <select id="itemSelection" onChange={(e) => updateFilter()}>
+              <option value="allItems">All</option>
+              {items.map((item, key) => (
+                <option key={key} value={item.item_id}>
+                  {item.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div class="flexColumn">
+            <label for="startDate">Start Date</label>
+            <input
+              type="date"
+              name="startDate"
+              id="startDate"
+              value={startDate}
+              max={today}
+              onChange={(e) => {
+                setStartDate(e.target.value);
+                // dateRangeFilter();
+              }}
+            />
+          </div>
+
+          <div class="flexColumn">
+            <label for="endDate">End Date</label>
+            <input
+              type="date"
+              name="endDate"
+              id="endDate"
+              value={endDate}
+              max={today}
+              onChange={(e) => {
+                setEndDate(e.target.value);
+                // dateRangeFilter();
+              }}
+            />
+          </div>
+
+          {/* <div class="flexColumn">
+            <label>Status</label>
+            <select>
+              <option>All</option>
+            </select>
+          </div> */}
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th> SUB ACCOUNTS</th>
+              {/* <th> PROCESSOR </th> */}
+              <th> MATERIALS </th>
+              <th> DATE </th>
+              <th> WEIGHT </th>
+              {/* <th> STATUS </th> */}
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredEntries
+              ? filteredEntries.map((entry, index) => (
+                  <tr key={index}>
+                    <td>{entry.source_name}</td>
+                    {/* <td> P1 </td> */}
+                    <td> {entry.item_name} </td>
+                    <td> {entry.entry_date} </td>
+                    <td> {entry.entry_weight} kg </td>
+                    {/* <td> Processed </td> */}
+                    <td>
+                      <IconButton onClick={() => selectEntry(entry, 'edit')}>
+                        <EditIcon sx={{ color: '#606f89' }} />
+                      </IconButton>
+                      <IconButton onClick={() => selectEntry(entry, 'delete')}>
+                        <Delete sx={{ color: '#606f89' }} />
+                      </IconButton>
+                    </td>
+                  </tr>
+                ))
+              : null}
+          </tbody>
+        </table>
+      </div>
       {/* <Summary startDate={'2022-01-01'} endDate={'2022-03-10'} /> */}
       {/* <Summary startDate={startDate} endDate={endDate} /> */}
     </>

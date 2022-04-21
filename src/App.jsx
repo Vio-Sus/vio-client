@@ -12,10 +12,16 @@ import ViewItemPage from './Pages/ViewItem';
 import ViewGraphPage from './Pages/ViewGraph';
 import BluetoothPage from './Pages/Bluetooth';
 
+import NavBarLogIn from './components/NavBarLogIn';
+import { NavigateBeforeTwoTone } from '@mui/icons-material';
+
 function App() {
   const [sources, setSources] = useState([]);
   const [items, setItems] = useState([]);
   const [user, setUser] = useState(null);
+  const [addedSomething, setAddedSomething] = useState(false);
+  //
+  // let addedSomething = false;
 
   useEffect(() => {
     (async () => {
@@ -30,11 +36,13 @@ function App() {
           setSources(sources);
           setItems(items);
         }
-
         console.log(user, sources, items);
+        setAddedSomething(false);
       } catch {}
     })();
-  }, []);
+    console.log("app's useEffect was called");
+    console.log('addSomething from app', addedSomething);
+  }, [addedSomething]);
 
   return (
     <>
@@ -43,10 +51,21 @@ function App() {
           <NavBar user={user} />
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<DashboardPage />}></Route>
+              {/* <Route path="/" element={<DashboardPage />}></Route> */}
+              <Route
+                path="/"
+                element={<ViewDataPage sources={sources} items={items} />}
+              ></Route>
               <Route
                 path="newEntry"
-                element={<NewEntryPage sources={sources} items={items} />}
+                element={
+                  <NewEntryPage
+                    sources={sources}
+                    items={items}
+                    setAddedSomething={setAddedSomething}
+                    addedSomething={addedSomething}
+                  />
+                }
               ></Route>
               <Route
                 path="viewData"
@@ -60,7 +79,10 @@ function App() {
                 path="viewItem"
                 element={<ViewItemPage items={items} />}
               ></Route>
-              <Route path="viewGraph" element={<ViewGraphPage />}></Route>
+              <Route
+                path="viewGraph"
+                element={<ViewGraphPage sources={sources} />}
+              ></Route>
               <Route
                 path="bluetooth"
                 element={<BluetoothPage sources={sources} items={items} />}

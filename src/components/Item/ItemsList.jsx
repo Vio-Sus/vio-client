@@ -1,5 +1,9 @@
 import { useState, useEffect } from 'react';
 import { getItems } from '../../common/network';
+import styled from 'styled-components';
+import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
+import Delete from '@mui/icons-material/Delete';
 
 export default function ItemList({ selectItem }) {
   const [items, setItems] = useState([]);
@@ -12,6 +16,11 @@ export default function ItemList({ selectItem }) {
     })();
   }, []);
 
+  const itemName = {
+    textAlign: 'left',
+    paddingLeft: '1em',
+  };
+
   return (
     <table>
       <thead>
@@ -22,9 +31,15 @@ export default function ItemList({ selectItem }) {
       <tbody>
         {items.map((item, index) => (
           <tr key={index}>
-            <td> {item.name} </td>
+            <td style={itemName}> {item.name} </td>
             <td>
-              <button onClick={() => selectItem(item)}>Edit</button>
+              <IconButton onClick={() => selectItem(item)}>
+                <EditIcon />
+              </IconButton>
+              {/* Need to add deleteItem function: */}
+              {/* <IconButton onClick={() => deleteItem(item)}>
+                <Delete />
+              </IconButton> */}
             </td>
           </tr>
         ))}
