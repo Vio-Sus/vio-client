@@ -41,7 +41,7 @@ export default function AddSourceForm({ setIsAdding }) {
         let res = await postSource(formContent);
         console.log(res);
         form.reset();
-        window.location.reload();
+        // window.location.reload();
       } catch (error) {
         console.log(error);
       }
