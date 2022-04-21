@@ -31,7 +31,7 @@ export default function AddItemForm({ setIsAdding }) {
         let res = await postItem(formContent);
         console.log(res);
         form.reset();
-        window.location.reload();
+        // window.location.reload();
       } catch (error) {
         console.log(error);
       }

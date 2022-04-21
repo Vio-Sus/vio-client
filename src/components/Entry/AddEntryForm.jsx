@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useState } from 'react';
+import EntryDropdown from './EntryDropdown';
+import { useState, useEffect } from 'react';
 import { postEntries } from '../../common/network';
 import { handleValidation } from '../../common/validation';
 import { Link } from 'react-router-dom';
@@ -64,12 +65,25 @@ const newEntryWeight = () => ({
   weight: '',
 });
 
-export default function Form({ items, sources }) {
+export default function Form({
+  items,
+  sources,
+  setAddedSomething,
+  addedSomething,
+}) {
   const [entryWeights, setEntryWeights] = useState([newEntryWeight()]);
   const [formValues, setFormValues] = useState({});
   const [errorMsgs, setErrorMsgs] = useState([]);
   const [isAddingSource, setIsAddingSource] = useState(false);
   const [isAddingItem, setIsAddingItem] = useState(false);
+  const [sourcesList, setSourcesList] = useState([]);
+  const [itemsList, setItemsList] = useState([]);
+
+  useEffect(() => {
+    console.log('this is the add stuff ', sources);
+    setSourcesList(sources);
+    setItemsList(items);
+  }, [items, sources]);
 
   const addSource = () => {
     console.log('adding..........');
@@ -126,7 +140,7 @@ export default function Form({ items, sources }) {
       const res = await postEntries(formContent);
       console.log(res);
       form.reset();
-      window.location.reload();
+      // window.location.reload();
     }
   };
 
@@ -137,24 +151,20 @@ export default function Form({ items, sources }) {
   };
 
   return (
+sourcesList &&
+    itemsList && (
     <>
       <div onClick={handleCancel}>
         <form onSubmit={handleSubmit} id="input-form" noValidate>
           <SourceCont>
             <label for="selectSource">Source</label>
-            <select
-              name="source_id"
-              id="selectSource"
-              onChange={(e) => handleFormValues(e)}
-            >
-              <option hidden>Select Source</option>
-              {sources.map((source, key) => (
-                <option key={key} value={source.source_id}>
-                  {source.name}
-                </option>
-              ))}
-              <option value="add_source">Add Source...</option>
-            </select>
+            <EntryDropdown
+                objects={sourcesList}
+                entryFor="Source"
+                handleFormValues={(e) => handleFormValues(e)}
+                setAddedSomething={setAddedSomething}
+                addedSomething={addedSomething}
+              ></EntryDropdown>
           </SourceCont>
 
           <DateItemWeightCont>
@@ -172,23 +182,18 @@ export default function Form({ items, sources }) {
                 <ItemWeightPair key={element.id}>
                   <ItemCont>
                     <label for="selectNewItem">Item</label>
-                    <select
-                      id="selectNewItem"
-                      name="item_id"
-                      onChange={(e) => {
-                        e.target.value === 'add_item'
-                          ? addItem()
-                          : (element.item_id = Number(e.target.value));
-                      }}
-                    >
-                      <option hidden>Select Item</option>
-                      {items.map((item) => (
-                        <option key={item.item_id} value={item.item_id}>
-                          {item.name}
-                        </option>
-                      ))}
-                      <option value="add_item">Add Item...</option>
-                    </select>
+                    <EntryDropdown
+                        name="item_id"
+                        objects={itemsList}
+                        entryFor="Item"
+                        handleFormValues={(e) => {
+                          e.target.value === 'add_item'
+                            ? addItem()
+                            : (element.item_id = Number(e.target.value));
+                        }}
+                        setAddedSomething={setAddedSomething}
+                        addedSomething={addedSomething}
+                      ></EntryDropdown>
                   </ItemCont>
 
                   <WeightCont>
@@ -260,9 +265,17 @@ export default function Form({ items, sources }) {
         </form>
       </div>
       {isAddingSource && (
-        <AddSourceModal setIsAddingSource={setIsAddingSource} />
-      )}
-      {isAddingItem && <AddItemModal setIsAddingItem={setIsAddingItem} />}
-    </>
+          <AddSourceModal
+            setIsAddingSource={setIsAddingSource}
+            setAddedSomething={setAddedSomething}
+          />
+        )}
+        {isAddingItem && (
+          <AddItemModal
+            setIsAddingItem={setIsAddingItem}
+            setAddedSomething={setAddedSomething}
+          />
+        )}
+    </>)
   );
 }

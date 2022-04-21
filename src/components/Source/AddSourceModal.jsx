@@ -66,7 +66,11 @@ const Heading = styled.text`
   };
 
 
-export default function AddSourceModal({ setIsAddingSource }) {
+export default function AddSourceModal({
+  setIsAddingSource,
+  setAddedSomething,
+  addedSomething,
+}) {
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -106,10 +110,15 @@ export default function AddSourceModal({ setIsAddingSource }) {
         let res = await postSource(formContent);
         console.log(res);
         form.reset();
-        window.location.reload();
+        // window.location.reload();
       } catch (error) {
         console.log(error);
       }
+      setAddedSomething(!addedSomething);
+      setName(null);
+      setAddress(null);
+      setPhoneNumber(null);
+      setIsAddingSource(false);
     }
   };
 

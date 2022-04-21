@@ -47,7 +47,7 @@ export default function EditItemForm({ item, setIsEditing }) {
     } catch (error) {
       console.log(error);
     }
-    window.location.reload();
+    // window.location.reload();
   };
 
   const handleCancel = () => {
