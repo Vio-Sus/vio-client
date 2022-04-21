@@ -35,13 +35,13 @@ const ViewSourcePage = ({ sources, items }) => {
       <div class="pageCont">
         <header>
           <div class="headingCont">
-            <h1>Sub Accounts</h1>
+            <h1>Sources</h1>
             <h3>Account and contact information.</h3>
           </div>
           <div class="buttonCont">
             <Button
               buttoncolor="#4A4A4A"
-              buttontext="Export"
+              buttontext="Print"
               onClick={handlePrint}
             ></Button>
             <Button

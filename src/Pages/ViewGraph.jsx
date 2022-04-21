@@ -49,7 +49,7 @@ const ViewGraphPage = ({ sources }) => {
   const [selectedSource, setSelectedSource] = useState(null);
 
   const todayObj = new Date(new Date().toString());
-  const todayMinus100 = new Date(new Date().setDate(todayObj.getDate() - 60));
+  const todayMinus100 = new Date(new Date().setDate(todayObj.getDate() - 30));
   const todayDate = dateToYMD(todayObj);
   const [endDate, setEndDate] = useState(todayDate);
   const [today, setToday] = useState(todayDate);
@@ -59,6 +59,14 @@ const ViewGraphPage = ({ sources }) => {
 
   const [datasets, setDatasets] = useState([]);
 
+  // useEffect(() => {
+  //   console.log('i am sources', sources);
+  //   if (sources.length > 0) {
+
+  //     setSelectedSource(sources[0].name);
+  //     console.log('i am selected sources', sources[0])
+  //   }
+  // }, [sources])
   // changes date range when startdate and enddate are changed
   //for dropdown
 
@@ -68,7 +76,7 @@ const ViewGraphPage = ({ sources }) => {
         try {
           let labels = await generateXAxis(startDate, endDate);
           setXAxisLabels(labels);
-          console.log('labels are', labels);
+          // console.log('labels are', labels);
           let sums = await getGraphDataset(startDate, endDate);
           setDatasets(sums.data);
         } catch {}
@@ -83,7 +91,7 @@ const ViewGraphPage = ({ sources }) => {
 
   const handleSourceSelect = (e) => {
           setSelectedSource(e.target.value);
-          console.log('NOTHING', datasets);
+          // console.log('NOTHING', datasets);
         }
 
   return (
@@ -102,7 +110,7 @@ const ViewGraphPage = ({ sources }) => {
   {/* TODO: Export data to a PDF or Excel */}
             <Button
               buttoncolor="#4A4A4A"
-              buttontext="Export"
+              buttontext="Print"
               onClick={handlePrint}
             />
 
@@ -112,7 +120,7 @@ const ViewGraphPage = ({ sources }) => {
           </div>
         </header>
         <DropdownCont>
-          <DropDownOptions text="Sub Accounts" array={sources} handleChange={handleSourceSelect}/>
+          <DropDownOptions text="Source" array={sources} handleChange={handleSourceSelect}/>
           {/* TODO: Add the ability to show a graph for quantity of items across multiple sources */}
           {/* <DropDownOptions text="Materials" /> */}
           {(startDate, endDate, today) && (
@@ -141,7 +149,7 @@ const ViewGraphPage = ({ sources }) => {
           datasets={datasets[selectedSource]}
         />
       ) : (
-        <p>'Select a source to view...'</p>
+        <p>Pick a source from the drop down above to view!</p>
       )}
           </GraphCont>
           {/* <GraphRightSideKey /> */}

@@ -37,7 +37,7 @@ const ViewItemPage = ({ items }) => {
           <div class="buttonCont">
             <Button
               buttoncolor="#4A4A4A"
-              buttontext="Export"
+              buttontext="Print"
               onClick={handlePrint}
             />
             <Button buttontext="New Item" onClick={addItem} />

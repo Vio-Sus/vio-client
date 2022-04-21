@@ -78,7 +78,7 @@ const ViewDataPage = ({ sources, items }) => {
               </StyledLink>
 
               <Button
-                buttontext="Export"
+                buttontext="Print"
                 buttoncolor="#4A4A4A"
                 onClick={handlePrint}
               />
