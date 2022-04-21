@@ -51,7 +51,7 @@ const ViewSourcePage = ({ sources, items }) => {
             />
           </div>
         </header>
-        <div>
+        <div class="pageCont">
           <SourcesList selectSource={selectSource}></SourcesList>
           {isEditing && (
             <EditSourceForm

@@ -30,6 +30,17 @@ code {
   align-items: center;
 }
 
+.flexColumn {
+  display: flex;
+  flex-direction: column; 
+}
+
+.flexRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 3em;
+}
+
 header {
   width: 80vw;
   margin: 3em 0;
@@ -87,6 +98,10 @@ h3 {
   transition: all 0.2s ease-in-out;
 }
 
+.red {
+  background-color:#f86e6e;
+}
+
 .submitButton:hover {
   transform: scale(1.1);
   cursor: pointer;
@@ -100,6 +115,7 @@ h3 {
   display: flex;
   flex-direction: column;
   width: 80vw;
+  margin-bottom: 6em;
 }
 
 table {
@@ -126,7 +142,7 @@ tr:nth-child(odd) {
 /* select and input styling start */
 
 label {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   color: #464646;
   line-height: normal;
@@ -137,7 +153,7 @@ select {
   height: 35px;
   width: 155px;
   margin-top: 5px;
-  padding: 5px;
+  padding: 5px 5px 5px 10px;
   border-radius: 5px;
   border: 0.5px solid #cbcbcb;
   box-shadow: 0px 2px 4px 0px #7474741a;
@@ -164,9 +180,10 @@ input {
 
 input[type="date"] {
   width: 135px;
+  height: 34px;
 }
 
-.dropdown {
+select, input[type="date"] {
   background-image: linear-gradient(45deg, transparent 50%, #80cf76 50%),
     linear-gradient(135deg, #80cf76 50%, transparent 50%),
     radial-gradient(#f1faf0 70%, transparent 72%);
@@ -176,6 +193,7 @@ input[type="date"] {
 }
 
 input::-webkit-calendar-picker-indicator {
+  width: 38%;
   opacity: 0;
   cursor: pointer;
 }
@@ -184,6 +202,7 @@ input::-webkit-calendar-picker-indicator {
   display: flex;
   align-items: center;
   height: 35px;
+  width: 155px;
   margin-top: 5px;
   border-radius: 5px;
   border: 0.5px solid #cbcbcb;
@@ -192,7 +211,7 @@ input::-webkit-calendar-picker-indicator {
 
 .weightInput {
   margin: 0;
-  max-width: 80px;
+  max-width: 105px;
   border: none;
   box-shadow: none;
   background-color: transparent;
@@ -205,3 +224,45 @@ input::-webkit-calendar-picker-indicator {
 }
 
 /* input and select styling end */
+
+/* popup modal styling start */
+
+.modal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px,
+}
+
+.modalContent {
+  min-width: fit-content;
+  width: 25%;
+  height: fit-content;
+  padding: 0 3em 2em 2em;
+  box-shadow: 5px 10px 18px #888888;
+  border-radius: 10px;
+}
+
+.modal .submitButton {
+  margin: 20px 0 0 0;
+}
+
+.modalClose {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+}
+
+.dropdownCont {
+  display: flex;
+  gap: 2em;
+  margin-bottom: 1em;
+}
+
+/* popup modal styling end */
