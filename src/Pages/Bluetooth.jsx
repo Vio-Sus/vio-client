@@ -11,28 +11,22 @@ const BluetoothPage = ({ sources, items }) => {
   const [isWeighing, setIsWeighing] = useState(false);
 
   useEffect(() => {
-    // setBtWeight(weight);
-    let arr = array.slice(-40);
+
+    let arr = array.slice(-100);
     arr.push(btWeight);
     setArray(arr);
-    setAverage(avg(array).toFixed(3));
 
-    // if (array.length < 100) {
-    //   setArray([...array, weight]);
-    //   console.log('weightsssssy', array);
-    // } else {
-    // }
-
-    // do {
-    // } while (array.length < 10);
-  }, [weight]);
+  }, [btWeight]);
 
   function avg(arr) {
     return arr.reduce((prev, curr) => prev + curr, 0) / arr.length;
   }
   const saveWeight = () => {
+    console.log('arrraaay before avereage: ', array);
     setSavedWeight(avg(array).toFixed(3));
+    console.log('arrraaay after avereage: ', array);
     setIsWeighing(false);
+    console.log('saved weight: ', savedWeight)
   };
   return (
     <>
@@ -42,13 +36,15 @@ const BluetoothPage = ({ sources, items }) => {
         setIsWeighing={setIsWeighing}
       />
       <p>bt weight: {btWeight}</p>
-      {isWeighing ? 'true' : 'fales'}
+      {isWeighing ? 'true' : 'false'}
       {isWeighing ? (
         <input type="number" value={btWeight}></input>
       ) : (
         <input type="number" value={savedWeight}></input>
       )}
       <button onClick={saveWeight}>SAVE</button>
+      Saved weight:
+      <input type="number" value={savedWeight}></input>
     </>
   );
 };
