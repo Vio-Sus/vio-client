@@ -1,96 +1,62 @@
+import React from 'react';
+import styled from 'styled-components';
+import EntryDropdown from './EntryDropdown';
 import { useState, useEffect } from 'react';
 import { postEntries } from '../../common/network';
 import { handleValidation } from '../../common/validation';
-import EntryDropdown from './EntryDropdown';
+import { Link } from 'react-router-dom';
 import AddSourceModal from '../Source/AddSourceModal';
 import AddItemModal from '../Item/AddItemModal';
-import React from 'react';
-import styled from 'styled-components';
-
-const MainCont = styled.div`
-  display: flex;
-  width: 500px;
-  background-color: none;
-`;
-
-const Headings = styled.text`
-  font-size: 12px;
-`;
+import IconButton from '@mui/material/IconButton';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import Delete from '@mui/icons-material/Delete';
 
 const SourceCont = styled.div`
-  margin-bottom: 5%;
-  /* background-color: #fad; */
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 3%;
 `;
 
 const DateCont = styled.div`
-  background-color: none;
-  /* background-color: red; */
+  grid-column: 1;
+  grid-row: 1;
 `;
 
 const ItemCont = styled.div`
-  margin-left: 10%;
-  //background-color: green;
+  grid-column: 1;
+  grid-row: 1;
 `;
 
-//issues here
 const WeightCont = styled.div`
-  margin-left: 10%;
-  //background-color: yellow;
+  grid-column: 2;
+  grid-row: 1;
 `;
 
-const DateItemWeightCont = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 600px;
-  //background-color: pink;
-`;
-
-// here
-const Inputs = styled.input`
-  width: 152px;
-  height: 35px;
-  background-color: #fff;
-  border: 1px solid #cbcbcb;
-  border-radius: 7px;
-  text-align: center;
-`;
-
-const AddItemButton = styled.button`
-  display: flex;
-  justify-content: center;
-  height: 20px;
-  width: 20px;
-  background-color: #e6e3e3;
-  border: 1px solid #cbcbcb;
-  border-radius: 120px;
-`;
-
-const AddItemButCont = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 125%;
-  margin-top: 5%;
-`;
-
-const SaveButton = styled.button`
-  width: 126px;
-  height: 40px;
-  background-color: #efefef;
-  font-size: 13px;
-  color: black;
-  border: none;
-  border-radius: 10px;
-`;
-
-const ButtonCont = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 125%;
-  margin-top: -3%;
+const ItemWeightPair = styled.div`
+  display: grid;
+  gap: 20px;
+  margin-bottom: 10px;
+  grid-template-columns: 1fr 1fr 30px;
 `;
 
 const ItemWeightCont = styled.div`
-  display: flex;
+  display: grid;
+  grid-column: 2 / 4;
+  grid-row: 1;
+`;
+
+const DateItemWeightCont = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: auto;
+  gap: 20px 0;
+  max-width: 515px;
+`;
+
+const StyledLink = styled(Link)`
+  color: none;
+  text-decoration: none;
+  position: relative;
 `;
 
 const newEntryWeight = () => ({
@@ -185,43 +151,39 @@ export default function Form({
   };
 
   return (
-    sourcesList &&
+sourcesList &&
     itemsList && (
-      <MainCont>
-        <div onClick={handleCancel}>
-          <form onSubmit={handleSubmit} id="input-form" noValidate>
-            <SourceCont>
-              <Headings>Source</Headings>
-              <br />
-              <EntryDropdown
+    <>
+      <div onClick={handleCancel}>
+        <form onSubmit={handleSubmit} id="input-form" noValidate>
+          <SourceCont>
+            <label for="selectSource">Source</label>
+            <EntryDropdown
                 objects={sourcesList}
                 entryFor="Source"
                 handleFormValues={(e) => handleFormValues(e)}
                 setAddedSomething={setAddedSomething}
                 addedSomething={addedSomething}
               ></EntryDropdown>
-              <br />
-            </SourceCont>
+          </SourceCont>
 
-            <DateItemWeightCont>
-              <DateCont>
-                <Headings>Date:</Headings>
-                <br />
-                {/* here */}
-                <Inputs
-                  name="created"
-                  type="date"
-                  onChange={(e) => handleFormValues(e)}
-                />
-              </DateCont>
-
+          <DateItemWeightCont>
+            <DateCont>
+              <label for="inputNewDate">Date</label>
+              <input
+                class="dropdown"
+                id="inputNewDate"
+                name="created"
+                type="date"
+                onChange={(e) => handleFormValues(e)}
+              />
+            </DateCont>
+            <ItemWeightCont>
               {entryWeights.map((element, index) => (
-                <div className="form-inline" key={element.id}>
-                  <ItemWeightCont>
-                    <ItemCont>
-                      <Headings>Item</Headings>
-                      <br />
-                      <EntryDropdown
+                <ItemWeightPair key={element.id}>
+                  <ItemCont>
+                    <label for="selectNewItem">Item</label>
+                    <EntryDropdown
                         name="item_id"
                         objects={itemsList}
                         entryFor="Item"
@@ -233,90 +195,64 @@ export default function Form({
                         setAddedSomething={setAddedSomething}
                         addedSomething={addedSomething}
                       ></EntryDropdown>
-                      {/* <Select
-                        name="item_id"
-                        onChange={(e) => {
-                          e.target.value === 'add_item'
-                            ? addItem()
-                            : (element.item_id = Number(e.target.value));
-                        }}
-                      >
-                        <option hidden>Select Item</option>
-                        {items.map((item) => (
-                          <option key={item.item_id} value={item.item_id}>
-                            {item.name}
-                          </option>
-                        ))}
-                        <option value="add_item">Add Item...</option>
-                      </Select> */}
-                    </ItemCont>
+                  </ItemCont>
 
-                    <WeightCont>
-                      <Headings>Weight</Headings>
-                      <br />
-                      <Inputs
+                  <WeightCont>
+                    <label for="inputNewWeight">Weight</label>
+                    <div class="weightInputCont">
+                      <input
+                        class="weightInput"
+                        id="inputNewWeight"
                         type="number"
                         name="weight"
+                        placeholder="0"
+                        min="0"
                         onChange={(e) => {
                           element.weight = Number(e.target.value);
                         }}
                       />
-                    </WeightCont>
-                  </ItemWeightCont>
+                      <span class="weightSuffix">kg</span>
+                    </div>
+                  </WeightCont>
 
                   {!!index && (
-                    <button
-                      type="button"
-                      className="button remove"
+                    <IconButton
                       onClick={() => removeFormFields(element)}
+                      sx={{ width: 2, marginTop: 3, '&:hover': { backgroundColor: 'transparent', transform: 'scale(1.1)' } }}
                     >
-                      -
-                    </button>
+                      <Delete sx={{ '&:hover': { color: '#80cf76' } }} />
+                    </IconButton>
                   )}
-                </div>
+                </ItemWeightPair>
               ))}
-            </DateItemWeightCont>
+            </ItemWeightCont>
+          </DateItemWeightCont>
 
-            <div className="error-messages">
+          <div>
+            <div class="buttonCont">
+              <IconButton onClick={() => addFormFields()}
+              sx={{ '&:hover': { backgroundColor: 'transparent', transform: 'scale(1.1)' } }}
+              >
+                <AddCircleIcon sx={{ '&:hover': { color: '#80cf76' } }} />
+              </IconButton>
+            </div>
+
+            <div class="errorMessages">
               {errorMsgs.map((msg, key) => (
                 <span key={key}>{msg}</span>
               ))}
             </div>
 
-            <div className="button-section">
-              <AddItemButCont>
-                <AddItemButton
-                  className="button add"
-                  type="button"
-                  onClick={() => addFormFields()}
-                >
-                  +
-                </AddItemButton>
-              </AddItemButCont>
-              <br />
-              <br />
-
-              {/* needs onclick to graphs */}
-              {/* <Button 
-            className="button submit" 
-            type="submit"
-            buttoncolor = "#EFEFEF"
-            fontsize = "13px"
-            textcolor="black"
-            textweight="medium"
-            buttontext="Save Entry"
-            buttonwidth = '126px'
-            buttonheight=  '40px'
-            /> */}
-              <ButtonCont>
-                <SaveButton className="button submit" type="submit">
-                  Save Entry
-                </SaveButton>
-              </ButtonCont>
+            <div class="buttonCont">
+              {/* uncommenting StyledLink will disable the form's error messages */}
+              {/* <StyledLink to="/viewData"> */}
+              <button class="submitButton">Save Entry</button>
+              {/* </StyledLink> */}
             </div>
-          </form>
-        </div>
-        {isAddingSource && (
+          </div>
+        </form>
+      </div>
+      {isAddingSource && (
           <AddSourceModal
             setIsAddingSource={setIsAddingSource}
             setAddedSomething={setAddedSomething}
@@ -328,7 +264,6 @@ export default function Form({
             setAddedSomething={setAddedSomething}
           />
         )}
-      </MainCont>
-    )
+    </>)
   );
 }

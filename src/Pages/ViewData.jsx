@@ -1,9 +1,18 @@
-import EntriesList from '../components/Entry/EntriesList';
-import DeleteConfirmation from '../components/Entry/DeleteEntryConfirmation';
-import EditForm from '../components/Entry/EditEntryForm';
 import { useEffect, useState } from 'react';
-import Summary from '../components/Summary/Summary';
 import { dateToYMD } from '../common/date';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import EntriesList from '../components/Entry/EntriesList';
+import EditForm from '../components/Entry/EditEntryForm';
+import DeleteConfirmation from '../components/Entry/DeleteEntryConfirmation';
+// import Summary from '../components/Summary/Summary';
+import Button from '../components/Button';
+
+const StyledLink = styled(Link)`
+  color: none;
+  text-decoration: none;
+  position: relative;
+`;
 
 const ViewDataPage = ({ sources, items }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -32,7 +41,7 @@ const ViewDataPage = ({ sources, items }) => {
   };
 
   const todayObj = new Date(new Date().toString());
-  const todayMinus100 = new Date(new Date().setDate(todayObj.getDate() - 100));
+  const todayMinus100 = new Date(new Date().setDate(todayObj.getDate() - 60));
   //set up dates for date input
   const todayDate = dateToYMD(todayObj);
   const defaultStartDate = dateToYMD(todayMinus100);
@@ -49,34 +58,62 @@ const ViewDataPage = ({ sources, items }) => {
     })();
   }, []);
 
+  const handlePrint = () => {
+    window.print();
+  };
+
   return (
     startDate &&
     endDate && (
       <>
-        <h1>View Data</h1>
-        <EntriesList
-          selectEntry={selectEntry}
-          sources={sources}
-          items={items}
-        ></EntriesList>
-        {isEditing && (
-          <EditForm
-            entry={selectedEntry}
-            setIsEditing={setIsEditing}
-            sources={sources}
-            items={items}
-          />
-        )}
-        {isDeleting && (
-          <DeleteConfirmation
-            entry={selectedEntry}
-            setIsDeleting={setIsDeleting}
-            sources={sources}
-            items={items}
-          />
-        )}
-        <Summary startDate={startDate} endDate={endDate} />
-        {/* <Summary startDate={'2022-01-01'} endDate={'2022-03-10'} /> */}
+        <div class="pageCont">
+          <header>
+            <div class="headingCont">
+              <h1>Your Entries</h1>
+              <h3>Here’s an overview of the performance.</h3>
+            </div>
+            <div class="buttonCont">
+              <StyledLink to="/viewGraph">
+                <Button buttontext="Graph View" buttoncolor="#4A4A4A" />
+              </StyledLink>
+
+              <Button
+                buttontext="Print"
+                buttoncolor="#4A4A4A"
+                onClick={handlePrint}
+              />
+
+              <StyledLink to="/NewEntry">
+                <Button buttontext="New Entry" />
+              </StyledLink>
+            </div>
+          </header>
+          <div class="pageCont">
+            <EntriesList
+              selectEntry={selectEntry}
+              sources={sources}
+              items={items}
+            ></EntriesList>
+            {isEditing && (
+              <EditForm
+                entry={selectedEntry}
+                setIsEditing={setIsEditing}
+                sources={sources}
+                items={items}
+              />
+            )}
+            {isDeleting && (
+              <DeleteConfirmation
+                entry={selectedEntry}
+                setIsDeleting={setIsDeleting}
+                sources={sources}
+                items={items}
+              />
+            )}
+          </div>
+          {/* <Summary startDate={startDate} endDate={endDate} />
+        <Summary startDate={'2022-01-01'} endDate={'2022-03-10'} /> */}
+        </div>
       </>
     )
   );

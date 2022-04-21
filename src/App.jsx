@@ -12,6 +12,9 @@ import ViewItemPage from './Pages/ViewItem';
 import ViewGraphPage from './Pages/ViewGraph';
 import BluetoothPage from './Pages/Bluetooth';
 
+import NavBarLogIn from './components/NavBarLogIn';
+import { NavigateBeforeTwoTone } from '@mui/icons-material';
+
 function App() {
   const [sources, setSources] = useState([]);
   const [items, setItems] = useState([]);
@@ -42,48 +45,51 @@ function App() {
   }, [addedSomething]);
 
   return (
-    user &&
-    sources &&
-    items && (
-      <>
-        {user && (
-          <div className="App">
-            <NavBar user={user} />
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<DashboardPage />}></Route>
-                <Route
-                  path="newEntry"
-                  element={
-                    <NewEntryPage
-                      sources={sources}
-                      items={items}
-                      setAddedSomething={setAddedSomething}
-                      addedSomething={addedSomething}
-                    />
-                  }
-                ></Route>
-                <Route
-                  path="viewData"
-                  element={<ViewDataPage sources={sources} items={items} />}
-                ></Route>
-                <Route
-                  path="viewSource"
-                  element={<ViewSourcePage sources={sources} items={items} />}
-                ></Route>
-                <Route
-                  path="viewItem"
-                  element={<ViewItemPage items={items} />}
-                ></Route>
-                <Route path="viewGraph" element={<ViewGraphPage />}></Route>
-                <Route path="bluetooth" element={<BluetoothPage />}></Route>
-              </Routes>
-            </BrowserRouter>
-          </div>
-        )}
-        {!user && <LoginButton />}
-      </>
-    )
+    <>
+      {user && (
+        <div className="App">
+          <NavBar user={user} />
+          <BrowserRouter>
+            <Routes>
+              {/* <Route path="/" element={<DashboardPage />}></Route> */}
+              <Route
+                path="/"
+                element={<ViewDataPage sources={sources} items={items} />}
+              ></Route>
+              <Route
+                path="newEntry"
+                element={
+                  <NewEntryPage
+                    sources={sources}
+                    items={items}
+                    setAddedSomething={setAddedSomething}
+                    addedSomething={addedSomething}
+                  />
+                }
+              ></Route>
+              <Route
+                path="viewData"
+                element={<ViewDataPage sources={sources} items={items} />}
+              ></Route>
+              <Route
+                path="viewSource"
+                element={<ViewSourcePage sources={sources} items={items} />}
+              ></Route>
+              <Route
+                path="viewItem"
+                element={<ViewItemPage items={items} />}
+              ></Route>
+              <Route
+                path="viewGraph"
+                element={<ViewGraphPage sources={sources} />}
+              ></Route>
+              <Route path="bluetooth" element={<BluetoothPage />}></Route>
+            </Routes>
+          </BrowserRouter>
+        </div>
+      )}
+      {!user && <LoginButton />}
+    </>
   );
 }
 

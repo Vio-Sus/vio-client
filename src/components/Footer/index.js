@@ -1,22 +1,21 @@
-import styled from "styled-components";
-import React from "react";
+import styled from 'styled-components';
+import React from 'react';
 
 const FooterUI = styled.div`
   width: 100%;
   height: 53px;
-  background-color:#C4C4C4;
+  background-color: #c4c4c4;
   display: flex;
   font-family: 'Manrope', sans-serif;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  margin-top: auto;
 `;
 
 const FooterNavigation = styled.div`
   display: flex;
   justify-content: space-between;
   width: 470px;
-  z-index: 1000;
 `;
 
 const LinkUI = styled.div`
@@ -28,24 +27,19 @@ const LinkUI = styled.div`
   color: #000000;
   font-weight: 300;
   &:hover {
-    color:#489CED;
-    ;
+    color: #489ced;
+  }
 `;
 
-
-export default function Footer({
-  onClick = () => {},
-}){
+export default function Footer({ onClick = () => {} }) {
   return (
     <FooterUI>
       <FooterNavigation>
-       <LinkUI onClick={onClick}>About Us</LinkUI>
-       <LinkUI>Contact Us</LinkUI>
-       <LinkUI>How to Sort</LinkUI>
-       <LinkUI>Privacy Policy</LinkUI>
-       </FooterNavigation>
+        <LinkUI onClick={onClick}>About Us</LinkUI>
+        <LinkUI>Contact Us</LinkUI>
+        <LinkUI>How to Sort</LinkUI>
+        <LinkUI>Privacy Policy</LinkUI>
+      </FooterNavigation>
     </FooterUI>
   );
 }
-
-
