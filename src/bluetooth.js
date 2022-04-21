@@ -1,4 +1,4 @@
-export async function connectBT(setWeight) {
+export async function connectBT(setWeight, setIsConnected) {
   try {
     const device = await navigator.bluetooth.requestDevice({
       filters: [{ services: ['bca881ce-42c0-444d-91f4-b31e9acc667c'] }],
@@ -15,6 +15,9 @@ export async function connectBT(setWeight) {
     );
     // console.log(characteristic);
     const notifs = await characteristic.startNotifications();
+
+    setIsConnected(true);
+
     setInterval(() => {
       const value = notifs.value.buffer;
       // console.log(notifs);
@@ -25,15 +28,18 @@ export async function connectBT(setWeight) {
       // console.log(json);
       setWeight(json.pounds);
     }, 200);
+    return true;
   } catch (error) {
     console.error(error);
+    return false;
   }
 }
 
-export async function disconnectBT() {
+export async function disconnectBT(setIsConnected) {
   const device = await navigator.bluetooth.requestDevice({
     filters: [{ services: ['bca881ce-42c0-444d-91f4-b31e9acc667c'] }],
   });
   // console.log(device);
   const disconnect = await device.gatt.disconnect();
+  setIsConnected(false);
 }
