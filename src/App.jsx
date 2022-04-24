@@ -11,6 +11,7 @@ import ViewSourcePage from './Pages/ViewSource';
 import ViewItemPage from './Pages/ViewItem';
 import ViewGraphPage from './Pages/ViewGraph';
 import BluetoothPage from './Pages/Bluetooth';
+import AccountTypePage from './Pages/AccountType';
 
 import NavBarLogIn from './components/NavBarLogIn';
 import { NavigateBeforeTwoTone } from '@mui/icons-material';
@@ -86,6 +87,10 @@ function App() {
               <Route
                 path="bluetooth"
                 element={<BluetoothPage sources={sources} items={items} />}
+              ></Route>
+               <Route
+                path="account-type"
+                element={<AccountTypePage sources={sources} items={items} />}
               ></Route>
             </Routes>
           </BrowserRouter>

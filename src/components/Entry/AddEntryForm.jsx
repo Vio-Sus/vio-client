@@ -80,7 +80,7 @@ export default function Form({
   const [itemsList, setItemsList] = useState([]);
 
   useEffect(() => {
-    console.log('this is the add stuff ', sources);
+    console.log('this is the add stuff', sources);
     setSourcesList(sources);
     setItemsList(items);
   }, [items, sources]);
