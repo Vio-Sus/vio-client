@@ -18,7 +18,7 @@ export default function EditSourceForm({ source, setIsEditing }) {
     setName(source.name);
     setAddress(source.address);
     setPhoneNumber(source.phone_number);
-    setPhoneNumber(source.email);
+    setEmail(source.email);
   }, [source]);
 
   // useEffect(() => {

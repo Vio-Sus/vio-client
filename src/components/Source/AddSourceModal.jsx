@@ -150,11 +150,12 @@ export default function AddSourceModal({
       let res = await postSource(formContent);
       console.log(res);
       form.reset();
-      // window.location.reload();
+      window.location.reload();
     } catch (error) {
       console.log(error);
+     return setMsg(error.message)
     }
-    setAddedSomething(!addedSomething);
+    // setAddedSomething(!addedSomething);
     setName(null);
     setAddress(null);
     setPhoneNumber(null);
