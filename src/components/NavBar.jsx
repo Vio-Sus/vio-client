@@ -69,15 +69,14 @@ const UserUI = styled(User)`
   }
 `;
 
-const NavBar = ({ user }) => {
+const NavBar = ({ user}) => {
+ 
   return (
     <>
+  
       <NavbarUI>
-        <Logo src="./logo.png" style={{ width: 80 }} />
-        <ListUI>
-          {/* <LinkUI>
-            <AnchorUI href="/">Dashboard</AnchorUI>
-          </LinkUI> */}
+        <Logo src="./logo.png" style={{ width: 80 }} />      
+        <ListUI>        
           <LinkUI>
             <AnchorUI href="newEntry">New Entry</AnchorUI>
           </LinkUI>
@@ -92,7 +91,7 @@ const NavBar = ({ user }) => {
           </LinkUI>
           <LinkUI>
             <AnchorUI href="bluetooth">Bluetooth</AnchorUI>
-          </LinkUI>
+          </LinkUI>   
           <LinkUI>
             <AnchorUI href="account-type">Account Type</AnchorUI>
           </LinkUI>
