@@ -131,7 +131,7 @@ export default function AddSourceModal({
     };
     console.log(name.length);
     if (name.length === 0 || address.length === 0 || email.length === 0) {
-      return setMsg('Name and address of source must be filled; Try again');
+      return setMsg('Name, address, and email of source must be filled; Try again');
     }
     if (phoneNumber !== null && phoneNumber !== '') {
       if (ValidatePhone(phoneNumber) === false) {
@@ -141,6 +141,8 @@ export default function AddSourceModal({
     if (ValidateEmail(email) === false) {
       console.log('invalid emial');
       return setMsg('Invalid Email; Try again');
+    } else {
+      
     }
 
     try {

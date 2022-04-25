@@ -50,7 +50,9 @@ export async function postSource(formContent) {
 export async function updateSource(sourceId, formContent) {
   return await axios.put(`/api/sources/${sourceId}`, { data: formContent });
 }
-
+export async function checkSourceEmail(sourceAddress) {
+  const isDuplicate = await axios.get(`api/sources`)
+}
 // totals
 export async function getTotalWeights(startDate, endDate) {
   return (await axios.get(`/api/totals/${startDate}/${endDate}`)).data;
