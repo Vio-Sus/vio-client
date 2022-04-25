@@ -5,10 +5,11 @@ export default function AddSourceForm({ setIsAdding }) {
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
   const [msg, setMsg] = useState('');
   const handleChange = (e) => {
     let inputName = e.target.name;
-    console.log('inputName: ', inputName, 'inputValue: ', e.target.value);
+    //console.log('inputName: ', inputName, 'inputValue: ', e.target.value);
     switch (inputName) {
       case 'name':
         setName(e.target.value);
@@ -19,10 +20,33 @@ export default function AddSourceForm({ setIsAdding }) {
       case 'phoneNumber':
         setPhoneNumber(e.target.value);
         break;
+      case 'email':
+        setEmail(e.target.value);
+        break;
       default:
         return;
     }
   };
+
+  function ValidateEmail(email) {
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      return true;
+    }
+    return false;
+  }
+
+  function ValidatePhone(phoneNumber) {
+    if(phoneNumber.length !== 10) {
+      return false
+    }
+    //Regex for Valid Characters i.e. Alphabets, Numbers and Space.
+    var regex = /^[A-Za-z0-9 ]+$/;
+
+    //Validate TextBox value against the Regex.
+    var isValid = regex.test(phoneNumber);
+
+    return isValid;
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,20 +55,30 @@ export default function AddSourceForm({ setIsAdding }) {
       name,
       address,
       phoneNumber,
+      email,
     };
     console.log(name.length);
-    if (name.length == '' || address.length == '') {
-      setMsg('Name and address of source must be filled; try again');
-    } else {
-      try {
-        console.log('sending form...', formContent);
-        let res = await postSource(formContent);
-        console.log(res);
-        form.reset();
-        // window.location.reload();
-      } catch (error) {
-        console.log(error);
+    if (name.length == 0 || address.length == 0 || email.length == 0) {
+      return setMsg('Name and address of source must be filled; Try again');
+    }
+    if(phoneNumber !== null && phoneNumber !== '') {
+      if(ValidatePhone(phoneNumber) === false) {
+        return setMsg("Invalid phone number; Try again")
       }
+    }
+    if (ValidateEmail(email) === false) {
+      console.log('invalid emial');
+      return setMsg('Invalid Email; Try again');
+    }
+
+    try {
+      console.log('sending form...', formContent);
+      let res = await postSource(formContent);
+      console.log(res);
+      form.reset();
+      // window.location.reload();
+    } catch (error) {
+      console.log(error);
     }
   };
 
