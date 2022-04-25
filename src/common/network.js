@@ -1,8 +1,13 @@
 import axios from 'axios';
 
-export async function getLoggedInUser() {
+export async function getLoggedInUser() { 
   return (await axios.get('/api/profile')).data;
 }
+
+export async function updateAccountType(formContent) { //change the account_type_id
+  return await axios.put(`/api/profile`, { data: formContent });
+}
+
 export async function getSources() {
   return (await axios.get('/api/sources')).data;
 }

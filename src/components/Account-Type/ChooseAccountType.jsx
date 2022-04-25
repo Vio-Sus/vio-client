@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import Entry from './Entry';
-import { useState, useEffect } from 'react';
-import { postEntries } from '../../common/network';
+import { useState } from 'react';
+import { updateAccountType } from '../../common/network';
 
 
 const SourceCont = styled.div`
@@ -42,18 +42,14 @@ export default function Form({
   };
 
   let handleSubmit = async (event) => {
-    event.preventDefault();
-
-    let form = document.getElementById('input-form1');       
+    event.preventDefault();       
     let formContent = {
-
-    account: accountType.map((e) => ({ ...e, ...formValues })),
+    account: formValues
     };
     console.log('~~~~~~~~~~~~~~~~~');
     console.log(formContent);
-    const res = await postEntries(formContent);
-    console.log(res);
-    form.reset();          
+    const res = await updateAccountType(formContent);
+    console.log(res);           
   };
 
   return (
@@ -65,7 +61,7 @@ acctId &&
             <label for="selectSource">Account Type</label>
             <Entry
                 objects={acctId}
-                entryFor="Collector"
+                entryFor="AccountType"
                 handleFormValues={(e) => handleFormValues(e)}
                 setAddedSomething={setAddedSomething}
                 addedSomething={addedSomething}
