@@ -8,6 +8,7 @@ export default function EditSourceForm({ source, setIsEditing }) {
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
 
   useEffect(() => {
     if (!source) {
@@ -17,6 +18,7 @@ export default function EditSourceForm({ source, setIsEditing }) {
     setName(source.name);
     setAddress(source.address);
     setPhoneNumber(source.phone_number);
+    setPhoneNumber(source.email);
   }, [source]);
 
   // useEffect(() => {
@@ -50,6 +52,11 @@ export default function EditSourceForm({ source, setIsEditing }) {
         setPhoneNumber(e.target.value);
         console.log('phoneNumber after', phoneNumber);
         break;
+      case 'email':
+        console.log('email before', email);
+        setEmail(e.target.value);
+        console.log('email after', email);
+        break;
       default:
         return;
     }
@@ -61,6 +68,7 @@ export default function EditSourceForm({ source, setIsEditing }) {
       name,
       address,
       phoneNumber,
+      email,
     };
     try {
       console.log(`sourceid = ${source.sourceId}`);
@@ -117,6 +125,14 @@ export default function EditSourceForm({ source, setIsEditing }) {
                 type="text"
                 name="phoneNumber"
                 value={phoneNumber}
+                onInput={(e) => handleChange(e)}
+              />
+
+              <label>Email</label>
+              <input
+                type="text"
+                name="email"
+                value={email}
                 onInput={(e) => handleChange(e)}
               />
 

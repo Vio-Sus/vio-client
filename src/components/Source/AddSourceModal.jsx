@@ -19,7 +19,7 @@ const PopupWrap = styled.form `
   position: absolute;
   border-radius: 10px;
   width: 40vw;
-  height: 35vh;
+  height: 39vh;
 `;
 
 const Input = styled.input`
@@ -65,6 +65,10 @@ const Heading = styled.text`
     padding: '10px',
   };
 
+const errorStyle = {
+  fontSize: "14px",
+  color: "red"
+}
 
 export default function AddSourceModal({
   setIsAddingSource,
@@ -74,6 +78,7 @@ export default function AddSourceModal({
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
   const [msg, setMsg] = useState('');
   const handleChange = (e) => {
     let inputName = e.target.name;
@@ -88,6 +93,9 @@ export default function AddSourceModal({
       case 'phoneNumber':
         setPhoneNumber(e.target.value);
         break;
+      case 'email':
+        setEmail(e.target.value);
+        break;
       default:
         return;
     }
@@ -100,9 +108,10 @@ export default function AddSourceModal({
       name,
       address,
       phoneNumber,
+      email,
     };
-    console.log(name.length);
-    if (name.length == '' || address.length == '') {
+    console.log("length" + name.length);
+    if (name.length == 0 || address.length == 0 || email.length == 0) {
       setMsg('Name and address of source must be filled; try again');
     } else {
       try {
@@ -118,6 +127,7 @@ export default function AddSourceModal({
       setName(null);
       setAddress(null);
       setPhoneNumber(null);
+      setEmail(null)
       setIsAddingSource(false);
     }
   };
@@ -159,6 +169,16 @@ export default function AddSourceModal({
                 value={phoneNumber}
                 onChange={(e) => handleChange(e)}
               />
+              <br/>
+              <Label>Email</Label>
+              <br/>
+              <Input
+                type="text"
+                name="email"
+                value={email}
+                onChange={(e) => handleChange(e)}
+              />
+              <p style={errorStyle}>{msg}</p>
               <ButtonCont>
                 <Button 
                   onClick={handleSubmit}
