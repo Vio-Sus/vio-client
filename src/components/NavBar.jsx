@@ -1,6 +1,7 @@
 import LogoutButton from './LogoutButton';
 import styled from 'styled-components';
 import PersonIcon from '@mui/icons-material/Person';
+import { useState, useEffect } from 'react';
 
 const NavbarUI = styled.div`
   padding: 0 3%;
@@ -70,39 +71,57 @@ const UserUI = styled(User)`
 `;
 
 const NavBar = ({ user}) => {
- 
+
+  const [userValue, setUserValue] = useState();
+  const newFormValues = localStorage.getItem('newFormValues');
+
+  useEffect(() => { 
+    setUserValue(Object.values(newFormValues)[19]);
+    console.log("USER FROM NAV: " + userValue);
+  }, [userValue, newFormValues])
+  
   return (
-    <>  
+    <>    
       <NavbarUI>
-        <Logo src="./logo.png" style={{ width: 80 }} />      
-        <ListUI>        
-          <LinkUI>
-            <AnchorUI href="newEntry">New Entry</AnchorUI>
-          </LinkUI>
-          <LinkUI>
+      {userValue == 2 && (
+        <><Logo src="./logo.png" style={{ width: 80 }} /><ListUI>
+            <LinkUI>
+              <AnchorUI href="newEntry">New Entry</AnchorUI>
+            </LinkUI>
+            <LinkUI>
+              <AnchorUI href="viewData">Data</AnchorUI>
+            </LinkUI>
+            <LinkUI>
+              <AnchorUI href="viewSource">Sources</AnchorUI>
+            </LinkUI>
+            <LinkUI>
+              <AnchorUI href="viewItem">Items</AnchorUI>
+            </LinkUI>
+            <LinkUI>
+              <AnchorUI href="bluetooth">Bluetooth</AnchorUI>
+            </LinkUI>
+            <LinkUI>
+              <AnchorUI href="account-type">Account Type</AnchorUI>
+            </LinkUI>
+          </ListUI><UserUI>
+              <User>
+                <PersonIcon fontSize="small" />
+                {JSON.stringify(user.user.nickname).replace(/['"]+/g, '')}
+              </User>
+              <LogoutButton />
+            </UserUI></>
+         )}
+          {userValue == 1 && ( 
+          <><Logo src="./logo.png" style={{ width: 80 }} /><ListUI></ListUI><LinkUI>
             <AnchorUI href="viewData">Data</AnchorUI>
-          </LinkUI>
-          <LinkUI>
-            <AnchorUI href="viewSource">Sources</AnchorUI>
-          </LinkUI>
-          <LinkUI>
-            <AnchorUI href="viewItem">Items</AnchorUI>
-          </LinkUI>
-          <LinkUI>
-            <AnchorUI href="bluetooth">Bluetooth</AnchorUI>
-          </LinkUI>   
-          <LinkUI>
-            <AnchorUI href="account-type">Account Type</AnchorUI>
-          </LinkUI>
-        </ListUI>
-        <UserUI>
-          <User>
-            <PersonIcon fontSize="small" />
-            {JSON.stringify(user.user.nickname).replace(/['"]+/g, '')}
-          </User>
-          <LogoutButton />
-        </UserUI>
+          </LinkUI><LinkUI>
+              <AnchorUI href="bluetooth">Bluetooth</AnchorUI>
+          </LinkUI><LinkUI>
+              <AnchorUI href="account-type">Account Type</AnchorUI>
+          </LinkUI></>
+          )}
       </NavbarUI>
+   
     </>
   );
 };

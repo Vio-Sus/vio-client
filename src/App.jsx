@@ -20,6 +20,7 @@ function App() {
   const [user, setUser] = useState(null);
   const [addedSomething, setAddedSomething] = useState(false);
   const [formValue, setFormValue] = useState({});
+  const [accountId, setAccountId] = useState();
   
 
   useEffect(() => {
@@ -39,39 +40,32 @@ function App() {
         const newFormValues = localStorage.getItem('newFormValues');                    
         user.user.account_type_id = parseInt(Object.values(newFormValues)[19]);         
         console.log(user, sources, items);
-            
+        setAccountId(user.user.account_type_id);                 
         setAddedSomething(false);
       } catch {}
     })();
     console.log("app's useEffect was called");
     console.log('addSomething from app', addedSomething);
   }, [addedSomething]);
-
-  console.log("FORM VALUE: " + formValue)
-
+ 
   return (
     <>
-      {user && (
+      {user && (  
         <div className="App">
           <NavBar user={user} />
-          <BrowserRouter>
-            <Routes>
-              {/* <Route path="/" element={<DashboardPage />}></Route> */}
-              <Route
-                path="/"
-                element={<ViewDataPage sources={sources} items={items} />}
-              ></Route>
-              <Route
-                path="newEntry"
-                element={
-                  <NewEntryPage
+          <BrowserRouter>         
+            <Routes>               
+              <><Route
+                  path="/"
+                  element={<ViewDataPage sources={sources} items={items} />}
+                ></Route><Route
+                  path="newEntry"
+                  element={<NewEntryPage
                     sources={sources}
                     items={items}
                     setAddedSomething={setAddedSomething}
-                    addedSomething={addedSomething}
-                  />
-                }
-              ></Route>
+                    addedSomething={addedSomething} />}
+                ></Route></>          
               <Route
                 path="viewData"
                 element={<ViewDataPage sources={sources} items={items} />}
@@ -91,11 +85,11 @@ function App() {
               <Route
                 path="bluetooth"
                 element={<BluetoothPage sources={sources} items={items} />}
-              ></Route>
+              ></Route>                       
                <Route
                 path="account-type"
                 element={<AccountTypePage handleSubmit={formValue => setFormValue(formValue)} handlefo/>}
-              ></Route>
+              ></Route>                          
             </Routes>
           </BrowserRouter>
         </div>
