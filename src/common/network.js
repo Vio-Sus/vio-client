@@ -53,25 +53,26 @@ export async function postSource(formContent) {
     console.log('err in network' + err);
   }
 }
+
 export async function updateSource(sourceId, formContent) {
   return await axios.put(`/api/sources/${sourceId}`, { data: formContent });
 }
-
+// check for duplicates
 export async function checkSourceEmail(email) {
   try {
     const data = await axios.post('/api/sources/check-email', { email });
     return data;
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
 }
-
+// check for duplicates
 export async function checkSourcePhone(phoneNumber) {
   try {
     const data = await axios.post('/api/sources/check-phone', { phoneNumber });
     return data;
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
 }
 
