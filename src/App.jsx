@@ -13,22 +13,20 @@ import ViewGraphPage from './Pages/ViewGraph';
 import BluetoothPage from './Pages/Bluetooth';
 import AccountTypePage from './Pages/AccountType';
 
-import NavBarLogIn from './components/NavBarLogIn';
-import { NavigateBeforeTwoTone } from '@mui/icons-material';
 
 function App() {
   const [sources, setSources] = useState([]);
   const [items, setItems] = useState([]);
   const [user, setUser] = useState(null);
   const [addedSomething, setAddedSomething] = useState(false);
-  //
-  // let addedSomething = false;
+  const [formValue, setFormValue] = useState();
+  
 
   useEffect(() => {
-    (async () => {
+    (async () => {     
       try {
         let [user, sources, items] = await Promise.all([
-          getLoggedInUser(),
+          getLoggedInUser(),         
           getSources(),
           getItems(),
         ]); // returns new promise with all data
@@ -36,14 +34,17 @@ function App() {
           setUser(user);
           setSources(sources);
           setItems(items);
-        }
+        }        
         console.log(user, sources, items);
+        user.user.account_type_id = formValue;        
         setAddedSomething(false);
       } catch {}
     })();
     console.log("app's useEffect was called");
     console.log('addSomething from app', addedSomething);
   }, [addedSomething]);
+
+  console.log("FORM VALUE: " + formValue)
 
   return (
     <>
@@ -90,7 +91,7 @@ function App() {
               ></Route>
                <Route
                 path="account-type"
-                element={<AccountTypePage sources={sources} items={items} />}
+                element={<AccountTypePage  getValue={formValue => setFormValue(formValue)} handlefo/>}
               ></Route>
             </Routes>
           </BrowserRouter>

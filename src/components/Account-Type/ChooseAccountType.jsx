@@ -27,7 +27,9 @@ const newAccountType = () => ({
 export default function Form({    
   setAddedSomething,
   addedSomething,
+  props,
 }) {
+
   const [accountType, setAccountType] = useState([newAccountType()]);
   const [formValues, setFormValues] = useState({});
   const [acctId, setacctId] = useState([]);
@@ -39,6 +41,7 @@ export default function Form({
     newFormValues[e.target.name] = Number(e.target.value);    
     console.log('Handling form changes', newFormValues);    
     setFormValues(newFormValues);
+
   };
 
   let handleSubmit = async (event) => {
@@ -69,7 +72,7 @@ acctId &&
           </SourceCont>      
           <div>                     
             <div class="buttonCont">           
-              <button class="submitButton">Save Account</button>            
+              <button class="submitButton" onClick={() => props.getValue(formValues)}>Save Account</button>            
             </div>
           </div>
         </StyledForm>         

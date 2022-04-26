@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 export default function Entry({
     objects,  
     handleFormValues,
-    addedSomething,
+    addedSomething,  
 }) {
   const Select = styled.select`
     width: 152px;
@@ -34,8 +34,7 @@ export default function Entry({
   const [dropdownObjects, setDropdownObjects] = useState(objects);
  
   useEffect(() => {
-    setDropdownObjects(dropdownObjects);
-    console.log(dropdownObjects)
+    setDropdownObjects(dropdownObjects);    
   }, [dropdownObjects, objects, addedSomething]);
 
   return (
