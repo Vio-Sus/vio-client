@@ -19,7 +19,7 @@ function App() {
   const [items, setItems] = useState([]);
   const [user, setUser] = useState(null);
   const [addedSomething, setAddedSomething] = useState(false);
-  const [formValue, setFormValue] = useState();
+  const [formValue, setFormValue] = useState({});
   
 
   useEffect(() => {
@@ -34,9 +34,12 @@ function App() {
           setUser(user);
           setSources(sources);
           setItems(items);
-        }        
+        }
+        //Get the account_type_id from local storage, format it and put it into user object       
+        const newFormValues = localStorage.getItem('newFormValues');                    
+        user.user.account_type_id = parseInt(Object.values(newFormValues)[19]);         
         console.log(user, sources, items);
-        user.user.account_type_id = formValue;        
+            
         setAddedSomething(false);
       } catch {}
     })();
@@ -91,7 +94,7 @@ function App() {
               ></Route>
                <Route
                 path="account-type"
-                element={<AccountTypePage  getValue={formValue => setFormValue(formValue)} handlefo/>}
+                element={<AccountTypePage handleSubmit={formValue => setFormValue(formValue)} handlefo/>}
               ></Route>
             </Routes>
           </BrowserRouter>
