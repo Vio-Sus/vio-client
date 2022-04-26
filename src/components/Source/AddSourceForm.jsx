@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { postSource } from '../../common/network';
+import { ValidatePhone, ValidateEmail } from '../../common/validation';
 
 export default function AddSourceForm({ setIsAdding }) {
   const [name, setName] = useState('');
@@ -27,26 +28,6 @@ export default function AddSourceForm({ setIsAdding }) {
         return;
     }
   };
-
-  function ValidateEmail(email) {
-    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-      return true;
-    }
-    return false;
-  }
-
-  function ValidatePhone(phoneNumber) {
-    if(phoneNumber.length !== 10) {
-      return false
-    }
-    //Regex for Valid Characters i.e. Alphabets, Numbers and Space.
-    var regex = /^[A-Za-z0-9 ]+$/;
-
-    //Validate TextBox value against the Regex.
-    var isValid = regex.test(phoneNumber);
-
-    return isValid;
-  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();

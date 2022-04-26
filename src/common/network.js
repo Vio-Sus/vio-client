@@ -1,10 +1,11 @@
 import axios from 'axios';
 
-export async function getLoggedInUser() { 
+export async function getLoggedInUser() {
   return (await axios.get('/api/profile')).data;
 }
 
-export async function updateAccountType(formContent) { //change the account_type_id
+export async function updateAccountType(formContent) {
+  //change the account_type_id
   return await axios.put(`/api/profile`, { data: formContent });
 }
 
@@ -45,14 +46,35 @@ export async function deleteEntry(entryId) {
 
 // sources
 export async function postSource(formContent) {
-  return (await axios.post('/api/sources', { data: formContent })).data;
+  try {
+    const res = await axios.post('/api/sources', { data: formContent });
+    console.log('res in network' + res);
+  } catch (err) {
+    console.log('err in network' + err);
+  }
 }
 export async function updateSource(sourceId, formContent) {
   return await axios.put(`/api/sources/${sourceId}`, { data: formContent });
 }
-export async function checkSourceEmail(sourceAddress) {
-  const isDuplicate = await axios.get(`api/sources`)
+
+export async function checkSourceEmail(email) {
+  try {
+    const data = await axios.post('/api/sources/check-email', { email });
+    return data;
+  } catch (err) {
+    console.log(err)
+  }
 }
+
+export async function checkSourcePhone(phoneNumber) {
+  try {
+    const data = await axios.post('/api/sources/check-phone', { phoneNumber });
+    return data;
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 // totals
 export async function getTotalWeights(startDate, endDate) {
   return (await axios.get(`/api/totals/${startDate}/${endDate}`)).data;

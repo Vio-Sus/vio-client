@@ -1,8 +1,13 @@
 import { useState } from 'react';
-import { postSource } from '../../common/network';
+import {
+  postSource,
+  checkSourceEmail,
+  checkSourcePhone,
+} from '../../common/network';
 import styled from 'styled-components';
 //import CancelIcon from '@mui/icons-material/Cancel';
 import Button from '../Button';
+import { ValidatePhone, ValidateEmail } from '../../common/validation';
 
 const Label = styled.label`
   font-size: 14px;
@@ -102,24 +107,6 @@ export default function AddSourceModal({
     }
   };
 
-  function ValidateEmail(email) {
-    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-      return true;
-    }
-    return false;
-  }
-
-  function ValidatePhone(phoneNumber) {
-    if (phoneNumber.length !== 10) {
-      return false;
-    }
-    //only allow numbers
-    var regex = /^[0-9 ]+$/;
-    var isValid = regex.test(phoneNumber);
-
-    return isValid;
-  }
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     let form = document.getElementById('new-source-form');
@@ -129,31 +116,45 @@ export default function AddSourceModal({
       phoneNumber,
       email,
     };
-    console.log(name.length);
+    //console.log(name.length);
     if (name.length === 0 || address.length === 0 || email.length === 0) {
-      return setMsg('Name, address, and email of source must be filled; Try again');
+      return setMsg(
+        'Name, address, and email of source must be filled; Try again'
+      );
     }
     if (phoneNumber !== null && phoneNumber !== '') {
       if (ValidatePhone(phoneNumber) === false) {
         return setMsg('Invalid phone number; Try again');
+      } else if (ValidatePhone(phoneNumber) === true) {
+        const res = await checkSourcePhone(phoneNumber);
+        if (parseInt(res.data.count) > 0) {
+          return setMsg(
+            'This phone number is in use. Check to see if the source is already added.'
+          );
+        }
       }
     }
     if (ValidateEmail(email) === false) {
       console.log('invalid emial');
       return setMsg('Invalid Email; Try again');
-    } else {
-      
+    } else if (ValidateEmail(email) === true) {
+      const res = await checkSourceEmail(email);
+      if (parseInt(res.data.count) > 0) {
+        return setMsg(
+          'This email is in use. Check to see if the source is already added.'
+        );
+      }
     }
 
     try {
       console.log('sending form...', formContent);
       let res = await postSource(formContent);
-      console.log(res);
+      console.log('res' + res);
       form.reset();
-      window.location.reload();
+      //window.location.reload();
     } catch (error) {
       console.log(error);
-     return setMsg(error.message)
+      return setMsg(error.message);
     }
     // setAddedSomething(!addedSomething);
     setName(null);
