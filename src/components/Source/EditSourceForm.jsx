@@ -68,9 +68,9 @@ export default function EditSourceForm({ source, setIsEditing }) {
         //console.log('phoneNumber after', phoneNumber);
         break;
       case 'email':
-        //console.log('email before', email);
+        console.log('email before', email);
         setEmail(e.target.value);
-        //console.log('email after', email);
+        console.log('email after', email);
         break;
       default:
         return;
@@ -135,6 +135,10 @@ export default function EditSourceForm({ source, setIsEditing }) {
   };
 
   const handleCancel = () => {
+    setName(null);
+    setAddress(null);
+    setPhoneNumber(null);
+    setEmail(null);
     setIsEditing(false);
   };
 

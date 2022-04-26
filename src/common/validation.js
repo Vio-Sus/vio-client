@@ -39,12 +39,9 @@ export function ValidateEmail(email) {
 }
 
 export function ValidatePhone(phoneNumber) {
-  if (phoneNumber.length !== 10) {
+  const onlyNumbers = phoneNumber.replace(/\D/g, '');
+  if(onlyNumbers.length !== 10) {
     return false;
   }
-  //only allow numbers
-  var regex = /^[0-9 ]+$/;
-  var isValid = regex.test(phoneNumber);
-
-  return isValid;
+  return true;
 }

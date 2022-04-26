@@ -40,11 +40,13 @@ export default function AddSourceForm({ setIsAdding }) {
     };
     console.log(name.length);
     if (name.length == 0 || address.length == 0 || email.length == 0) {
-      return setMsg('Name, address, and email of source must be filled; Try again');
+      return setMsg(
+        'Name, address, and email of source must be filled; Try again'
+      );
     }
-    if(phoneNumber !== null && phoneNumber !== '') {
-      if(ValidatePhone(phoneNumber) === false) {
-        return setMsg("Invalid phone number; Try again")
+    if (phoneNumber !== null && phoneNumber !== '') {
+      if (ValidatePhone(phoneNumber) === false) {
+        return setMsg('Invalid phone number; Try again');
       }
     }
     if (ValidateEmail(email) === false) {
@@ -64,6 +66,10 @@ export default function AddSourceForm({ setIsAdding }) {
   };
 
   const handleCancel = () => {
+    setName(null);
+    setAddress(null);
+    setPhoneNumber(null);
+    setEmail(null);
     setIsAdding(false);
   };
 

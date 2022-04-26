@@ -139,6 +139,7 @@ export default function AddSourceModal({
       return setMsg('Invalid Email; Try again');
     } else if (ValidateEmail(email) === true) {
       const res = await checkSourceEmail(email);
+      console.log(res)
       if (parseInt(res.data.count) > 0) {
         return setMsg(
           'This email is in use. Check to see if the source is already added.'
@@ -165,6 +166,10 @@ export default function AddSourceModal({
   };
 
   const handleCancel = () => {
+    setName(null);
+    setAddress(null);
+    setPhoneNumber(null);
+    setEmail(null);
     setIsAddingSource(false);
   };
 
