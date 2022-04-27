@@ -1,14 +1,16 @@
 import { useState } from 'react';
 import { postSource } from '../../common/network';
+import { ValidatePhone, ValidateEmail } from '../../common/validation';
 
 export default function AddSourceForm({ setIsAdding }) {
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
   const [msg, setMsg] = useState('');
   const handleChange = (e) => {
     let inputName = e.target.name;
-    console.log('inputName: ', inputName, 'inputValue: ', e.target.value);
+    //console.log('inputName: ', inputName, 'inputValue: ', e.target.value);
     switch (inputName) {
       case 'name':
         setName(e.target.value);
@@ -18,6 +20,9 @@ export default function AddSourceForm({ setIsAdding }) {
         break;
       case 'phoneNumber':
         setPhoneNumber(e.target.value);
+        break;
+      case 'email':
+        setEmail(e.target.value);
         break;
       default:
         return;
@@ -31,24 +36,40 @@ export default function AddSourceForm({ setIsAdding }) {
       name,
       address,
       phoneNumber,
+      email,
     };
     console.log(name.length);
-    if (name.length == '' || address.length == '') {
-      setMsg('Name and address of source must be filled; try again');
-    } else {
-      try {
-        console.log('sending form...', formContent);
-        let res = await postSource(formContent);
-        console.log(res);
-        form.reset();
-        // window.location.reload();
-      } catch (error) {
-        console.log(error);
+    if (name.length == 0 || address.length == 0 || email.length == 0) {
+      return setMsg(
+        'Name, address, and email of source must be filled; Try again'
+      );
+    }
+    if (phoneNumber !== null && phoneNumber !== '') {
+      if (ValidatePhone(phoneNumber) === false) {
+        return setMsg('Invalid phone number; Try again');
       }
+    }
+    if (ValidateEmail(email) === false) {
+      console.log('invalid emial');
+      return setMsg('Invalid Email; Try again');
+    }
+
+    try {
+      console.log('sending form...', formContent);
+      let res = await postSource(formContent);
+      console.log(res);
+      form.reset();
+      // window.location.reload();
+    } catch (error) {
+      console.log(error);
     }
   };
 
   const handleCancel = () => {
+    setName(null);
+    setAddress(null);
+    setPhoneNumber(null);
+    setEmail(null);
     setIsAdding(false);
   };
 

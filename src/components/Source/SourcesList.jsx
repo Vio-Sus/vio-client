@@ -28,7 +28,8 @@ export default function SourceList({ selectSource }) {
           <tr>
             <th> SOURCE </th>
             <th> ADDRESS </th>
-            <th> PHONE NUMBER</th>
+            <th> PHONE NUMBER </th>
+            <th> EMAIL </th>
             <th></th>
           </tr>
         </thead>
@@ -38,6 +39,7 @@ export default function SourceList({ selectSource }) {
               <td> {source.name} </td>
               <td> {source.address} </td>
               <td> {source.phone_number} </td>
+              <td> {source.email} </td>
               <td>
                 <IconButton onClick={() => selectSource(source)}>
                   <EditIcon sx={{ color: '#606f89' }}></EditIcon>

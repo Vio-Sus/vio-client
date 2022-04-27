@@ -116,7 +116,7 @@ export default function Form({
 
   let removeFormFields = (element) => {
     let newEntryWeights = entryWeights.filter(
-      (weight) => weight.id != element.id
+      (weight) => weight.id !== element.id
     );
     setEntryWeights(newEntryWeights);
   };

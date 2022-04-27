@@ -1,25 +1,30 @@
 import { useState } from 'react';
-import { postSource } from '../../common/network';
+import {
+  postSource,
+  checkSourceEmail,
+  checkSourcePhone,
+} from '../../common/network';
 import styled from 'styled-components';
-import CancelIcon from '@mui/icons-material/Cancel';
+//import CancelIcon from '@mui/icons-material/Cancel';
 import Button from '../Button';
+import { ValidatePhone, ValidateEmail } from '../../common/validation';
 
 const Label = styled.label`
-  font-size:14px;
+  font-size: 14px;
 `;
 
-const PopupWrap = styled.form `
-  display:flex;
+const PopupWrap = styled.form`
+  display: flex;
   flex-direction: column;
-  justify-content:center;
-  align-items:center;
-  background-color: #F9F9F9;
+  justify-content: center;
+  align-items: center;
+  background-color: #f9f9f9;
   box-shadow: 0px 2px 4px 0px #7474741a;
   border: solid grey 2px;
   position: absolute;
   border-radius: 10px;
   width: 40vw;
-  height: 35vh;
+  height: 39vh;
 `;
 
 const Input = styled.input`
@@ -46,25 +51,29 @@ const ButtonCont = styled.div`
 `;
 
 const Heading = styled.text`
-  font-size:25px;
-  font-weight:400;
-  color:black;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  font-size: 25px;
+  font-weight: 400;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
-  const modalHeader = {
-    padding: '10px',
-  };
+const modalHeader = {
+  padding: '10px',
+};
 
-  const modalBody = {
-    display:'flex',
-    alignItems:'center',
-    justifyContent:'center',
-    padding: '10px',
-  };
+const modalBody = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: '10px',
+};
 
+const errorStyle = {
+  fontSize: '14px',
+  color: 'red',
+};
 
 export default function AddSourceModal({
   setIsAddingSource,
@@ -74,10 +83,12 @@ export default function AddSourceModal({
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
   const [msg, setMsg] = useState('');
+
   const handleChange = (e) => {
     let inputName = e.target.name;
-    console.log('inputName: ', inputName, 'inputValue: ', e.target.value);
+    //console.log('inputName: ', inputName, 'inputValue: ', e.target.value);
     switch (inputName) {
       case 'name':
         setName(e.target.value);
@@ -87,6 +98,9 @@ export default function AddSourceModal({
         break;
       case 'phoneNumber':
         setPhoneNumber(e.target.value);
+        break;
+      case 'email':
+        setEmail(e.target.value);
         break;
       default:
         return;
@@ -100,29 +114,62 @@ export default function AddSourceModal({
       name,
       address,
       phoneNumber,
+      email,
     };
-    console.log(name.length);
-    if (name.length == '' || address.length == '') {
-      setMsg('Name and address of source must be filled; try again');
-    } else {
-      try {
-        console.log('sending form...', formContent);
-        let res = await postSource(formContent);
-        console.log(res);
-        form.reset();
-        // window.location.reload();
-      } catch (error) {
-        console.log(error);
-      }
-      setAddedSomething(!addedSomething);
-      setName(null);
-      setAddress(null);
-      setPhoneNumber(null);
-      setIsAddingSource(false);
+    //console.log(name.length);
+    if (name.length === 0 || address.length === 0 || email.length === 0) {
+      return setMsg(
+        'Name, address, and email of source must be filled; Try again'
+      );
     }
+    if (phoneNumber !== null && phoneNumber !== '') {
+      if (ValidatePhone(phoneNumber) === false) {
+        return setMsg('Invalid phone number; Try again');
+      } else if (ValidatePhone(phoneNumber) === true) {
+        const res = await checkSourcePhone(phoneNumber);
+        if (parseInt(res.data.count) > 0) {
+          return setMsg(
+            'This phone number is in use. Check to see if the source is already added.'
+          );
+        }
+      }
+    }
+    if (ValidateEmail(email) === false) {
+      console.log('invalid emial');
+      return setMsg('Invalid Email; Try again');
+    } else if (ValidateEmail(email) === true) {
+      const res = await checkSourceEmail(email);
+      console.log(res)
+      if (parseInt(res.data.count) > 0) {
+        return setMsg(
+          'This email is in use. Check to see if the source is already added.'
+        );
+      }
+    }
+
+    try {
+      console.log('sending form...', formContent);
+      let res = await postSource(formContent);
+      console.log('res' + res);
+      form.reset();
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+      return setMsg(error.message);
+    }
+    // setAddedSomething(!addedSomething);
+    setName(null);
+    setAddress(null);
+    setPhoneNumber(null);
+    setEmail(null);
+    setIsAddingSource(false);
   };
 
   const handleCancel = () => {
+    setName(null);
+    setAddress(null);
+    setPhoneNumber(null);
+    setEmail(null);
     setIsAddingSource(false);
   };
 
@@ -131,61 +178,71 @@ export default function AddSourceModal({
       <div className="modalHeader" style={modalHeader}>
         <Heading>Add a New Source</Heading>
       </div>
-        <div className="modalBody" style={modalBody}>
-          <form onSubmit={handleSubmit} id="new-source-form" >
-              <Label>Name</Label>
-                <br/>
-              <Input
-                name="name"
-                type="text"
-                value={name}
-                onChange={(e) => handleChange(e)}
-              />
-                <br/>
-              <Label>Address</Label>
-                <br/>
-              <Input
-                name="address"
-                type="text"
-                value={address}
-                onChange={(e) => handleChange(e)}
-              />
-                <br/>
-              <Label>Phone Number</Label>
-                <br/>
-              <Input
-                type="text"
-                name="phoneNumber"
-                value={phoneNumber}
-                onChange={(e) => handleChange(e)}
-              />
-              <ButtonCont>
-                <Button 
-                  onClick={handleSubmit}
-                  buttonwidth="150px"
-                  buttonheight="30px"
-                  buttoncolor='#80CF76'
-                  textcolor='white'
-                  buttontext="Add"
-                  fontsize="14px"
-                  textweight='450'
-                  borderweight='solid #80CF76 1px'
-                />
-                <Button 
-                  onClick={handleCancel}
-                  buttonwidth="150px"
-                  buttonheight="30px"
-                  buttontext="Cancel"
-                  fontsize="14px"
-                  textweight='500'
-                  textcolor='#80CF76'
-                  buttoncolor='white'
-                  borderweight='solid lightgrey 1px'
-                />
-              </ButtonCont>
-             <br/>
-          </form>
-        </div>
+      <div className="modalBody" style={modalBody}>
+        <form onSubmit={handleSubmit} id="new-source-form">
+          <Label>Name</Label>
+          <br />
+          <Input
+            name="name"
+            type="text"
+            value={name}
+            onChange={(e) => handleChange(e)}
+          />
+          <br />
+          <Label>Address</Label>
+          <br />
+          <Input
+            name="address"
+            type="text"
+            value={address}
+            onChange={(e) => handleChange(e)}
+          />
+          <br />
+          <Label>Phone Number</Label>
+          <br />
+          <Input
+            type="text"
+            name="phoneNumber"
+            value={phoneNumber}
+            onChange={(e) => handleChange(e)}
+          />
+          <br />
+          <Label>Email</Label>
+          <br />
+          <Input
+            type="text"
+            name="email"
+            value={email}
+            onChange={(e) => handleChange(e)}
+          />
+          <p style={errorStyle}>{msg}</p>
+          <ButtonCont>
+            <Button
+              onClick={handleSubmit}
+              buttonwidth="150px"
+              buttonheight="30px"
+              buttoncolor="#80CF76"
+              textcolor="white"
+              buttontext="Add"
+              fontsize="14px"
+              textweight="450"
+              borderweight="solid #80CF76 1px"
+            />
+            <Button
+              onClick={handleCancel}
+              buttonwidth="150px"
+              buttonheight="30px"
+              buttontext="Cancel"
+              fontsize="14px"
+              textweight="500"
+              textcolor="#80CF76"
+              buttoncolor="white"
+              borderweight="solid lightgrey 1px"
+            />
+          </ButtonCont>
+          <br />
+        </form>
+      </div>
     </PopupWrap>
   );
 }
