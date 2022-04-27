@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import {
   postSource,
-  checkSourceEmail,
   checkSourcePhone,
 } from '../../common/network';
 import styled from 'styled-components';
@@ -125,7 +124,8 @@ export default function AddSourceModal({
     if (phoneNumber !== null && phoneNumber !== '') {
       if (ValidatePhone(phoneNumber) === false) {
         return setMsg('Invalid phone number; Try again');
-      } else if (ValidatePhone(phoneNumber) === true) {
+      } 
+      else if (ValidatePhone(phoneNumber) === true) {
         const res = await checkSourcePhone(phoneNumber);
         if (parseInt(res.data.count) > 0) {
           return setMsg(
@@ -137,20 +137,23 @@ export default function AddSourceModal({
     if (ValidateEmail(email) === false) {
       console.log('invalid emial');
       return setMsg('Invalid Email; Try again');
-    } else if (ValidateEmail(email) === true) {
-      const res = await checkSourceEmail(email);
-      console.log(res)
-      if (parseInt(res.data.count) > 0) {
-        return setMsg(
-          'This email is in use. Check to see if the source is already added.'
-        );
-      }
-    }
+    } 
+    // else if (ValidateEmail(email) === true) {
+    //   const res = await checkSourceEmail(email);
+    //   console.log(res)
+    //   if (parseInt(res.data.count) > 0) {
+    //     return setMsg(
+    //       'This email is in use. Check to see if the source is already added.'
+    //     );
+    //   }
+    // }
 
     try {
       console.log('sending form...', formContent);
       let res = await postSource(formContent);
-      console.log('res' + res);
+      if(res.data.error) {
+        return setMsg(res.data.error);
+      }
       form.reset();
       window.location.reload();
     } catch (error) {

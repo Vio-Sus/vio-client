@@ -48,9 +48,9 @@ export async function deleteEntry(entryId) {
 export async function postSource(formContent) {
   try {
     const res = await axios.post('/api/sources', { data: formContent });
-    console.log('res in network' + res);
+    return res;
   } catch (err) {
-    console.log('err in network' + err);
+    console.log('err: ' + err);
   }
 }
 

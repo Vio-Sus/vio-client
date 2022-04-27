@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { postSource } from '../../common/network';
+import { postSource, checkSourcePhone, } from '../../common/network';
 import { ValidatePhone, ValidateEmail } from '../../common/validation';
 
 export default function AddSourceForm({ setIsAdding }) {
@@ -47,17 +47,27 @@ export default function AddSourceForm({ setIsAdding }) {
     if (phoneNumber !== null && phoneNumber !== '') {
       if (ValidatePhone(phoneNumber) === false) {
         return setMsg('Invalid phone number; Try again');
+      } 
+      else if (ValidatePhone(phoneNumber) === true) {
+        const res = await checkSourcePhone(phoneNumber);
+        if (parseInt(res.data.count) > 0) {
+          return setMsg(
+            'This phone number is in use. Check to see if the source is already added.'
+          );
+        }
       }
     }
     if (ValidateEmail(email) === false) {
       console.log('invalid emial');
       return setMsg('Invalid Email; Try again');
-    }
+    } 
 
     try {
       console.log('sending form...', formContent);
       let res = await postSource(formContent);
-      console.log(res);
+      if(res.data.error) {
+        return setMsg(res.data.error);
+      }
       form.reset();
       // window.location.reload();
     } catch (error) {

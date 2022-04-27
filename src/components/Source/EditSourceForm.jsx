@@ -15,8 +15,8 @@ export default function EditSourceForm({ source, setIsEditing }) {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
   const [msg, setMsg] = useState('');
-  const [oldEmail, setOldEmail] = useState('')
-  const [oldPhoneNumber, setOldPhoneNumber] = useState('')
+  const [oldEmail, setOldEmail] = useState('');
+  const [oldPhoneNumber, setOldPhoneNumber] = useState('');
   const [sourceId, setSourceId] = useState(null);
 
   useEffect(() => {
@@ -125,7 +125,7 @@ export default function EditSourceForm({ source, setIsEditing }) {
     }
 
     try {
-      console.log("source id " + sourceId);
+      console.log('source id ' + sourceId);
       await updateSource(sourceId, formContent);
       setIsEditing(false);
     } catch (error) {
