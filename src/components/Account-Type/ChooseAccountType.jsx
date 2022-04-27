@@ -51,8 +51,9 @@ export default function Form({
     };
     console.log('~~~~~~~~~~~~~~~~~');
     console.log(formContent);
-    const res = await updateAccountType(formContent);
-    console.log(res);           
+    const res = await updateAccountType(formContent);   
+    console.log(res);
+    window.location.reload(false);
   };
 
   return (

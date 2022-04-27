@@ -12,6 +12,7 @@ import ViewItemPage from './Pages/ViewItem';
 import ViewGraphPage from './Pages/ViewGraph';
 import BluetoothPage from './Pages/Bluetooth';
 import AccountTypePage from './Pages/AccountType';
+import ViewSourceDataPage from './Pages/ViewSourceData';
 
 
 function App() {
@@ -89,7 +90,11 @@ function App() {
                <Route
                 path="account-type"
                 element={<AccountTypePage handleSubmit={formValue => setFormValue(formValue)} handlefo/>}
-              ></Route>                          
+              ></Route>
+               <Route
+                path="viewSourceData"
+                element={<ViewSourceDataPage sources={sources} items={items} />}
+              ></Route>                        
             </Routes>
           </BrowserRouter>
         </div>

@@ -76,8 +76,12 @@ const NavBar = ({ user}) => {
   const newFormValues = localStorage.getItem('newFormValues');
 
   useEffect(() => { 
+    if(newFormValues == null) {
+      setUserValue(2)
+    } else {
     setUserValue(Object.values(newFormValues)[19]);
     console.log("USER FROM NAV: " + userValue);
+    }
   }, [userValue, newFormValues])
   
   return (
@@ -112,13 +116,22 @@ const NavBar = ({ user}) => {
             </UserUI></>
          )}
           {userValue == 1 && ( 
-          <><Logo src="./logo.png" style={{ width: 80 }} /><ListUI></ListUI><LinkUI>
-            <AnchorUI href="viewData">Data</AnchorUI>
+          <><Logo src="./logo.png" style={{ width: 80 }} /><ListUI>
+          <LinkUI>
+            <AnchorUI href="viewSourceData">Source Data</AnchorUI>
           </LinkUI><LinkUI>
               <AnchorUI href="bluetooth">Bluetooth</AnchorUI>
           </LinkUI><LinkUI>
               <AnchorUI href="account-type">Account Type</AnchorUI>
-          </LinkUI></>
+          </LinkUI>
+          </ListUI>
+          <UserUI>
+              <User>
+                <PersonIcon fontSize="small" />
+                {JSON.stringify(user.user.nickname).replace(/['"]+/g, '')}
+              </User>
+              <LogoutButton />
+            </UserUI></>
           )}
       </NavbarUI>
    
