@@ -85,6 +85,9 @@ const NavBar = ({ user }) => {
             <AnchorUI href="viewData">Data</AnchorUI>
           </LinkUI>
           <LinkUI>
+            <AnchorUI href="viewSourceData">Source Data</AnchorUI>
+          </LinkUI>
+          <LinkUI>
             <AnchorUI href="viewSource">Sources</AnchorUI>
           </LinkUI>
           <LinkUI>
