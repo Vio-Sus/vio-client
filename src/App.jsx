@@ -58,7 +58,7 @@ function App() {
             <Routes>               
               <><Route
                   path="/"
-                  element={<ViewDataPage sources={sources} items={items} />}
+                  element={<AccountTypePage handleSubmit={formValue => setFormValue(formValue)} handlefo/>}
                 ></Route><Route
                   path="newEntry"
                   element={<NewEntryPage
