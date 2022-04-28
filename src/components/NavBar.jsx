@@ -7,7 +7,7 @@ const NavbarUI = styled.div`
   padding: 0 3%;
   height: 80px;
   background-color: #e1eedd;
-  display: flex;
+  display: flex; 
   align-items: center;
   @media screen and (max-width: 600px) {
     flex-direction: column;
@@ -22,6 +22,11 @@ const Logo = styled.img`
   @media screen and (max-width: 600px) {
     margin: auto;
   }
+`;
+
+const AccountType = styled.p`
+  font-weight: 500;
+  margin-right: auto;  
 `;
 
 const ListUI = styled.ul`
@@ -77,7 +82,7 @@ const NavBar = ({ user}) => {
 
   useEffect(() => { 
     if(newFormValues == null) {
-      setUserValue(2)
+      setUserValue(1)
     } else {
     setUserValue(Object.values(newFormValues)[19]);
     console.log("USER FROM NAV: " + userValue);
@@ -87,8 +92,10 @@ const NavBar = ({ user}) => {
   return (
     <>    
       <NavbarUI>
-      {userValue == 2 && (
-        <><Logo src="./logo.png" style={{ width: 80 }} /><ListUI>
+      {userValue == 1 && (
+        <><Logo src="./logo.png" style={{ width: 80 }} />
+          <AccountType>Source Account</AccountType>  
+          <ListUI>
             <LinkUI>
               <AnchorUI href="newEntry">New Entry</AnchorUI>
             </LinkUI>
@@ -115,8 +122,10 @@ const NavBar = ({ user}) => {
               <LogoutButton />
             </UserUI></>
          )}
-          {userValue == 1 && ( 
-          <><Logo src="./logo.png" style={{ width: 80 }} /><ListUI>
+          {userValue == 2 && ( 
+          <><Logo src="./logo.png" style={{ width: 80 }} />
+          <AccountType>Collector Account</AccountType> 
+          <ListUI>
           <LinkUI>
             <AnchorUI href="viewSourceData">Source Data</AnchorUI>
           </LinkUI><LinkUI>
