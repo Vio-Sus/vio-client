@@ -30,3 +30,18 @@ export let handleValidation = (formValues, entryWeights, items) => {
 
   return err;
 };
+
+export function ValidateEmail(email) {
+  if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+    return true;
+  }
+  return false;
+}
+
+export function ValidatePhone(phoneNumber) {
+  const onlyNumbers = phoneNumber.replace(/\D/g, '');
+  if(onlyNumbers.length !== 10) {
+    return false;
+  }
+  return true;
+}

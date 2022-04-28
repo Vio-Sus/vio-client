@@ -80,7 +80,7 @@ export default function Form({
   const [itemsList, setItemsList] = useState([]);
 
   useEffect(() => {
-    console.log('this is the add stuff ', sources);
+    console.log('this is the add stuff', sources);
     setSourcesList(sources);
     setItemsList(items);
   }, [items, sources]);
@@ -116,7 +116,7 @@ export default function Form({
 
   let removeFormFields = (element) => {
     let newEntryWeights = entryWeights.filter(
-      (weight) => weight.id != element.id
+      (weight) => weight.id !== element.id
     );
     setEntryWeights(newEntryWeights);
   };
@@ -140,7 +140,6 @@ export default function Form({
       const res = await postEntries(formContent);
       console.log(res);
       form.reset();
-      // window.location.reload();
     }
   };
 

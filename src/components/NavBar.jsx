@@ -1,12 +1,13 @@
 import LogoutButton from './LogoutButton';
 import styled from 'styled-components';
 import PersonIcon from '@mui/icons-material/Person';
+import { useState, useEffect } from 'react';
 
 const NavbarUI = styled.div`
   padding: 0 3%;
   height: 80px;
   background-color: #e1eedd;
-  display: flex;
+  display: flex; 
   align-items: center;
   @media screen and (max-width: 600px) {
     flex-direction: column;
@@ -23,9 +24,14 @@ const Logo = styled.img`
   }
 `;
 
+const AccountType = styled.p`
+  font-weight: 500;
+  margin-right: auto;  
+`;
+
 const ListUI = styled.ul`
   display: flex;
-  min-width: 343px;
+  min-width: 463px;
   padding: 0;
   gap: 5%;
 `;
@@ -69,42 +75,75 @@ const UserUI = styled(User)`
   }
 `;
 
-const NavBar = ({ user }) => {
+const NavBar = ({ user}) => {
+
+  const [userValue, setUserValue] = useState();
+  const newFormValues = localStorage.getItem('newFormValues');
+
+  useEffect(() => { 
+    if(newFormValues == null) {
+      setUserValue(1)
+    } else {
+    setUserValue(Object.values(newFormValues)[19]);
+    console.log("USER FROM NAV: " + userValue);
+    }
+  }, [userValue, newFormValues])
+  
   return (
-    <>
+    <>    
       <NavbarUI>
-        <Logo src="./logo.png" style={{ width: 80 }} />
-        <ListUI>
-          {/* <LinkUI>
-            <AnchorUI href="/">Dashboard</AnchorUI>
-          </LinkUI> */}
-          <LinkUI>
-            <AnchorUI href="newEntry">New Entry</AnchorUI>
-          </LinkUI>
-          <LinkUI>
-            <AnchorUI href="viewData">Data</AnchorUI>
-          </LinkUI>
+      {userValue == 1 && (
+        <><Logo src="./logo.png" style={{ width: 80 }} />
+          <AccountType>Source Account</AccountType>  
+          <ListUI>
+            <LinkUI>
+              <AnchorUI href="newEntry">New Entry</AnchorUI>
+            </LinkUI>
+            <LinkUI>
+              <AnchorUI href="viewData">Data</AnchorUI>
+            </LinkUI>
+            <LinkUI>
+              <AnchorUI href="viewSource">Sources</AnchorUI>
+            </LinkUI>
+            <LinkUI>
+              <AnchorUI href="viewItem">Items</AnchorUI>
+            </LinkUI>
+            <LinkUI>
+              <AnchorUI href="bluetooth">Bluetooth</AnchorUI>
+            </LinkUI>
+            <LinkUI>
+              <AnchorUI href="account-type">Account Type</AnchorUI>
+            </LinkUI>
+          </ListUI><UserUI>
+              <User>
+                <PersonIcon fontSize="small" />
+                {JSON.stringify(user.user.nickname).replace(/['"]+/g, '')}
+              </User>
+              <LogoutButton />
+            </UserUI></>
+         )}
+          {userValue == 2 && ( 
+          <><Logo src="./logo.png" style={{ width: 80 }} />
+          <AccountType>Collector Account</AccountType> 
+          <ListUI>
           <LinkUI>
             <AnchorUI href="viewSourceData">Source Data</AnchorUI>
+          </LinkUI><LinkUI>
+              <AnchorUI href="bluetooth">Bluetooth</AnchorUI>
+          </LinkUI><LinkUI>
+              <AnchorUI href="account-type">Account Type</AnchorUI>
           </LinkUI>
-          <LinkUI>
-            <AnchorUI href="viewSource">Sources</AnchorUI>
-          </LinkUI>
-          <LinkUI>
-            <AnchorUI href="viewItem">Items</AnchorUI>
-          </LinkUI>
-          <LinkUI>
-            <AnchorUI href="bluetooth">Bluetooth</AnchorUI>
-          </LinkUI>
-        </ListUI>
-        <UserUI>
-          <User>
-            <PersonIcon fontSize="small" />
-            {JSON.stringify(user.user.nickname).replace(/['"]+/g, '')}
-          </User>
-          <LogoutButton />
-        </UserUI>
+          </ListUI>
+          <UserUI>
+              <User>
+                <PersonIcon fontSize="small" />
+                {JSON.stringify(user.user.nickname).replace(/['"]+/g, '')}
+              </User>
+              <LogoutButton />
+            </UserUI></>
+          )}
       </NavbarUI>
+   
     </>
   );
 };

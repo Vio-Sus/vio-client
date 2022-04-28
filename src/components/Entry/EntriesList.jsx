@@ -7,6 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import Delete from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
+
 export default function EntriesList({ selectEntry, sources, items }) {
   const [entries, setEntries] = useState([]);
   const [filteredEntries, setFilteredEntries] = useState([]);
@@ -112,6 +113,7 @@ export default function EntriesList({ selectEntry, sources, items }) {
 
   return (
     <>
+
       {/* {(startDate, endDate, today) && (
         <DateFilter
           startDate={startDate}
@@ -125,11 +127,11 @@ export default function EntriesList({ selectEntry, sources, items }) {
           }}
         />
       )}{' '}  */}
-      {/* Filter by Date Range: */}
+      {/* Filter by Date Range: */}    
       <div class="tableCont">
         <div class="flexRow">
           <div class="flexColumn">
-            <label>Sources</label>
+            <label>Source</label>
             <select id="sourceSelection" onChange={(e) => updateFilter()}>
               <option value="allSources">All</option>
               {sources.map((source, key) => (
