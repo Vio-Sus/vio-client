@@ -78,7 +78,7 @@ export default function EditSourceForm({ source, setIsEditing }) {
   };
 
   const handleSubmit = async (event) => {
-    // event.preventDefault();
+    event.preventDefault();
     let formContent = {
       name,
       address,
@@ -110,28 +110,32 @@ export default function EditSourceForm({ source, setIsEditing }) {
     }
 
     // validate email
-    if (email !== oldEmail) {
-      if (ValidateEmail(email) === false) {
-        console.log('invalid emial');
-        return setMsg('Invalid Email; Try again');
-      } else if (ValidateEmail(email) === true) {
-        const res = await checkSourceEmail(email);
-        if (parseInt(res.data.count) > 0) {
-          return setMsg(
-            'This email is in use. Check to see if the source is already added.'
-          );
-        }
-      }
-    }
+    // if (email !== oldEmail) {
+    //   if (ValidateEmail(email) === false) {
+    //     console.log('invalid emial');
+    //     return setMsg('Invalid Email; Try again');
+    //   } else if (ValidateEmail(email) === true) {
+    //     const res = await checkSourceEmail(email);
+    //     if (parseInt(res.data.count) > 0) {
+    //       return setMsg(
+    //         'This email is in use. Check to see if the source is already added.'
+    //       );
+    //     }
+    //   }
+    // }
 
     try {
       console.log('source id ' + sourceId);
       await updateSource(sourceId, formContent);
       setIsEditing(false);
+      window.location.reload();
+
     } catch (error) {
       console.log(error);
+      return setMsg(
+        'The updated email of source already exists; Try again'
+      );
     }
-    //window.location.reload();
   };
 
   const handleCancel = () => {
