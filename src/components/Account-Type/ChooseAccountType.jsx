@@ -26,18 +26,21 @@ const newAccountType = () => ({
 
 export default function Form({    
   setAddedSomething,
-  addedSomething,
+  addedSomething,  
 }) {
+
   const [accountType, setAccountType] = useState([newAccountType()]);
   const [formValues, setFormValues] = useState({});
   const [acctId, setacctId] = useState([]);
   const [itemsList, setItemsList] = useState([]);
+  
 
   let handleFormValues = (e) => {   
     let newFormValues = formValues;   
     console.log("GREAT SUCCESS");
     newFormValues[e.target.name] = Number(e.target.value);    
-    console.log('Handling form changes', newFormValues);    
+    console.log('Handling form changes',  newFormValues);
+    localStorage.setItem("newFormValues", JSON.stringify(newFormValues));  
     setFormValues(newFormValues);
   };
 
@@ -48,8 +51,9 @@ export default function Form({
     };
     console.log('~~~~~~~~~~~~~~~~~');
     console.log(formContent);
-    const res = await updateAccountType(formContent);
-    console.log(res);           
+    const res = await updateAccountType(formContent);   
+    console.log(res);
+    window.location.reload(false);
   };
 
   return (
