@@ -12,23 +12,23 @@ import ViewItemPage from './Pages/ViewItem';
 import ViewGraphPage from './Pages/ViewGraph';
 import BluetoothPage from './Pages/Bluetooth';
 import AccountTypePage from './Pages/AccountType';
+import ViewSourceDataPage from './Pages/ViewSourceData';
 
-import NavBarLogIn from './components/NavBarLogIn';
-import { NavigateBeforeTwoTone } from '@mui/icons-material';
 
 function App() {
   const [sources, setSources] = useState([]);
   const [items, setItems] = useState([]);
   const [user, setUser] = useState(null);
   const [addedSomething, setAddedSomething] = useState(false);
-  //
-  // let addedSomething = false;
+  const [formValue, setFormValue] = useState({});
+  const [accountId, setAccountId] = useState();
+  
 
   useEffect(() => {
-    (async () => {
+    (async () => {     
       try {
         let [user, sources, items] = await Promise.all([
-          getLoggedInUser(),
+          getLoggedInUser(),         
           getSources(),
           getItems(),
         ]); // returns new promise with all data
@@ -37,37 +37,36 @@ function App() {
           setSources(sources);
           setItems(items);
         }
+        //Get the account_type_id from local storage, format it and put it into user object       
+        const newFormValues = localStorage.getItem('newFormValues');                    
+        user.user.account_type_id = parseInt(Object.values(newFormValues)[19]);         
         console.log(user, sources, items);
+        setAccountId(user.user.account_type_id);                 
         setAddedSomething(false);
       } catch {}
     })();
     console.log("app's useEffect was called");
     console.log('addSomething from app', addedSomething);
   }, [addedSomething]);
-
+ 
   return (
     <>
-      {user && (
+      {user && (  
         <div className="App">
           <NavBar user={user} />
-          <BrowserRouter>
-            <Routes>
-              {/* <Route path="/" element={<DashboardPage />}></Route> */}
-              <Route
-                path="/"
-                element={<ViewDataPage sources={sources} items={items} />}
-              ></Route>
-              <Route
-                path="newEntry"
-                element={
-                  <NewEntryPage
+          <BrowserRouter>         
+            <Routes>               
+              <><Route
+                  path="/"
+                  element={<ViewDataPage sources={sources} items={items} />}
+                ></Route><Route
+                  path="newEntry"
+                  element={<NewEntryPage
                     sources={sources}
                     items={items}
                     setAddedSomething={setAddedSomething}
-                    addedSomething={addedSomething}
-                  />
-                }
-              ></Route>
+                    addedSomething={addedSomething} />}
+                ></Route></>          
               <Route
                 path="viewData"
                 element={<ViewDataPage sources={sources} items={items} />}
@@ -87,11 +86,15 @@ function App() {
               <Route
                 path="bluetooth"
                 element={<BluetoothPage sources={sources} items={items} />}
-              ></Route>
+              ></Route>                       
                <Route
                 path="account-type"
-                element={<AccountTypePage sources={sources} items={items} />}
+                element={<AccountTypePage handleSubmit={formValue => setFormValue(formValue)} handlefo/>}
               ></Route>
+               <Route
+                path="viewSourceData"
+                element={<ViewSourceDataPage sources={sources} items={items} />}
+              ></Route>                        
             </Routes>
           </BrowserRouter>
         </div>

@@ -5,12 +5,7 @@ export async function getLoggedInUser() {
 }
 
 export async function updateAccountType(formContent) {
-  //change the account_type_id
   return await axios.put(`/api/profile`, { data: formContent });
-}
-
-export async function getSources() {
-  return (await axios.get('/api/sources')).data;
 }
 
 // items
@@ -56,6 +51,10 @@ export async function postSource(formContent) {
 
 export async function updateSource(sourceId, formContent) {
   return await axios.put(`/api/sources/${sourceId}`, { data: formContent });
+}
+
+export async function getSources() {
+  return (await axios.get('/api/sources')).data;
 }
 // check for duplicates
 export async function checkSourceEmail(email) {

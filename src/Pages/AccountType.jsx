@@ -4,16 +4,18 @@ import React from 'react';
 const AccountTypePage = ({   
   setAddedSomething,
   addedSomething,
-}) => {
+  handleFormValues, 
+}) => {  
   return (
     <>
       <div class="pageCont">
         <header>
           <h1>Select An Account Type</h1>
         </header>
-        <Form                 
+        <Form                       
           setAddedSomething={setAddedSomething}
           addedSomething={addedSomething}
+          handleFormValues={handleFormValues}                
         ></Form>{' '}
       </div>
     </>

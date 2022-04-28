@@ -140,7 +140,6 @@ export default function Form({
       const res = await postEntries(formContent);
       console.log(res);
       form.reset();
-      // window.location.reload();
     }
   };
 
