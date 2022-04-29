@@ -125,11 +125,11 @@ export default function SourceEntriesList({ collectors, items }) {
             <label>Collectors</label>
             <select id="collectorSelection" onChange={(e) => updateFilter()}>
               <option value="allCollectors">All</option>
-              {collectors.map((collector, key) => (
+              {/* {collectors.map((collector, key) => (
                 <option key={key} value={collector.account_id}>
                   {collector.name}
                 </option>
-              ))}
+              ))} */}
             </select>
           </div>
 
@@ -193,7 +193,7 @@ export default function SourceEntriesList({ collectors, items }) {
         <table>
           <thead>
             <tr>
-              <th> SOURCES</th>
+              <th> COLLECTORS</th>
               {/* <th> PROCESSOR </th> */}
               <th> MATERIALS </th>
               <th> DATE </th>

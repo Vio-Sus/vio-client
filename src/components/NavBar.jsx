@@ -109,11 +109,12 @@ const NavBar = ({ user}) => {
       {userValue == collectorAccount && (
         <><Logo src="./logo.png" style={{ width: 80 }} />
           <AccountType>Source Account</AccountType>  
-          <ListUI>           
-            <LinkUI>
-              <AnchorUI href="viewData">Data</AnchorUI>
-            </LinkUI>                                
-          </ListUI><UserUI>
+          <ListUI>
+          <LinkUI>
+            <AnchorUI href="viewSourceData">Data</AnchorUI>
+          </LinkUI>                                                   
+          </ListUI>
+          <UserUI>
               <User>
                 <PersonIcon fontSize="small" />
                 {JSON.stringify(user.user.nickname).replace(/['"]+/g, '')}
@@ -128,9 +129,9 @@ const NavBar = ({ user}) => {
           <LinkUI>
               <AnchorUI href="viewSource">Sources</AnchorUI>
             </LinkUI>
-          <LinkUI>
-            <AnchorUI href="viewSourceData">Data</AnchorUI>
-          </LinkUI>
+            <LinkUI>
+              <AnchorUI href="viewData">Data</AnchorUI>
+            </LinkUI>   
           <LinkUI>
               <AnchorUI href="newEntry">New Entry</AnchorUI>
             </LinkUI>

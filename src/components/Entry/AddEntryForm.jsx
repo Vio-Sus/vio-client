@@ -188,7 +188,7 @@ sourcesList &&
                         handleFormValues={(e) => {
                           e.target.value === 'add_item'
                             ? addItem()
-                            : (element.item_id = 11);
+                            : (element.item_id = Number(e.target.value));
                         }}
                         setAddedSomething={setAddedSomething}
                         addedSomething={addedSomething}
