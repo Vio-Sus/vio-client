@@ -82,7 +82,7 @@ export default function Form({
   useEffect(() => {
     console.log('this is the add stuff', sources);
     setSourcesList(sources);
-    setItemsList(items);
+    setItemsList(items);    
   }, [items, sources]);
 
   const addSource = () => {
@@ -106,8 +106,8 @@ export default function Form({
       newFormValues[e.target.name] = Number(e.target.value);
     }
     console.log('handling form changes', newFormValues);
-    // setting the state from the original to the new copy
-    setFormValues(newFormValues);
+    // setting the state from the original to the new copy    
+    setFormValues(newFormValues);   
   };
 
   let addFormFields = () => {
@@ -123,7 +123,7 @@ export default function Form({
 
   let handleSubmit = async (event) => {
     event.preventDefault();
-    let form = document.getElementById('input-form');
+    let form = document.getElementById('input-form');    
     let errorMsgs = handleValidation(formValues, entryWeights, items); // ['error messages']
     setErrorMsgs(errorMsgs);
     console.log(errorMsgs);
@@ -188,7 +188,7 @@ sourcesList &&
                         handleFormValues={(e) => {
                           e.target.value === 'add_item'
                             ? addItem()
-                            : (element.item_id = Number(e.target.value));
+                            : (element.item_id = 11);
                         }}
                         setAddedSomething={setAddedSomething}
                         addedSomething={addedSomething}
