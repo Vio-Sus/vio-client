@@ -26,7 +26,8 @@ const Logo = styled.img`
 
 const AccountType = styled.p`
   font-weight: 500;
-  margin-right: auto;  
+  margin-right: auto;
+} 
 `;
 
 const ListUI = styled.ul`
@@ -79,12 +80,16 @@ const NavBar = ({ user}) => {
 
   const [userValue, setUserValue] = useState();
   const newFormValues = localStorage.getItem('newFormValues');
+  const ACCOUNT_ID = 19;
+
+  const sourceAccount = 1;
+  const collectorAccount = 2;
 
   useEffect(() => { 
     if(newFormValues == null) {
-      setUserValue(1)
+      setUserValue(0)
     } else {
-    setUserValue(Object.values(newFormValues)[19]);
+    setUserValue(Object.values(newFormValues)[ACCOUNT_ID]);
     console.log("USER FROM NAV: " + userValue);
     }
   }, [userValue, newFormValues])
@@ -92,7 +97,16 @@ const NavBar = ({ user}) => {
   return (
     <>    
       <NavbarUI>
-      {userValue == 1 && (
+      {userValue == 0 && (
+      <ListUI>
+      <Logo src="./logo.png" style={{ width: 80 }} />
+      <AccountType>Account Selection</AccountType>
+      <LinkUI>
+              <AnchorUI href="account-type">Account Type</AnchorUI>
+      </LinkUI>
+      </ListUI>
+      )}
+      {userValue == sourceAccount && (
         <><Logo src="./logo.png" style={{ width: 80 }} />
           <AccountType>Source Account</AccountType>  
           <ListUI>
@@ -110,10 +124,7 @@ const NavBar = ({ user}) => {
             </LinkUI>
             <LinkUI>
               <AnchorUI href="bluetooth">Bluetooth</AnchorUI>
-            </LinkUI>
-            <LinkUI>
-              <AnchorUI href="account-type">Account Type</AnchorUI>
-            </LinkUI>
+            </LinkUI>           
           </ListUI><UserUI>
               <User>
                 <PersonIcon fontSize="small" />
@@ -122,7 +133,7 @@ const NavBar = ({ user}) => {
               <LogoutButton />
             </UserUI></>
          )}
-          {userValue == 2 && ( 
+          {userValue == collectorAccount && ( 
           <><Logo src="./logo.png" style={{ width: 80 }} />
           <AccountType>Collector Account</AccountType> 
           <ListUI>
@@ -130,8 +141,6 @@ const NavBar = ({ user}) => {
             <AnchorUI href="viewSourceData">Source Data</AnchorUI>
           </LinkUI><LinkUI>
               <AnchorUI href="bluetooth">Bluetooth</AnchorUI>
-          </LinkUI><LinkUI>
-              <AnchorUI href="account-type">Account Type</AnchorUI>
           </LinkUI>
           </ListUI>
           <UserUI>
