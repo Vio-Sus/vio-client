@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getListOfEntries, getEntriesByDateRange } from '../../common/network';
+import { getListOfSourcesForCollector, getEntriesByDateRangeForCollector } from '../../common/network';
 import styled from 'styled-components';
 // import Summary from '../Summary/Summary';
 // import DateFilter from '../Filter/DateFilter';
@@ -40,7 +40,7 @@ export default function SourceEntriesList({ collectors, items }) {
         setEndDate(todayDate);
 
         let [entries] = await Promise.all([
-          getEntriesByDateRange('2020-01-01', todayDate),
+          getEntriesByDateRangeForCollector('2020-01-01', todayDate),
         ]); // returns new promise with all data
         setEntries(entries || []);
         setFilteredEntries(entries || []);
@@ -55,13 +55,13 @@ export default function SourceEntriesList({ collectors, items }) {
       if (startDate && endDate) {
         try {
           let [entriesDateRange] = await Promise.all([
-            getEntriesByDateRange(startDate, endDate),
+            getEntriesByDateRangeForCollector(startDate, endDate),
           ]);
           setEntries(entriesDateRange);
           setFilteredEntries(entriesDateRange || []);
         } catch {}
       } else {
-        let [entriesDateRange] = await Promise.all([getListOfEntries()]);
+        let [entriesDateRange] = await Promise.all([getListOfSourcesForCollector()]);
         setEntries(entriesDateRange);
         setFilteredEntries(entriesDateRange || []);
       }
@@ -193,7 +193,7 @@ export default function SourceEntriesList({ collectors, items }) {
         <table>
           <thead>
             <tr>
-              <th> COLLECTORS</th>
+              <th> COLLECTOR</th>
               {/* <th> PROCESSOR </th> */}
               <th> MATERIALS </th>
               <th> DATE </th>
