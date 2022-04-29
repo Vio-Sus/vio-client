@@ -106,25 +106,13 @@ const NavBar = ({ user}) => {
       </LinkUI>
       </ListUI>
       )}
-      {userValue == sourceAccount && (
+      {userValue == collectorAccount && (
         <><Logo src="./logo.png" style={{ width: 80 }} />
           <AccountType>Source Account</AccountType>  
-          <ListUI>
-            <LinkUI>
-              <AnchorUI href="newEntry">New Entry</AnchorUI>
-            </LinkUI>
+          <ListUI>           
             <LinkUI>
               <AnchorUI href="viewData">Data</AnchorUI>
-            </LinkUI>
-            <LinkUI>
-              <AnchorUI href="viewSource">Sources</AnchorUI>
-            </LinkUI>
-            <LinkUI>
-              <AnchorUI href="viewItem">Items</AnchorUI>
-            </LinkUI>
-            <LinkUI>
-              <AnchorUI href="bluetooth">Bluetooth</AnchorUI>
-            </LinkUI>           
+            </LinkUI>                                
           </ListUI><UserUI>
               <User>
                 <PersonIcon fontSize="small" />
@@ -133,13 +121,23 @@ const NavBar = ({ user}) => {
               <LogoutButton />
             </UserUI></>
          )}
-          {userValue == collectorAccount && ( 
+          {userValue == sourceAccount && ( 
           <><Logo src="./logo.png" style={{ width: 80 }} />
           <AccountType>Collector Account</AccountType> 
           <ListUI>
           <LinkUI>
-            <AnchorUI href="viewSourceData">Source Data</AnchorUI>
-          </LinkUI><LinkUI>
+              <AnchorUI href="viewSource">Sources</AnchorUI>
+            </LinkUI>
+          <LinkUI>
+            <AnchorUI href="viewSourceData">Data</AnchorUI>
+          </LinkUI>
+          <LinkUI>
+              <AnchorUI href="newEntry">New Entry</AnchorUI>
+            </LinkUI>
+            <LinkUI>
+              <AnchorUI href="viewItem">Items</AnchorUI>
+            </LinkUI>
+          <LinkUI>
               <AnchorUI href="bluetooth">Bluetooth</AnchorUI>
           </LinkUI>
           </ListUI>

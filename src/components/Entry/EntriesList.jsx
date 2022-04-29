@@ -202,7 +202,7 @@ export default function EntriesList({ selectEntry, sources, items }) {
         <table>
           <thead>
             <tr>
-              <th> SOURCES</th>
+              <th>SOURCES</th>
               {/* <th> PROCESSOR </th> */}
               <th> MATERIALS </th>
               <th> DATE </th>
