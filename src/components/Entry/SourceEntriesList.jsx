@@ -1,25 +1,22 @@
 import { useState, useEffect } from 'react';
-import { getListOfEntries, getEntriesByDateRange } from '../../common/network';
+import { getListOfSourcesForCollector, getEntriesByDateRangeForCollector } from '../../common/network';
 import styled from 'styled-components';
 // import Summary from '../Summary/Summary';
 // import DateFilter from '../Filter/DateFilter';
-import IconButton from '@mui/material/IconButton';
-import Delete from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
+// import IconButton from '@mui/material/IconButton';
+// import Delete from '@mui/icons-material/Delete';
+// import EditIcon from '@mui/icons-material/Edit';
 
+export default function SourceEntriesList({ collectors, items }) {
+	const [entries, setEntries] = useState([]);
+	const [filteredEntries, setFilteredEntries] = useState([]);
 
-export default function EntriesList({ selectEntry, sources, items }) {
-  const [entries, setEntries] = useState([]);
-  const [filteredEntries, setFilteredEntries] = useState([]);
-  // const [itemFilter, setItemfilter] = useState('');
-  // const [sourceFilter, setSourcefilter] = useState('');
-
-  //setting up dates
-  const [startDate, setStartDate] = useState('');
+	// Setting up dates
+	const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [today, setToday] = useState([]);
 
-  // grabbed from binibin-repo
+	// grabbed from binibin-repo
   const dateToYMD = (date) => {
     let yyyy = date.getFullYear();
     let mm = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -27,17 +24,12 @@ export default function EntriesList({ selectEntry, sources, items }) {
     return `${yyyy}-${mm}-${dd}`;
   };
 
-  const todayObj = new Date(new Date().toString());
+	const todayObj = new Date(new Date().toString());
   const todayMinus100 = new Date(new Date().setDate(todayObj.getDate() - 60));
-  // useEffect(() => {
-  //   getListOfEntries().then((result) => {
-  //     console.log(result);
-  //     setEntries(result);
-  //   });
-  // }, []);
-  const todayDate = dateToYMD(todayObj);
+	const todayDate = dateToYMD(todayObj);
   const defaultStartDate = dateToYMD(todayMinus100);
-  useEffect(() => {
+
+	useEffect(() => {
     (async () => {
       try {
         //set up dates for date input
@@ -48,41 +40,41 @@ export default function EntriesList({ selectEntry, sources, items }) {
         setEndDate(todayDate);
 
         let [entries] = await Promise.all([
-          getEntriesByDateRange('2020-01-01', todayDate),
+          getEntriesByDateRangeForCollector('2020-01-01', todayDate),
         ]); // returns new promise with all data
         setEntries(entries || []);
         setFilteredEntries(entries || []);
-        console.log({ sources });
+        console.log({ collectors });
       } catch {}
     })();
   }, []);
 
-  // changes date range when startdate and enddate are changed
+	// changes date range when startdate and enddate are changed
   useEffect(() => {
     (async () => {
       if (startDate && endDate) {
         try {
           let [entriesDateRange] = await Promise.all([
-            getEntriesByDateRange(startDate, endDate),
+            getEntriesByDateRangeForCollector(startDate, endDate),
           ]);
           setEntries(entriesDateRange);
           setFilteredEntries(entriesDateRange || []);
         } catch {}
       } else {
-        let [entriesDateRange] = await Promise.all([getListOfEntries()]);
+        let [entriesDateRange] = await Promise.all([getListOfSourcesForCollector()]);
         setEntries(entriesDateRange);
         setFilteredEntries(entriesDateRange || []);
       }
     })();
   }, [startDate, endDate]);
 
-  const updateFilter = () => {
+	const updateFilter = () => {
     let itemSelection = document.getElementById('itemSelection').value;
-    let sourceSelection = document.getElementById('sourceSelection').value;
+    let sourceSelection = document.getElementById('collectorSelection').value;
 
-    if (sourceSelection === 'allSources' && itemSelection === 'allItems') {
+    if (sourceSelection === 'allCollectors' && itemSelection === 'allItems') {
       setFilteredEntries(entries);
-    } else if (sourceSelection === 'allSources') {
+    } else if (sourceSelection === 'allCollectors') {
       let filtered = entries.filter((entry) => {
         if (entry['item_id'] === +itemSelection) {
           return entry;
@@ -113,7 +105,6 @@ export default function EntriesList({ selectEntry, sources, items }) {
 
   return (
     <>
-
       {/* {(startDate, endDate, today) && (
         <DateFilter
           startDate={startDate}
@@ -127,18 +118,18 @@ export default function EntriesList({ selectEntry, sources, items }) {
           }}
         />
       )}{' '}  */}
-      {/* Filter by Date Range: */}    
+      {/* Filter by Date Range: */}
       <div class="tableCont">
         <div class="flexRow">
           <div class="flexColumn">
-            <label>Source</label>
-            <select id="sourceSelection" onChange={(e) => updateFilter()}>
-              <option value="allSources">All</option>
-              {sources.map((source, key) => (
-                <option key={key} value={source.source_id}>
-                  {source.name}
+            <label>Collectors</label>
+            <select id="collectorSelection" onChange={(e) => updateFilter()}>
+              <option value="allCollectors">All</option>
+              {/* {collectors.map((collector, key) => (
+                <option key={key} value={collector.account_id}>
+                  {collector.name}
                 </option>
-              ))}
+              ))} */}
             </select>
           </div>
 
@@ -202,7 +193,7 @@ export default function EntriesList({ selectEntry, sources, items }) {
         <table>
           <thead>
             <tr>
-              <th>SOURCES</th>
+              <th> COLLECTOR</th>
               {/* <th> PROCESSOR </th> */}
               <th> MATERIALS </th>
               <th> DATE </th>
@@ -222,12 +213,12 @@ export default function EntriesList({ selectEntry, sources, items }) {
                     <td> {entry.entry_weight} kg </td>
                     {/* <td> Processed </td> */}
                     <td>
-                      <IconButton onClick={() => selectEntry(entry, 'edit')}>
+                      {/* <IconButton onClick={() => selectEntry(entry, 'edit')}>
                         <EditIcon sx={{ color: '#606f89' }} />
                       </IconButton>
                       <IconButton onClick={() => selectEntry(entry, 'delete')}>
                         <Delete sx={{ color: '#606f89' }} />
-                      </IconButton>
+                      </IconButton> */}
                     </td>
                   </tr>
                 ))
@@ -239,4 +230,6 @@ export default function EntriesList({ selectEntry, sources, items }) {
       {/* <Summary startDate={startDate} endDate={endDate} /> */}
     </>
   );
+
+
 }

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Entry from './Entry';
 import { useState } from 'react';
 import { updateAccountType } from '../../common/network';
+import { useNavigate } from 'react-router-dom';
 
 
 const SourceCont = styled.div`
@@ -20,11 +21,13 @@ const StyledForm = styled.form`
   text-align: center;
 `;
 
+
 const newAccountType = () => ({
     account_type_id: 0
 });
 
-export default function Form({    
+export default function Form({
+ 
   setAddedSomething,
   addedSomething,  
 }) {
@@ -33,27 +36,35 @@ export default function Form({
   const [formValues, setFormValues] = useState({});
   const [acctId, setacctId] = useState([]);
   const [itemsList, setItemsList] = useState([]);
-  
+  const navigate = useNavigate();
+
+  const sourceAccount = 1;
+  const collectorAccount = 2;
 
   let handleFormValues = (e) => {   
-    let newFormValues = formValues;   
-    console.log("GREAT SUCCESS");
-    newFormValues[e.target.name] = Number(e.target.value);    
-    console.log('Handling form changes',  newFormValues);
+    let newFormValues = formValues;      
+    newFormValues[e.target.name] = Number(e.target.value);       
     localStorage.setItem("newFormValues", JSON.stringify(newFormValues));  
     setFormValues(newFormValues);
+    console.log(newFormValues);
   };
 
-  let handleSubmit = async (event) => {
+  let handleSubmit = async (event) => {    
     event.preventDefault();       
     let formContent = {
     account: formValues
     };
-    console.log('~~~~~~~~~~~~~~~~~');
-    console.log(formContent);
+    let accountValue = (Object.values(formContent.account)[0]);   
     const res = await updateAccountType(formContent);   
-    console.log(res);
-    window.location.reload(false);
+    console.log(res);   
+    if((accountValue) === sourceAccount) {    
+      navigate('/newEntry');
+      window.location.reload(false);
+     
+    } else if((accountValue) === collectorAccount) {      
+      navigate('/viewSourceData');
+      window.location.reload(false);
+    }
   };
 
   return (
