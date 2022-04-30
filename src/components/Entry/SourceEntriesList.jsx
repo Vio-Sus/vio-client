@@ -70,11 +70,11 @@ export default function SourceEntriesList({ collectors, items }) {
 
 	const updateFilter = () => {
     let itemSelection = document.getElementById('itemSelection').value;
-    let sourceSelection = document.getElementById('sourceSelection').value;
+    let sourceSelection = document.getElementById('collectorSelection').value;
 
-    if (sourceSelection === 'allSources' && itemSelection === 'allItems') {
+    if (sourceSelection === 'allCollectors' && itemSelection === 'allItems') {
       setFilteredEntries(entries);
-    } else if (sourceSelection === 'allSources') {
+    } else if (sourceSelection === 'allCollectors') {
       let filtered = entries.filter((entry) => {
         if (entry['item_id'] === +itemSelection) {
           return entry;
