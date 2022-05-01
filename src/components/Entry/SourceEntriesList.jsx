@@ -31,10 +31,7 @@ export default function SourceEntriesList({ collectors, items }) {
 
 	useEffect(() => {
     (async () => {
-      try {
-        //set up dates for date input
-        // const todayDate = dateToYMD(todayObj);
-        // const defaultStartDate = dateToYMD(todayMinus100);
+      try {    
         setToday(todayDate);
         setStartDate(defaultStartDate);
         setEndDate(todayDate);
@@ -49,7 +46,6 @@ export default function SourceEntriesList({ collectors, items }) {
     })();
   }, []);
 
-	// changes date range when startdate and enddate are changed
   useEffect(() => {
     (async () => {
       if (startDate && endDate) {
@@ -102,6 +98,24 @@ export default function SourceEntriesList({ collectors, items }) {
       setFilteredEntries(filtered);
     }
   };
+
+  
+  const totals = filteredEntries.reduce((entry, index) => {    
+    let existMaterial = entry.find(({item_name}) => index.item_name === item_name);
+    console.log("EXIST MATERIAL:" + JSON.stringify(existMaterial));   
+    if(existMaterial) {
+      let originalWeight = parseInt(existMaterial.entry_weight);
+      let totalWeight = parseInt(index.entry_weight);   
+      totalWeight += originalWeight;
+      console.log("OLD WEIGHT: " + originalWeight);
+      console.log("NEW WEIGHT: " + totalWeight);
+    } else {
+        entry.push(index);
+      }
+      return entry;    
+  }, [])
+
+  console.log(totals[1]);
 
   return (
     <>
@@ -180,25 +194,16 @@ export default function SourceEntriesList({ collectors, items }) {
                 // dateRangeFilter();
               }}
             />
-          </div>
-
-          {/* <div class="flexColumn">
-            <label>Status</label>
-            <select>
-              <option>All</option>
-            </select>
-          </div> */}
+          </div>     
         </div>
 
         <table>
           <thead>
             <tr>
-              <th> COLLECTOR</th>
-              {/* <th> PROCESSOR </th> */}
+              <th> COLLECTOR</th>             
               <th> MATERIALS </th>
               <th> DATE </th>
-              <th> WEIGHT </th>
-              {/* <th> STATUS </th> */}
+              <th> WEIGHT </th>             
               <th></th>
             </tr>
           </thead>
@@ -206,12 +211,10 @@ export default function SourceEntriesList({ collectors, items }) {
             {filteredEntries
               ? filteredEntries.map((entry, index) => (
                   <tr key={index}>
-                    <td>{entry.source_name}</td>
-                    {/* <td> P1 </td> */}
+                    <td>{entry.company}</td>                  
                     <td> {entry.item_name} </td>
                     <td> {entry.entry_date} </td>
-                    <td> {entry.entry_weight} kg </td>
-                    {/* <td> Processed </td> */}
+                    <td> {entry.entry_weight} kg </td>                 
                     <td>
                       {/* <IconButton onClick={() => selectEntry(entry, 'edit')}>
                         <EditIcon sx={{ color: '#606f89' }} />
@@ -225,9 +228,26 @@ export default function SourceEntriesList({ collectors, items }) {
               : null}
           </tbody>
         </table>
-      </div>
-      {/* <Summary startDate={'2022-01-01'} endDate={'2022-03-10'} /> */}
-      {/* <Summary startDate={startDate} endDate={endDate} /> */}
+<br/><br/><br/>
+        <table>
+          <thead>
+            <tr>                       
+              <th> MATERIALS </th>            
+              <th> TOTAL WEIGHT </th>                        
+            </tr>
+          </thead>
+          <tbody>
+          {totals
+              ? totals.map((entry, index) => (
+                  <tr key={index}>                                   
+                    <td> {entry.item_name} </td>                  
+                    <td> {entry.entry_weight} kg </td>                                    
+                  </tr>
+                ))
+              : null}              
+          </tbody>
+        </table>
+      </div>  
     </>
   );
 
