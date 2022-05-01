@@ -97,7 +97,7 @@ const NavBar = ({ user}) => {
   return (
     <>    
       <NavbarUI>
-      {userValue == 0 && (
+      {userValue === 0 && (
       <ListUI>
       <Logo src="./logo.png" style={{ width: 80 }} />
       <AccountType>Account Selection</AccountType>
@@ -106,7 +106,7 @@ const NavBar = ({ user}) => {
       </LinkUI>
       </ListUI>
       )}
-      {userValue == collectorAccount && (
+      {userValue === collectorAccount && (
         <><Logo src="./logo.png" style={{ width: 80 }} />
           <AccountType>Source Account</AccountType>  
           <ListUI>
@@ -122,7 +122,7 @@ const NavBar = ({ user}) => {
               <LogoutButton />
             </UserUI></>
          )}
-          {userValue == sourceAccount && ( 
+          {userValue === sourceAccount && ( 
           <><Logo src="./logo.png" style={{ width: 80 }} />
           <AccountType>Collector Account</AccountType> 
           <ListUI>
