@@ -42,34 +42,39 @@ export default function SourceEntriesList({ collectors, items }) {
         let [entries] = await Promise.all([
           getEntriesByDateRangeForCollector('2020-01-01', todayDate),
         ]); // returns new promise with all data
-        setEntries(entries || []);
-        setFilteredEntries(entries || []);             
-        console.log({ collectors });
+        const newEntries = entries.map((item)=>{
+          return {...item, entry_weight: +item.entry_weight}
+        })
+        setEntries(newEntries|| []);
+        setFilteredEntries(newEntries || []);             
+        console.log(newEntries);
       } catch {}
     })();
   }, []);
   
 
-  useEffect(() => {
-    (async () => {
-      if (startDate && endDate) {
-        try {
-          let [entriesDateRange] = await Promise.all([
-            getEntriesByDateRangeForCollector(startDate, endDate),
-          ]);
-          setEntries(entriesDateRange);
-          setFilteredEntries(entriesDateRange || []);          
-        } catch {}
-      } else {
-        let [entriesDateRange] = await Promise.all([getListOfSourcesForCollector()]);
-        setEntries(entriesDateRange);
-        setFilteredEntries(entriesDateRange || []);
+  // useEffect(() => {
+  //   (async () => {
+  //     if (startDate && endDate) {
+  //       try {
+  //         let [entriesDateRange] = await Promise.all([
+  //           getEntriesByDateRangeForCollector(startDate, endDate),
+  //         ]);
+  //         setEntries(entriesDateRange);
+  //         console.log(entriesDateRange)
+  //         setFilteredEntries(entriesDateRange || []);          
+  //       } catch {}
+  //     } else {
+  //       let [entriesDateRange] = await Promise.all([getListOfSourcesForCollector()]);
+        
+  //       setEntries(entriesDateRange);
+  //       setFilteredEntries(entriesDateRange || []);
        
-      }
-    })();
-  }, [startDate, endDate]);
+  //     }
+  //   })();
+  // }, [startDate, endDate]);
 
-  console.log(total);
+  // console.log(total);
 
 	const updateFilter = () => {
     let itemSelection = document.getElementById('itemSelection').value;
@@ -105,28 +110,21 @@ export default function SourceEntriesList({ collectors, items }) {
       setFilteredEntries(filtered);     
     }
   };
-
-  
-  const totals = total.reduce((entry, index) => {    
-    let existMaterial = entry.find(({item_name}) => index.item_name === item_name);   
+// get the total of weight of the same item_id
+  const totals = entries.reduce((acc, item) => {    
+    let existMaterial = acc.find(({item_id}) => item.item_id ==item_id);   
     if(existMaterial) {     
-      let firstWeight = parseInt(existMaterial.entry_weight);
-      console.log(firstWeight)
-      let secondWeight = parseInt(index.entry_weight);
-      console.log(secondWeight)
-      firstWeight = secondWeight
-      console.log(firstWeight)
-      existMaterial.entry_weight = firstWeight;
-      console.log(parseInt(Object.values(existMaterial)[7]))
+      existMaterial.entry_weight += item.entry_weight
+      console.log(existMaterial.entry_weight)
     } else {
-      entry.push(index)
+      acc.push({...item})
     }   
-    return entry
+    return acc
   }, [])
   
  
 
-  console.log(totals);
+  // console.log(totals);
   console.log(filteredEntries);
 
   return (
