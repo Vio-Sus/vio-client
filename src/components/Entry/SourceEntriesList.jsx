@@ -10,6 +10,9 @@ import styled from 'styled-components';
 export default function SourceEntriesList({ collectors, items }) {
 	const [entries, setEntries] = useState([]);
 	const [filteredEntries, setFilteredEntries] = useState([]);
+  const [collectorList, setCollectorList] = useState([]);
+  const [total, setTotals] = useState([]);
+
 
 	// Setting up dates
 	const [startDate, setStartDate] = useState('');
@@ -31,65 +34,70 @@ export default function SourceEntriesList({ collectors, items }) {
 
 	useEffect(() => {
     (async () => {
-      try {
-        //set up dates for date input
-        // const todayDate = dateToYMD(todayObj);
-        // const defaultStartDate = dateToYMD(todayMinus100);
+      try {    
         setToday(todayDate);
         setStartDate(defaultStartDate);
         setEndDate(todayDate);
+        setTotals(filteredEntries);
 
         let [entries] = await Promise.all([
           getEntriesByDateRangeForCollector('2020-01-01', todayDate),
         ]); // returns new promise with all data
-        setEntries(entries || []);
-        setFilteredEntries(entries || []);
-        console.log({ collectors });
+        const newEntries = entries.map((item)=>{
+          return {...item, entry_weight: +item.entry_weight}
+        })
+        setEntries(newEntries|| []);
+        setFilteredEntries(newEntries || []);             
+        console.log('Entries: ', newEntries);
+        makeCollectorList(entries)
       } catch {}
     })();
   }, []);
+  
 
-	// changes date range when startdate and enddate are changed
-  useEffect(() => {
-    (async () => {
-      if (startDate && endDate) {
-        try {
-          let [entriesDateRange] = await Promise.all([
-            getEntriesByDateRangeForCollector(startDate, endDate),
-          ]);
-          setEntries(entriesDateRange);
-          setFilteredEntries(entriesDateRange || []);
-          console.log(entriesDateRange)
-        } catch {}
-      } else {
-        let [entriesDateRange] = await Promise.all([getCollectors()]);
-        setEntries(entriesDateRange);
-        setFilteredEntries(entriesDateRange || []);
-        console.log(entriesDateRange)
-      }
-    })();
-  }, [startDate, endDate]);
+  // useEffect(() => {
+  //   (async () => {
+  //     if (startDate && endDate) {
+  //       try {
+  //         let [entriesDateRange] = await Promise.all([
+  //           getEntriesByDateRangeForCollector(startDate, endDate),
+  //         ]);
+  //         setEntries(entriesDateRange);
+  //         console.log(entriesDateRange)
+  //         setFilteredEntries(entriesDateRange || []);          
+  //       } catch {}
+  //     } else {
+  //       let [entriesDateRange] = await Promise.all([getListOfSourcesForCollector()]);
+        
+  //       setEntries(entriesDateRange);
+  //       setFilteredEntries(entriesDateRange || []);
+       
+  //     }
+  //   })();
+  // }, [startDate, endDate]);
+
+  // console.log(total);
 
 	const updateFilter = () => {
     let itemSelection = document.getElementById('itemSelection').value;
     let sourceSelection = document.getElementById('collectorSelection').value;
 
     if (sourceSelection === 'allCollectors' && itemSelection === 'allItems') {
-      setFilteredEntries(entries);
+      setFilteredEntries(entries);     
     } else if (sourceSelection === 'allCollectors') {
       let filtered = entries.filter((entry) => {
         if (entry['item_id'] === +itemSelection) {
           return entry;
         }
       });
-      setFilteredEntries(filtered);
+      setFilteredEntries(filtered);      
     } else if (itemSelection === 'allItems') {
       let filtered = entries.filter((entry) => {
         if (entry['source_id'] === +sourceSelection) {
           return entry;
         }
       });
-      setFilteredEntries(filtered);
+      setFilteredEntries(filtered);     
     } else {
       let filtered = entries.filter((entry) => {
         if (entry['source_id'] === +sourceSelection) {
@@ -101,9 +109,29 @@ export default function SourceEntriesList({ collectors, items }) {
           return entry;
         }
       });
-      setFilteredEntries(filtered);
+      setFilteredEntries(filtered);     
     }
   };
+// get the total of weight of the same item_id
+  const totals = entries.reduce((acc, item) => {    
+    let existMaterial = acc.find(({item_id}) => item.item_id == item_id);   
+    if(existMaterial) {     
+      existMaterial.entry_weight += item.entry_weight
+      console.log(existMaterial.entry_weight)
+    } else {
+      acc.push({...item})
+    }   
+    return acc
+  }, [])
+
+  const makeCollectorList = (entries) => {
+    let uniqueCollectorEntries = entries.distinct
+  }
+  
+ 
+
+  // console.log(totals);
+  console.log('Filtered entries: ', filteredEntries);
 
   return (
     <>
@@ -127,11 +155,11 @@ export default function SourceEntriesList({ collectors, items }) {
             <label>Collectors</label>
             <select id="collectorSelection" onChange={(e) => updateFilter()}>
               <option value="allCollectors">All</option>
-              {/* {collectors.map((collector, key) => (
+              {entries.map((collector, key) => (
                 <option key={key} value={collector.account_id}>
-                  {collector.name}
+                  {collector.company}
                 </option>
-              ))} */}
+              ))}
             </select>
           </div>
 
@@ -146,9 +174,9 @@ export default function SourceEntriesList({ collectors, items }) {
             <label>Materials</label>
             <select id="itemSelection" onChange={(e) => updateFilter()}>
               <option value="allItems">All</option>
-              {items.map((item, key) => (
+              {entries.map((item, key) => (
                 <option key={key} value={item.item_id}>
-                  {item.name}
+                  {item.item_name}
                 </option>
               ))}
             </select>
@@ -182,25 +210,16 @@ export default function SourceEntriesList({ collectors, items }) {
                 // dateRangeFilter();
               }}
             />
-          </div>
-
-          {/* <div class="flexColumn">
-            <label>Status</label>
-            <select>
-              <option>All</option>
-            </select>
-          </div> */}
+          </div>     
         </div>
 
         <table>
           <thead>
             <tr>
-              <th> COLLECTOR</th>
-              {/* <th> PROCESSOR </th> */}
+              <th> COLLECTOR</th>             
               <th> MATERIALS </th>
               <th> DATE </th>
-              <th> WEIGHT </th>
-              {/* <th> STATUS </th> */}
+              <th> WEIGHT </th>             
               <th></th>
             </tr>
           </thead>
@@ -212,8 +231,7 @@ export default function SourceEntriesList({ collectors, items }) {
                     {/* <td> P1 </td> */}
                     <td> {entry.item_name} </td>
                     <td> {entry.entry_date} </td>
-                    <td> {entry.entry_weight} kg </td>
-                    {/* <td> Processed </td> */}
+                    <td> {entry.entry_weight} kg </td>                 
                     <td>
                       {/* <IconButton onClick={() => selectEntry(entry, 'edit')}>
                         <EditIcon sx={{ color: '#606f89' }} />
@@ -227,9 +245,26 @@ export default function SourceEntriesList({ collectors, items }) {
               : null}
           </tbody>
         </table>
-      </div>
-      {/* <Summary startDate={'2022-01-01'} endDate={'2022-03-10'} /> */}
-      {/* <Summary startDate={startDate} endDate={endDate} /> */}
+<br/><br/><br/>
+        <table>
+          <thead>
+            <tr>                       
+              <th> MATERIALS </th>            
+              <th> TOTAL WEIGHT </th>                        
+            </tr>
+          </thead>
+          <tbody>
+          {totals
+              ? totals.map((entry, index) => (
+                  <tr key={index}>                                   
+                    <td> {entry.item_name} </td>                  
+                    <td> {entry.entry_weight} kg </td>                                    
+                  </tr>
+                ))
+              : null}              
+          </tbody>
+        </table>
+      </div>  
     </>
   );
 
