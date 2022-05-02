@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getListOfSourcesForCollector, getEntriesByDateRangeForCollector } from '../../common/network';
+import { getCollectors, getEntriesByDateRangeForCollector } from '../../common/network';
 import styled from 'styled-components';
 // import Summary from '../Summary/Summary';
 // import DateFilter from '../Filter/DateFilter';
@@ -59,11 +59,13 @@ export default function SourceEntriesList({ collectors, items }) {
           ]);
           setEntries(entriesDateRange);
           setFilteredEntries(entriesDateRange || []);
+          console.log(entriesDateRange)
         } catch {}
       } else {
-        let [entriesDateRange] = await Promise.all([getListOfSourcesForCollector()]);
+        let [entriesDateRange] = await Promise.all([getCollectors()]);
         setEntries(entriesDateRange);
         setFilteredEntries(entriesDateRange || []);
+        console.log(entriesDateRange)
       }
     })();
   }, [startDate, endDate]);
@@ -206,7 +208,7 @@ export default function SourceEntriesList({ collectors, items }) {
             {filteredEntries
               ? filteredEntries.map((entry, index) => (
                   <tr key={index}>
-                    <td>{entry.source_name}</td>
+                    <td>{entry.company}</td>
                     {/* <td> P1 </td> */}
                     <td> {entry.item_name} </td>
                     <td> {entry.entry_date} </td>

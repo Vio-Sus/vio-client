@@ -50,7 +50,7 @@ export async function postSource(formContent) {
 }
 
 //Get all collectors that belong to the source
-export async function getListOfSourcesForCollector(){
+export async function getCollectors(){
   return await (await axios.get('/api/sourceCollectors')).data;
 }
 
