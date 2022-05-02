@@ -10,6 +10,7 @@ import styled from 'styled-components';
 export default function SourceEntriesList({ collectors, items }) {
 	const [entries, setEntries] = useState([]);
 	const [filteredEntries, setFilteredEntries] = useState([]);
+  const [total, setTotals] = useState([])
 
 
 	// Setting up dates
@@ -36,16 +37,18 @@ export default function SourceEntriesList({ collectors, items }) {
         setToday(todayDate);
         setStartDate(defaultStartDate);
         setEndDate(todayDate);
+        setTotals(filteredEntries);
 
         let [entries] = await Promise.all([
           getEntriesByDateRangeForCollector('2020-01-01', todayDate),
         ]); // returns new promise with all data
         setEntries(entries || []);
-        setFilteredEntries(entries || []);       
+        setFilteredEntries(entries || []);             
         console.log({ collectors });
       } catch {}
     })();
   }, []);
+  
 
   useEffect(() => {
     (async () => {
@@ -65,6 +68,8 @@ export default function SourceEntriesList({ collectors, items }) {
       }
     })();
   }, [startDate, endDate]);
+
+  console.log(total);
 
 	const updateFilter = () => {
     let itemSelection = document.getElementById('itemSelection').value;
@@ -102,35 +107,27 @@ export default function SourceEntriesList({ collectors, items }) {
   };
 
   
-  const totals = filteredEntries.reduce((entry, index) => {    
-    let existMaterial = entry.find(({item_name}) => index.item_name === item_name);      
-    if(existMaterial) {
-      console.log(existMaterial.entry_weight);
+  const totals = total.reduce((entry, index) => {    
+    let existMaterial = entry.find(({item_name}) => index.item_name === item_name);   
+    if(existMaterial) {     
       let firstWeight = parseInt(existMaterial.entry_weight);
       console.log(firstWeight)
       let secondWeight = parseInt(index.entry_weight);
       console.log(secondWeight)
-      firstWeight += secondWeight
+      firstWeight = secondWeight
       console.log(firstWeight)
       existMaterial.entry_weight = firstWeight;
       console.log(parseInt(Object.values(existMaterial)[7]))
     } else {
       entry.push(index)
-    }
+    }   
     return entry
   }, [])
   
+ 
+
   console.log(totals);
-
-
-  // const totals = reducerEntries.reduce((entry, index) => { 
-  //   let existMaterial = entry.find(({item_name}) => index.item_name === item_name);
-  //   console.log("EXIST MATERIAL:" + JSON.stringify(existMaterial));
-  //   return entry + index.entry_weight;
-  // }, 0)
-
-  // console.log(totals);
-
+  console.log(filteredEntries);
 
   return (
     <>
