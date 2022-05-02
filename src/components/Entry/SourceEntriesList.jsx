@@ -38,7 +38,8 @@ export default function SourceEntriesList({ collectors, items }) {
         setStartDate(defaultStartDate);
         setEndDate(todayDate);
         setTotals(filteredEntries);
-
+        console.log(filteredEntries)   
+        
         let [entries] = await Promise.all([
           getEntriesByDateRangeForCollector('2020-01-01', todayDate),
         ]); // returns new promise with all data
@@ -109,19 +110,34 @@ export default function SourceEntriesList({ collectors, items }) {
   
   const totals = total.reduce((entry, index) => {    
     let existMaterial = entry.find(({item_name}) => index.item_name === item_name);   
-    if(existMaterial) {     
+    if(existMaterial) {
+
+      console.log(parseInt(existMaterial.entry_weight)) // 10
+      console.log(parseInt(index.entry_weight)) // 200
+
       let firstWeight = parseInt(existMaterial.entry_weight);
-      console.log(firstWeight)
       let secondWeight = parseInt(index.entry_weight);
-      console.log(secondWeight)
-      firstWeight = secondWeight
-      console.log(firstWeight)
+          
+      firstWeight += secondWeight;
       existMaterial.entry_weight = firstWeight;
-      console.log(parseInt(Object.values(existMaterial)[7]))
+      console.log(firstWeight);
+     
+      console.log(typeof(existMaterial.entry_weight))    
+      // console.log(existMaterial); 
+      // let firstWeight = parseInt(existMaterial.entry_weight);
+      // console.log(firstWeight)
+      // let secondWeight = parseInt(index.entry_weight);
+      // console.log(entry)
+      // firstWeight = secondWeight
+      // console.log(firstWeight)
+      // existMaterial.entry_weight = firstWeight;
+         
     } else {
       entry.push(index)
-    }   
-    return entry
+      console.log(entry)    
+    }
+       
+    return entry    
   }, [])
   
  
