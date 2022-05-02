@@ -42,8 +42,8 @@ export default function Entry({
       <>
         <Select name="account_type_id" onChange={handleFormValues}>
           <option hidden>Select Type</option>       
-          <option value={2}>1 - Source</option>
-          <option value={1}>2 - Collector</option>
+          <option value={1}>1 - Collector</option>
+          <option value={2}>2 - Source</option>
           <option value={3}>3 - Processor</option>      
         </Select>
       </>
