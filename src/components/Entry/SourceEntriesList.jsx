@@ -11,6 +11,7 @@ export default function SourceEntriesList({ collectors, items }) {
 	const [entries, setEntries] = useState([]);
 	const [filteredEntries, setFilteredEntries] = useState([]);
 
+
 	// Setting up dates
 	const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
@@ -40,7 +41,7 @@ export default function SourceEntriesList({ collectors, items }) {
           getEntriesByDateRangeForCollector('2020-01-01', todayDate),
         ]); // returns new promise with all data
         setEntries(entries || []);
-        setFilteredEntries(entries || []);
+        setFilteredEntries(entries || []);       
         console.log({ collectors });
       } catch {}
     })();
@@ -54,12 +55,13 @@ export default function SourceEntriesList({ collectors, items }) {
             getEntriesByDateRangeForCollector(startDate, endDate),
           ]);
           setEntries(entriesDateRange);
-          setFilteredEntries(entriesDateRange || []);
+          setFilteredEntries(entriesDateRange || []);          
         } catch {}
       } else {
         let [entriesDateRange] = await Promise.all([getListOfSourcesForCollector()]);
         setEntries(entriesDateRange);
         setFilteredEntries(entriesDateRange || []);
+       
       }
     })();
   }, [startDate, endDate]);
@@ -69,21 +71,21 @@ export default function SourceEntriesList({ collectors, items }) {
     let sourceSelection = document.getElementById('collectorSelection').value;
 
     if (sourceSelection === 'allCollectors' && itemSelection === 'allItems') {
-      setFilteredEntries(entries);
+      setFilteredEntries(entries);     
     } else if (sourceSelection === 'allCollectors') {
       let filtered = entries.filter((entry) => {
         if (entry['item_id'] === +itemSelection) {
           return entry;
         }
       });
-      setFilteredEntries(filtered);
+      setFilteredEntries(filtered);      
     } else if (itemSelection === 'allItems') {
       let filtered = entries.filter((entry) => {
         if (entry['source_id'] === +sourceSelection) {
           return entry;
         }
       });
-      setFilteredEntries(filtered);
+      setFilteredEntries(filtered);     
     } else {
       let filtered = entries.filter((entry) => {
         if (entry['source_id'] === +sourceSelection) {
@@ -95,27 +97,40 @@ export default function SourceEntriesList({ collectors, items }) {
           return entry;
         }
       });
-      setFilteredEntries(filtered);
+      setFilteredEntries(filtered);     
     }
   };
 
   
   const totals = filteredEntries.reduce((entry, index) => {    
-    let existMaterial = entry.find(({item_name}) => index.item_name === item_name);
-    console.log("EXIST MATERIAL:" + JSON.stringify(existMaterial));   
+    let existMaterial = entry.find(({item_name}) => index.item_name === item_name);      
     if(existMaterial) {
-      let originalWeight = parseInt(existMaterial.entry_weight);
-      let totalWeight = parseInt(index.entry_weight);   
-      totalWeight += originalWeight;
-      console.log("OLD WEIGHT: " + originalWeight);
-      console.log("NEW WEIGHT: " + totalWeight);
+      console.log(existMaterial.entry_weight);
+      let firstWeight = parseInt(existMaterial.entry_weight);
+      console.log(firstWeight)
+      let secondWeight = parseInt(index.entry_weight);
+      console.log(secondWeight)
+      firstWeight += secondWeight
+      console.log(firstWeight)
+      existMaterial.entry_weight = firstWeight;
+      console.log(parseInt(Object.values(existMaterial)[7]))
     } else {
-        entry.push(index);
-      }
-      return entry;    
+      entry.push(index)
+    }
+    return entry
   }, [])
+  
+  console.log(totals);
 
-  console.log(totals[1]);
+
+  // const totals = reducerEntries.reduce((entry, index) => { 
+  //   let existMaterial = entry.find(({item_name}) => index.item_name === item_name);
+  //   console.log("EXIST MATERIAL:" + JSON.stringify(existMaterial));
+  //   return entry + index.entry_weight;
+  // }, 0)
+
+  // console.log(totals);
+
 
   return (
     <>
