@@ -42,7 +42,7 @@ export default function SourceEntriesList() {
         setTotals(filteredEntries);
 
         let [entries] = await Promise.all([
-          getEntriesByDateRangeForCollector('2020-01-01', todayDate),
+          getEntriesByDateRangeForCollector(startDate, endDate),
         ]); // returns new promise with all data
         const newEntries = entries.map((item)=>{
           return {...item, entry_weight: +item.entry_weight}
