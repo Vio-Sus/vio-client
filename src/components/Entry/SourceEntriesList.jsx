@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getListOfSourcesForCollector, getEntriesByDateRangeForCollector } from '../../common/network';
+import { getCollectors, getEntriesByDateRangeForCollector } from '../../common/network';
 import styled from 'styled-components';
 // import Summary from '../Summary/Summary';
 // import DateFilter from '../Filter/DateFilter';
@@ -10,7 +10,8 @@ import styled from 'styled-components';
 export default function SourceEntriesList({ collectors, items }) {
 	const [entries, setEntries] = useState([]);
 	const [filteredEntries, setFilteredEntries] = useState([]);
-  const [total, setTotals] = useState([])
+  const [collectorList, setCollectorList] = useState([]);
+  const [total, setTotals] = useState([]);
 
 
 	// Setting up dates
@@ -47,7 +48,8 @@ export default function SourceEntriesList({ collectors, items }) {
         })
         setEntries(newEntries|| []);
         setFilteredEntries(newEntries || []);             
-        console.log(newEntries);
+        console.log('Entries: ', newEntries);
+        makeCollectorList(entries)
       } catch {}
     })();
   }, []);
@@ -112,7 +114,7 @@ export default function SourceEntriesList({ collectors, items }) {
   };
 // get the total of weight of the same item_id
   const totals = entries.reduce((acc, item) => {    
-    let existMaterial = acc.find(({item_id}) => item.item_id ==item_id);   
+    let existMaterial = acc.find(({item_id}) => item.item_id == item_id);   
     if(existMaterial) {     
       existMaterial.entry_weight += item.entry_weight
       console.log(existMaterial.entry_weight)
@@ -121,11 +123,15 @@ export default function SourceEntriesList({ collectors, items }) {
     }   
     return acc
   }, [])
+
+  const makeCollectorList = (entries) => {
+    let uniqueCollectorEntries = entries.distinct
+  }
   
  
 
   // console.log(totals);
-  console.log(filteredEntries);
+  console.log('Filtered entries: ', filteredEntries);
 
   return (
     <>
@@ -149,11 +155,11 @@ export default function SourceEntriesList({ collectors, items }) {
             <label>Collectors</label>
             <select id="collectorSelection" onChange={(e) => updateFilter()}>
               <option value="allCollectors">All</option>
-              {/* {collectors.map((collector, key) => (
+              {entries.map((collector, key) => (
                 <option key={key} value={collector.account_id}>
-                  {collector.name}
+                  {collector.company}
                 </option>
-              ))} */}
+              ))}
             </select>
           </div>
 
@@ -168,9 +174,9 @@ export default function SourceEntriesList({ collectors, items }) {
             <label>Materials</label>
             <select id="itemSelection" onChange={(e) => updateFilter()}>
               <option value="allItems">All</option>
-              {items.map((item, key) => (
+              {entries.map((item, key) => (
                 <option key={key} value={item.item_id}>
-                  {item.name}
+                  {item.item_name}
                 </option>
               ))}
             </select>
@@ -221,7 +227,8 @@ export default function SourceEntriesList({ collectors, items }) {
             {filteredEntries
               ? filteredEntries.map((entry, index) => (
                   <tr key={index}>
-                    <td>{entry.company}</td>                  
+                    <td>{entry.company}</td>
+                    {/* <td> P1 </td> */}
                     <td> {entry.item_name} </td>
                     <td> {entry.entry_date} </td>
                     <td> {entry.entry_weight} kg </td>                 

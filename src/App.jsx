@@ -1,6 +1,6 @@
 import './App.css';
 import { useEffect, useState } from 'react';
-import { getSources, getItems, getLoggedInUser } from './common/network';
+import { getSources, getCollectors, getItems, getLoggedInUser } from './common/network';
 import LoginButton from './components/LoginButton';
 import NavBar from './components/NavBar';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -21,33 +21,34 @@ import { NavigateBeforeTwoTone } from '@mui/icons-material';
 
 function App() {
   const [sources, setSources] = useState([]);
+  const [collectors, setCollectors] = useState([]);
   const [items, setItems] = useState([]);
   const [user, setUser] = useState(null);
   const [addedSomething, setAddedSomething] = useState(false);
 
-  const collectors = [
-    {
-      account_id: 1,
-      company: "Scharbach Recycling",
-      name: "Plastic",
-      date: "2022-04-13",
-      weight: 15.00
-    },
-    {
-      account_id: 1,
-      company: "Scharbach Recycling",
-      name: "Cardboard",
-      date: "2022-04-13",
-      weight: 20.00
-    },
-    {
-      account_id: 2,
-      company: "Seymour Waste",
-      name: "Plastic",
-      date: "2022-04-14",
-      weight: 30.00
-    },
-  ]
+  // const collectors = [
+  //   {
+  //     account_id: 1,
+  //     company: "Scharbach Recycling",
+  //     name: "Plastic",
+  //     date: "2022-04-13",
+  //     weight: 15.00
+  //   },
+  //   {
+  //     account_id: 1,
+  //     company: "Scharbach Recycling",
+  //     name: "Cardboard",
+  //     date: "2022-04-13",
+  //     weight: 20.00
+  //   },
+  //   {
+  //     account_id: 2,
+  //     company: "Seymour Waste",
+  //     name: "Plastic",
+  //     date: "2022-04-14",
+  //     weight: 30.00
+  //   },
+  // ]
   //
   // let addedSomething = false;
 
@@ -63,6 +64,7 @@ function App() {
           getLoggedInUser(),         
           getSources(),
           getItems(),
+          getCollectors(),
         ]); // returns new promise with all data
         if (!user.error) {
           setUser(user);
@@ -78,6 +80,7 @@ function App() {
       } catch {}
     })();
     console.log("app's useEffect was called");
+    console.log('collectors: ', collectors);
     console.log('addSomething from app', addedSomething);
   }, [addedSomething]);
  
