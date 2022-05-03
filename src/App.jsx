@@ -10,6 +10,7 @@ import ViewDataPage from './Pages/ViewData';
 import ViewSourcePage from './Pages/ViewSource';
 import ViewItemPage from './Pages/ViewItem';
 import ViewGraphPage from './Pages/ViewGraph';
+import ViewSourceGraphPage from './Pages/ViewSourceGraph';
 import BluetoothPage from './Pages/Bluetooth';
 import AccountTypePage from './Pages/AccountType';
 import ViewSourceDataPage from './Pages/ViewSourceData';
@@ -21,35 +22,10 @@ import { NavigateBeforeTwoTone } from '@mui/icons-material';
 
 function App() {
   const [sources, setSources] = useState([]);
-  const [collectors, setCollectors] = useState([]);
   const [items, setItems] = useState([]);
   const [user, setUser] = useState(null);
   const [addedSomething, setAddedSomething] = useState(false);
 
-  // const collectors = [
-  //   {
-  //     account_id: 1,
-  //     company: "Scharbach Recycling",
-  //     name: "Plastic",
-  //     date: "2022-04-13",
-  //     weight: 15.00
-  //   },
-  //   {
-  //     account_id: 1,
-  //     company: "Scharbach Recycling",
-  //     name: "Cardboard",
-  //     date: "2022-04-13",
-  //     weight: 20.00
-  //   },
-  //   {
-  //     account_id: 2,
-  //     company: "Seymour Waste",
-  //     name: "Plastic",
-  //     date: "2022-04-14",
-  //     weight: 30.00
-  //   },
-  // ]
-  //
   // let addedSomething = false;
 
   const [formValue, setFormValue] = useState({});
@@ -80,7 +56,6 @@ function App() {
       } catch {}
     })();
     console.log("app's useEffect was called");
-    console.log('collectors: ', collectors);
     console.log('addSomething from app', addedSomething);
   }, [addedSomething]);
  
@@ -108,7 +83,7 @@ function App() {
               ></Route>
               <Route
                 path="viewSourceData"
-                element={<ViewSourceDataPage sources={collectors} items={items} />}
+                element={<ViewSourceDataPage />}
               ></Route>
               <Route
                 path="viewSource"
@@ -121,6 +96,10 @@ function App() {
               <Route
                 path="viewGraph"
                 element={<ViewGraphPage sources={sources} />}
+              ></Route>
+              <Route
+                path="viewSourceGraph"
+                element={<ViewSourceGraphPage sources={sources} />}
               ></Route>
               <Route
                 path="bluetooth"

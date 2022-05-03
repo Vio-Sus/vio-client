@@ -7,7 +7,7 @@ import styled from 'styled-components';
 // import Delete from '@mui/icons-material/Delete';
 // import EditIcon from '@mui/icons-material/Edit';
 
-export default function SourceEntriesList({ collectors, items }) {
+export default function SourceEntriesList() {
 	const [entries, setEntries] = useState([]);
 	const [filteredEntries, setFilteredEntries] = useState([]);
   const [collectorList, setCollectorList] = useState([]);
@@ -131,7 +131,7 @@ export default function SourceEntriesList({ collectors, items }) {
   };
 // get the total of weight of the same item_id
   const totals = entries.reduce((acc, item) => {    
-    let existMaterial = acc.find(({item_id}) => item.item_id == item_id);   
+    let existMaterial = acc.find(({item_id}) => item.item_id === item_id);   
     if(existMaterial) {     
       existMaterial.entry_weight += item.entry_weight
       console.log(existMaterial.entry_weight)
