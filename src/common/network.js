@@ -49,6 +49,19 @@ export async function postSource(formContent) {
   }
 }
 
+//Get all collectors that belong to the source
+export async function getCollectors(){
+  return await (await axios.get('/api/sourceCollectors')).data;
+}
+
+//Get start and end date for collectors that belong to source
+export async function getEntriesByDateRangeForCollector(startDate, endDate) {
+  console.log((await axios.get(`/api/sourceCollectors/${startDate}/${endDate}`)).data)
+  return (await axios.get(`/api/sourceCollectors/${startDate}/${endDate}`)).data;
+}
+
+
+
 export async function updateSource(sourceId, formContent) {
   return await axios.put(`/api/sources/${sourceId}`, { data: formContent });
 }

@@ -32,21 +32,27 @@ export default function EntryDropdown({
     background-repeat: no-repeat;
   `;
 
+  const Test = styled.select`
+  display: none;
+`;
+
   const [dropdownObjects, setDropdownObjects] = useState(objects);
   const addOption = `add_${entryFor.toLowerCase()}`;
+  const lowerEntryFor = `${entryFor.toLowerCase()}_id`;
 
   useEffect(() => {
     setDropdownObjects(dropdownObjects);
   }, [dropdownObjects, objects, addedSomething]);
 
   return (
+    // name="source_id"
     dropdownObjects && (
       <>
-        <Select name="source_id" onChange={handleFormValues}>
+        <Select name={lowerEntryFor} onChange={handleFormValues}>
           <option hidden>Select {entryFor}</option>
           {objects.map((obj, key) => (
-            <option key={key} value={obj.source_id}>
-              {obj.name}
+            <option key={key} value={obj.source_id || obj.item_id}>
+              {obj.name} - ID: {obj.item_id}
             </option>
           ))}
           <option value={addOption}>Add {entryFor}...</option>
