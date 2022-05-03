@@ -258,7 +258,7 @@ export default function SourceEntriesList({ collectors, items }) {
               ? totals.map((entry, index) => (
                   <tr key={index}>                                   
                     <td> {entry.item_name} </td>                  
-                    <td> {entry.entry_weight} kg </td>                                    
+                    <td> {entry.entry_weight.toFixed(2)} kg </td>                                    
                   </tr>
                 ))
               : null}              
