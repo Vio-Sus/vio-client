@@ -8,18 +8,18 @@ import styled from 'styled-components';
 // import EditIcon from '@mui/icons-material/Edit';
 
 export default function SourceEntriesList({ collectors, items }) {
-	const [entries, setEntries] = useState([]);
-	const [filteredEntries, setFilteredEntries] = useState([]);
+  const [entries, setEntries] = useState([]);
+  const [filteredEntries, setFilteredEntries] = useState([]);
   const [collectorList, setCollectorList] = useState([]);
   const [total, setTotals] = useState([]);
 
 
-	// Setting up dates
-	const [startDate, setStartDate] = useState('');
+  // Setting up dates
+  const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [today, setToday] = useState([]);
 
-	// grabbed from binibin-repo
+  // grabbed from binibin-repo
   const dateToYMD = (date) => {
     let yyyy = date.getFullYear();
     let mm = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -27,33 +27,53 @@ export default function SourceEntriesList({ collectors, items }) {
     return `${yyyy}-${mm}-${dd}`;
   };
 
-	const todayObj = new Date(new Date().toString());
+  const todayObj = new Date(new Date().toString());
   const todayMinus100 = new Date(new Date().setDate(todayObj.getDate() - 60));
-	const todayDate = dateToYMD(todayObj);
+  const todayDate = dateToYMD(todayObj);
   const defaultStartDate = dateToYMD(todayMinus100);
 
-	useEffect(() => {
+  useEffect(() => {
     (async () => {
-      try {    
+      try {
         setToday(todayDate);
         setStartDate(defaultStartDate);
         setEndDate(todayDate);
         setTotals(filteredEntries);
-
+        let test = `${new Date(todayDate).getFullYear()}-01-01`
+        console.log(test)
         let [entries] = await Promise.all([
-          getEntriesByDateRangeForCollector('2020-01-01', todayDate),
+          getEntriesByDateRangeForCollector(`${new Date(todayDate).getFullYear()}-01-01`, todayDate),
         ]); // returns new promise with all data
-        const newEntries = entries.map((item)=>{
-          return {...item, entry_weight: +item.entry_weight}
+        const newEntries = entries.map((item) => {
+          return { ...item, entry_weight: +item.entry_weight }
         })
-        setEntries(newEntries|| []);
-        setFilteredEntries(newEntries || []);             
+        setEntries(newEntries || []);
+        setFilteredEntries(newEntries || []);
         console.log('Entries: ', newEntries);
         makeCollectorList(entries)
-      } catch {}
+      } catch { }
     })();
   }, []);
-  
+
+  const mapDayToMonth = entries.map(x => ({ ...x, entry_date: new Date(x.entry_date).getMonth() }));
+
+  console.log(mapDayToMonth);
+
+  // get the total of weight of the same item_id
+  const totalsByMonths = mapDayToMonth.reduce((acc, item) => {
+    let existMaterial = acc.find(({ entry_date }) => item.entry_date == entry_date);
+    if (existMaterial) {
+      existMaterial.entry_weight += item.entry_weight
+      console.log(existMaterial.entry_weight)
+    } else {
+      acc.push({ ...item })
+    }
+    return acc
+  }, [])
+  console.log(totalsByMonths)
+
+
+
 
   // useEffect(() => {
   //   (async () => {
@@ -68,36 +88,36 @@ export default function SourceEntriesList({ collectors, items }) {
   //       } catch {}
   //     } else {
   //       let [entriesDateRange] = await Promise.all([getListOfSourcesForCollector()]);
-        
+
   //       setEntries(entriesDateRange);
   //       setFilteredEntries(entriesDateRange || []);
-       
+
   //     }
   //   })();
   // }, [startDate, endDate]);
 
   // console.log(total);
 
-	const updateFilter = () => {
+  const updateFilter = () => {
     let itemSelection = document.getElementById('itemSelection').value;
     let sourceSelection = document.getElementById('collectorSelection').value;
 
     if (sourceSelection === 'allCollectors' && itemSelection === 'allItems') {
-      setFilteredEntries(entries);     
+      setFilteredEntries(entries);
     } else if (sourceSelection === 'allCollectors') {
       let filtered = entries.filter((entry) => {
         if (entry['item_id'] === +itemSelection) {
           return entry;
         }
       });
-      setFilteredEntries(filtered);      
+      setFilteredEntries(filtered);
     } else if (itemSelection === 'allItems') {
       let filtered = entries.filter((entry) => {
         if (entry['source_id'] === +sourceSelection) {
           return entry;
         }
       });
-      setFilteredEntries(filtered);     
+      setFilteredEntries(filtered);
     } else {
       let filtered = entries.filter((entry) => {
         if (entry['source_id'] === +sourceSelection) {
@@ -109,26 +129,26 @@ export default function SourceEntriesList({ collectors, items }) {
           return entry;
         }
       });
-      setFilteredEntries(filtered);     
+      setFilteredEntries(filtered);
     }
   };
-// get the total of weight of the same item_id
-  const totals = entries.reduce((acc, item) => {    
-    let existMaterial = acc.find(({item_id}) => item.item_id == item_id);   
-    if(existMaterial) {     
+  // get the total of weight of the same item_id
+  const totals = entries.reduce((acc, item) => {
+    let existMaterial = acc.find(({ item_id }) => item.item_id == item_id);
+    if (existMaterial) {
       existMaterial.entry_weight += item.entry_weight
       console.log(existMaterial.entry_weight)
     } else {
-      acc.push({...item})
-    }   
+      acc.push({ ...item })
+    }
     return acc
   }, [])
 
   const makeCollectorList = (entries) => {
     let uniqueCollectorEntries = entries.distinct
   }
-  
- 
+
+
 
   // console.log(totals);
   console.log('Filtered entries: ', filteredEntries);
@@ -210,61 +230,61 @@ export default function SourceEntriesList({ collectors, items }) {
                 // dateRangeFilter();
               }}
             />
-          </div>     
+          </div>
         </div>
 
         <table>
           <thead>
             <tr>
-              <th> COLLECTOR</th>             
+              <th> COLLECTOR</th>
               <th> MATERIALS </th>
               <th> DATE </th>
-              <th> WEIGHT </th>             
+              <th> WEIGHT </th>
               <th></th>
             </tr>
           </thead>
           <tbody>
             {filteredEntries
               ? filteredEntries.map((entry, index) => (
-                  <tr key={index}>
-                    <td>{entry.company}</td>
-                    {/* <td> P1 </td> */}
-                    <td> {entry.item_name} </td>
-                    <td> {entry.entry_date} </td>
-                    <td> {entry.entry_weight} kg </td>                 
-                    <td>
-                      {/* <IconButton onClick={() => selectEntry(entry, 'edit')}>
+                <tr key={index}>
+                  <td>{entry.company}</td>
+                  {/* <td> P1 </td> */}
+                  <td> {entry.item_name} </td>
+                  <td> {entry.entry_date} </td>
+                  <td> {entry.entry_weight} kg </td>
+                  <td>
+                    {/* <IconButton onClick={() => selectEntry(entry, 'edit')}>
                         <EditIcon sx={{ color: '#606f89' }} />
                       </IconButton>
                       <IconButton onClick={() => selectEntry(entry, 'delete')}>
                         <Delete sx={{ color: '#606f89' }} />
-                      </IconButton> */} 
-                    </td>
-                  </tr>
-                ))
+                      </IconButton> */}
+                  </td>
+                </tr>
+              ))
               : null}
           </tbody>
         </table>
-<br/><br/><br/>
+        <br /><br /><br />
         <table>
           <thead>
-            <tr>                       
-              <th> MATERIALS </th>            
-              <th> TOTAL WEIGHT </th>                        
+            <tr>
+              <th> MATERIALS </th>
+              <th> TOTAL WEIGHT </th>
             </tr>
           </thead>
           <tbody>
-          {totals
+            {totals
               ? totals.map((entry, index) => (
-                  <tr key={index}>                                   
-                    <td> {entry.item_name} </td>                  
-                    <td> {entry.entry_weight.toFixed(2)} kg </td>                                    
-                  </tr>
-                ))
-              : null}              
+                <tr key={index}>
+                  <td> {entry.item_name} </td>
+                  <td> {entry.entry_weight.toFixed(2)} kg </td>
+                </tr>
+              ))
+              : null}
           </tbody>
         </table>
-      </div>  
+      </div>
     </>
   );
 
