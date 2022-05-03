@@ -100,6 +100,9 @@ const NavBar = ({ user}) => {
               <AnchorUI href="newEntry">New Entry</AnchorUI>
             </LinkUI>
             <LinkUI>
+              <AnchorUI href="viewSourceData">Source Data</AnchorUI>
+            </LinkUI>
+            <LinkUI>
               <AnchorUI href="viewData">Data</AnchorUI>
             </LinkUI>
             <LinkUI>
@@ -127,8 +130,6 @@ const NavBar = ({ user}) => {
           <AccountType>Collector Account</AccountType> 
           <ListUI>
           <LinkUI>
-            <AnchorUI href="viewSourceData">Source Data</AnchorUI>
-          </LinkUI><LinkUI>
               <AnchorUI href="bluetooth">Bluetooth</AnchorUI>
           </LinkUI><LinkUI>
               <AnchorUI href="account-type">Account Type</AnchorUI>
