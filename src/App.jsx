@@ -26,37 +26,9 @@ function App() {
   const [user, setUser] = useState(null);
   const [addedSomething, setAddedSomething] = useState(false);
 
-  // const collectors = [
-  //   {
-  //     account_id: 1,
-  //     company: "Scharbach Recycling",
-  //     name: "Plastic",
-  //     date: "2022-04-13",
-  //     weight: 15.00
-  //   },
-  //   {
-  //     account_id: 1,
-  //     company: "Scharbach Recycling",
-  //     name: "Cardboard",
-  //     date: "2022-04-13",
-  //     weight: 20.00
-  //   },
-  //   {
-  //     account_id: 2,
-  //     company: "Seymour Waste",
-  //     name: "Plastic",
-  //     date: "2022-04-14",
-  //     weight: 30.00
-  //   },
-  // ]
-  //
-  // let addedSomething = false;
-
   const [formValue, setFormValue] = useState({});
   const [accountId, setAccountId] = useState();
   
-
-
   useEffect(() => {
     (async () => {     
       try {
@@ -64,7 +36,6 @@ function App() {
           getLoggedInUser(),         
           getSources(),
           getItems(),
-          getCollectors(),
         ]); // returns new promise with all data
         if (!user.error) {
           setUser(user);
@@ -80,7 +51,6 @@ function App() {
       } catch {}
     })();
     console.log("app's useEffect was called");
-    console.log('collectors: ', collectors);
     console.log('addSomething from app', addedSomething);
   }, [addedSomething]);
  

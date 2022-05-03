@@ -238,7 +238,7 @@ export default function SourceEntriesList({ collectors, items }) {
                       </IconButton>
                       <IconButton onClick={() => selectEntry(entry, 'delete')}>
                         <Delete sx={{ color: '#606f89' }} />
-                      </IconButton> */}
+                      </IconButton> */} 
                     </td>
                   </tr>
                 ))

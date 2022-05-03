@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export async function getLoggedInUser() {
+export async function getLoggedInUser() { 
   return (await axios.get('/api/profile')).data;
 }
 
