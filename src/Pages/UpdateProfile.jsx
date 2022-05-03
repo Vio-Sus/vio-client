@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { updateAccountType } from '../common/network';
+import { updateAccountProfile } from '../common/network';
 import { ValidateEmail } from '../common/validation';
 
 export default function UpdateProfile() {
@@ -52,7 +52,7 @@ export default function UpdateProfile() {
 
     try {
       console.log('sending form...', formContent);
-      let res = await updateAccountType(formContent);
+      let res = await updateAccountProfile(formContent);
       if(res.data.error) {
         return setMsg(res.data.error);
       }

@@ -8,6 +8,11 @@ export async function updateAccountType(formContent) {
   return await axios.put(`/api/profile`, { data: formContent });
 }
 
+export async function updateAccountProfile(formContent) {
+  return await axios.put(`/api/profile`, { data: formContent });
+}
+
+
 // items
 export async function getItems() {
   return (await axios.get('/api/items')).data;
