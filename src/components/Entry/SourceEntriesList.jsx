@@ -45,15 +45,15 @@ export default function SourceEntriesList({ collectors, items }) {
     'December'
   ];
 
-  const NUMBER_CFG = {count: 7, min: -100, max: 100};
-  const labels = months({count: 7});
+  const NUMBER_CFG = {count: 12, min: -100, max: 100};
+  const labels = months({count: 12});
 
   const data = {
     labels: labels,
     datasets: [
       {
         label: 'Dataset 1',
-        data: [10, 20, 10],
+        data: [10,20,30],
         borderColor: "red",
         backgroundColor: "white",
       }
@@ -134,9 +134,21 @@ export default function SourceEntriesList({ collectors, items }) {
     }
     return acc
   }, [])
-  console.log(totalsByMonths)
+  //console.log(totalsByMonths)
 
-
+  function formatTotalsByMonths() {
+    let formattedTotalsByMonths = [];
+    for(let i = 0; i <12; i++){
+      let found= totalsByMonths.find((item ) => item.entry_date === i);
+      if(found){
+        formattedTotalsByMonths.push(parseFloat(found.entry_weight.toFixed(2)))
+      }else{
+        formattedTotalsByMonths.push(0)
+      }
+    }
+    return formattedTotalsByMonths
+  }
+console.log()
 
 
   // useEffect(() => {
