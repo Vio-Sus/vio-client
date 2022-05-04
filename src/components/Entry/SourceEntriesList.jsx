@@ -358,6 +358,7 @@ export default function SourceEntriesList({ collectors, items }) {
         <br />
         <br />
         <br />
+        <h3 style={{margin: "0 auto"}}>Summary</h3>
         <table>
           <thead>
             <tr>
