@@ -86,7 +86,7 @@ export default function UpdateProfile({user}) {
         <input
           name="email"
           type="text"
-          placeholder={JSON.stringify(user.user.email).replace(/['"]+/g, '')}         
+          value={JSON.stringify(user.user.email).replace(/['"]+/g, '')}         
           onChange={(e) => handleChange(e)}
           disabled
         />              
