@@ -10,96 +10,9 @@ import { Line } from 'react-chartjs-2';
 // import Delete from '@mui/icons-material/Delete';
 // import EditIcon from '@mui/icons-material/Edit';
 
-// function transparentize(value, opacity) {
-//   var alpha = opacity === undefined ? 0.5 : 1 - opacity;
-//   return colorLib(value).alpha(alpha).rgbString();
-// }
-const options = {
-  responsive: true,
-  spanGaps: true,
-  plugins: {
-    legend: {
-      position: 'right',
-      labels: {
-        usePointStyle:true,
-        boxWidth: 6,
-        boxHeight: 6,
-        padding: 20,
-        //legend styling
-      }
-    },
-    title: {
-      display: true,
-      text: "heeee",
-    },
-  },
-};
-const MONTHS = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December'
-];
-
-function months(config) {
-  var cfg = config || {};
-  var count = cfg.count || 12;
-  var section = cfg.section;
-  var values = [];
-  var i, value;
-
-  for (i = 0; i < count; ++i) {
-    value = MONTHS[Math.ceil(i) % 12];
-    values.push(value.substring(0, section));
-  }
-
-  return values;
-}
-
-const labels = months({count: 7});
-
-const NUMBER_CFG = {min: -100, max: 100};
-
-const data = {
-  labels,
-  datasets: [
-    {
-      label: 'Dataset 1',
-      data: [10, 20, 30],
-      borderColor: 'rgb(255, 99, 132)',
-      backgroundColor: 'rgb(255,255,255)',
-    }
-  ]
-};
-
-const config = {
-  type: 'line',
-  data: data,
-  options: {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top',
-      },
-      title: {
-        display: true,
-        text: 'Chart.js Line Chart'
-      }
-    }
-  },
-};
-
-export default function SourceEntriesList({ collectors, items }) {
-  const [entries, setEntries] = useState([]);
-  const [filteredEntries, setFilteredEntries] = useState([]);
+export default function SourceEntriesList() {
+	const [entries, setEntries] = useState([]);
+	const [filteredEntries, setFilteredEntries] = useState([]);
   const [collectorList, setCollectorList] = useState([]);
   const [itemList, setItemList] = useState([]);
   const [total, setTotals] = useState([]);
@@ -253,10 +166,10 @@ console.log(formatTotalsByMonths())
       setFilteredEntries(filtered);
     }
   };
-  // get the total of weight of the same item_id
-  const totals = entries.reduce((acc, item) => {
-    let existMaterial = acc.find(({ item_id }) => item.item_id == item_id);
-    if (existMaterial) {
+// get the total of weight of the same item_id
+  const totals = entries.reduce((acc, item) => {    
+    let existMaterial = acc.find(({item_id}) => item.item_id === item_id);   
+    if(existMaterial) {     
       existMaterial.entry_weight += item.entry_weight
       console.log(existMaterial.entry_weight)
     } else {
@@ -399,7 +312,6 @@ console.log(formatTotalsByMonths())
               : null}
           </tbody>
         </table>
-        <Line options={config} data={data}/>
       </div>
     </>
   );
