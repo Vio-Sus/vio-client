@@ -12,10 +12,11 @@ import { Line } from 'react-chartjs-2';
 // import Delete from '@mui/icons-material/Delete';
 // import EditIcon from '@mui/icons-material/Edit';
 
-export default function SourceEntriesList({ collectors, items }) {
-  const [entries, setEntries] = useState([]);
-  const [filteredEntries, setFilteredEntries] = useState([]);
+export default function SourceEntriesList() {
+	const [entries, setEntries] = useState([]);
+	const [filteredEntries, setFilteredEntries] = useState([]);
   const [collectorList, setCollectorList] = useState([]);
+  const [itemList, setItemList] = useState([]);
   const [total, setTotals] = useState([]);
   const [formattedData, setFormattedData] = useState([]);
 
@@ -192,11 +193,11 @@ export default function SourceEntriesList({ collectors, items }) {
 
   const updateFilter = () => {
     let itemSelection = document.getElementById('itemSelection').value;
-    let sourceSelection = document.getElementById('collectorSelection').value;
+    let collectorSelection = document.getElementById('collectorSelection').value;
 
-    if (sourceSelection === 'allCollectors' && itemSelection === 'allItems') {
-      setFilteredEntries(entries);
-    } else if (sourceSelection === 'allCollectors') {
+    if (collectorSelection === 'allCollectors' && itemSelection === 'allItems') {
+      setFilteredEntries(entries);     
+    } else if (collectorSelection === 'allCollectors') {
       let filtered = entries.filter((entry) => {
         if (entry['item_id'] === +itemSelection) {
           return entry;
@@ -205,14 +206,14 @@ export default function SourceEntriesList({ collectors, items }) {
       setFilteredEntries(filtered);
     } else if (itemSelection === 'allItems') {
       let filtered = entries.filter((entry) => {
-        if (entry['source_id'] === +sourceSelection) {
+        if (entry['account_id'] === +collectorSelection) {
           return entry;
         }
       });
       setFilteredEntries(filtered);
     } else {
       let filtered = entries.filter((entry) => {
-        if (entry['source_id'] === +sourceSelection) {
+        if (entry['account_id'] === +collectorSelection) {
           return entry;
         }
       });
@@ -265,7 +266,7 @@ export default function SourceEntriesList({ collectors, items }) {
             <label>Collectors</label>
             <select id="collectorSelection" onChange={(e) => updateFilter()}>
               <option value="allCollectors">All</option>
-              {entries.map((collector, key) => (
+              {collectorList.map((collector, key) => (
                 <option key={key} value={collector.account_id}>
                   {collector.company}
                 </option>
@@ -284,7 +285,7 @@ export default function SourceEntriesList({ collectors, items }) {
             <label>Materials</label>
             <select id="itemSelection" onChange={(e) => updateFilter()}>
               <option value="allItems">All</option>
-              {entries.map((item, key) => (
+              {itemList.map((item, key) => (
                 <option key={key} value={item.item_id}>
                   {item.item_name}
                 </option>

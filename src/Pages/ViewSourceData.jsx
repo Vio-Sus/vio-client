@@ -14,7 +14,7 @@ const StyledLink = styled(Link)`
     position: relative;
     `;
 
-    const ViewSourceDataPage = ({ collectors, items }) => {
+    const ViewSourceDataPage = () => {
         const [isEditing, setIsEditing] = useState(false);
         const [selectedEntry, setSelectedEntry] = useState(null);
         const [isDeleting, setIsDeleting] = useState(false);
@@ -76,7 +76,7 @@ const StyledLink = styled(Link)`
                                 <h3>Here's an overview of your collections.</h3>
                             </div>
                             <div className="buttonCont">
-                                <StyledLink to="/viewGraph">
+                                <StyledLink to="/viewSourceGraph">
                                     <Button buttontext="Graph View" buttoncolor="#4A4A4A" />
                                 </StyledLink>
 
@@ -92,26 +92,8 @@ const StyledLink = styled(Link)`
                                 </StyledLink> */}
                             </div>
                         </header>
-                        <SourceEntriesList
-                            sources={collectors}
-                            items={items}
-                        />
-                        {isEditing && (
-                            <EditForm
-                                entry={selectedEntry}
-                                setIsEditing={setIsEditing}
-                                sources={collectors}
-                                items={items}
-                            />
-                        )}
-                        {isDeleting && (
-                            <DeleteConfirmation
-                                entry={selectedEntry}
-                                setIsDeleting={setIsDeleting}
-                                sources={collectors}
-                                items={items}
-                            />
-                        )}
+                        <SourceEntriesList/>
+
                     </div>
                 </>
             )
