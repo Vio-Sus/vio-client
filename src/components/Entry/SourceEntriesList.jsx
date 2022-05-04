@@ -84,7 +84,7 @@ export default function SourceEntriesList({ collectors, items }) {
       },
       title: {
         display: true,
-        text: 'Total weight over time',
+        text: `Total weight over time for (${new Date().getFullYear()})`,
       },
     },
   };
