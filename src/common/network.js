@@ -9,7 +9,7 @@ export async function updateAccountType(formContent) {
 }
 
 export async function updateAccountProfile(formContent) {
-  return await axios.put(`/api/profile`, { data: formContent });
+  return await axios.put(`/api/profileCollector`, { data: formContent });
 }
 
 

@@ -2,26 +2,22 @@ import { useState } from 'react';
 import { updateAccountProfile } from '../common/network';
 import { ValidateEmail } from '../common/validation';
 
-export default function UpdateProfile() {
-  const [fname, setfName] = useState('');
-  const [lname, setlName] = useState('');
+export default function UpdateProfile() { 
+  const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
-  const [companyName, setCompanyName] = useState('');
+  const [company, setCompanyName] = useState('');
   const [msg, setMsg] = useState('');
   const handleChange = (e) => {
-    let inputName = e.target.name;
+    let inputName = e.target.name;    
     //console.log('inputName: ', inputName, 'inputValue: ', e.target.value);
-    switch (inputName) {
-      case 'firstname':
-        setfName(e.target.value);
-        break;
-      case 'lastname':
-        setlName(e.target.value);
+    switch (inputName) {     
+      case 'nickname':
+        setNickname(e.target.value);
         break;
       case 'email':
         setEmail(e.target.value);
         break;
-      case 'companyname':
+      case 'company':
         setCompanyName(e.target.value);
         break;
       default:
@@ -32,16 +28,15 @@ export default function UpdateProfile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     let form = document.getElementById('new-source-form');
-    let formContent = {
-      fname,
-      lname,
+    let formContent = {      
+      nickname,
       email,
-      companyName,
+      company,
     };
-    console.log(fname.length); 
-    if (fname.length === 0 || lname.length === 0 || email.length === 0 || companyName === 0) {
+    console.log(formContent); 
+    if (nickname.length === 0 || email.length === 0 || company === 0) {
       return setMsg(
-        'Name, address, and email of source must be filled; Try again'
+        'Name, company, and email of source must be filled; Try again'
       );
     }
    
@@ -66,34 +61,26 @@ export default function UpdateProfile() {
     <>     
       <form onSubmit={handleSubmit} id="new-source-form" noValidate>
       <h2>Update Account Profile</h2>
-        <label>First Name:</label>
+        <label>Nickname:</label>
         <br />
         <input
-          name="firstname"
+          name="nickname"
           type="text"
           onChange={(e) => handleChange(e)}
-        ></input>
-          <br />
-          <label>Last Name:</label>
-        <br />
-        <input
-          name="lastname"
-          type="text"
-          onChange={(e) => handleChange(e)}
-        ></input>
+        ></input>               
           <br />
         <label>Email:</label>
         <br />
         <input
-          type="text"
           name="email"
+          type="text"         
           onChange={(e) => handleChange(e)}
         />              
         <br />
         <label>Company Name:</label>
         <br />
         <input
-          name="companyname"
+          name="company"
           type="text"
           onChange={(e) => handleChange(e)}
         ></input>               
