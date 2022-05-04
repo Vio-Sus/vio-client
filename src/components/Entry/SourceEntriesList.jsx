@@ -54,6 +54,35 @@ export default function SourceEntriesList({ collectors, items }) {
     })();
   }, []);
   
+  // get the total weight of per month
+  const mapDayToMonth = entries.map(x => ({ ...x, entry_date: new Date(x.entry_date).getMonth() }));
+
+  console.log(mapDayToMonth);
+  const totalsByMonths = mapDayToMonth.reduce((acc, item) => {
+    let existMaterial = acc.find(({ entry_date }) => item.entry_date == entry_date);
+    if (existMaterial) {
+      existMaterial.entry_weight += item.entry_weight
+      console.log(existMaterial.entry_weight)
+    } else {
+      acc.push({ ...item })
+    }
+    return acc
+  }, [])
+  console.log(totalsByMonths)
+
+  let formattedTotalsByMonths = [];
+  function formatTotalsByMonths(){
+    for(let i = 0; i <12; i++){
+      let found= totalsByMonths.find((item ) => item.entry_date == i);
+      if(found){
+        formattedTotalsByMonths.push(parseFloat(found.entry_weight.toFixed(2)))
+      }else{
+        formattedTotalsByMonths.push(0)
+      }
+    }
+    return formattedTotalsByMonths
+  }
+console.log(formatTotalsByMonths())
 
   // useEffect(() => {
   //   (async () => {
