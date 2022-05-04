@@ -134,7 +134,7 @@ export default function SourceEntriesList({ collectors, items }) {
     }
     return acc
   }, [])
-  //console.log(totalsByMonths)
+  console.log(totalsByMonths)
 
   function formatTotalsByMonths() {
     let formattedTotalsByMonths = [];
@@ -146,9 +146,10 @@ export default function SourceEntriesList({ collectors, items }) {
         formattedTotalsByMonths.push(0)
       }
     }
+    console.log(formattedTotalsByMonths)
     return formattedTotalsByMonths
   }
-console.log()
+console.log(formatTotalsByMonths())
 
 
   // useEffect(() => {
