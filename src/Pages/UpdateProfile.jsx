@@ -72,7 +72,7 @@ export default function UpdateProfile({user}) {
     <>     
       <StyledForm onSubmit={handleSubmit} id="new-source-form" noValidate>
       <h2>Update Account Profile</h2>
-        <label>Nickname:</label>
+        <label>Nickname</label>
         <br />
         <input
           name="nickname"
@@ -81,7 +81,7 @@ export default function UpdateProfile({user}) {
           onChange={(e) => handleChange(e)}
         ></input>               
           <br />
-        <label>Email:</label>
+        <label>Email</label>
         <br />
         <input
           name="email"
@@ -91,7 +91,7 @@ export default function UpdateProfile({user}) {
           disabled
         />              
         <br />
-        <label>Company Name:</label>
+        <label>Company Name</label>
         <br />
         <input
           name="company"
