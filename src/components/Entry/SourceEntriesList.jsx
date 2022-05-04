@@ -1,11 +1,80 @@
 import { useState, useEffect } from 'react';
 import { getCollectors, getEntriesByDateRangeForCollector } from '../../common/network';
 import styled from 'styled-components';
+import Chart from 'chart.js/auto';
+import { Line } from 'react-chartjs-2';
 // import Summary from '../Summary/Summary';
 // import DateFilter from '../Filter/DateFilter';
 // import IconButton from '@mui/material/IconButton';
 // import Delete from '@mui/icons-material/Delete';
 // import EditIcon from '@mui/icons-material/Edit';
+
+// function transparentize(value, opacity) {
+//   var alpha = opacity === undefined ? 0.5 : 1 - opacity;
+//   return colorLib(value).alpha(alpha).rgbString();
+// }
+
+const MONTHS = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+];
+
+function months(config) {
+  var cfg = config || {};
+  var count = cfg.count || 12;
+  var section = cfg.section;
+  var values = [];
+  var i, value;
+
+  for (i = 0; i < count; ++i) {
+    value = MONTHS[Math.ceil(i) % 12];
+    values.push(value.substring(0, section));
+  }
+
+  return values;
+}
+
+const labels = months({count: 7});
+
+const NUMBER_CFG = {min: -100, max: 100};
+const data = {
+  labels,
+  datasets: [
+    {
+      label: 'Dataset 1',
+      data: [10, 20, 30],
+      borderColor: 'rgb(255, 99, 132)',
+      backgroundColor: 'rgb(255,255,255)',
+    }
+  ]
+};
+
+const config = {
+  type: 'line',
+  data: data,
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: true,
+        text: 'Chart.js Line Chart'
+      }
+    }
+  },
+};
 
 export default function SourceEntriesList({ collectors, items }) {
   const [entries, setEntries] = useState([]);
@@ -53,7 +122,7 @@ export default function SourceEntriesList({ collectors, items }) {
         makeCollectorList(entries)
       } catch { }
     })();
-  }, []);
+  }, [defaultStartDate, filteredEntries, todayDate]);
 
   const mapDayToMonth = entries.map(x => ({ ...x, entry_date: new Date(x.entry_date).getMonth() }));
 
@@ -61,7 +130,7 @@ export default function SourceEntriesList({ collectors, items }) {
 
   // get the total of weight of the same item_id
   const totalsByMonths = mapDayToMonth.reduce((acc, item) => {
-    let existMaterial = acc.find(({ entry_date }) => item.entry_date == entry_date);
+    let existMaterial = acc.find(({ entry_date }) => item.entry_date === entry_date);
     if (existMaterial) {
       existMaterial.entry_weight += item.entry_weight
       console.log(existMaterial.entry_weight)
@@ -284,6 +353,7 @@ export default function SourceEntriesList({ collectors, items }) {
               : null}
           </tbody>
         </table>
+        <Line options={config} data={data} />
       </div>
     </>
   );

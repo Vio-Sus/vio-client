@@ -111,6 +111,7 @@ export default function EntriesList({ selectEntry, sources, items }) {
     }
   };
 
+
   return (
     <>
 
@@ -236,7 +237,7 @@ export default function EntriesList({ selectEntry, sources, items }) {
         </table>
       </div>
       {/* <Summary startDate={'2022-01-01'} endDate={'2022-03-10'} /> */}
-      {/* <Summary startDate={startDate} endDate={endDate} /> */}
+      {/* <Summary startDate={startDate} endDate={endDate} /> */}  
     </>
   );
 }
