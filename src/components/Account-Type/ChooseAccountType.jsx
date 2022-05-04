@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { updateAccountType } from '../../common/network';
 import { useNavigate } from 'react-router-dom';
 
-
 const SourceCont = styled.div`
   display: flex;
   flex-direction: column;
@@ -21,13 +20,11 @@ const StyledForm = styled.form`
   text-align: center;
 `;
 
-
 const newAccountType = () => ({
     account_type_id: 0
 });
 
-export default function Form({
- 
+export default function Form({ 
   setAddedSomething,
   addedSomething,  
 }) {
