@@ -12,11 +12,13 @@ const StyledForm = styled.form`
   text-align: left;
 `;
 
-export default function UpdateProfile() { 
+export default function UpdateProfile({user}) { 
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
   const [company, setCompanyName] = useState('');
   const [msg, setMsg] = useState('');
+
+  console.log("USER" + JSON.stringify(user.user.email).replace(/['"]+/g, ''))
   const handleChange = (e) => {
     let inputName = e.target.name;       
     switch (inputName) {     
@@ -75,6 +77,7 @@ export default function UpdateProfile() {
         <input
           name="nickname"
           type="text"
+          placeholder="nickname"
           onChange={(e) => handleChange(e)}
         ></input>               
           <br />
@@ -82,8 +85,10 @@ export default function UpdateProfile() {
         <br />
         <input
           name="email"
-          type="text"         
+          type="text"
+          placeholder={JSON.stringify(user.user.email).replace(/['"]+/g, '')}         
           onChange={(e) => handleChange(e)}
+          disabled
         />              
         <br />
         <label>Company Name:</label>
@@ -91,6 +96,7 @@ export default function UpdateProfile() {
         <input
           name="company"
           type="text"
+          placeholder="company name"
           onChange={(e) => handleChange(e)}
         ></input>               
         <div className="button-section">

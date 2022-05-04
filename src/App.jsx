@@ -102,7 +102,7 @@ function App() {
               ></Route>
               <Route
                 path="update-profile"
-                element={<UpdateProfilePage handleSubmit={formValue => setFormValue(formValue)} handlefo/>}
+                element={<UpdateProfilePage handleSubmit={formValue => setFormValue(formValue)} user={user} handlefo/>}
               ></Route>
                <Route
                 path="viewSourceData"
