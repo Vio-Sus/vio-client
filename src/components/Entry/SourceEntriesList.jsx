@@ -3,6 +3,7 @@ import { getCollectors, getEntriesByDateRangeForCollector } from '../../common/n
 import styled from 'styled-components';
 import Chart from 'chart.js/auto';
 import { Line } from 'react-chartjs-2';
+
 // import Summary from '../Summary/Summary';
 // import DateFilter from '../Filter/DateFilter';
 // import IconButton from '@mui/material/IconButton';
@@ -13,7 +14,26 @@ import { Line } from 'react-chartjs-2';
 //   var alpha = opacity === undefined ? 0.5 : 1 - opacity;
 //   return colorLib(value).alpha(alpha).rgbString();
 // }
-
+const options = {
+  responsive: true,
+  spanGaps: true,
+  plugins: {
+    legend: {
+      position: 'right',
+      labels: {
+        usePointStyle:true,
+        boxWidth: 6,
+        boxHeight: 6,
+        padding: 20,
+        //legend styling
+      }
+    },
+    title: {
+      display: true,
+      text: "heeee",
+    },
+  },
+};
 const MONTHS = [
   'January',
   'February',
@@ -47,6 +67,7 @@ function months(config) {
 const labels = months({count: 7});
 
 const NUMBER_CFG = {min: -100, max: 100};
+
 const data = {
   labels,
   datasets: [
@@ -80,6 +101,7 @@ export default function SourceEntriesList({ collectors, items }) {
   const [entries, setEntries] = useState([]);
   const [filteredEntries, setFilteredEntries] = useState([]);
   const [collectorList, setCollectorList] = useState([]);
+  const [itemList, setItemList] = useState([]);
   const [total, setTotals] = useState([]);
 
 
@@ -116,11 +138,27 @@ export default function SourceEntriesList({ collectors, items }) {
         const newEntries = entries.map((item) => {
           return { ...item, entry_weight: +item.entry_weight }
         })
-        setEntries(newEntries || []);
-        setFilteredEntries(newEntries || []);
+        
+        setEntries(newEntries|| []);
+        setFilteredEntries(newEntries || []);             
         console.log('Entries: ', newEntries);
-        makeCollectorList(entries)
-      } catch { }
+
+        // Reduce the entries list so you only have unique collectors (for dropdown menu)
+        const uniqueCollectors = entries.reduce(
+          (acc, curr) =>
+            acc.find((e) => e.account_id === curr.account_id) ? acc : [...acc, curr],
+          []
+        );
+        setCollectorList(uniqueCollectors);
+
+        // Reduce the entries list so you only have unique items (for dropdown menu)
+        const uniqueItems = entries.reduce(
+          (acc, curr) =>
+            acc.find((e) => e.item_id === curr.item_id) ? acc : [...acc, curr],
+          []
+        );
+        setItemList(uniqueItems);
+      } catch {}
     })();
   }, [defaultStartDate, filteredEntries, todayDate]);
 
@@ -183,11 +221,11 @@ console.log(formatTotalsByMonths())
 
   const updateFilter = () => {
     let itemSelection = document.getElementById('itemSelection').value;
-    let sourceSelection = document.getElementById('collectorSelection').value;
+    let collectorSelection = document.getElementById('collectorSelection').value;
 
-    if (sourceSelection === 'allCollectors' && itemSelection === 'allItems') {
-      setFilteredEntries(entries);
-    } else if (sourceSelection === 'allCollectors') {
+    if (collectorSelection === 'allCollectors' && itemSelection === 'allItems') {
+      setFilteredEntries(entries);     
+    } else if (collectorSelection === 'allCollectors') {
       let filtered = entries.filter((entry) => {
         if (entry['item_id'] === +itemSelection) {
           return entry;
@@ -196,14 +234,14 @@ console.log(formatTotalsByMonths())
       setFilteredEntries(filtered);
     } else if (itemSelection === 'allItems') {
       let filtered = entries.filter((entry) => {
-        if (entry['source_id'] === +sourceSelection) {
+        if (entry['account_id'] === +collectorSelection) {
           return entry;
         }
       });
       setFilteredEntries(filtered);
     } else {
       let filtered = entries.filter((entry) => {
-        if (entry['source_id'] === +sourceSelection) {
+        if (entry['account_id'] === +collectorSelection) {
           return entry;
         }
       });
@@ -226,13 +264,7 @@ console.log(formatTotalsByMonths())
     }
     return acc
   }, [])
-
-  const makeCollectorList = (entries) => {
-    let uniqueCollectorEntries = entries.distinct
-  }
-
-
-
+  
   // console.log(totals);
   console.log('Filtered entries: ', filteredEntries);
 
@@ -258,7 +290,7 @@ console.log(formatTotalsByMonths())
             <label>Collectors</label>
             <select id="collectorSelection" onChange={(e) => updateFilter()}>
               <option value="allCollectors">All</option>
-              {entries.map((collector, key) => (
+              {collectorList.map((collector, key) => (
                 <option key={key} value={collector.account_id}>
                   {collector.company}
                 </option>
@@ -277,7 +309,7 @@ console.log(formatTotalsByMonths())
             <label>Materials</label>
             <select id="itemSelection" onChange={(e) => updateFilter()}>
               <option value="allItems">All</option>
-              {entries.map((item, key) => (
+              {itemList.map((item, key) => (
                 <option key={key} value={item.item_id}>
                   {item.item_name}
                 </option>
@@ -367,7 +399,7 @@ console.log(formatTotalsByMonths())
               : null}
           </tbody>
         </table>
-        <Line options={config} data={data} />
+        <Line options={config} data={data}/>
       </div>
     </>
   );
