@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
-import { getCollectors, getEntriesByDateRangeForCollector } from '../../common/network';
+import {
+  getCollectors,
+  getEntriesByDateRangeForCollector,
+} from '../../common/network';
 import styled from 'styled-components';
 import Chart from 'chart.js/auto';
 import { Line } from 'react-chartjs-2';
@@ -14,6 +17,7 @@ export default function SourceEntriesList({ collectors, items }) {
   const [filteredEntries, setFilteredEntries] = useState([]);
   const [collectorList, setCollectorList] = useState([]);
   const [total, setTotals] = useState([]);
+  const [formattedData, setFormattedData] = useState([]);
 
   function months(config) {
     var cfg = config || {};
@@ -21,12 +25,12 @@ export default function SourceEntriesList({ collectors, items }) {
     var section = cfg.section;
     var values = [];
     var i, value;
-  
+
     for (i = 0; i < count; ++i) {
       value = MONTHS[Math.ceil(i) % 12];
       values.push(value.substring(0, section));
     }
-  
+
     return values;
   }
 
@@ -42,41 +46,48 @@ export default function SourceEntriesList({ collectors, items }) {
     'September',
     'October',
     'November',
-    'December'
+    'December',
   ];
 
-  const NUMBER_CFG = {count: 12, min: -100, max: 100};
-  const labels = months({count: 12});
+  const labels = months({ count: 12 });
 
   const data = {
-    labels: labels,
+    labels,
     datasets: [
       {
         label: 'Dataset 1',
-        data: [10,20,30],
-        borderColor: "red",
-        backgroundColor: "white",
-      }
-    ]
+        data: formattedData,
+        borderColor: 'red',
+        backgroundColor: 'white',
+      },
+    ],
   };
 
   const options = {
-    type: 'line',
-    data: data,
-    options: {
-      responsive: true,
-      plugins: {
-        legend: {
-          position: 'top',
+    scales: {
+      y: {
+        min: 0,
+      },
+    },
+    responsive: true,
+    spanGaps: true,
+    plugins: {
+      legend: {
+        display: false,
+        labels: {
+          usePointStyle: true,
+          boxWidth: 6,
+          boxHeight: 6,
+          padding: 20,
+          //legend styling
         },
-        title: {
-          display: true,
-          text: 'Chart.js Line Chart'
-        }
-      }
+      },
+      title: {
+        display: true,
+        text: 'Total weight over time',
+      },
     },
   };
-
 
   // Setting up dates
   const [startDate, setStartDate] = useState('');
@@ -103,54 +114,58 @@ export default function SourceEntriesList({ collectors, items }) {
         setStartDate(defaultStartDate);
         setEndDate(todayDate);
         setTotals(filteredEntries);
-        let test = `${new Date(todayDate).getFullYear()}-01-01`
+        //let test = `${new Date(todayDate).getFullYear()}-01-01`
         //console.log(test)
         let [entries] = await Promise.all([
-          getEntriesByDateRangeForCollector(`${new Date(todayDate).getFullYear()}-01-01`, todayDate),
+          getEntriesByDateRangeForCollector(
+            `${new Date(todayDate).getFullYear()}-01-01`,
+            todayDate
+          ),
         ]); // returns new promise with all data
         const newEntries = entries.map((item) => {
-          return { ...item, entry_weight: +item.entry_weight }
-        })
+          return { ...item, entry_weight: +item.entry_weight };
+        });
+        console.log('==========');
+        console.log(newEntries);
+        if (newEntries !== []) {
+          const mapDayToMonth = newEntries.map((x) => ({
+            ...x,
+            entry_date: new Date(x.entry_date).getMonth(),
+          }));
+          const totalsByMonths = mapDayToMonth.reduce((acc, item) => {
+            let existMaterial = acc.find(
+              ({ entry_date }) => item.entry_date === entry_date
+            );
+            if (existMaterial) {
+              existMaterial.entry_weight += item.entry_weight;
+              //console.log(existMaterial.entry_weight)
+            } else {
+              acc.push({ ...item });
+            }
+            return acc;
+          }, []);
+          let formattedTotalsByMonths = [];
+          for (let i = 0; i < 12; i++) {
+            let found = totalsByMonths.find((item) => item.entry_date === i);
+            if (found) {
+              formattedTotalsByMonths.push(
+                parseFloat(found.entry_weight.toFixed(2))
+              );
+            } else {
+              formattedTotalsByMonths.push(0);
+            }
+          }
+          setFormattedData(formattedTotalsByMonths);
+        }
         setEntries(newEntries || []);
         setFilteredEntries(newEntries || []);
-        console.log('Entries: ', newEntries);
-        makeCollectorList(entries)
-      } catch { }
+        //console.log('Entries: ', newEntries);
+        makeCollectorList(entries);
+      } catch (err) {
+        console.log(err);
+      }
     })();
   }, []);
-
-  const mapDayToMonth = entries.map(x => ({ ...x, entry_date: new Date(x.entry_date).getMonth() }));
-
-  //console.log(mapDayToMonth);
-
-  // get the total of weight of the same item_id
-  const totalsByMonths = mapDayToMonth.reduce((acc, item) => {
-    let existMaterial = acc.find(({ entry_date }) => item.entry_date === entry_date);
-    if (existMaterial) {
-      existMaterial.entry_weight += item.entry_weight
-      //console.log(existMaterial.entry_weight)
-    } else {
-      acc.push({ ...item })
-    }
-    return acc
-  }, [])
-  console.log(totalsByMonths)
-
-  function formatTotalsByMonths() {
-    let formattedTotalsByMonths = [];
-    for(let i = 0; i <12; i++){
-      let found= totalsByMonths.find((item ) => item.entry_date === i);
-      if(found){
-        formattedTotalsByMonths.push(parseFloat(found.entry_weight.toFixed(2)))
-      }else{
-        formattedTotalsByMonths.push(0)
-      }
-    }
-    console.log(formattedTotalsByMonths)
-    return formattedTotalsByMonths
-  }
-console.log(formatTotalsByMonths())
-
 
   // useEffect(() => {
   //   (async () => {
@@ -161,7 +176,7 @@ console.log(formatTotalsByMonths())
   //         ]);
   //         setEntries(entriesDateRange);
   //         console.log(entriesDateRange)
-  //         setFilteredEntries(entriesDateRange || []);          
+  //         setFilteredEntries(entriesDateRange || []);
   //       } catch {}
   //     } else {
   //       let [entriesDateRange] = await Promise.all([getListOfSourcesForCollector()]);
@@ -213,19 +228,17 @@ console.log(formatTotalsByMonths())
   const totals = entries.reduce((acc, item) => {
     let existMaterial = acc.find(({ item_id }) => item.item_id == item_id);
     if (existMaterial) {
-      existMaterial.entry_weight += item.entry_weight
-      console.log(existMaterial.entry_weight)
+      existMaterial.entry_weight += item.entry_weight;
+      console.log(existMaterial.entry_weight);
     } else {
-      acc.push({ ...item })
+      acc.push({ ...item });
     }
-    return acc
-  }, [])
+    return acc;
+  }, []);
 
   const makeCollectorList = (entries) => {
-    let uniqueCollectorEntries = entries.distinct
-  }
-
-
+    let uniqueCollectorEntries = entries.distinct;
+  };
 
   // console.log(totals);
   console.log('Filtered entries: ', filteredEntries);
@@ -323,26 +336,28 @@ console.log(formatTotalsByMonths())
           <tbody>
             {filteredEntries
               ? filteredEntries.map((entry, index) => (
-                <tr key={index}>
-                  <td>{entry.company}</td>
-                  {/* <td> P1 </td> */}
-                  <td> {entry.item_name} </td>
-                  <td> {entry.entry_date} </td>
-                  <td> {entry.entry_weight} kg </td>
-                  <td>
-                    {/* <IconButton onClick={() => selectEntry(entry, 'edit')}>
+                  <tr key={index}>
+                    <td>{entry.company}</td>
+                    {/* <td> P1 </td> */}
+                    <td> {entry.item_name} </td>
+                    <td> {entry.entry_date} </td>
+                    <td> {entry.entry_weight} kg </td>
+                    <td>
+                      {/* <IconButton onClick={() => selectEntry(entry, 'edit')}>
                         <EditIcon sx={{ color: '#606f89' }} />
                       </IconButton>
                       <IconButton onClick={() => selectEntry(entry, 'delete')}>
                         <Delete sx={{ color: '#606f89' }} />
                       </IconButton> */}
-                  </td>
-                </tr>
-              ))
+                    </td>
+                  </tr>
+                ))
               : null}
           </tbody>
         </table>
-        <br /><br /><br />
+        <br />
+        <br />
+        <br />
         <table>
           <thead>
             <tr>
@@ -353,18 +368,16 @@ console.log(formatTotalsByMonths())
           <tbody>
             {totals
               ? totals.map((entry, index) => (
-                <tr key={index}>
-                  <td> {entry.item_name} </td>
-                  <td> {entry.entry_weight.toFixed(2)} kg </td>
-                </tr>
-              ))
+                  <tr key={index}>
+                    <td> {entry.item_name} </td>
+                    <td> {entry.entry_weight.toFixed(2)} kg </td>
+                  </tr>
+                ))
               : null}
           </tbody>
         </table>
-        <Line options={options} data={data}></Line>
+        {formattedData !== [] && <Line options={options} data={data}></Line>}
       </div>
     </>
   );
-
-
 }
