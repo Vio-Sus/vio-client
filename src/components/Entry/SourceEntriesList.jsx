@@ -128,7 +128,7 @@ export default function SourceEntriesList({ collectors, items }) {
 
   console.log(mapDayToMonth);
 
-  // get the total of weight of the same item_id
+  // get the total of weight of per month
   const totalsByMonths = mapDayToMonth.reduce((acc, item) => {
     let existMaterial = acc.find(({ entry_date }) => item.entry_date === entry_date);
     if (existMaterial) {
@@ -141,8 +141,22 @@ export default function SourceEntriesList({ collectors, items }) {
   }, [])
   console.log(totalsByMonths)
 
+  let formattedTotalsByMonths = [];
+  function formatTotalsByMonths(){
+    for(let i = 0; i <12; i++){
+      let found= totalsByMonths.find((item ) => item.entry_date == i);
+      if(found){
+        formattedTotalsByMonths.push(parseFloat(found.entry_weight.toFixed(2)))
+      }else{
+        formattedTotalsByMonths.push(0)
+      }
+    }
+    return formattedTotalsByMonths
+  }
+console.log(formatTotalsByMonths())
 
-
+ 
+ 
 
   // useEffect(() => {
   //   (async () => {
