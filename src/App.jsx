@@ -56,6 +56,24 @@ function App() {
     console.log('addSomething from app', addedSomething);
   }, [addedSomething]);
  
+function sortBy(arr) {
+  return arr.sort((a,b) => {
+    if(a < b) return -1
+    if(a > b) return 1
+    return 0
+  })
+}
+sortBy(["b", "c"])
+function deleteItems(items) {
+  for(var i = 0; i < items.length; i++) {
+    if(items[i].length == 0) {
+      items.splice(i, 1)
+    }
+  }
+}
+
+var names = ["rachel", "", "Meghana", "", "", "Tim" ]
+deleteItems(names)
   return (
     <>
       {user && (  

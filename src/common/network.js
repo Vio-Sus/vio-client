@@ -61,7 +61,7 @@ export async function getCollectors(){
 
 //Get start and end date for collectors that belong to source
 export async function getEntriesByDateRangeForCollector(startDate, endDate) {
-  console.log((await axios.get(`/api/sourceCollectors/${startDate}/${endDate}`)).data)
+  //console.log((await axios.get(`/api/sourceCollectors/${startDate}/${endDate}`)).data)
   return (await axios.get(`/api/sourceCollectors/${startDate}/${endDate}`)).data;
 }
 

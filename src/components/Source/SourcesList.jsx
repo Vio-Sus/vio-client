@@ -21,6 +21,7 @@ export default function SourceList({ selectSource }) {
     })();
   }, []);
 
+  console.log(sources)
   return (
     <div class="tableCont">
       <table>
