@@ -317,9 +317,9 @@ export default function SourceEntriesList() {
         />
       )}{' '}  */}
       {/* Filter by Date Range: */}
-      <div class="tableCont">
-        <div class="flexRow">
-          <div class="flexColumn">
+      <div className="tableCont">
+        <div className="flexRow">
+          <div className="flexColumn">
             <label>Collectors</label>
             <select id="collectorSelection" onChange={(e) => updateFilter()}>
               <option value="allCollectors">All</option>
@@ -338,7 +338,7 @@ export default function SourceEntriesList() {
             </select>
           </div> */}
 
-          <div class="flexColumn">
+          <div className="flexColumn">
             <label>Materials</label>
             <select id="itemSelection" onChange={(e) => updateFilter()}>
               <option value="allItems">All</option>
@@ -350,8 +350,8 @@ export default function SourceEntriesList() {
             </select>
           </div>
 
-          <div class="flexColumn">
-            <label for="startDate">Start Date</label>
+          <div className="flexColumn">
+            <label htmlFor="startDate">Start Date</label>
             <input
               type="date"
               name="startDate"
@@ -365,8 +365,8 @@ export default function SourceEntriesList() {
             />
           </div>
 
-          <div class="flexColumn">
-            <label for="endDate">End Date</label>
+          <div className="flexColumn">
+            <label htmlFor="endDate">End Date</label>
             <input
               type="date"
               name="endDate"
