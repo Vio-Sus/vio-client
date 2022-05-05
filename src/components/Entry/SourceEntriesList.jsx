@@ -3,6 +3,7 @@ import { getCollectors, getEntriesByDateRangeForCollector } from '../../common/n
 import styled from 'styled-components';
 import Chart from 'chart.js/auto';
 import { Line } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 // import Summary from '../Summary/Summary';
 // import DateFilter from '../Filter/DateFilter';
 // import IconButton from '@mui/material/IconButton';
@@ -31,8 +32,6 @@ export default function SourceEntriesList() {
 
     return values;
   }
-
-
 
   const MONTHS = [
     'January',
@@ -66,7 +65,7 @@ export default function SourceEntriesList() {
   
 
   //Config for stacked bar chart
-  const config = {
+  const barConfig = {
     type: 'bar',
     data: data,
     options: {
@@ -86,6 +85,31 @@ export default function SourceEntriesList() {
         }
       }
     }
+  };
+
+  const DATA_COUNT = 7;
+  const NUMBER_CFG = {count: DATA_COUNT, min: 0, max: 100};
+
+  // const barLabels = Utils.months({count: 7});
+  const barData = {
+    labels: labels,
+    datasets: [
+      {
+        label: 'Dataset 1',
+        data: formattedData,
+        backgroundColor: 'red',
+      },
+      {
+        label: 'Dataset 2',
+        data: formattedData,
+        backgroundColor: 'blue',
+      },
+      {
+        label: 'Dataset 3',
+        data: formattedData,
+        backgroundColor: 'green',
+      },
+    ]
   };
 
   const options = {
@@ -414,6 +438,7 @@ export default function SourceEntriesList() {
           </tbody>
         </table>
         {formattedData !== [] && <Line options={options} data={data}></Line>}
+        {formattedData !== [] && <Bar options={barConfig} data={barData}></Bar>}
       </div>
     </>
   );
