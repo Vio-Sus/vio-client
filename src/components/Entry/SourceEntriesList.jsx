@@ -21,7 +21,7 @@ export default function SourceEntriesList() {
   const [total, setTotals] = useState([]);
   const [formattedData, setFormattedData] = useState([]);
   const [formattedGarbageData, setFormattedGarbageData] = useState([]);
-
+  const [weeklyTotalsData, setWeeklyTotalsData] = useState([]);
   function months(config) {
     var cfg = config || {};
     var count = cfg.count || 12;
@@ -136,12 +136,21 @@ export default function SourceEntriesList() {
     return filtedEntriesByMonths;
   }
   const test = filterEntriesByMonths('2022-04');
-  // console.log('test entries for 2022-04');
-  // console.log(test);
 
-  // weekly table
-  // console.log("entries")
-  // console.log(entries)
+
+  // used in useeffect by alex
+  function filterEntriesByMonths2(month, entries) {
+    // unecessary extra code
+    // const entriesByMonths = entries.map((item) => ({
+    //   ...item,
+    //   entry_date: item.entry_date.substring(0, 7),
+    // }));
+    const filtedEntriesByMonths = entries.filter(
+      (item) => item.entry_date.substring(0, 7) === month
+    );
+    return filtedEntriesByMonths;
+  }
+
   const getWeekNumOfMonthOfDate = (date) => {
     let d = new Date(
       date.substring(0, 4),
@@ -152,69 +161,94 @@ export default function SourceEntriesList() {
     return Math.ceil((d.getDate() + (firstDay - 1)) / 7);
   };
 
+  const getWeeklyTotals = (data, distinctItems) => {
+    const numberOfWeeks = 4;
+    for (let i = 0; i < distinctItems.length; i++) {
+      for (let j = 1; j <= numberOfWeeks; j++) {
+        let filtered = data.filter(e => e.week_of_month === j)
+        const weeklyTotal = filtered.reduce((prev, curr) => {
+          if(curr.item_id === distinctItems[i].item_id) {
+            prev += curr.entry_weight
+          }
+          return prev;
+        }, 0)
+        distinctItems[i][`week${j}Total`] = weeklyTotal.toFixed(2);
+
+        const monthlyTotal = data.reduce((prev, curr) => {
+          if(curr.item_id === distinctItems[i].item_id) {
+            prev += curr.entry_weight
+          }
+          return prev;
+        }, 0)
+        distinctItems[i]['monthlyTotal'] = monthlyTotal.toFixed(2);
+      }
+    }
+    return distinctItems;
+  };
+
+  const generateWeeklyTableData = (test) => {
+    const monthlyEntriesWithWeek = test.map((item) => ({
+      ...item,
+      week_of_month: getWeekNumOfMonthOfDate(item.entry_date),
+    }));
+    console.log('monthlyEntriesWithWeek');
+    console.log(monthlyEntriesWithWeek);
+
+    const distinctItems = monthlyEntriesWithWeek.reduce((prev, curr) => {
+      let item = prev.find((e) => e.item_id === curr.item_id);
+      if (!item) {
+        prev.push({ item_name: curr.item_name, item_id: curr.item_id });
+      }
+      return prev;
+    }, []);
+    console.log("distinct")
+    console.log(distinctItems)
+
+    setWeeklyTotalsData(getWeeklyTotals(monthlyEntriesWithWeek, distinctItems));
+  }
   //const aprilDate = "2022-04"
   // const weekNumOfDate = getWeekNumOfMonthOfDate(new Date(aprilDate.substring(0,4), aprilDate.substring(5,7), 20));
   // console.log("week of month date")
   // console.log(weekNumOfDate);
-  const monthlyEntriesWithWeek = test.map((item) => ({
-    ...item,
-    week_of_month: getWeekNumOfMonthOfDate(item.entry_date),
-  }));
-  console.log('monthlyEntriesWithWeek');
-  console.log(monthlyEntriesWithWeek);
 
-  const getWeeklyTotals = (data, weekNumber) => {
-    const newData = data.filter((item) => item.week_of_month === weekNumber);
-    let total = newData.reduce((acc, item) => {
-      let existMaterial = acc.find(({ item_id }) => item.item_id === item_id);
-      if (existMaterial) {
-        existMaterial.entry_weight += item.entry_weight;
-      } else {
-        acc.push({ ...item });
-      }
-      return acc;
-    }, []);
-    // console.log('fitlered totoasl');
-    // console.log(total);
-    return total;
-  };
-  console.log('week 1 total');
-  console.log(getWeeklyTotals(monthlyEntriesWithWeek, 1));
 
-  const monthlyTotals = monthlyEntriesWithWeek.reduce((acc, item) => {
-    let existMaterial = acc.find(({ item_id }) => item.item_id === item_id);
-    if (existMaterial) {
-      existMaterial.entry_weight += item.entry_weight;
-    } else {
-      acc.push({ ...item });
-    }
-    return acc;
-  }, []);
-  console.log('monthly totals');
-  console.log(monthlyTotals);
 
-  function createWeeklyTotalArray(data, weekNumber) {
-    if (getWeeklyTotals(data, weekNumber).length === 0) {
-      return new Array(data.length).fill(0);
-    } else if (
-      getWeeklyTotals(data, weekNumber).length === monthlyTotals.length
-    ) {
-      return getWeeklyTotals(data, weekNumber);
-    }
-    return getWeeklyTotals(data, weekNumber).concat(
-      new Array(data.length - getWeeklyTotals(data, weekNumber).length).fill(0)
-    );
-  }
-  const weeklyTotals = monthlyTotals.map((item) => ({
-    ...item,
-    week1Totals: createWeeklyTotalArray(monthlyEntriesWithWeek, 1),
-    week2Totals: createWeeklyTotalArray(monthlyEntriesWithWeek, 2),
-    week3Totals: createWeeklyTotalArray(monthlyEntriesWithWeek, 3),
-    week4Totals: createWeeklyTotalArray(monthlyEntriesWithWeek, 4),
-  }));
+  // const monthlyTotals = monthlyEntriesWithWeek.reduce((acc, item) => {
+  //   let existMaterial = acc.find(({ item_id }) => item.item_id === item_id);
+  //   if (existMaterial) {
+  //     existMaterial.entry_weight += item.entry_weight;
+  //   } else {
+  //     acc.push({ ...item });
+  //   }
+  //   return acc;
+  // }, []);
+  // console.log('monthly totals');
+  // console.log(monthlyTotals);
 
-  console.log('weekly totals');
-  console.log(weeklyTotals);
+  // function createWeeklyTotalArray(data, weekNumber) {
+  //   if (getWeeklyTotals(data, weekNumber).length === 0) {
+  //     return new Array(data.length).fill(0);
+  //   } else if (
+  //     getWeeklyTotals(data, weekNumber).length === monthlyTotals.length
+  //   ) {
+  //     return getWeeklyTotals(data, weekNumber);
+  //   }
+  //   return getWeeklyTotals(data, weekNumber).concat(
+  //     new Array(
+  //       data.length - getWeeklyTotals(data, weekNumber).length - 1
+  //     ).fill(0)
+  //   );
+  // }
+  // const weeklyTotals = monthlyTotals.map((item) => ({
+  //   ...item,
+  //   week1Totals: createWeeklyTotalArray(monthlyEntriesWithWeek, 1),
+  //   week2Totals: createWeeklyTotalArray(monthlyEntriesWithWeek, 2),
+  //   week3Totals: createWeeklyTotalArray(monthlyEntriesWithWeek, 3),
+  //   week4Totals: createWeeklyTotalArray(monthlyEntriesWithWeek, 4),
+  // }));
+
+  // console.log('weekly totals');
+  // console.log(weeklyTotals);
   ///////////////////////////end of weekly table calculation //////////////
 
   var filtedDataByMonths = Object.values(
@@ -225,8 +259,8 @@ export default function SourceEntriesList() {
       return acc;
     }, {})
   );
-  // console.log('filter data by months');
-  // console.log(filtedDataByMonths);
+  console.log('filter data by months');
+  console.log(filtedDataByMonths);
 
   const labelsItems = filtedDataByMonths
     .reduce(
@@ -311,7 +345,6 @@ export default function SourceEntriesList() {
       },
       title: {
         display: true,
-        fontSize: 16,
         text: `Landfilled vs Diverted in ${new Date().getFullYear()}`,
       },
     },
@@ -357,11 +390,13 @@ export default function SourceEntriesList() {
         });
         //console.log('==========');
         //console.log(newEntries);
-        
+
         setEntries(newEntries || []);
         setFilteredEntries(newEntries || []);
         // console.log('Entries: ', newEntries);
-        generateChartData(newEntries)
+
+        generateWeeklyTableData(filterEntriesByMonths2('2022-04', newEntries));
+        generateChartData(newEntries);
         // Reduce the entries list so you only have unique collectors (for dropdown menu)
         const uniqueCollectors = entries.reduce(
           (acc, curr) =>
@@ -406,7 +441,7 @@ export default function SourceEntriesList() {
   // }, [startDate, endDate]);
 
   // console.log(total);
-  const generateChartData = (data) =>{
+  const generateChartData = (data) => {
     if (data) {
       const mapDayToMonth = data.map((x) => ({
         ...x,
@@ -417,7 +452,7 @@ export default function SourceEntriesList() {
           ({ entry_date }) => item.entry_date === entry_date
         );
         if (existMaterial) {
-            existMaterial.entry_weight += item.entry_weight;
+          existMaterial.entry_weight += item.entry_weight;
           //console.log(existMaterial.entry_weight)
         } else {
           acc.push({ ...item });
@@ -425,21 +460,23 @@ export default function SourceEntriesList() {
         return acc;
       }, []);
       //console.log("map day to month for garbage")
-      const mapDayToMonthGarbage = mapDayToMonth.filter(item => item.item_name === "Garbage")
+      const mapDayToMonthGarbage = mapDayToMonth.filter(
+        (item) => item.item_name === 'Garbage'
+      );
       //console.log(mapDayToMonthGarbage)
       const totalsByMonthsGarbage = mapDayToMonthGarbage.reduce((acc, item) => {
         let existMaterial = acc.find(
-          ({ entry_date}) => item.entry_date === entry_date
+          ({ entry_date }) => item.entry_date === entry_date
         );
         if (existMaterial) {
-            existMaterial.entry_weight += item.entry_weight;
+          existMaterial.entry_weight += item.entry_weight;
           //console.log(existMaterial.entry_weight)
         } else {
           acc.push({ ...item });
         }
         return acc;
       }, []);
-      console.log(totalsByMonthsGarbage)
+      //console.log(totalsByMonthsGarbage);
       let formattedTotalsByMonths = [];
       let formattedTotalsGarbageByMonths = [];
       for (let i = 0; i < 12; i++) {
@@ -463,13 +500,14 @@ export default function SourceEntriesList() {
         }
       }
       for (let i = 0; i < 12; i++) {
-        formattedTotalsByMonths[i] = formattedTotalsByMonths[i] - formattedTotalsGarbageByMonths[i]
-       }
+        formattedTotalsByMonths[i] =
+          formattedTotalsByMonths[i] - formattedTotalsGarbageByMonths[i];
+      }
 
       setFormattedGarbageData(formattedTotalsGarbageByMonths);
       setFormattedData(formattedTotalsByMonths);
     }
-  }
+  };
 
   const updateFilter = () => {
     let itemSelection = document.getElementById('itemSelection').value;
@@ -645,6 +683,7 @@ export default function SourceEntriesList() {
         </table>
         <br />
         <h3 style={{ margin: '0 auto' }}>April 2022 Week Collection</h3>
+        <br />
         <table>
           <thead>
             <tr>
@@ -657,30 +696,14 @@ export default function SourceEntriesList() {
             </tr>
           </thead>
           <tbody>
-            {weeklyTotals.map((entry, index) => (
+            {weeklyTotalsData.map((row, index) => (
               <tr key={index}>
-                <td>{entry.item_name}</td>
-                <td>
-                  {entry.week1Totals[index].entry_weight 
-                    ? entry.week1Totals[index].entry_weight
-                    : 0}
-                </td>
-                <td>
-                  {entry.week2Totals[index].entry_weight
-                    ? entry.week2Totals[index].entry_weight
-                    : 0}
-                </td>
-                <td>
-                  {entry.week3Totals[index].entry_weight
-                    ? entry.week3Totals[index].entry_weight
-                    : 0}
-                </td>
-                <td>
-                  {entry.week4Totals[index].entry_weight
-                    ? entry.week4Totals[index].entry_weight.toFixed(2)
-                    : 0}
-                </td>
-                <td>{entry.entry_weight.toFixed(2)} kg</td>
+                <td>{row.item_name}</td>
+                <td>{row.week1Total} kg</td>
+                <td>{row.week2Total} kg</td>
+                <td>{row.week3Total} kg</td>
+                <td>{row.week4Total} kg</td>
+                <td>{row.monthlyTotal} kg</td>
               </tr>
             ))}
           </tbody>
