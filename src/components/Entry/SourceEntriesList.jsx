@@ -135,7 +135,7 @@ export default function SourceEntriesList() {
         setEntries(newEntries || []);
         setFilteredEntries(newEntries || []);
         // console.log('Entries: ', newEntries);
-        generateChartData()
+        generateChartData(newEntries)
         // Reduce the entries list so you only have unique collectors (for dropdown menu)
         const uniqueCollectors = entries.reduce(
           (acc, curr) =>
@@ -180,9 +180,9 @@ export default function SourceEntriesList() {
   // }, [startDate, endDate]);
 
   // console.log(total);
-  const generateChartData = () =>{
-    if (entries) {
-      const mapDayToMonth = entries.map((x) => ({
+  const generateChartData = (data) =>{
+    if (data) {
+      const mapDayToMonth = data.map((x) => ({
         ...x,
         entry_date: new Date(x.entry_date).getMonth(),
       }));
@@ -213,7 +213,7 @@ export default function SourceEntriesList() {
         }
         return acc;
       }, []);
-      //console.log(totalsByMonthsGarbage)
+      console.log(totalsByMonthsGarbage)
       let formattedTotalsByMonths = [];
       let formattedTotalsGarbageByMonths = [];
       for (let i = 0; i < 12; i++) {
