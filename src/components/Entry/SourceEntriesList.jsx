@@ -3,7 +3,15 @@ import {
   getCollectors,
   getEntriesByDateRangeForCollector,
 } from '../../common/network';
+import styled from 'styled-components';
+import Chart from 'chart.js/auto';
 import { Line } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
+// import Summary from '../Summary/Summary';
+// import DateFilter from '../Filter/DateFilter';
+// import IconButton from '@mui/material/IconButton';
+// import Delete from '@mui/icons-material/Delete';
+// import EditIcon from '@mui/icons-material/Edit';
 
 export default function SourceEntriesList() {
   const [entries, setEntries] = useState([]);
@@ -64,6 +72,225 @@ export default function SourceEntriesList() {
     ],
   };
 
+  //Config for stacked bar chart
+  const barConfig = {
+    scales: {
+      y: {
+        min: 0,
+      },
+    },
+    type: 'bar',
+    data: data,
+    options: {
+      plugins: {
+        title: {
+          display: true,
+          text: 'Test',
+        },
+      },
+      responsive: true,
+      scales: {
+        x: {
+          stacked: true,
+        },
+        y: {
+          stacked: true,
+        },
+      },
+    },
+  };
+  // console.log(formattedData)
+
+  // const DATA_COUNT = 7;
+  //const NUMBER_CFG = { count: DATA_COUNT, min: 0, max: 100 };
+  const colors = [
+    'rgb(255, 99, 132)',
+    'rgb(54, 162, 235)',
+    'rgb(75, 192, 192)',
+  ];
+
+  // get the total of weight of the same item_id
+
+  const totals = entries.reduce((acc, item) => {
+    let existMaterial = acc.find(({ item_id }) => item.item_id === item_id);
+    if (existMaterial) {
+      existMaterial.entry_weight += item.entry_weight;
+    } else {
+      acc.push({ ...item });
+    }
+    return acc;
+  }, []);
+
+  // console.log(totals);
+  // console.log('Filtered entries: ', filteredEntries);
+
+  function filterEntriesByMonths(month) {
+    // unecessary extra code
+    // const entriesByMonths = entries.map((item) => ({
+    //   ...item,
+    //   entry_date: item.entry_date.substring(0, 7),
+    // }));
+    const filtedEntriesByMonths = entries.filter(
+      (item) => item.entry_date.substring(0, 7) === month
+    );
+    return filtedEntriesByMonths;
+  }
+  const test = filterEntriesByMonths('2022-04');
+  // console.log('test entries for 2022-04');
+  // console.log(test);
+
+  // weekly table
+  // console.log("entries")
+  // console.log(entries)
+  const getWeekNumOfMonthOfDate = (date) => {
+    let d = new Date(
+      date.substring(0, 4),
+      date.substring(5, 7),
+      date.substring(8, 10)
+    );
+    const firstDay = new Date(d.getFullYear(), d.getMonth(), 1).getDay();
+    return Math.ceil((d.getDate() + (firstDay - 1)) / 7);
+  };
+
+  //const aprilDate = "2022-04"
+  // const weekNumOfDate = getWeekNumOfMonthOfDate(new Date(aprilDate.substring(0,4), aprilDate.substring(5,7), 20));
+  // console.log("week of month date")
+  // console.log(weekNumOfDate);
+  const monthlyEntriesWithWeek = test.map((item) => ({
+    ...item,
+    week_of_month: getWeekNumOfMonthOfDate(item.entry_date),
+  }));
+  console.log('monthlyEntriesWithWeek');
+  console.log(monthlyEntriesWithWeek);
+
+  const getWeeklyTotals = (data, weekNumber) => {
+    const newData = data.filter((item) => item.week_of_month === weekNumber);
+    let total = newData.reduce((acc, item) => {
+      let existMaterial = acc.find(({ item_id }) => item.item_id === item_id);
+      if (existMaterial) {
+        existMaterial.entry_weight += item.entry_weight;
+      } else {
+        acc.push({ ...item });
+      }
+      return acc;
+    }, []);
+    // console.log('fitlered totoasl');
+    // console.log(total);
+    return total;
+  };
+  console.log('week 1 total');
+  console.log(getWeeklyTotals(monthlyEntriesWithWeek, 1));
+
+  const monthlyTotals = monthlyEntriesWithWeek.reduce((acc, item) => {
+    let existMaterial = acc.find(({ item_id }) => item.item_id === item_id);
+    if (existMaterial) {
+      existMaterial.entry_weight += item.entry_weight;
+    } else {
+      acc.push({ ...item });
+    }
+    return acc;
+  }, []);
+  console.log('monthly totals');
+  console.log(monthlyTotals);
+
+  function createWeeklyTotalArray(data, weekNumber) {
+    if (getWeeklyTotals(data, weekNumber).length === 0) {
+      return new Array(data.length).fill(0);
+    } else if (
+      getWeeklyTotals(data, weekNumber).length === monthlyTotals.length
+    ) {
+      return getWeeklyTotals(data, weekNumber);
+    }
+    return getWeeklyTotals(data, weekNumber).concat(
+      new Array(data.length - getWeeklyTotals(data, weekNumber).length).fill(0)
+    );
+  }
+  const weeklyTotals = monthlyTotals.map((item) => ({
+    ...item,
+    week1Totals: createWeeklyTotalArray(monthlyEntriesWithWeek, 1),
+    week2Totals: createWeeklyTotalArray(monthlyEntriesWithWeek, 2),
+    week3Totals: createWeeklyTotalArray(monthlyEntriesWithWeek, 3),
+    week4Totals: createWeeklyTotalArray(monthlyEntriesWithWeek, 4),
+  }));
+
+  console.log('weekly totals');
+  console.log(weeklyTotals);
+  ///////////////////////////end of weekly table calculation //////////////
+
+  var filtedDataByMonths = Object.values(
+    test.reduce((acc, { company, item_name, entry_weight }) => {
+      const key = company + '_' + item_name; // unique combination of id and subject
+      acc[key] = acc[key] || { company, item_name, entry_weight };
+      acc[key].entry_weight += entry_weight;
+      return acc;
+    }, {})
+  );
+  // console.log('filter data by months');
+  // console.log(filtedDataByMonths);
+
+  const labelsItems = filtedDataByMonths
+    .reduce(
+      (acc, curr) =>
+        acc.find((e) => e.item_name === curr.item_name) ? acc : [...acc, curr],
+      []
+    )
+    .map((item) => item.item_name);
+
+  // console.log('label name');
+  // console.log(labelsItems);
+
+  // uneccessary code
+  const companyName = filtedDataByMonths
+    .reduce(
+      (acc, curr) =>
+        acc.find((e) => e.company === curr.company) ? acc : [...acc, curr],
+      []
+    )
+    .map((item) => item.company);
+  // console.log('company name');
+  // console.log(companyName);
+
+  function testData() {
+    let barData = [];
+    for (let i = 0; i < companyName.length; i++) {
+      let result = [];
+      barData.push({
+        label: companyName[i],
+        data: result,
+        backgroundColor: colors[i],
+      });
+      for (let j = 0; j < labelsItems.length; j++) {
+        let found = filtedDataByMonths.find(
+          (item) =>
+            item.company === companyName[i] && item.item_name === labelsItems[j]
+        );
+        if (found) {
+          result.push(found.entry_weight.toFixed(2));
+        } else {
+          result.push(0);
+        }
+      }
+    }
+    return barData;
+  }
+  // console.log('test data');
+  // console.log(testData());
+
+  const barData = {
+    labels: labelsItems,
+    datasets: testData(),
+  };
+
+  // console.log(barData.datasets)
+
+  // for(let i = 0; i < datasets.length; i++) {
+  //   barChartData.push({
+  //     label[i],
+  //     data[i],
+  //     backgroundColor
+  //   })
+  // }
+
   const options = {
     scales: {
       y: {
@@ -85,7 +312,7 @@ export default function SourceEntriesList() {
       title: {
         display: true,
         fontSize: 16,
-        text: `Landfilled vs Diverted (${new Date().getFullYear()})`,
+        text: `Landfilled vs Diverted in ${new Date().getFullYear()}`,
       },
     },
   };
@@ -126,7 +353,6 @@ export default function SourceEntriesList() {
           return {
             ...item,
             entry_weight: +item.entry_weight,
-            garbage_weight: 0,
           };
         });
         //console.log('==========');
@@ -292,20 +518,6 @@ export default function SourceEntriesList() {
       setFilteredEntries(filtered);
     }
   };
-  // get the total of weight of the same item_id
-  const totals = entries.reduce((acc, item) => {
-    let existMaterial = acc.find(({ item_id }) => item.item_id === item_id);
-    if (existMaterial) {
-      existMaterial.entry_weight += item.entry_weight;
-      //console.log(existMaterial.entry_weight);
-    } else {
-      acc.push({ ...item });
-    }
-    return acc;
-  }, []);
-
-  //console.log(totals);
-  //console.log('Filtered entries: ', filteredEntries);
 
   return (
     <>
@@ -386,7 +598,6 @@ export default function SourceEntriesList() {
             />
           </div>
         </div>
-
         <table>
           <thead>
             <tr>
@@ -441,9 +652,52 @@ export default function SourceEntriesList() {
               : null}
           </tbody>
         </table>
-        {formattedData !== [] && formattedGarbageData !== [] && (
-          <Line options={options} data={data}></Line>
-        )}
+        <br />
+        <h3 style={{ margin: '0 auto' }}>April 2022 Week Collection</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Materials</th>
+              <th>Week 1</th>
+              <th>Week 2</th>
+              <th>Week 3</th>
+              <th>Week 4</th>
+              <th>Total weight</th>
+            </tr>
+          </thead>
+          <tbody>
+            {weeklyTotals.map((entry, index) => (
+              <tr key={index}>
+                <td>{entry.item_name}</td>
+                <td>
+                  {entry.week1Totals[index].entry_weight 
+                    ? entry.week1Totals[index].entry_weight
+                    : 0}
+                </td>
+                <td>
+                  {entry.week2Totals[index].entry_weight
+                    ? entry.week2Totals[index].entry_weight
+                    : 0}
+                </td>
+                <td>
+                  {entry.week3Totals[index].entry_weight
+                    ? entry.week3Totals[index].entry_weight
+                    : 0}
+                </td>
+                <td>
+                  {entry.week4Totals[index].entry_weight
+                    ? entry.week4Totals[index].entry_weight.toFixed(2)
+                    : 0}
+                </td>
+                <td>{entry.entry_weight.toFixed(2)} kg</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <br />
+        {formattedData !== [] && <Line options={options} data={data}></Line>}
+        <br /> <br /> <br />
+        {barData !== [] && <Bar options={barConfig} data={barData}></Bar>}
       </div>
     </>
   );
