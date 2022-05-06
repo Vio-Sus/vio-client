@@ -20,6 +20,7 @@ export default function SourceEntriesList() {
   const [total, setTotals] = useState([]);
   const [formattedData, setFormattedData] = useState([]);
   const [formattedGarbageData, setFormattedGarbageData] = useState([]);
+
   function months(config) {
     var cfg = config || {};
     var count = cfg.count || 12;
@@ -50,7 +51,9 @@ export default function SourceEntriesList() {
     'December',
   ];
 
-  const labels = months({ count: 12 });
+  const d = new Date();
+  let month = d.getMonth();
+  const labels = months({ count: month });
 
   const data = {
     labels,
@@ -122,7 +125,10 @@ export default function SourceEntriesList() {
         setTotals(filteredEntries);
 
         let [entries] = await Promise.all([
-          getEntriesByDateRangeForCollector(`${todayDate.substring(0,4)}-01-01`, todayDate),
+          getEntriesByDateRangeForCollector(
+            `${todayDate.substring(0, 4)}-01-01`,
+            todayDate
+          ),
         ]); // returns new promise with all data
         const newEntries = entries.map((item) => {
           return {
@@ -145,7 +151,7 @@ export default function SourceEntriesList() {
               ({ entry_date }) => item.entry_date === entry_date
             );
             if (existMaterial) {
-                existMaterial.entry_weight += item.entry_weight;
+              existMaterial.entry_weight += item.entry_weight;
               //console.log(existMaterial.entry_weight)
             } else {
               acc.push({ ...item });
@@ -153,20 +159,25 @@ export default function SourceEntriesList() {
             return acc;
           }, []);
           //console.log("map day to month for garbage")
-          const mapDayToMonthGarbage = mapDayToMonth.filter(item => item.item_name === "Garbage")
+          const mapDayToMonthGarbage = mapDayToMonth.filter(
+            (item) => item.item_name === 'Garbage'
+          );
           //console.log(mapDayToMonthGarbage)
-          const totalsByMonthsGarbage = mapDayToMonthGarbage.reduce((acc, item) => {
-            let existMaterial = acc.find(
-              ({ entry_date}) => item.entry_date === entry_date
-            );
-            if (existMaterial) {
+          const totalsByMonthsGarbage = mapDayToMonthGarbage.reduce(
+            (acc, item) => {
+              let existMaterial = acc.find(
+                ({ entry_date }) => item.entry_date === entry_date
+              );
+              if (existMaterial) {
                 existMaterial.entry_weight += item.entry_weight;
-              //console.log(existMaterial.entry_weight)
-            } else {
-              acc.push({ ...item });
-            }
-            return acc;
-          }, []);
+                //console.log(existMaterial.entry_weight)
+              } else {
+                acc.push({ ...item });
+              }
+              return acc;
+            },
+            []
+          );
           //console.log(totalsByMonthsGarbage)
           let formattedTotalsByMonths = [];
           let formattedTotalsGarbageByMonths = [];
@@ -181,7 +192,9 @@ export default function SourceEntriesList() {
             }
           }
           for (let i = 0; i < 12; i++) {
-            let found = totalsByMonthsGarbage.find((item) => item.entry_date === i);
+            let found = totalsByMonthsGarbage.find(
+              (item) => item.entry_date === i
+            );
             if (found) {
               formattedTotalsGarbageByMonths.push(
                 parseFloat(found.entry_weight.toFixed(2))
@@ -191,8 +204,9 @@ export default function SourceEntriesList() {
             }
           }
           for (let i = 0; i < 12; i++) {
-            formattedTotalsByMonths[i] = formattedTotalsByMonths[i] - formattedTotalsGarbageByMonths[i]
-           }
+            formattedTotalsByMonths[i] =
+              formattedTotalsByMonths[i] - formattedTotalsGarbageByMonths[i];
+          }
           //console.log("formatted totals garbage")
           //console.log(formattedTotalsGarbageByMonths)
           //console.log("formatted totals")
