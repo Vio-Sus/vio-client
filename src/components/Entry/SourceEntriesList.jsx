@@ -357,85 +357,11 @@ export default function SourceEntriesList() {
         });
         //console.log('==========');
         //console.log(newEntries);
-        if (newEntries !== []) {
-          const mapDayToMonth = newEntries.map((x) => ({
-            ...x,
-            entry_date: new Date(x.entry_date).getMonth(),
-          }));
-          //console.log('map day to month');
-          //console.log(mapDayToMonth);
-          const totalsByMonths = mapDayToMonth.reduce((acc, item) => {
-            let existMaterial = acc.find(
-              ({ entry_date }) => item.entry_date === entry_date
-            );
-            if (existMaterial) {
-              existMaterial.entry_weight += item.entry_weight;
-              //console.log(existMaterial.entry_weight)
-            } else {
-              acc.push({ ...item });
-            }
-            return acc;
-          }, []);
-          //console.log("map day to month for garbage")
-          const mapDayToMonthGarbage = mapDayToMonth.filter(
-            (item) => item.item_name === 'Garbage'
-          );
-          //console.log(mapDayToMonthGarbage)
-          const totalsByMonthsGarbage = mapDayToMonthGarbage.reduce(
-            (acc, item) => {
-              let existMaterial = acc.find(
-                ({ entry_date }) => item.entry_date === entry_date
-              );
-              if (existMaterial) {
-                existMaterial.entry_weight += item.entry_weight;
-                //console.log(existMaterial.entry_weight)
-              } else {
-                acc.push({ ...item });
-              }
-              return acc;
-            },
-            []
-          );
-          //console.log(totalsByMonthsGarbage)
-          let formattedTotalsByMonths = [];
-          let formattedTotalsGarbageByMonths = [];
-          for (let i = 0; i < 12; i++) {
-            let found = totalsByMonths.find((item) => item.entry_date === i);
-            if (found) {
-              formattedTotalsByMonths.push(
-                parseFloat(found.entry_weight.toFixed(2))
-              );
-            } else {
-              formattedTotalsByMonths.push(0);
-            }
-          }
-          for (let i = 0; i < 12; i++) {
-            let found = totalsByMonthsGarbage.find(
-              (item) => item.entry_date === i
-            );
-            if (found) {
-              formattedTotalsGarbageByMonths.push(
-                parseFloat(found.entry_weight.toFixed(2))
-              );
-            } else {
-              formattedTotalsGarbageByMonths.push(0);
-            }
-          }
-          for (let i = 0; i < 12; i++) {
-            formattedTotalsByMonths[i] =
-              formattedTotalsByMonths[i] - formattedTotalsGarbageByMonths[i];
-          }
-          //console.log("formatted totals garbage")
-          //console.log(formattedTotalsGarbageByMonths)
-          //console.log("formatted totals")
-          //console.log(formattedTotalsByMonths)
-          setFormattedGarbageData(formattedTotalsGarbageByMonths);
-          setFormattedData(formattedTotalsByMonths);
-        }
+        
         setEntries(newEntries || []);
         setFilteredEntries(newEntries || []);
-        console.log('Entries: ', newEntries);
-
+        // console.log('Entries: ', newEntries);
+        generateChartData(newEntries)
         // Reduce the entries list so you only have unique collectors (for dropdown menu)
         const uniqueCollectors = entries.reduce(
           (acc, curr) =>
@@ -453,6 +379,7 @@ export default function SourceEntriesList() {
           []
         );
         setItemList(uniqueItems);
+        generateChartData();
       } catch {}
     })();
   }, []);
@@ -479,6 +406,70 @@ export default function SourceEntriesList() {
   // }, [startDate, endDate]);
 
   // console.log(total);
+  const generateChartData = (data) =>{
+    if (data) {
+      const mapDayToMonth = data.map((x) => ({
+        ...x,
+        entry_date: new Date(x.entry_date).getMonth(),
+      }));
+      const totalsByMonths = mapDayToMonth.reduce((acc, item) => {
+        let existMaterial = acc.find(
+          ({ entry_date }) => item.entry_date === entry_date
+        );
+        if (existMaterial) {
+            existMaterial.entry_weight += item.entry_weight;
+          //console.log(existMaterial.entry_weight)
+        } else {
+          acc.push({ ...item });
+        }
+        return acc;
+      }, []);
+      //console.log("map day to month for garbage")
+      const mapDayToMonthGarbage = mapDayToMonth.filter(item => item.item_name === "Garbage")
+      //console.log(mapDayToMonthGarbage)
+      const totalsByMonthsGarbage = mapDayToMonthGarbage.reduce((acc, item) => {
+        let existMaterial = acc.find(
+          ({ entry_date}) => item.entry_date === entry_date
+        );
+        if (existMaterial) {
+            existMaterial.entry_weight += item.entry_weight;
+          //console.log(existMaterial.entry_weight)
+        } else {
+          acc.push({ ...item });
+        }
+        return acc;
+      }, []);
+      console.log(totalsByMonthsGarbage)
+      let formattedTotalsByMonths = [];
+      let formattedTotalsGarbageByMonths = [];
+      for (let i = 0; i < 12; i++) {
+        let found = totalsByMonths.find((item) => item.entry_date === i);
+        if (found) {
+          formattedTotalsByMonths.push(
+            parseFloat(found.entry_weight.toFixed(2))
+          );
+        } else {
+          formattedTotalsByMonths.push(0);
+        }
+      }
+      for (let i = 0; i < 12; i++) {
+        let found = totalsByMonthsGarbage.find((item) => item.entry_date === i);
+        if (found) {
+          formattedTotalsGarbageByMonths.push(
+            parseFloat(found.entry_weight.toFixed(2))
+          );
+        } else {
+          formattedTotalsGarbageByMonths.push(0);
+        }
+      }
+      for (let i = 0; i < 12; i++) {
+        formattedTotalsByMonths[i] = formattedTotalsByMonths[i] - formattedTotalsGarbageByMonths[i]
+       }
+
+      setFormattedGarbageData(formattedTotalsGarbageByMonths);
+      setFormattedData(formattedTotalsByMonths);
+    }
+  }
 
   const updateFilter = () => {
     let itemSelection = document.getElementById('itemSelection').value;
