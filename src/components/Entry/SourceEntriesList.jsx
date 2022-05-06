@@ -137,7 +137,6 @@ export default function SourceEntriesList() {
   }
   const test = filterEntriesByMonths('2022-04');
 
-
   // used in useeffect by alex
   function filterEntriesByMonths2(month, entries) {
     // unecessary extra code
@@ -165,21 +164,21 @@ export default function SourceEntriesList() {
     const numberOfWeeks = 4;
     for (let i = 0; i < distinctItems.length; i++) {
       for (let j = 1; j <= numberOfWeeks; j++) {
-        let filtered = data.filter(e => e.week_of_month === j)
+        let filtered = data.filter((e) => e.week_of_month === j);
         const weeklyTotal = filtered.reduce((prev, curr) => {
-          if(curr.item_id === distinctItems[i].item_id) {
-            prev += curr.entry_weight
+          if (curr.item_id === distinctItems[i].item_id) {
+            prev += curr.entry_weight;
           }
           return prev;
-        }, 0)
+        }, 0);
         distinctItems[i][`week${j}Total`] = weeklyTotal.toFixed(2);
 
         const monthlyTotal = data.reduce((prev, curr) => {
-          if(curr.item_id === distinctItems[i].item_id) {
-            prev += curr.entry_weight
+          if (curr.item_id === distinctItems[i].item_id) {
+            prev += curr.entry_weight;
           }
           return prev;
-        }, 0)
+        }, 0);
         distinctItems[i]['monthlyTotal'] = monthlyTotal.toFixed(2);
       }
     }
@@ -201,17 +200,15 @@ export default function SourceEntriesList() {
       }
       return prev;
     }, []);
-    console.log("distinct")
-    console.log(distinctItems)
+    console.log('distinct');
+    console.log(distinctItems);
 
     setWeeklyTotalsData(getWeeklyTotals(monthlyEntriesWithWeek, distinctItems));
-  }
+  };
   //const aprilDate = "2022-04"
   // const weekNumOfDate = getWeekNumOfMonthOfDate(new Date(aprilDate.substring(0,4), aprilDate.substring(5,7), 20));
   // console.log("week of month date")
   // console.log(weekNumOfDate);
-
-
 
   // const monthlyTotals = monthlyEntriesWithWeek.reduce((acc, item) => {
   //   let existMaterial = acc.find(({ item_id }) => item.item_id === item_id);
@@ -696,7 +693,7 @@ export default function SourceEntriesList() {
             </tr>
           </thead>
           <tbody>
-            {weeklyTotalsData.map((row, index) => (
+            {weeklyTotalsData !== [] && weeklyTotalsData.map((row, index) => (
               <tr key={index}>
                 <td>{row.item_name}</td>
                 <td>{row.week1Total} kg</td>
