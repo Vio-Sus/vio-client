@@ -62,7 +62,7 @@ export default function SourceEntriesList() {
     ],
   };
 
-  
+
 
   //Config for stacked bar chart
   const barConfig = {
@@ -86,26 +86,75 @@ export default function SourceEntriesList() {
       }
     }
   };
-  console.log(formattedData)
+  // console.log(formattedData)
 
   const DATA_COUNT = 7;
-  const NUMBER_CFG = {count: DATA_COUNT, min: 0, max: 100};
-  const colors = ['red','blue','green'];
-  const labelsItems = itemList.map((item) => item.item_name)
-  const companyName = collectorList.map((item) => item.company);
+  const NUMBER_CFG = { count: DATA_COUNT, min: 0, max: 100 };
+  const colors = ['red', 'blue', 'green'];
 
+  function filterEntriesByMonths(month) {
+    const entriesByMonths = entries.map((item) => ({
+      ...item,
+      entry_date: item.entry_date.substring(0, 7),
+    }))
+    const filtedEntriesByMonths = entriesByMonths.filter((item) => item.entry_date == month)
+    return filtedEntriesByMonths
+  }
+  const test = filterEntriesByMonths("2022-04")
+
+  var filtedDataByMonths = Object.values(test.reduce((acc, { company, item_name, entry_weight }) => {
+
+    const key = company + '_' + item_name; // unique combination of id and subject
+    acc[key] = acc[key] || { company, item_name, entry_weight };
+    acc[key].entry_weight += entry_weight;
+    return acc;
+  }, {}));
+  console.log(filtedDataByMonths)
+
+  const labelsItems = filtedDataByMonths.reduce(
+    (acc, curr) =>
+      acc.find((e) => e.item_name  === curr.item_name )
+        ? acc
+        : [...acc, curr],
+    []
+  ).map((item) => item.item_name)
+
+  const companyName = filtedDataByMonths.reduce(
+    (acc, curr) =>
+      acc.find((e) => e.company === curr.company)
+        ? acc
+        : [...acc, curr],
+    []
+  ).map((item) => item.company);
+  console.log(companyName)
+  function testData() {
+    let barData = []
+    for (let i = 0; i < companyName.length; i++) {
+      let result = []
+      barData.push(
+        {
+          label: companyName[i],
+          data: result,
+          backgroundColor: colors[i]
+        })
+      for (let j = 0; j < labelsItems.length; j++) {
+        let found = filtedDataByMonths.find((item) => item.company == companyName[i] && item.item_name == labelsItems[j])
+        if (found) {
+          result.push(found.entry_weight.toFixed(2))
+        } else {
+          result.push(0)
+        }
+      }
+    }
+    return barData
+  }
+  console.log(testData())
   const barData = {
     labels: labelsItems,
-    datasets: [
-      {
-        label: companyName,
-        data: formattedData,
-        backgroundColor: colors
-      }              
-    ]
+    datasets:testData()
   };
 
-  console.log(barData.datasets)
+  // console.log(barData.datasets)
 
   // for(let i = 0; i < datasets.length; i++) {
   //   barChartData.push({
@@ -229,7 +278,7 @@ export default function SourceEntriesList() {
           []
         );
         setItemList(uniqueItems);
-      } catch {}
+      } catch { }
     })();
   }, []);
 
@@ -299,7 +348,6 @@ export default function SourceEntriesList() {
     let existMaterial = acc.find(({ item_id }) => item.item_id === item_id);
     if (existMaterial) {
       existMaterial.entry_weight += item.entry_weight;
-      console.log(existMaterial.entry_weight);
     } else {
       acc.push({ ...item });
     }
@@ -307,7 +355,7 @@ export default function SourceEntriesList() {
   }, []);
 
   // console.log(totals);
-  console.log('Filtered entries: ', filteredEntries);
+  // console.log('Filtered entries: ', filteredEntries);
 
   return (
     <>
@@ -402,22 +450,22 @@ export default function SourceEntriesList() {
           <tbody>
             {filteredEntries
               ? filteredEntries.map((entry, index) => (
-                  <tr key={index}>
-                    <td>{entry.company}</td>
-                    {/* <td> P1 </td> */}
-                    <td> {entry.item_name} </td>
-                    <td> {entry.entry_date} </td>
-                    <td> {entry.entry_weight} kg </td>
-                    <td>
-                      {/* <IconButton onClick={() => selectEntry(entry, 'edit')}>
+                <tr key={index}>
+                  <td>{entry.company}</td>
+                  {/* <td> P1 </td> */}
+                  <td> {entry.item_name} </td>
+                  <td> {entry.entry_date} </td>
+                  <td> {entry.entry_weight} kg </td>
+                  <td>
+                    {/* <IconButton onClick={() => selectEntry(entry, 'edit')}>
                         <EditIcon sx={{ color: '#606f89' }} />
                       </IconButton>
                       <IconButton onClick={() => selectEntry(entry, 'delete')}>
                         <Delete sx={{ color: '#606f89' }} />
                       </IconButton> */}
-                    </td>
-                  </tr>
-                ))
+                  </td>
+                </tr>
+              ))
               : null}
           </tbody>
         </table>
@@ -435,16 +483,16 @@ export default function SourceEntriesList() {
           <tbody>
             {totals
               ? totals.map((entry, index) => (
-                  <tr key={index}>
-                    <td> {entry.item_name} </td>
-                    <td> {entry.entry_weight.toFixed(2)} kg </td>
-                  </tr>
-                ))
+                <tr key={index}>
+                  <td> {entry.item_name} </td>
+                  <td> {entry.entry_weight.toFixed(2)} kg </td>
+                </tr>
+              ))
               : null}
           </tbody>
         </table>
         {formattedData !== [] && <Line options={options} data={data}></Line>}
-        <br/> <br/> <br/>
+        <br /> <br /> <br />
         {formattedData !== [] && <Bar options={barConfig} data={barData}></Bar>}
       </div>
     </>
