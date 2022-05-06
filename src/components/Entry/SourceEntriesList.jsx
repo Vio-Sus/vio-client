@@ -22,6 +22,8 @@ export default function SourceEntriesList() {
   const [formattedData, setFormattedData] = useState([]);
   const [formattedGarbageData, setFormattedGarbageData] = useState([]);
   const [weeklyTotalsData, setWeeklyTotalsData] = useState([]);
+  const [numWeeksInMonth, setNumWeeksInMonth] = useState(null);
+
   function months(config) {
     var cfg = config || {};
     var count = cfg.count || 12;
@@ -137,33 +139,35 @@ export default function SourceEntriesList() {
   }
   const test = filterEntriesByMonths('2022-04');
 
+  let numWeeks = 0;
   // used in useeffect by alex
   function filterEntriesByMonths2(month, entries) {
-    // unecessary extra code
-    // const entriesByMonths = entries.map((item) => ({
-    //   ...item,
-    //   entry_date: item.entry_date.substring(0, 7),
-    // }));
+    let date = new Date(month + '-01');
+    let y = date.getFullYear();
+    let m = date.getMonth();
+    let lastDay = new Date(y, m + 2, 0);
+    let lastDayConverted = lastDay.toISOString().split('T')[0];
+    numWeeks = getWeekNumOfMonthOfDate(lastDayConverted);
+    console.log(numWeeks);
+    // console.log(wek)
     const filtedEntriesByMonths = entries.filter(
       (item) => item.entry_date.substring(0, 7) === month
     );
     return filtedEntriesByMonths;
   }
 
-  const getWeekNumOfMonthOfDate = (date) => {
-    let d = new Date(
-      date.substring(0, 4),
-      date.substring(5, 7),
-      date.substring(8, 10)
-    );
-    const firstDay = new Date(d.getFullYear(), d.getMonth(), 1).getDay();
-    return Math.ceil((d.getDate() + (firstDay - 1)) / 7);
+  const getWeekNumOfMonthOfDate = (s) => {
+    const [y, m, d] = s.split('-'); // parse date string
+    const date = new Date(y, m - 1, d); // create date object
+    date.setDate(d - ((date.getDay() + 6) % 7)); // adjust date to previous Monday
+    return Math.ceil(date.getDate() / 7); // return week number of the month
   };
 
   const getWeeklyTotals = (data, distinctItems) => {
-    const numberOfWeeks = 4;
+    // console.log('in 2 looop');
+    // console.log(distinctItems.length);
     for (let i = 0; i < distinctItems.length; i++) {
-      for (let j = 1; j <= numberOfWeeks; j++) {
+      for (let j = 1; j <= numWeeks; j++) {
         let filtered = data.filter((e) => e.week_of_month === j);
         const weeklyTotal = filtered.reduce((prev, curr) => {
           if (curr.item_id === distinctItems[i].item_id) {
@@ -200,8 +204,8 @@ export default function SourceEntriesList() {
       }
       return prev;
     }, []);
-    // console.log('distinct');
-    // console.log(distinctItems);
+    console.log('distinct');
+    console.log(distinctItems);
 
     setWeeklyTotalsData(getWeeklyTotals(monthlyEntriesWithWeek, distinctItems));
   };
@@ -349,8 +353,7 @@ export default function SourceEntriesList() {
         setEntries(newEntries || []);
         setFilteredEntries(newEntries || []);
         // console.log('Entries: ', newEntries);
-
-        generateWeeklyTableData(filterEntriesByMonths2('2022-04', newEntries));
+        generateWeeklyTableData(filterEntriesByMonths2('2022-01', newEntries));
         generateChartData(newEntries);
         // Reduce the entries list so you only have unique collectors (for dropdown menu)
         const uniqueCollectors = entries.reduce(
@@ -647,20 +650,24 @@ export default function SourceEntriesList() {
               <th>Week 2</th>
               <th>Week 3</th>
               <th>Week 4</th>
+              {weeklyTotalsData.length !== 0 && weeklyTotalsData[0].hasOwnProperty("week5Total") &&
+              <th>Week 5</th>}
               <th>Total weight</th>
             </tr>
           </thead>
           <tbody>
-            {weeklyTotalsData !== [] && weeklyTotalsData.map((row, index) => (
-              <tr key={index}>
-                <td>{row.item_name}</td>
-                <td>{row.week1Total} kg</td>
-                <td>{row.week2Total} kg</td>
-                <td>{row.week3Total} kg</td>
-                <td>{row.week4Total} kg</td>
-                <td>{row.monthlyTotal} kg</td>
-              </tr>
-            ))}
+            {weeklyTotalsData.length !== 0 &&
+              weeklyTotalsData.map((row, index) => (
+                <tr key={index}>
+                  <td>{row.item_name}</td>
+                  <td>{row.week1Total} kg</td>
+                  <td>{row.week2Total} kg</td>
+                  <td>{row.week3Total} kg</td>
+                  <td>{row.week4Total} kg</td>
+                  {row.week5Total && <td>{row.week5Total} kg</td>}
+                  <td>{row.monthlyTotal} kg</td>
+                </tr>
+              ))}
           </tbody>
         </table>
         <br />
