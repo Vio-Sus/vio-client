@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import {
-  getCollectors,
+  // getCollectors,
   getEntriesByDateRangeForCollector,
 } from '../../common/network';
-import styled from 'styled-components';
-import Chart from 'chart.js/auto';
+// import styled from 'styled-components';
+// import Chart from 'chart.js/auto';
 import { Line } from 'react-chartjs-2';
 import { Bar } from 'react-chartjs-2';
 // import Summary from '../Summary/Summary';
@@ -190,8 +190,8 @@ export default function SourceEntriesList() {
       ...item,
       week_of_month: getWeekNumOfMonthOfDate(item.entry_date),
     }));
-    console.log('monthlyEntriesWithWeek');
-    console.log(monthlyEntriesWithWeek);
+    // console.log('monthlyEntriesWithWeek');
+    // console.log(monthlyEntriesWithWeek);
 
     const distinctItems = monthlyEntriesWithWeek.reduce((prev, curr) => {
       let item = prev.find((e) => e.item_id === curr.item_id);
@@ -200,53 +200,11 @@ export default function SourceEntriesList() {
       }
       return prev;
     }, []);
-    console.log('distinct');
-    console.log(distinctItems);
+    // console.log('distinct');
+    // console.log(distinctItems);
 
     setWeeklyTotalsData(getWeeklyTotals(monthlyEntriesWithWeek, distinctItems));
   };
-  //const aprilDate = "2022-04"
-  // const weekNumOfDate = getWeekNumOfMonthOfDate(new Date(aprilDate.substring(0,4), aprilDate.substring(5,7), 20));
-  // console.log("week of month date")
-  // console.log(weekNumOfDate);
-
-  // const monthlyTotals = monthlyEntriesWithWeek.reduce((acc, item) => {
-  //   let existMaterial = acc.find(({ item_id }) => item.item_id === item_id);
-  //   if (existMaterial) {
-  //     existMaterial.entry_weight += item.entry_weight;
-  //   } else {
-  //     acc.push({ ...item });
-  //   }
-  //   return acc;
-  // }, []);
-  // console.log('monthly totals');
-  // console.log(monthlyTotals);
-
-  // function createWeeklyTotalArray(data, weekNumber) {
-  //   if (getWeeklyTotals(data, weekNumber).length === 0) {
-  //     return new Array(data.length).fill(0);
-  //   } else if (
-  //     getWeeklyTotals(data, weekNumber).length === monthlyTotals.length
-  //   ) {
-  //     return getWeeklyTotals(data, weekNumber);
-  //   }
-  //   return getWeeklyTotals(data, weekNumber).concat(
-  //     new Array(
-  //       data.length - getWeeklyTotals(data, weekNumber).length - 1
-  //     ).fill(0)
-  //   );
-  // }
-  // const weeklyTotals = monthlyTotals.map((item) => ({
-  //   ...item,
-  //   week1Totals: createWeeklyTotalArray(monthlyEntriesWithWeek, 1),
-  //   week2Totals: createWeeklyTotalArray(monthlyEntriesWithWeek, 2),
-  //   week3Totals: createWeeklyTotalArray(monthlyEntriesWithWeek, 3),
-  //   week4Totals: createWeeklyTotalArray(monthlyEntriesWithWeek, 4),
-  // }));
-
-  // console.log('weekly totals');
-  // console.log(weeklyTotals);
-  ///////////////////////////end of weekly table calculation //////////////
 
   var filtedDataByMonths = Object.values(
     test.reduce((acc, { company, item_name, entry_weight }) => {
@@ -256,8 +214,8 @@ export default function SourceEntriesList() {
       return acc;
     }, {})
   );
-  console.log('filter data by months');
-  console.log(filtedDataByMonths);
+  // console.log('filter data by months');
+  // console.log(filtedDataByMonths);
 
   const labelsItems = filtedDataByMonths
     .reduce(
@@ -392,7 +350,7 @@ export default function SourceEntriesList() {
         setFilteredEntries(newEntries || []);
         // console.log('Entries: ', newEntries);
 
-        generateWeeklyTableData(filterEntriesByMonths2('2022-04', newEntries));
+        generateWeeklyTableData(filterEntriesByMonths2('2022-01', newEntries));
         generateChartData(newEntries);
         // Reduce the entries list so you only have unique collectors (for dropdown menu)
         const uniqueCollectors = entries.reduce(
