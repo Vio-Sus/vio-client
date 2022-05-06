@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { getCollectors, getEntriesByDateRangeForCollector } from '../../common/network';
 import styled from 'styled-components';
 import Chart from 'chart.js/auto';
-import { Line } from 'react-chartjs-2';
-import { Bar } from 'react-chartjs-2';
+import { Line, Bar } from 'react-chartjs-2';
+
 // import Summary from '../Summary/Summary';
 // import DateFilter from '../Filter/DateFilter';
 // import IconButton from '@mui/material/IconButton';
@@ -62,35 +62,7 @@ export default function SourceEntriesList() {
     ],
   };
 
-
-
-  //Config for stacked bar chart
-  const barConfig = {
-    type: 'bar',
-    data: data,
-    options: {
-      plugins: {
-        title: {
-          display: true,
-          text: 'Test'
-        },
-      },
-      responsive: true,
-      scales: {
-        x: {
-          stacked: true,
-        },
-        y: {
-          stacked: true
-        }
-      }
-    }
-  };
-  // console.log(formattedData)
-
-  const DATA_COUNT = 7;
-  const NUMBER_CFG = { count: DATA_COUNT, min: 0, max: 100 };
-  const colors = ['red', 'blue', 'green'];
+  const colors = ['red', 'blue', 'green', 'yellow', 'orange', 'purple', 'pink'];
 
   function filterEntriesByMonths(month) {
     const entriesByMonths = entries.map((item) => ({
@@ -100,7 +72,9 @@ export default function SourceEntriesList() {
     const filtedEntriesByMonths = entriesByMonths.filter((item) => item.entry_date == month)
     return filtedEntriesByMonths
   }
-  const test = filterEntriesByMonths("2022-04")
+  const test = filterEntriesByMonths("2022-03")
+
+  
 
   var filtedDataByMonths = Object.values(test.reduce((acc, { company, item_name, entry_weight }) => {
 
@@ -133,6 +107,7 @@ export default function SourceEntriesList() {
       let result = []
       barData.push(
         {
+          stack: companyName[i],
           label: companyName[i],
           data: result,
           backgroundColor: colors[i]
@@ -148,12 +123,15 @@ export default function SourceEntriesList() {
     }
     return barData
   }
+
+
   console.log(testData())
   const barData = {
     labels: labelsItems,
-    datasets:testData()
+    datasets:testData(),
   };
-
+      
+  //Config for line chart
   const options = {
     scales: {
       y: {
@@ -179,6 +157,8 @@ export default function SourceEntriesList() {
       },
     },
   };
+
+  console.log(options)
 
   // Setting up dates
   const [startDate, setStartDate] = useState('');
@@ -478,9 +458,29 @@ export default function SourceEntriesList() {
               : null}
           </tbody>
         </table>
+        <br /> <br /> <br />
         {formattedData !== [] && <Line options={options} data={data}></Line>}
         <br /> <br /> <br />
-        {formattedData !== [] && <Bar options={barConfig} data={barData}></Bar>}
+        {formattedData !== [] && <Bar options = {{
+        plugins: {
+            title: {
+              display: true,
+              text: "Current Month Materials Collected by Collector"
+            },
+           legend: { 
+              display: true, 
+              position: "top"
+            },
+            scales: {
+            x: {
+                stacked: true
+            },
+            y: {
+                stacked: true,               
+            },            
+          }
+        }      
+    }} data={barData}></Bar>}
       </div>
     </>
   );
