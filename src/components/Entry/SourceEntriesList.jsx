@@ -92,7 +92,7 @@ export default function SourceEntriesList() {
       title: {
         display: true,
         fontSize: 16,
-        text: `Total weight over time for (${new Date().getFullYear()})`,
+        text: `Landfilled vs Diverted (${new Date().getFullYear()})`,
       },
     },
   };
