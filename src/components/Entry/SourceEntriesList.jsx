@@ -104,12 +104,12 @@ export default function SourceEntriesList() {
 
   var filtedDataByMonths = Object.values(test.reduce((acc, { company, item_name, entry_weight }) => {
 
-    const key = company + '_' + item_name; // unique combination of id and subject
+    const key = company + '_' + item_name; 
     acc[key] = acc[key] || { company, item_name, entry_weight };
     acc[key].entry_weight += entry_weight;
     return acc;
   }, {}));
-  console.log(filtedDataByMonths)
+ 
 
   const labelsItems = filtedDataByMonths.reduce(
     (acc, curr) =>
@@ -126,7 +126,7 @@ export default function SourceEntriesList() {
         : [...acc, curr],
     []
   ).map((item) => item.company);
-  console.log(companyName)
+
   function testData() {
     let barData = []
     for (let i = 0; i < companyName.length; i++) {
@@ -153,19 +153,6 @@ export default function SourceEntriesList() {
     labels: labelsItems,
     datasets:testData()
   };
-
-  // console.log(barData.datasets)
-
-  // for(let i = 0; i < datasets.length; i++) {
-  //   barChartData.push({
-  //     label[i],
-  //     data[i],     
-  //     backgroundColor
-  //   })
-  // }
-
-
-
 
   const options = {
     scales: {
