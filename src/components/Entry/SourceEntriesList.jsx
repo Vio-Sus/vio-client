@@ -72,7 +72,7 @@ export default function SourceEntriesList() {
       plugins: {
         title: {
           display: true,
-          text: `${new Date().getMonth()} ${new Date().getFullYear()} Materials Obtained By Collector`
+          text: 'Test'
         },
       },
       responsive: true,
@@ -86,31 +86,37 @@ export default function SourceEntriesList() {
       }
     }
   };
+  console.log(formattedData)
 
   const DATA_COUNT = 7;
   const NUMBER_CFG = {count: DATA_COUNT, min: 0, max: 100};
+  const colors = ['red','blue','green'];
+  const labelsItems = itemList.map((item) => item.item_name)
+  const companyName = collectorList.map((item) => item.company);
 
-  // const barLabels = Utils.months({count: 7});
   const barData = {
-    labels: labels,
+    labels: labelsItems,
     datasets: [
       {
-        label: 'Dataset 1',
+        label: companyName,
         data: formattedData,
-        backgroundColor: 'red',
-      },
-      {
-        label: 'Dataset 2',
-        data: formattedData,
-        backgroundColor: 'blue',
-      },
-      {
-        label: 'Dataset 3',
-        data: formattedData,
-        backgroundColor: 'green',
-      },
+        backgroundColor: colors
+      }              
     ]
   };
+
+  console.log(barData.datasets)
+
+  // for(let i = 0; i < datasets.length; i++) {
+  //   barChartData.push({
+  //     label[i],
+  //     data[i],     
+  //     backgroundColor
+  //   })
+  // }
+
+
+
 
   const options = {
     scales: {
@@ -438,6 +444,7 @@ export default function SourceEntriesList() {
           </tbody>
         </table>
         {formattedData !== [] && <Line options={options} data={data}></Line>}
+        <br/> <br/> <br/>
         {formattedData !== [] && <Bar options={barConfig} data={barData}></Bar>}
       </div>
     </>
