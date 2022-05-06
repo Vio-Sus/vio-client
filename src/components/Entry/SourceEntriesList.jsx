@@ -142,6 +142,7 @@ export default function SourceEntriesList() {
     let m = date.getMonth();
     let lastDay = new Date(y, m + 2, 0);
     let lastDayConverted = lastDay.toISOString().split('T')[0];
+    console.log(lastDayConverted)
     numWeeks = getWeekNumOfMonthOfDate(lastDayConverted);
     console.log(numWeeks);
     // console.log(wek)
@@ -341,7 +342,7 @@ export default function SourceEntriesList() {
         setEntries(newEntries || []);
         setFilteredEntries(newEntries || []);
         // console.log('Entries: ', newEntries);
-        generateWeeklyTableData(filterEntriesByMonths2('2022-01', newEntries));
+        generateWeeklyTableData(filterEntriesByMonths2('2022-03', newEntries));
         generateChartData(newEntries);
         // Reduce the entries list so you only have unique collectors (for dropdown menu)
         const uniqueCollectors = entries.reduce(
