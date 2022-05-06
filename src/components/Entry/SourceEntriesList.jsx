@@ -3,8 +3,8 @@ import {
   // getCollectors,
   getEntriesByDateRangeForCollector,
 } from '../../common/network';
-// import styled from 'styled-components';
-// import Chart from 'chart.js/auto';
+import styled from 'styled-components';
+import Chart from 'chart.js/auto';
 import { Line } from 'react-chartjs-2';
 import { Bar } from 'react-chartjs-2';
 // import Summary from '../Summary/Summary';
@@ -350,7 +350,7 @@ export default function SourceEntriesList() {
         setFilteredEntries(newEntries || []);
         // console.log('Entries: ', newEntries);
 
-        generateWeeklyTableData(filterEntriesByMonths2('2022-01', newEntries));
+        generateWeeklyTableData(filterEntriesByMonths2('2022-04', newEntries));
         generateChartData(newEntries);
         // Reduce the entries list so you only have unique collectors (for dropdown menu)
         const uniqueCollectors = entries.reduce(
