@@ -125,11 +125,6 @@ export default function SourceEntriesList() {
   // console.log('Filtered entries: ', filteredEntries);
 
   function filterEntriesByMonths(month) {
-    // unecessary extra code
-    // const entriesByMonths = entries.map((item) => ({
-    //   ...item,
-    //   entry_date: item.entry_date.substring(0, 7),
-    // }));
     const filtedEntriesByMonths = entries.filter(
       (item) => item.entry_date.substring(0, 7) === month
     );
@@ -139,11 +134,6 @@ export default function SourceEntriesList() {
 
   // used in useeffect by alex
   function filterEntriesByMonths2(month, entries) {
-    // unecessary extra code
-    // const entriesByMonths = entries.map((item) => ({
-    //   ...item,
-    //   entry_date: item.entry_date.substring(0, 7),
-    // }));
     const filtedEntriesByMonths = entries.filter(
       (item) => item.entry_date.substring(0, 7) === month
     );
@@ -272,13 +262,6 @@ export default function SourceEntriesList() {
 
   // console.log(barData.datasets)
 
-  // for(let i = 0; i < datasets.length; i++) {
-  //   barChartData.push({
-  //     label[i],
-  //     data[i],
-  //     backgroundColor
-  //   })
-  // }
 
   const options = {
     scales: {
@@ -369,7 +352,7 @@ export default function SourceEntriesList() {
           []
         );
         setItemList(uniqueItems);
-        generateChartData();
+       
       } catch {}
     })();
   }, []);
