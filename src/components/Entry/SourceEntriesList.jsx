@@ -93,27 +93,26 @@ export default function SourceEntriesList() {
   const colors = ['red','blue','green'];
   const labelsItems = itemList.map((item) => item.item_name)
   const companyName = collectorList.map((item) => item.company);
+  const collectorData = []
 
   const barData = {
     labels: labelsItems,
-    datasets: [
-      {
-        label: companyName,
-        data: formattedData,
-        backgroundColor: colors
-      }              
-    ]
+    datasets: collectorData
   };
 
-  console.log(barData.datasets)
+  for(let i = 0 ; i < 3; i++) {
+    collectorData.push({
+      label: itemList[i].company,
+      data: itemList[i].entry_weight,
+      backgroundColor: colors[i]
+    })
+  }
 
-  // for(let i = 0; i < datasets.length; i++) {
-  //   barChartData.push({
-  //     label[i],
-  //     data[i],     
-  //     backgroundColor
-  //   })
-  // }
+  console.log(collectorData); 
+
+  
+console.log(itemList)
+console.log(itemList[0].company)
 
 
 
