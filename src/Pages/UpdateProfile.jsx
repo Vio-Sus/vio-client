@@ -1,6 +1,16 @@
 import { useState } from 'react';
 import { updateAccountProfile } from '../common/network';
 import { ValidateEmail } from '../common/validation';
+import styled from 'styled-components';
+
+const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+`;
 
 export default function UpdateProfile() { 
   const [nickname, setNickname] = useState('');
@@ -8,8 +18,7 @@ export default function UpdateProfile() {
   const [company, setCompanyName] = useState('');
   const [msg, setMsg] = useState('');
   const handleChange = (e) => {
-    let inputName = e.target.name;    
-    //console.log('inputName: ', inputName, 'inputValue: ', e.target.value);
+    let inputName = e.target.name;       
     switch (inputName) {     
       case 'nickname':
         setNickname(e.target.value);
@@ -59,7 +68,7 @@ export default function UpdateProfile() {
 
   return (
     <>     
-      <form onSubmit={handleSubmit} id="new-source-form" noValidate>
+      <StyledForm onSubmit={handleSubmit} id="new-source-form" noValidate>
       <h2>Update Account Profile</h2>
         <label>Nickname:</label>
         <br />
@@ -85,13 +94,13 @@ export default function UpdateProfile() {
           onChange={(e) => handleChange(e)}
         ></input>               
         <div className="button-section">
-          <button className="button submit" type="submit">
+          <button className="submitButton" type="submit">
             Update Profile
           </button>         
           <br />
           {msg}
         </div>
-      </form>
+      </StyledForm>
     </>
   );
 }
