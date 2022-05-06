@@ -51,9 +51,7 @@ export default function SourceEntriesList() {
     'December',
   ];
 
-  const d = new Date();
-  let month = d.getMonth();
-  const labels = months({ count: month });
+  const labels = months({ count: new Date().getMonth() });
 
   const data = {
     labels,
@@ -93,6 +91,7 @@ export default function SourceEntriesList() {
       },
       title: {
         display: true,
+        fontSize: 16,
         text: `Total weight over time for (${new Date().getFullYear()})`,
       },
     },
@@ -449,7 +448,9 @@ export default function SourceEntriesList() {
               : null}
           </tbody>
         </table>
-        {formattedData !== [] && <Line options={options} data={data}></Line>}
+        {formattedData !== [] && formattedGarbageData !== [] && (
+          <Line options={options} data={data}></Line>
+        )}
       </div>
     </>
   );
