@@ -1,5 +1,6 @@
 export let handleValidation = (formValues, entryWeights, items) => {
   console.log('---------------------');
+  console.log('formvalues after pressing submit', formValues);
   let err = [];
   if (!formValues.created) {
     err.push('A date is missing');
@@ -12,16 +13,16 @@ export let handleValidation = (formValues, entryWeights, items) => {
   } else {
     for (let i = 0; i < entryWeights.length; i++) {
       const entry = entryWeights[i];
-      if (entry.item_id !== '') {
+      if (formValues.item_id !== '') {
         if (entry.weight === '') {
           let isMissingItem = items.find(
-            ({ item_id }) => item_id === Number(entry.item_id)
+            ({ item_id }) => item_id === Number(formValues.item_id)
           );
           err.push(`${isMissingItem.name} is missing a weight`);
         }
       }
       if (entry.weight !== '') {
-        if (entry.item_id === '') {
+        if (!formValues.item_id) {
           err.push(`Which item weighs ${entry.weight} kg?`);
         }
       }

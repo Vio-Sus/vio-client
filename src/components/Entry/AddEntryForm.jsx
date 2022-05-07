@@ -83,8 +83,10 @@ export default function Form({
     console.log('this is the add stuff ', sources);
     setSourcesList(sources);
     setItemsList(items);
+    console.log('i am sourcesList', sourcesList);
   }, [items, sources]);
 
+  console.log('i am itemsList', itemsList);
   const addSource = () => {
     console.log('adding..........');
     setIsAddingSource(true);
@@ -100,9 +102,13 @@ export default function Form({
     // adding onto the copy
     if (e.target.value === 'add_source') {
       addSource();
+    } else if (e.target.value === 'add_item') {
+      addItem();
     } else if (e.target.name === 'created') {
       newFormValues[e.target.name] = e.target.value;
     } else {
+      console.log(e.target.value);
+      console.log(newFormValues[e.target.name]);
       newFormValues[e.target.name] = Number(e.target.value);
     }
     console.log('handling form changes', newFormValues);
@@ -112,6 +118,7 @@ export default function Form({
 
   let addFormFields = () => {
     setEntryWeights([...entryWeights, newEntryWeight()]);
+    console.log('entryWeights', entryWeights);
   };
 
   let removeFormFields = (element) => {
@@ -151,120 +158,122 @@ export default function Form({
   };
 
   return (
-sourcesList &&
+    sourcesList &&
     itemsList && (
-    <>
-      <div onClick={handleCancel}>
-        <form onSubmit={handleSubmit} id="input-form" noValidate>
-          <SourceCont>
-            <label for="selectSource">Source</label>
-            <EntryDropdown
+      <>
+        <div onClick={handleCancel}>
+          <form onSubmit={handleSubmit} id="input-form" noValidate>
+            <SourceCont>
+              <label for="selectSource">Source</label>
+              <EntryDropdown
+                name="source_id"
                 objects={sourcesList}
                 entryFor="Source"
+                value={formValues['source_id']}
                 handleFormValues={(e) => handleFormValues(e)}
                 setAddedSomething={setAddedSomething}
                 addedSomething={addedSomething}
               ></EntryDropdown>
-          </SourceCont>
+            </SourceCont>
 
-          <DateItemWeightCont>
-            <DateCont>
-              <label for="inputNewDate">Date</label>
-              <input
-                id="inputNewDate"
-                name="created"
-                type="date"
-                onChange={(e) => handleFormValues(e)}
-              />
-            </DateCont>
-            <ItemWeightCont>
-              {entryWeights.map((element, index) => (
-                <ItemWeightPair key={element.id}>
-                  <ItemCont>
-                    <label for="selectNewItem">Item</label>
-                    <EntryDropdown
+            <DateItemWeightCont>
+              <DateCont>
+                <label for="inputNewDate">Date</label>
+                <input
+                  id="inputNewDate"
+                  name="created"
+                  type="date"
+                  onChange={(e) => handleFormValues(e)}
+                />
+              </DateCont>
+              <ItemWeightCont>
+                {entryWeights.map((element, index) => (
+                  <ItemWeightPair key={element.id}>
+                    <ItemCont>
+                      <label for="selectNewItem">Item</label>
+                      <EntryDropdown
                         name="item_id"
                         objects={itemsList}
                         entryFor="Item"
                         handleFormValues={(e) => {
-                          e.target.value === 'add_item'
-                            ? addItem()
-                            : (element.item_id = Number(e.target.value));
+                          element.item_id = Number(e.target.value);
+                          handleFormValues(e);
                         }}
+                        value={element.item_id}
                         setAddedSomething={setAddedSomething}
                         addedSomething={addedSomething}
                       ></EntryDropdown>
-                  </ItemCont>
+                    </ItemCont>
 
-                  <WeightCont>
-                    <label for="inputNewWeight">Weight</label>
-                    <div class="weightInputCont">
-                      <input
-                        class="weightInput"
-                        id="inputNewWeight"
-                        type="number"
-                        name="weight"
-                        placeholder="0"
-                        min="0"
-                        onChange={(e) => {
-                          element.weight = Number(e.target.value);
+                    <WeightCont>
+                      <label for="inputNewWeight">Weight</label>
+                      <div class="weightInputCont">
+                        <input
+                          class="weightInput"
+                          id="inputNewWeight"
+                          type="number"
+                          name="weight"
+                          placeholder="0"
+                          min="0"
+                          onChange={(e) => {
+                            element.weight = Number(e.target.value);
+                          }}
+                        />
+                        <span class="weightSuffix">kg</span>
+                      </div>
+                    </WeightCont>
+
+                    {!!index && (
+                      <IconButton
+                        onClick={() => removeFormFields(element)}
+                        sx={{
+                          width: 2,
+                          marginTop: 3,
+                          '&:hover': {
+                            backgroundColor: 'transparent',
+                            transform: 'scale(1.1)',
+                          },
                         }}
-                      />
-                      <span class="weightSuffix">kg</span>
-                    </div>
-                  </WeightCont>
+                      >
+                        <Delete sx={{ '&:hover': { color: '#80cf76' } }} />
+                      </IconButton>
+                    )}
+                  </ItemWeightPair>
+                ))}
+              </ItemWeightCont>
+            </DateItemWeightCont>
 
-                  {!!index && (
-                    <IconButton
-                      onClick={() => removeFormFields(element)}
-                      sx={{
-                        width: 2,
-                        marginTop: 3,
-                        '&:hover': {
-                          backgroundColor: 'transparent',
-                          transform: 'scale(1.1)',
-                        },
-                      }}
-                    >
-                      <Delete sx={{ '&:hover': { color: '#80cf76' } }} />
-                    </IconButton>
-                  )}
-                </ItemWeightPair>
-              ))}
-            </ItemWeightCont>
-          </DateItemWeightCont>
+            <div>
+              <div class="buttonCont">
+                <IconButton
+                  onClick={() => addFormFields()}
+                  sx={{
+                    '&:hover': {
+                      backgroundColor: 'transparent',
+                      transform: 'scale(1.1)',
+                    },
+                  }}
+                >
+                  <AddCircleIcon sx={{ '&:hover': { color: '#80cf76' } }} />
+                </IconButton>
+              </div>
 
-          <div>
-            <div class="buttonCont">
-              <IconButton
-                onClick={() => addFormFields()}
-                sx={{
-                  '&:hover': {
-                    backgroundColor: 'transparent',
-                    transform: 'scale(1.1)',
-                  },
-                }}
-              >
-                <AddCircleIcon sx={{ '&:hover': { color: '#80cf76' } }} />
-              </IconButton>
+              <div class="errorMessages">
+                {errorMsgs.map((msg, key) => (
+                  <span key={key}>{msg}</span>
+                ))}
+              </div>
+
+              <div class="buttonCont">
+                {/* uncommenting StyledLink will disable the form's error messages */}
+                {/* <StyledLink to="/viewData"> */}
+                <button class="submitButton">Save Entry</button>
+                {/* </StyledLink> */}
+              </div>
             </div>
-
-            <div class="errorMessages">
-              {errorMsgs.map((msg, key) => (
-                <span key={key}>{msg}</span>
-              ))}
-            </div>
-
-            <div class="buttonCont">
-              {/* uncommenting StyledLink will disable the form's error messages */}
-              {/* <StyledLink to="/viewData"> */}
-              <button class="submitButton">Save Entry</button>
-              {/* </StyledLink> */}
-            </div>
-          </div>
-        </form>
-      </div>
-      {isAddingSource && (
+          </form>
+        </div>
+        {isAddingSource && (
           <AddSourceModal
             setIsAddingSource={setIsAddingSource}
             setAddedSomething={setAddedSomething}
@@ -276,6 +285,7 @@ sourcesList &&
             setAddedSomething={setAddedSomething}
           />
         )}
-    </>)
+      </>
+    )
   );
 }

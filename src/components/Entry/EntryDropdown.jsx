@@ -2,10 +2,12 @@ import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 
 export default function EntryDropdown({
+  name,
   objects,
   entryFor,
   handleFormValues,
   addedSomething,
+  value,
 }) {
   const Select = styled.select`
     width: 152px;
@@ -42,10 +44,14 @@ export default function EntryDropdown({
   return (
     dropdownObjects && (
       <>
-        <Select name="source_id" onChange={handleFormValues}>
+        <Select
+          name={name}
+          onChange={handleFormValues}
+          {...(value ? (value = { value }) : {})}
+        >
           <option hidden>Select {entryFor}</option>
           {objects.map((obj, key) => (
-            <option key={key} value={obj.source_id}>
+            <option key={key} value={obj[`${entryFor.toLowerCase()}_id`]}>
               {obj.name}
             </option>
           ))}
