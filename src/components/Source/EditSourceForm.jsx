@@ -56,7 +56,7 @@ export default function EditSourceForm({ source, setIsEditing }) {
   };
 
   const handleSubmit = async (event) => {
-    // event.preventDefault();
+    event.preventDefault();
     let formContent = {
       name,
       address,

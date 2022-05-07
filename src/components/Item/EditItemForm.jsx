@@ -36,7 +36,7 @@ export default function EditItemForm({ item, setIsEditing }) {
   };
 
   const handleSubmit = async (event) => {
-    // event.preventDefault();
+    event.preventDefault();
     let formContent = {
       name,
     };
@@ -47,7 +47,7 @@ export default function EditItemForm({ item, setIsEditing }) {
     } catch (error) {
       console.log(error);
     }
-    // window.location.reload();
+    window.location.reload();
   };
 
   const handleCancel = () => {

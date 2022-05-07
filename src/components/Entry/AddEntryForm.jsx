@@ -107,18 +107,20 @@ export default function Form({
     } else if (e.target.name === 'created') {
       newFormValues[e.target.name] = e.target.value;
     } else {
-      console.log(e.target.value);
-      console.log(newFormValues[e.target.name]);
+      console.log('im e.target.value', e.target.value);
+      console.log('im e.target.name', e.target.name);
       newFormValues[e.target.name] = Number(e.target.value);
+      // newformvalues = {weight: 200}
     }
     console.log('handling form changes', newFormValues);
     // setting the state from the original to the new copy
     setFormValues(newFormValues);
+    console.log('therefore FORMvALUES:', formValues);
   };
 
   let addFormFields = () => {
     setEntryWeights([...entryWeights, newEntryWeight()]);
-    console.log('entryWeights', entryWeights);
+    console.log('entryWeights whn adding new row', entryWeights);
   };
 
   let removeFormFields = (element) => {
@@ -131,6 +133,7 @@ export default function Form({
   let handleSubmit = async (event) => {
     event.preventDefault();
     let form = document.getElementById('input-form');
+    console.log('entryWeights from saving', entryWeights);
     let errorMsgs = handleValidation(formValues, entryWeights, items); // ['error messages']
     setErrorMsgs(errorMsgs);
     console.log(errorMsgs);
@@ -140,10 +143,15 @@ export default function Form({
       console.log('Form is missing values; try again');
     } else {
       let formContent = {
-        entries: entryWeights.map((e) => ({ ...e, ...formValues })),
+        //entries: entryWeights.map((e) => ({ ...e, ...formValues })),
+        entries: entryWeights.map((e) => ({
+          ...e,
+          created: formValues.created,
+          source_id: formValues.source_id,
+        })),
       };
       console.log('~~~~~~~~~~~~~~~~~`');
-      console.log(formContent);
+      console.log('formContent that will be passed is:', formContent);
       const res = await postEntries(formContent);
       console.log(res);
       form.reset();
@@ -198,6 +206,9 @@ export default function Form({
                         handleFormValues={(e) => {
                           element.item_id = Number(e.target.value);
                           handleFormValues(e);
+                        }}
+                        onChange={(e) => {
+                          element.item_id = Number(e.target.value);
                         }}
                         value={element.item_id}
                         setAddedSomething={setAddedSomething}
