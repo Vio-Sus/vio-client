@@ -22,7 +22,7 @@ export default function SourceEntriesList() {
   const [formattedData, setFormattedData] = useState([]);
   const [formattedGarbageData, setFormattedGarbageData] = useState([]);
   const [weeklyTotalsData, setWeeklyTotalsData] = useState([]);
-  const [numWeeksInMonth, setNumWeeksInMonth] = useState(null);
+  // const [numWeeksInMonth, setNumWeeksInMonth] = useState(null);
 
   function months(config) {
     var cfg = config || {};
@@ -134,16 +134,38 @@ export default function SourceEntriesList() {
   }
   const test = filterEntriesByMonths('2022-04');
 
+  const getWeekNumOfMonthOfDate = (date) => {
+    // let monthNum = date.substring(5, 7);
+    // if (monthNum[0] === '0') {
+    //   monthNum = monthNum[1]; // get second digit
+    // }
+    let dayNum = date.substring(8, 10);
+    if (dayNum[0] === '0') {
+      dayNum = dayNum[1]; // get second digit
+    }
+    dayNum = parseInt(dayNum) + 1;
+    if(dayNum.toString().length === 1) {
+      dayNum = `0${dayNum}`
+    } 
+    // console.log("daynum")
+    // console.log(dayNum)
+    let day1 = new Date(date.substring(0,7) + "-" + dayNum);
+    let day = day1.getDate()
+    day -= (day1.getDay() === 0 ? 6 : day1.getDay()); //get monday of this week
+    //special case handling for 0 (sunday)
+
+    day += 7;
+    //for the first non full week the value was negative
+
+    const prefixes = ['0', '1', '2', '3', '4', '5'];
+    return +prefixes[0 | (day / 7)] + 1;
+  };
+  console.log(getWeekNumOfMonthOfDate('2022-01-30'));
+
   let numWeeks = 0;
   // used in useeffect by alex
   function filterEntriesByMonths2(month, entries) {
-    let date = new Date(month + '-01');
-    let y = date.getFullYear();
-    let m = date.getMonth();
-    let lastDay = new Date(y, m + 2, 0);
-    let lastDayConverted = lastDay.toISOString().split('T')[0];
-    console.log(lastDayConverted)
-    numWeeks = getWeekNumOfMonthOfDate(lastDayConverted);
+    numWeeks = weekCount(month);
     console.log(numWeeks);
     // console.log(wek)
     const filtedEntriesByMonths = entries.filter(
@@ -152,14 +174,22 @@ export default function SourceEntriesList() {
     return filtedEntriesByMonths;
   }
 
-  const getWeekNumOfMonthOfDate = (s) => {
-    const [y, m, d] = s.split('-'); // parse date string
-    const date = new Date(y, m - 1, d); // create date object
-    date.setDate(d - ((date.getDay() + 6) % 7)); // adjust date to previous Monday
-    return Math.ceil(date.getDate() / 7); // return week number of the month
+  const weekCount = (s) => {
+    let year = s.substring(0, 4);
+    let monthNum = s.substring(5, 7);
+    if (monthNum[0] === '0') {
+      monthNum = monthNum[1]; // get second digit
+    }
+    var firstOfMonth = new Date(+year, +monthNum - 1, 1);
+    var lastOfMonth = new Date(+year, +monthNum, 0);
+
+    var used = firstOfMonth.getDay() + lastOfMonth.getDate();
+
+    return Math.ceil(used / 7);
   };
 
   const getWeeklyTotals = (data, distinctItems) => {
+    console.log(data);
     // console.log('in 2 looop');
     // console.log(distinctItems.length);
     for (let i = 0; i < distinctItems.length; i++) {
@@ -272,7 +302,6 @@ export default function SourceEntriesList() {
 
   // console.log(barData.datasets)
 
-
   const options = {
     scales: {
       y: {
@@ -342,7 +371,7 @@ export default function SourceEntriesList() {
         setEntries(newEntries || []);
         setFilteredEntries(newEntries || []);
         // console.log('Entries: ', newEntries);
-        generateWeeklyTableData(filterEntriesByMonths2('2022-03', newEntries));
+        generateWeeklyTableData(filterEntriesByMonths2('2022-04', newEntries));
         generateChartData(newEntries);
         // Reduce the entries list so you only have unique collectors (for dropdown menu)
         const uniqueCollectors = entries.reduce(
@@ -361,7 +390,6 @@ export default function SourceEntriesList() {
           []
         );
         setItemList(uniqueItems);
-       
       } catch {}
     })();
   }, []);
@@ -639,8 +667,11 @@ export default function SourceEntriesList() {
               <th>Week 2</th>
               <th>Week 3</th>
               <th>Week 4</th>
-              {weeklyTotalsData.length !== 0 && weeklyTotalsData[0].hasOwnProperty("week5Total") &&
-              <th>Week 5</th>}
+              <th>Week 5</th>
+              {weeklyTotalsData.length !== 0 &&
+                weeklyTotalsData[0].hasOwnProperty('week6Total') && (
+                  <th>Week 6</th>
+                )}
               <th>Total weight</th>
             </tr>
           </thead>
@@ -653,7 +684,8 @@ export default function SourceEntriesList() {
                   <td>{row.week2Total} kg</td>
                   <td>{row.week3Total} kg</td>
                   <td>{row.week4Total} kg</td>
-                  {row.week5Total && <td>{row.week5Total} kg</td>}
+                  <td>{row.week5Total} kg</td>
+                  {row.week6Total && <td>{row.week6Total} kg</td>}
                   <td>{row.monthlyTotal} kg</td>
                 </tr>
               ))}
