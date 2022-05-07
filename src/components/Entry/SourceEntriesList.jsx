@@ -139,28 +139,30 @@ export default function SourceEntriesList() {
     // if (monthNum[0] === '0') {
     //   monthNum = monthNum[1]; // get second digit
     // }
-    let dayNum = date.substring(8, 10);
-    if (dayNum[0] === '0') {
-      dayNum = dayNum[1]; // get second digit
+    var date2 = new Date(date.substring(0, 8) + '01');
+    var dayChosen = date.substring(8, 10);
+    if (dayChosen[0] === '0') {
+      dayChosen = dayChosen[1];
     }
-    dayNum = parseInt(dayNum) + 1;
-    if(dayNum.toString().length === 1) {
-      dayNum = `0${dayNum}`
-    } 
-    // console.log("daynum")
-    // console.log(dayNum)
-    let day1 = new Date(date.substring(0,7) + "-" + dayNum);
-    let day = day1.getDate()
-    day -= (day1.getDay() === 0 ? 6 : day1.getDay()); //get monday of this week
-    //special case handling for 0 (sunday)
+    let day1 = date2.getDay();
+    //console.log("day of week of first day " + day1)
+    // Sunday - Saturday : 0 - 6
 
-    day += 7;
-    //for the first non full week the value was negative
-
-    const prefixes = ['0', '1', '2', '3', '4', '5'];
-    return +prefixes[0 | (day / 7)] + 1;
+    //console.log("day chosen " + dayChosen)
+    // expected output: 2
+    let weekCounter = 1;
+    for (let i = 1; i < dayChosen; i++) {
+      day1++;
+      if (day1 >= 6) {
+        weekCounter++;
+        day1 = -1;
+      }
+    }
+    //console.log(weekCounter)
+    return weekCounter;
   };
-  console.log(getWeekNumOfMonthOfDate('2022-01-30'));
+  // console.log('weeknumofmonthdate');
+  // console.log(getWeekNumOfMonthOfDate('2024-02-29'));
 
   let numWeeks = 0;
   // used in useeffect by alex
