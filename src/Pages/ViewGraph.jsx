@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
-import {
-  generateXAxis,
-} from '../common/chartHelpers';
+import { generateXAxis } from '../common/chartHelpers';
 
 import { graphApi } from '../common/mockData';
 import { dateToYMD } from '../common/date';
@@ -42,7 +40,6 @@ const GraphCont = styled.div`
   width: 60vw;
 `;
 
-
 const ViewGraphPage = ({ sources }) => {
   // const [startDate, setStartDate] = useState('2022-03-01');
   // const [endDate, setEndDate] = useState('2022-03-11');
@@ -75,8 +72,9 @@ const ViewGraphPage = ({ sources }) => {
       if (startDate && endDate) {
         try {
           let labels = await generateXAxis(startDate, endDate);
+
           setXAxisLabels(labels);
-          // console.log('labels are', labels);
+
           let sums = await getGraphDataset(startDate, endDate);
           setDatasets(sums.data);
         } catch {}
@@ -90,9 +88,9 @@ const ViewGraphPage = ({ sources }) => {
   };
 
   const handleSourceSelect = (e) => {
-          setSelectedSource(e.target.value);
-          // console.log('NOTHING', datasets);
-        }
+    setSelectedSource(e.target.value);
+    // console.log('NOTHING', datasets);
+  };
 
   return (
     <>
@@ -107,7 +105,7 @@ const ViewGraphPage = ({ sources }) => {
               <Button buttoncolor="#4A4A4A" buttontext="List View" />
             </StyledLink>
 
-  {/* TODO: Export data to a PDF or Excel */}
+            {/* TODO: Export data to a PDF or Excel */}
             <Button
               buttoncolor="#4A4A4A"
               buttontext="Print"
@@ -120,22 +118,26 @@ const ViewGraphPage = ({ sources }) => {
           </div>
         </header>
         <DropdownCont>
-          <DropDownOptions text="Source" array={sources} handleChange={handleSourceSelect}/>
+          <DropDownOptions
+            text="Source"
+            array={sources}
+            handleChange={handleSourceSelect}
+          />
           {/* TODO: Add the ability to show a graph for quantity of items across multiple sources */}
           {/* <DropDownOptions text="Materials" /> */}
           {(startDate, endDate, today) && (
-        <DateFilter
-          startDate={startDate}
-          endDate={endDate}
-          today={today}
-          setStartDate={(e) => {
-            setStartDate(e.target.value);
-          }}
-          setEndDate={(e) => {
-            setEndDate(e.target.value);
-          }}
-        />
-      )}
+            <DateFilter
+              startDate={startDate}
+              endDate={endDate}
+              today={today}
+              setStartDate={(e) => {
+                setStartDate(e.target.value);
+              }}
+              setEndDate={(e) => {
+                setEndDate(e.target.value);
+              }}
+            />
+          )}
         </DropdownCont>
 
         <GraphMainCont>
@@ -143,14 +145,14 @@ const ViewGraphPage = ({ sources }) => {
           {/* give width & put it in div */}
           <GraphCont>
             {xAxisLabels && datasets && selectedSource ? (
-        <LineGraph
-          sourceName={selectedSource}
-          xAxisLabels={xAxisLabels}
-          datasets={datasets[selectedSource]}
-        />
-      ) : (
-        <p>Pick a source from the drop down above to view!</p>
-      )}
+              <LineGraph
+                sourceName={selectedSource}
+                xAxisLabels={xAxisLabels}
+                datasets={datasets[selectedSource]}
+              />
+            ) : (
+              <p>Pick a source from the drop down above to view!</p>
+            )}
           </GraphCont>
           {/* <GraphRightSideKey /> */}
           {/* give width & put it in div */}
