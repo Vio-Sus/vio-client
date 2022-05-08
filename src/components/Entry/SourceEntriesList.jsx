@@ -3,6 +3,9 @@ import { getCollectors, getEntriesByDateRangeForCollector } from '../../common/n
 import styled from 'styled-components';
 import Chart from 'chart.js/auto';
 import { Line, Bar } from 'react-chartjs-2';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 
 // import Summary from '../Summary/Summary';
 // import DateFilter from '../Filter/DateFilter';
@@ -17,6 +20,15 @@ export default function SourceEntriesList() {
   const [itemList, setItemList] = useState([]);
   const [total, setTotals] = useState([]);
   const [formattedData, setFormattedData] = useState([]);
+  const currentMonthYear = new Date().getFullYear() + "-" + (new Date().getMonth()+1).toString().padStart(2,'0');
+  const [selectedDate, setSelectedDate] = useState(new Date())
+
+
+  console.log(selectedDate);
+  console.log(currentMonthYear)
+  const formattedSelectedYearMonth = selectedDate.toISOString().substring(7,-1);
+
+  console.log(formattedSelectedYearMonth) 
 
   function months(config) {
     var cfg = config || {};
@@ -72,7 +84,7 @@ export default function SourceEntriesList() {
     const filtedEntriesByMonths = entriesByMonths.filter((item) => item.entry_date == month)
     return filtedEntriesByMonths
   }
-  const test = filterEntriesByMonths("2022-03")
+  const test = filterEntriesByMonths(formattedSelectedYearMonth)
 
   
 
@@ -165,6 +177,7 @@ export default function SourceEntriesList() {
   const [endDate, setEndDate] = useState('');
   const [today, setToday] = useState([]);
 
+
   // grabbed from binibin-repo
   const dateToYMD = (date) => {
     let yyyy = date.getFullYear();
@@ -176,7 +189,8 @@ export default function SourceEntriesList() {
   const todayObj = new Date(new Date().toString());
   const todayMinus100 = new Date(new Date().setDate(todayObj.getDate() - 60));
   const todayDate = dateToYMD(todayObj);
-  const defaultStartDate = dateToYMD(todayMinus100);
+  const defaultStartDate = dateToYMD(todayMinus100); 
+  
 
   useEffect(() => {
     (async () => {
@@ -184,7 +198,9 @@ export default function SourceEntriesList() {
         setToday(todayDate);
         setStartDate(defaultStartDate);
         setEndDate(todayDate);
-        setTotals(filteredEntries);
+        setTotals(filteredEntries);        
+        
+      
 
         let [entries] = await Promise.all([
           getEntriesByDateRangeForCollector('2020-01-01', todayDate),
@@ -320,9 +336,6 @@ export default function SourceEntriesList() {
     }
     return acc;
   }, []);
-
-  // console.log(totals);
-  // console.log('Filtered entries: ', filteredEntries);
 
   return (
     <>
@@ -461,11 +474,39 @@ export default function SourceEntriesList() {
         <br /> <br /> <br />
         {formattedData !== [] && <Line options={options} data={data}></Line>}
         <br /> <br /> <br />
-        {formattedData !== [] && <Bar options = {{
+        <label>See data by month</label>    
+          <DatePicker          
+           selected={selectedDate}
+           onChange={(date) => setSelectedDate(date)}
+           dateFormat="yyyy-MM"
+           showMonthYearPicker                     
+           maxDate={new Date()}
+           placeholderText={currentMonthYear}           
+          />
+        {testData().length !== 0  ? <Bar options = {{
         plugins: {
             title: {
               display: true,
-              text: "Current Month Materials Collected by Collector"
+              text: `(${formattedSelectedYearMonth}) Materials Collected by Collector`
+            },
+           legend: { 
+              display: true, 
+              position: "top"
+            },
+            scales: {
+            x: {
+                stacked: true
+            },
+            y: {
+                stacked: true,               
+            },            
+          }
+        }      
+    }} data={barData}></Bar> : <Bar options = {{
+        plugins: {
+            title: {
+              display: true,
+              text: "No data for this month"
             },
            legend: { 
               display: true, 
