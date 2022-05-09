@@ -42,7 +42,7 @@ export default function Button({
     return (
         <Cont 
             border={borderweight} 
-            bgColor={buttoncolor} 
+            bgcolor={buttoncolor} 
             width={buttonwidth} 
             height={buttonheight}
             onClick={onClick}
