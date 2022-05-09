@@ -66,7 +66,23 @@ export default function SourceEntriesList() {
     ],
   };
 
-  const colors = ['red', 'blue', 'green', 'yellow', 'orange', 'purple', 'pink'];
+  const colors = ['rgba(255, 99, 132, 0.2)',
+  'rgba(255, 159, 64, 0.2)',
+  'rgba(255, 205, 86, 0.2)',
+  'rgba(75, 192, 192, 0.2)',
+  'rgba(54, 162, 235, 0.2)',
+  'rgba(153, 102, 255, 0.2)',
+  'rgba(201, 203, 207, 0.2)'];
+
+  const borderColors = [
+    'rgb(255, 99, 132)',
+    'rgb(255, 159, 64)',
+    'rgb(255, 205, 86)',
+    'rgb(75, 192, 192)',
+    'rgb(54, 162, 235)',
+    'rgb(153, 102, 255)',
+    'rgb(201, 203, 207)'
+  ]
 
   function filterEntriesByMonths(month) {
     const entriesByMonths = entries.map((item) => ({
@@ -76,11 +92,9 @@ export default function SourceEntriesList() {
     const filtedEntriesByMonths = entriesByMonths.filter((item) => item.entry_date == month)
     return filtedEntriesByMonths
   }
-  const test = filterEntriesByMonths(formattedSelectedYearMonth)
-
+  const filteredMonthYear = filterEntriesByMonths(formattedSelectedYearMonth)
   
-
-  var filtedDataByMonths = Object.values(test.reduce((acc, { company, item_name, entry_weight }) => {
+  var filtedDataByMonths = Object.values(filteredMonthYear.reduce((acc, { company, item_name, entry_weight }) => {
 
     const key = company + '_' + item_name; 
     acc[key] = acc[key] || { company, item_name, entry_weight };
@@ -88,7 +102,6 @@ export default function SourceEntriesList() {
     return acc;
   }, {}));
  
-
   const labelsItems = filtedDataByMonths.reduce(
     (acc, curr) =>
       acc.find((e) => e.item_name  === curr.item_name )
@@ -114,7 +127,9 @@ export default function SourceEntriesList() {
           stack: companyName[i],
           label: companyName[i],
           data: result,
-          backgroundColor: colors[i]
+          backgroundColor: colors[i],
+          borderColor: borderColors[i],
+          borderWidth: 1
         })
       for (let j = 0; j < labelsItems.length; j++) {
         let found = filtedDataByMonths.find((item) => item.company == companyName[i] && item.item_name == labelsItems[j])
@@ -159,8 +174,7 @@ export default function SourceEntriesList() {
       },
     },
   };
-
-  console.log(options)
+  
 
   // grabbed from binibin-repo
   const dateToYMD = (date) => {
@@ -193,9 +207,7 @@ export default function SourceEntriesList() {
   useEffect(() => {
     (async () => {
       try {
-        setToday(todayDate);
-        // setStartDate(defaultStartDate);
-        // setEndDate(todayDate);
+        setToday(todayDate);     
         setTotals(filteredEntries);        
         
         let [entries] = await Promise.all([
@@ -203,9 +215,7 @@ export default function SourceEntriesList() {
         ]); // returns new promise with all data
         const newEntries = entries.map((item) => {
           return { ...item, entry_weight: +item.entry_weight };
-        });
-        console.log('==========');
-        console.log(newEntries);
+        });     
         if (newEntries !== []) {
           const mapDayToMonth = newEntries.map((x) => ({
             ...x,
@@ -236,8 +246,7 @@ export default function SourceEntriesList() {
           setFormattedData(formattedTotalsByMonths);
         }
         setEntries(newEntries || []);
-        setFilteredEntries(newEntries || []);
-        console.log('Entries: ', newEntries);
+        setFilteredEntries(newEntries || []);      
 
         // Reduce the entries list so you only have unique collectors (for dropdown menu)
         const uniqueCollectors = entries.reduce(
