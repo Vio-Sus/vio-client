@@ -6,13 +6,10 @@ import {
 import styled from 'styled-components';
 import Chart from 'chart.js/auto';
 import { Line } from 'react-chartjs-2';
-
 import { Bar } from 'react-chartjs-2';
-// import Summary from '../Summary/Summary';
-// import DateFilter from '../Filter/DateFilter';
-// import IconButton from '@mui/material/IconButton';
-// import Delete from '@mui/icons-material/Delete';
-// import EditIcon from '@mui/icons-material/Edit';
+import { MONTHS, colours } from '../../common/chartHelpers';
+import { dateToYMD, getWeekNumOfMonthOfDate, weekCount} from '../../common/date';
+
 
 
 export default function SourceEntriesList() {
@@ -24,7 +21,6 @@ export default function SourceEntriesList() {
   const [formattedData, setFormattedData] = useState([]);
   const [formattedGarbageData, setFormattedGarbageData] = useState([]);
   const [weeklyTotalsData, setWeeklyTotalsData] = useState([]);
-  // const [numWeeksInMonth, setNumWeeksInMonth] = useState(null);
 
   function months(config) {
     var cfg = config || {};
@@ -41,20 +37,7 @@ export default function SourceEntriesList() {
     return values;
   }
 
-  const MONTHS = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
+
 
   const labels = months({ count: new Date().getMonth() });
 
@@ -103,15 +86,6 @@ export default function SourceEntriesList() {
       },
     },
   };
-  // console.log(formattedData)
-
-  // const DATA_COUNT = 7;
-  //const NUMBER_CFG = { count: DATA_COUNT, min: 0, max: 100 };
-  const colors = [
-    'rgb(255, 99, 132)',
-    'rgb(54, 162, 235)',
-    'rgb(75, 192, 192)',
-  ];
 
   // get the total of weight of the same item_id
 
@@ -125,9 +99,6 @@ export default function SourceEntriesList() {
     return acc;
   }, []);
 
-  // console.log(totals);
-  // console.log('Filtered entries: ', filteredEntries);
-
   function filterEntriesByMonths(month) {
     const filtedEntriesByMonths = entries.filter(
       (item) => item.entry_date.substring(0, 7) === month
@@ -136,39 +107,14 @@ export default function SourceEntriesList() {
   }
   const test = filterEntriesByMonths('2022-04');
 
-  const getWeekNumOfMonthOfDate = (date) => {
-    // let monthNum = date.substring(5, 7);
-    // if (monthNum[0] === '0') {
-    //   monthNum = monthNum[1]; // get second digit
-    // }
-    var date2 = new Date(date.substring(0, 8) + '01');
-    var dayChosen = date.substring(8, 10);
-    if (dayChosen[0] === '0') {
-      dayChosen = dayChosen[1];
-    }
-    let day1 = date2.getDay();
-    //console.log("day of week of first day " + day1)
-    // Sunday - Saturday : 0 - 6
-
-    //console.log("day chosen " + dayChosen)
-    // expected output: 2
-    let weekCounter = 1;
-    for (let i = 1; i < dayChosen; i++) {
-      day1++;
-      if (day1 >= 6) {
-        weekCounter++;
-        day1 = -1;
-      }
-    }
-    //console.log(weekCounter)
-    return weekCounter;
-  };
+ 
   // console.log('weeknumofmonthdate');
   // console.log(getWeekNumOfMonthOfDate('2024-02-29'));
 
   let numWeeks = 0;
   // used in useeffect by alex
   function filterEntriesByMonths2(month, entries) {
+    
     numWeeks = weekCount(month);
     console.log(numWeeks);
     // console.log(wek)
@@ -178,19 +124,7 @@ export default function SourceEntriesList() {
     return filtedEntriesByMonths;
   }
 
-  const weekCount = (s) => {
-    let year = s.substring(0, 4);
-    let monthNum = s.substring(5, 7);
-    if (monthNum[0] === '0') {
-      monthNum = monthNum[1]; // get second digit
-    }
-    var firstOfMonth = new Date(+year, +monthNum - 1, 1);
-    var lastOfMonth = new Date(+year, +monthNum, 0);
-
-    var used = firstOfMonth.getDay() + lastOfMonth.getDate();
-
-    return Math.ceil(used / 7);
-  };
+ 
 
   const getWeeklyTotals = (data, distinctItems) => {
     console.log(data);
@@ -262,7 +196,6 @@ export default function SourceEntriesList() {
   // console.log('label name');
   // console.log(labelsItems);
 
-  // uneccessary code
   const companyName = filtedDataByMonths
     .reduce(
       (acc, curr) =>
@@ -270,8 +203,7 @@ export default function SourceEntriesList() {
       []
     )
     .map((item) => item.company);
-  // console.log('company name');
-  // console.log(companyName);
+
 
   function testData() {
     let barData = [];
@@ -280,7 +212,7 @@ export default function SourceEntriesList() {
       barData.push({
         label: companyName[i],
         data: result,
-        backgroundColor: colors[i],
+        backgroundColor: colours[i],
       });
       for (let j = 0; j < labelsItems.length; j++) {
         let found = filtedDataByMonths.find(
@@ -336,13 +268,7 @@ export default function SourceEntriesList() {
   const [endDate, setEndDate] = useState('');
   const [today, setToday] = useState([]);
 
-  // grabbed from binibin-repo
-  const dateToYMD = (date) => {
-    let yyyy = date.getFullYear();
-    let mm = (date.getMonth() + 1).toString().padStart(2, '0');
-    let dd = date.getDate().toString().padStart(2, '0');
-    return `${yyyy}-${mm}-${dd}`;
-  };
+
 
   const todayObj = new Date(new Date().toString());
   const todayMinus100 = new Date(new Date().setDate(todayObj.getDate() - 60));
@@ -394,7 +320,7 @@ export default function SourceEntriesList() {
           []
         );
         setItemList(uniqueItems);
-      } catch {}
+      } catch { }
     })();
   }, []);
 
@@ -619,22 +545,22 @@ export default function SourceEntriesList() {
           <tbody>
             {filteredEntries
               ? filteredEntries.map((entry, index) => (
-                  <tr key={index}>
-                    <td>{entry.company}</td>
-                    {/* <td> P1 </td> */}
-                    <td> {entry.item_name} </td>
-                    <td> {entry.entry_date} </td>
-                    <td> {entry.entry_weight} kg </td>
-                    <td>
-                      {/* <IconButton onClick={() => selectEntry(entry, 'edit')}>
+                <tr key={index}>
+                  <td>{entry.company}</td>
+                  {/* <td> P1 </td> */}
+                  <td> {entry.item_name} </td>
+                  <td> {entry.entry_date} </td>
+                  <td> {entry.entry_weight} kg </td>
+                  <td>
+                    {/* <IconButton onClick={() => selectEntry(entry, 'edit')}>
                         <EditIcon sx={{ color: '#606f89' }} />
                       </IconButton>
                       <IconButton onClick={() => selectEntry(entry, 'delete')}>
                         <Delete sx={{ color: '#606f89' }} />
                       </IconButton> */}
-                    </td>
-                  </tr>
-                ))
+                  </td>
+                </tr>
+              ))
               : null}
           </tbody>
         </table>
@@ -652,11 +578,11 @@ export default function SourceEntriesList() {
           <tbody>
             {totals
               ? totals.map((entry, index) => (
-                  <tr key={index}>
-                    <td> {entry.item_name} </td>
-                    <td> {entry.entry_weight.toFixed(2)} kg </td>
-                  </tr>
-                ))
+                <tr key={index}>
+                  <td> {entry.item_name} </td>
+                  <td> {entry.entry_weight.toFixed(2)} kg </td>
+                </tr>
+              ))
               : null}
           </tbody>
         </table>
