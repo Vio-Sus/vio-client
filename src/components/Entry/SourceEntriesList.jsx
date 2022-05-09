@@ -7,11 +7,6 @@ import styled from 'styled-components';
 import Chart from 'chart.js/auto';
 import { Line } from 'react-chartjs-2';
 import { Bar } from 'react-chartjs-2';
-// import Summary from '../Summary/Summary';
-// import DateFilter from '../Filter/DateFilter';
-// import IconButton from '@mui/material/IconButton';
-// import Delete from '@mui/icons-material/Delete';
-// import EditIcon from '@mui/icons-material/Edit';
 
 export default function SourceEntriesList() {
   const [entries, setEntries] = useState([]);
@@ -133,12 +128,9 @@ export default function SourceEntriesList() {
     return filtedEntriesByMonths;
   }
   const test = filterEntriesByMonths('2022-04');
-
+  console.log("test")
+  console.log(test)
   const getWeekNumOfMonthOfDate = (date) => {
-    // let monthNum = date.substring(5, 7);
-    // if (monthNum[0] === '0') {
-    //   monthNum = monthNum[1]; // get second digit
-    // }
     var date2 = new Date(date.substring(0, 8) + '01');
     var dayChosen = date.substring(8, 10);
     if (dayChosen[0] === '0') {
@@ -162,7 +154,7 @@ export default function SourceEntriesList() {
     return weekCounter;
   };
   // console.log('weeknumofmonthdate');
-  // console.log(getWeekNumOfMonthOfDate('2024-02-29'));
+  // console.log(getWeekNumOfMonthOfDate('2022-10-29'));
 
   let numWeeks = 0;
   // used in useeffect by alex
