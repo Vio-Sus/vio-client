@@ -172,12 +172,6 @@ export default function SourceEntriesList() {
 
   console.log(options)
 
-  // Setting up dates
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [today, setToday] = useState([]);
-
-
   // grabbed from binibin-repo
   const dateToYMD = (date) => {
     let yyyy = date.getFullYear();
@@ -190,18 +184,20 @@ export default function SourceEntriesList() {
   const todayMinus100 = new Date(new Date().setDate(todayObj.getDate() - 60));
   const todayDate = dateToYMD(todayObj);
   const defaultStartDate = dateToYMD(todayMinus100); 
-  
+
+  // Setting up dates
+  const [startDate, setStartDate] = useState(defaultStartDate);
+  const [endDate, setEndDate] = useState(todayDate);
+  const [today, setToday] = useState([]);
 
   useEffect(() => {
     (async () => {
       try {
         setToday(todayDate);
-        setStartDate(defaultStartDate);
-        setEndDate(todayDate);
+        // setStartDate(defaultStartDate);
+        // setEndDate(todayDate);
         setTotals(filteredEntries);        
         
-      
-
         let [entries] = await Promise.all([
           getEntriesByDateRangeForCollector(startDate, endDate),
         ]); // returns new promise with all data
@@ -263,7 +259,7 @@ export default function SourceEntriesList() {
         setItemList(uniqueItems);
       } catch { }
     })();
-  }, []);
+  }, [startDate, endDate]);
 
   // useEffect(() => {
   //   (async () => {
