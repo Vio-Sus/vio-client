@@ -130,12 +130,14 @@ export default function SourceEntriesList() {
   function filterEntriesByMonths2(month, entries) {
 
     numWeeks = weekCount(month);
+    console.log("numweeks")
     console.log(numWeeks);
     // console.log(wek)
-    const filtedEntriesByMonths = entries.filter(
-      (item) => item.entry_date.substring(0, 7) === month
-    );
-    return filtedEntriesByMonths;
+    // const filtedEntriesByMonths = entries.filter(
+    //   (item) => item.entry_date.substring(0, 7) === month
+    // );
+    console.log(entries)
+    return entries;
   }
 
   const getWeeklyTotals = (data, distinctItems) => {
@@ -147,7 +149,7 @@ export default function SourceEntriesList() {
         let filtered = data.filter((e) => e.week_of_month === j);
         const weeklyTotal = filtered.reduce((prev, curr) => {
           if (curr.item_id === distinctItems[i].item_id) {
-            prev += curr.entry_weight;
+            prev += +curr.entry_weight;
           }
           return prev;
         }, 0);
@@ -155,7 +157,7 @@ export default function SourceEntriesList() {
 
         const monthlyTotal = data.reduce((prev, curr) => {
           if (curr.item_id === distinctItems[i].item_id) {
-            prev += curr.entry_weight;
+            prev += +curr.entry_weight;
           }
           return prev;
         }, 0);
@@ -166,6 +168,8 @@ export default function SourceEntriesList() {
   };
 
   const generateWeeklyTableData = (test) => {
+    console.log("test")
+    console.log(test)
     const monthlyEntriesWithWeek = test.map((item) => ({
       ...item,
       week_of_month: getWeekNumOfMonthOfDate(item.entry_date),
@@ -289,8 +293,14 @@ export default function SourceEntriesList() {
     endMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0)
 
     let [data] = await Promise.all([getEntriesByDateRangeForCollector(startMonth.toISOString().substring(0, 10), endMonth.toISOString().substring(0, 10))]);
+    console.log("data")
+    console.log(date)
+    console.log(date.getFullYear())
+    console.log(date.getMonth() + 1)
+    generateWeeklyTableData(filterEntriesByMonths2(`${date.getFullYear()}-${date.getMonth()+1}`, data));
     setEntriesByMonth(data)
     setSelectedDate(date);
+
   }
 
 
@@ -319,7 +329,7 @@ export default function SourceEntriesList() {
         setEntries(newEntries || []);
         setFilteredEntries(newEntries || []);
         // console.log('Entries: ', newEntries);
-        generateWeeklyTableData(filterEntriesByMonths2('2022-04', newEntries));
+        // generateWeeklyTableData(filterEntriesByMonths2('2022-04', newEntries));
         generateChartData(newEntries);
 
         // Reduce the entries list so you only have unique collectors (for dropdown menu)
@@ -456,7 +466,6 @@ export default function SourceEntriesList() {
 
   return (
     <>
-
       {/* Filter by Date Range: */}
       <div class="tableCont">
         <div class="flexRow">
