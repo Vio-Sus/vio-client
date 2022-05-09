@@ -15,17 +15,19 @@ import "react-datepicker/dist/react-datepicker.css";
 
 export default function SourceEntriesList() {
   const [entries, setEntries] = useState([]);
+  const [entriesByMonth, setEntriesByMonth] = useState([]);
   const [filteredEntries, setFilteredEntries] = useState([]);
   const [collectorList, setCollectorList] = useState([]);
   const [itemList, setItemList] = useState([]);
   const [total, setTotals] = useState([]);
   const [formattedData, setFormattedData] = useState([]);
-  const currentMonthYear = new Date().getFullYear() + "-" + (new Date().getMonth()+1).toString().padStart(2,'0');
+  let startMonth = (new Date().getMonth()+1).toString().padStart(2,'0');
+  console.log(startMonth)
+  let endMonth = new Date().getFullYear()
+  console.log(endMonth)
   const [selectedDate, setSelectedDate] = useState(new Date())
 
-
-  console.log(selectedDate);
-  console.log(currentMonthYear)
+  console.log(selectedDate); 
   const formattedSelectedYearMonth = selectedDate.toISOString().substring(7,-1);
 
   console.log(formattedSelectedYearMonth) 
@@ -159,8 +161,7 @@ export default function SourceEntriesList() {
           usePointStyle: true,
           boxWidth: 6,
           boxHeight: 6,
-          padding: 20,
-          //legend styling
+          padding: 20,         
         },
       },
       title: {
@@ -190,6 +191,24 @@ export default function SourceEntriesList() {
   const [endDate, setEndDate] = useState(todayDate);
   const [today, setToday] = useState([]);
 
+ 
+
+  const getTheMonthAndYear = async (date) => {    
+    startMonth = new Date(date.getFullYear(),date.getMonth(), 1)
+    endMonth = new Date(date.getFullYear(),date.getMonth()+1, 0)
+    // console.log(year.getFullYear())
+    // console.log(date.getFullYear())
+    // console.log(startMonth.toISOString().substring(0,10))
+    // console.log(endMonth.toISOString().substring(0,10))
+
+    let [data] = await Promise.all([getEntriesByDateRangeForCollector(startMonth.toISOString().substring(0,10), endMonth.toISOString().substring(0,10))]);
+    setEntriesByMonth(data)
+    setSelectedDate(date);
+  }
+
+  
+
+
   useEffect(() => {
     (async () => {
       try {
@@ -216,8 +235,7 @@ export default function SourceEntriesList() {
               ({ entry_date }) => item.entry_date === entry_date
             );
             if (existMaterial) {
-              existMaterial.entry_weight += item.entry_weight;
-              //console.log(existMaterial.entry_weight)
+              existMaterial.entry_weight += item.entry_weight;             
             } else {
               acc.push({ ...item });
             }
@@ -473,11 +491,11 @@ export default function SourceEntriesList() {
         <label>See data by month</label>    
           <DatePicker          
            selected={selectedDate}
-           onChange={(date) => setSelectedDate(date)}
+           onChange={(date) => getTheMonthAndYear(date)}
            dateFormat="yyyy-MM"
            showMonthYearPicker                     
            maxDate={new Date()}
-           placeholderText={currentMonthYear}           
+           placeholderText={startMonth + endMonth}           
           />
         {testData().length !== 0  ? <Bar options = {{
         plugins: {
