@@ -1,12 +1,17 @@
 import axios from 'axios';
 
-export async function getLoggedInUser() {
+export async function getLoggedInUser() { 
   return (await axios.get('/api/profile')).data;
 }
 
 export async function updateAccountType(formContent) {
   return await axios.put(`/api/profile`, { data: formContent });
 }
+
+export async function updateAccountProfile(formContent) {
+  return await axios.put(`/api/profileCollector`, { data: formContent });
+}
+
 
 // items
 export async function getItems() {
@@ -55,8 +60,7 @@ export async function getCollectors(){
 }
 
 //Get start and end date for collectors that belong to source
-export async function getEntriesByDateRangeForCollector(startDate, endDate) {
-  console.log((await axios.get(`/api/sourceCollectors/${startDate}/${endDate}`)).data)
+export async function getEntriesByDateRangeForCollector(startDate, endDate) { 
   return (await axios.get(`/api/sourceCollectors/${startDate}/${endDate}`)).data;
 }
 

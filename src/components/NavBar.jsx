@@ -144,8 +144,12 @@ const NavBar = ({ user}) => {
           </ListUI>
           <UserUI>
               <User>
+              <LinkUI>
+              <AnchorUI href="update-profile">
                 <PersonIcon fontSize="small" />
                 {JSON.stringify(user.user.nickname).replace(/['"]+/g, '')}
+              </AnchorUI>
+              </LinkUI>
               </User>
               <LogoutButton />
             </UserUI></>

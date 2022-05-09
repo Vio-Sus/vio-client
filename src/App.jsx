@@ -4,7 +4,6 @@ import { getSources, getCollectors, getItems, getLoggedInUser } from './common/n
 import LoginButton from './components/LoginButton';
 import NavBar from './components/NavBar';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import DashboardPage from './Pages/Dashboard';
 import NewEntryPage from './Pages/NewEntry';
 import ViewDataPage from './Pages/ViewData';
 import ViewSourcePage from './Pages/ViewSource';
@@ -14,6 +13,7 @@ import ViewSourceGraphPage from './Pages/ViewSourceGraph';
 import BluetoothPage from './Pages/Bluetooth';
 import AccountTypePage from './Pages/AccountType';
 import ViewSourceDataPage from './Pages/ViewSourceData';
+import UpdateProfilePage from './Pages/UpdateProfile';
 
 import NavBarLogIn from './components/NavBarLogIn';
 import { NavigateBeforeTwoTone } from '@mui/icons-material';
@@ -31,8 +31,6 @@ function App() {
   const [formValue, setFormValue] = useState({});
   const [accountId, setAccountId] = useState();
   
-
-
   useEffect(() => {
     (async () => {     
       try {
@@ -40,7 +38,6 @@ function App() {
           getLoggedInUser(),         
           getSources(),
           getItems(),
-          getCollectors(),
         ]); // returns new promise with all data
         if (!user.error) {
           setUser(user);
@@ -108,6 +105,10 @@ function App() {
                <Route
                 path="account-type"
                 element={<AccountTypePage handleSubmit={formValue => setFormValue(formValue)} handlefo/>}
+              ></Route>
+              <Route
+                path="update-profile"
+                element={<UpdateProfilePage handleSubmit={formValue => setFormValue(formValue)} user={user} handlefo/>}
               ></Route>
                <Route
                 path="viewSourceData"
