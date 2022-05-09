@@ -1,19 +1,18 @@
 import { useState, useEffect } from 'react';
-import {
-  // getCollectors,
-  getEntriesByDateRangeForCollector,
-} from '../../common/network';
+import { MONTHS,  colors, borderColors } from '../../common/chartHelpers';
+import { dateToYMD, getWeekNumOfMonthOfDate, weekCount } from '../../common/date';
+import { getEntriesByDateRangeForCollector } from '../../common/network';
+import { Line, Bar } from 'react-chartjs-2';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import styled from 'styled-components';
 import Chart from 'chart.js/auto';
-import { Line } from 'react-chartjs-2';
-import { Bar } from 'react-chartjs-2';
-import { MONTHS, colours } from '../../common/chartHelpers';
-import { dateToYMD, getWeekNumOfMonthOfDate, weekCount} from '../../common/date';
-
 
 
 export default function SourceEntriesList() {
+
   const [entries, setEntries] = useState([]);
+  const [entriesByMonth, setEntriesByMonth] = useState([]);
   const [filteredEntries, setFilteredEntries] = useState([]);
   const [collectorList, setCollectorList] = useState([]);
   const [itemList, setItemList] = useState([]);
@@ -37,9 +36,25 @@ export default function SourceEntriesList() {
     return values;
   }
 
-
-
   const labels = months({ count: new Date().getMonth() });
+  const [selectedDate, setSelectedDate] = useState(new Date())
+  const formattedSelectedYearMonth = selectedDate.toISOString().substring(7, -1);
+  let startMonth = (new Date().getMonth() + 1).toString().padStart(2, '0');
+  let endMonth = new Date().getFullYear()
+
+  function months(config) {
+    var cfg = config || {};
+    var count = cfg.count || 12;
+    var section = cfg.section;
+    var values = [];
+    var i, value;
+
+    for (i = 0; i < count; ++i) {
+      value = MONTHS[Math.ceil(i) % 12];
+      values.push(value.substring(0, section));
+    }
+    return values;
+  }
 
   const data = {
     labels,
@@ -99,22 +114,21 @@ export default function SourceEntriesList() {
     return acc;
   }, []);
 
+
   function filterEntriesByMonths(month) {
     const filtedEntriesByMonths = entries.filter(
       (item) => item.entry_date.substring(0, 7) === month
     );
     return filtedEntriesByMonths;
   }
-  const test = filterEntriesByMonths('2022-04');
 
- 
   // console.log('weeknumofmonthdate');
   // console.log(getWeekNumOfMonthOfDate('2024-02-29'));
 
   let numWeeks = 0;
   // used in useeffect by alex
   function filterEntriesByMonths2(month, entries) {
-    
+
     numWeeks = weekCount(month);
     console.log(numWeeks);
     // console.log(wek)
@@ -123,8 +137,6 @@ export default function SourceEntriesList() {
     );
     return filtedEntriesByMonths;
   }
-
- 
 
   const getWeeklyTotals = (data, distinctItems) => {
     console.log(data);
@@ -174,46 +186,48 @@ export default function SourceEntriesList() {
     setWeeklyTotalsData(getWeeklyTotals(monthlyEntriesWithWeek, distinctItems));
   };
 
-  var filtedDataByMonths = Object.values(
-    test.reduce((acc, { company, item_name, entry_weight }) => {
-      const key = company + '_' + item_name; // unique combination of id and subject
-      acc[key] = acc[key] || { company, item_name, entry_weight };
-      acc[key].entry_weight += entry_weight;
-      return acc;
-    }, {})
-  );
   // console.log('filter data by months');
   // console.log(filtedDataByMonths);
 
-  const labelsItems = filtedDataByMonths
-    .reduce(
-      (acc, curr) =>
-        acc.find((e) => e.item_name === curr.item_name) ? acc : [...acc, curr],
-      []
-    )
-    .map((item) => item.item_name);
+  const selectedYearMonth = filterEntriesByMonths(formattedSelectedYearMonth)
 
-  // console.log('label name');
-  // console.log(labelsItems);
+  var filtedDataByMonths = Object.values(selectedYearMonth.reduce((acc, { company, item_name, entry_weight }) => {
 
-  const companyName = filtedDataByMonths
-    .reduce(
-      (acc, curr) =>
-        acc.find((e) => e.company === curr.company) ? acc : [...acc, curr],
-      []
-    )
-    .map((item) => item.company);
+    const key = company + '_' + item_name;
+    acc[key] = acc[key] || { company, item_name, entry_weight };
+    acc[key].entry_weight += entry_weight;
+    return acc;
+  }, {}));
 
+  const labelsItems = filtedDataByMonths.reduce(
+    (acc, curr) =>
+      acc.find((e) => e.item_name === curr.item_name)
+        ? acc
+        : [...acc, curr],
+    []
+  ).map((item) => item.item_name)
 
-  function testData() {
-    let barData = [];
+  const companyName = filtedDataByMonths.reduce(
+    (acc, curr) =>
+      acc.find((e) => e.company === curr.company)
+        ? acc
+        : [...acc, curr],
+    []
+  ).map((item) => item.company);
+
+  function monthYearData() {
+    let barData = []
     for (let i = 0; i < companyName.length; i++) {
-      let result = [];
-      barData.push({
-        label: companyName[i],
-        data: result,
-        backgroundColor: colours[i],
-      });
+      let result = []
+      barData.push(
+        {
+          stack: companyName[i],
+          label: companyName[i],
+          data: result,
+          backgroundColor: colors[i],
+          borderColor: borderColors[i],
+          borderWidth: 1,
+        })
       for (let j = 0; j < labelsItems.length; j++) {
         let found = filtedDataByMonths.find(
           (item) =>
@@ -228,16 +242,13 @@ export default function SourceEntriesList() {
     }
     return barData;
   }
-  // console.log('test data');
-  // console.log(testData());
 
   const barData = {
     labels: labelsItems,
-    datasets: testData(),
+    datasets: monthYearData(),
   };
 
-  // console.log(barData.datasets)
-
+  //Config for line chart
   const options = {
     scales: {
       y: {
@@ -253,7 +264,6 @@ export default function SourceEntriesList() {
           boxWidth: 6,
           boxHeight: 6,
           padding: 20,
-          //legend styling
         },
       },
       title: {
@@ -263,27 +273,35 @@ export default function SourceEntriesList() {
     },
   };
 
-  // Setting up dates
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [today, setToday] = useState([]);
-
-
 
   const todayObj = new Date(new Date().toString());
   const todayMinus100 = new Date(new Date().setDate(todayObj.getDate() - 60));
   const todayDate = dateToYMD(todayObj);
   const defaultStartDate = dateToYMD(todayMinus100);
 
+  // Setting up dates
+  const [startDate, setStartDate] = useState(defaultStartDate);
+  const [endDate, setEndDate] = useState(todayDate);
+  const [today, setToday] = useState([]);
+
+  const getTheMonthAndYear = async (date) => {
+    startMonth = new Date(date.getFullYear(), date.getMonth(), 1)
+    endMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0)
+
+    let [data] = await Promise.all([getEntriesByDateRangeForCollector(startMonth.toISOString().substring(0, 10), endMonth.toISOString().substring(0, 10))]);
+    setEntriesByMonth(data)
+    setSelectedDate(date);
+  }
+
+
   useEffect(() => {
     (async () => {
       try {
         setToday(todayDate);
-        setStartDate(defaultStartDate);
-        setEndDate(todayDate);
         setTotals(filteredEntries);
 
         let [entries] = await Promise.all([
+
           getEntriesByDateRangeForCollector(
             `${todayDate.substring(0, 4)}-01-01`,
             todayDate
@@ -303,6 +321,7 @@ export default function SourceEntriesList() {
         // console.log('Entries: ', newEntries);
         generateWeeklyTableData(filterEntriesByMonths2('2022-04', newEntries));
         generateChartData(newEntries);
+
         // Reduce the entries list so you only have unique collectors (for dropdown menu)
         const uniqueCollectors = entries.reduce(
           (acc, curr) =>
@@ -322,28 +341,10 @@ export default function SourceEntriesList() {
         setItemList(uniqueItems);
       } catch { }
     })();
-  }, []);
+  }, [startDate, endDate]);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     if (startDate && endDate) {
-  //       try {
-  //         let [entriesDateRange] = await Promise.all([
-  //           getEntriesByDateRangeForCollector(startDate, endDate),
-  //         ]);
-  //         setEntries(entriesDateRange);
-  //         console.log(entriesDateRange)
-  //         setFilteredEntries(entriesDateRange || []);
-  //       } catch {}
-  //     } else {
-  //       let [entriesDateRange] = await Promise.all([getListOfSourcesForCollector()]);
 
-  //       setEntries(entriesDateRange);
-  //       setFilteredEntries(entriesDateRange || []);
 
-  //     }
-  //   })();
-  // }, [startDate, endDate]);
 
   // console.log(total);
   const generateChartData = (data) => {
@@ -455,23 +456,11 @@ export default function SourceEntriesList() {
 
   return (
     <>
-      {/* {(startDate, endDate, today) && (
-        <DateFilter
-          startDate={startDate}
-          endDate={endDate}
-          today={today}
-          setStartDate={(e) => {
-            setStartDate(e.target.value);
-          }}
-          setEndDate={(e) => {
-            setEndDate(e.target.value);
-          }}
-        />
-      )}{' '}  */}
+
       {/* Filter by Date Range: */}
-      <div className="tableCont">
-        <div className="flexRow">
-          <div className="flexColumn">
+      <div class="tableCont">
+        <div class="flexRow">
+          <div class="flexColumn">
             <label>Collectors</label>
             <select id="collectorSelection" onChange={(e) => updateFilter()}>
               <option value="allCollectors">All</option>
@@ -482,15 +471,7 @@ export default function SourceEntriesList() {
               ))}
             </select>
           </div>
-
-          {/* <div class="flexColumn">
-            <label>Processor</label>
-            <select>
-              <option>All</option>
-            </select>
-          </div> */}
-
-          <div className="flexColumn">
+          <div class="flexColumn">
             <label>Materials</label>
             <select id="itemSelection" onChange={(e) => updateFilter()}>
               <option value="allItems">All</option>
@@ -502,8 +483,8 @@ export default function SourceEntriesList() {
             </select>
           </div>
 
-          <div className="flexColumn">
-            <label htmlFor="startDate">Start Date</label>
+          <div class="flexColumn">
+            <label for="startDate">Start Date</label>
             <input
               type="date"
               name="startDate"
@@ -517,8 +498,8 @@ export default function SourceEntriesList() {
             />
           </div>
 
-          <div className="flexColumn">
-            <label htmlFor="endDate">End Date</label>
+          <div class="flexColumn">
+            <label for="endDate">End Date</label>
             <input
               type="date"
               name="endDate"
@@ -532,6 +513,7 @@ export default function SourceEntriesList() {
             />
           </div>
         </div>
+
         <table>
           <thead>
             <tr>
@@ -551,14 +533,7 @@ export default function SourceEntriesList() {
                   <td> {entry.item_name} </td>
                   <td> {entry.entry_date} </td>
                   <td> {entry.entry_weight} kg </td>
-                  <td>
-                    {/* <IconButton onClick={() => selectEntry(entry, 'edit')}>
-                        <EditIcon sx={{ color: '#606f89' }} />
-                      </IconButton>
-                      <IconButton onClick={() => selectEntry(entry, 'delete')}>
-                        <Delete sx={{ color: '#606f89' }} />
-                      </IconButton> */}
-                  </td>
+
                 </tr>
               ))
               : null}
@@ -586,9 +561,58 @@ export default function SourceEntriesList() {
               : null}
           </tbody>
         </table>
-        <br />
-        <h3 style={{ margin: '0 auto' }}>April 2022 Week Collection</h3>
-        <br />
+        <br /> <br /> <br />
+        {formattedData !== [] && <Line options={options} data={data}></Line>}
+        <br /> <br /> <br />
+        <label>See data by month</label>
+        <DatePicker
+          selected={selectedDate}
+          onChange={(date) => getTheMonthAndYear(date)}
+          dateFormat="yyyy-MM"
+          showMonthYearPicker
+          maxDate={new Date()}
+          placeholderText={startMonth + endMonth}
+        />
+        {monthYearData().length !== 0 ? <Bar options={{
+          plugins: {
+            title: {
+              display: true,
+              text: `(${formattedSelectedYearMonth}) Materials Collected by Collector`
+            },
+            legend: {
+              display: true,
+              position: "top"
+            },
+            scales: {
+              x: {
+                stacked: true
+              },
+              y: {
+                stacked: true,
+              },
+            }
+          }
+        }} data={barData}></Bar> : <Bar options={{
+          plugins: {
+            title: {
+              display: true,
+              text: "No data for this month"
+            },
+            legend: {
+              display: true,
+              position: "top"
+            },
+            scales: {
+              x: {
+                stacked: true
+              },
+              y: {
+                stacked: true,
+              },
+            }
+          }
+        }} data={barData}></Bar>}
+        <h3 style={{ margin: '0 auto' }}>{formattedSelectedYearMonth} Weeks Collection</h3>
         <table>
           <thead>
             <tr>
@@ -621,10 +645,6 @@ export default function SourceEntriesList() {
               ))}
           </tbody>
         </table>
-        <br />
-        {formattedData !== [] && <Line options={options} data={data}></Line>}
-        <br /> <br /> <br />
-        {barData !== [] && <Bar options={barConfig} data={barData}></Bar>}
       </div>
     </>
   );
