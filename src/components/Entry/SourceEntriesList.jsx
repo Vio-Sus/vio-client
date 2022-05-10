@@ -27,6 +27,7 @@ export default function SourceEntriesList() {
   let endMonth = new Date().getFullYear()
   // total of one year
   const [totalByYear, setTotalByYear] = useState([])
+  const [totalNum, setTotalNum] = useState(0)
   const [selectedYear, setSelectedYear] = useState(new Date())
   const [message, setMessage] = useState(" ")
   const formattedSelectedYear = selectedYear.toISOString().substring(0, 4);
@@ -111,8 +112,13 @@ export default function SourceEntriesList() {
       }
       return acc;
     }, []);
+    let initialValue = 0
+    const sum = totals.reduce(function (previousValue, currentValue) {
+      return previousValue + currentValue.entry_weight
+    }, initialValue)
     setTotalByYear(totals)
-    console.log(totals)
+    setTotalNum(sum)
+
   }
 
   function filterEntriesByMonths(month) {
@@ -580,6 +586,11 @@ export default function SourceEntriesList() {
                       <td> {entry.entry_weight.toFixed(2)} kg </td>
                     </tr>
                   ))}
+                {/* add styling for the total of one year */}
+                <tr>
+                  <td> Total in {formattedSelectedYear}</td>
+                  <td> {totalNum.toFixed(2)} kg </td>
+                </tr>
               </tbody>
             </table>
             <br /> <br /> <br />
@@ -634,42 +645,42 @@ export default function SourceEntriesList() {
             }
           }
         }} data={barData}></Bar>}
-        {monthYearData().length !== 0 && 
-        <>
-         <h3 style={{ margin: '0 auto' }}>{formattedSelectedYearMonth} Weeks Collection</h3>
-         <table>
-           <thead>
-             <tr>
-               <th>Materials</th>
-               <th>Week 1</th>
-               <th>Week 2</th>
-               <th>Week 3</th>
-               <th>Week 4</th>
-               <th>Week 5</th>
-               {weeklyTotalsData.length !== 0 &&
-                 weeklyTotalsData[0].hasOwnProperty('week6Total') && (
-                   <th>Week 6</th>
-                 )}
-               <th>Total weight</th>
-             </tr>
-           </thead>
-           <tbody>
-             {weeklyTotalsData.length !== 0 &&
-               weeklyTotalsData.map((row, index) => (
-                 <tr key={index}>
-                   <td>{row.item_name}</td>
-                   <td>{row.week1Total} kg</td>
-                   <td>{row.week2Total} kg</td>
-                   <td>{row.week3Total} kg</td>
-                   <td>{row.week4Total} kg</td>
-                   <td>{row.week5Total} kg</td>
-                   {row.week6Total && <td>{row.week6Total} kg</td>}
-                   <td>{row.monthlyTotal} kg</td>
-                 </tr>
-               ))}
-           </tbody>
-         </table>
-         </>
+        {monthYearData().length !== 0 &&
+          <>
+            <h3 style={{ margin: '0 auto' }}>{formattedSelectedYearMonth} Weeks Collection</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Materials</th>
+                  <th>Week 1</th>
+                  <th>Week 2</th>
+                  <th>Week 3</th>
+                  <th>Week 4</th>
+                  <th>Week 5</th>
+                  {weeklyTotalsData.length !== 0 &&
+                    weeklyTotalsData[0].hasOwnProperty('week6Total') && (
+                      <th>Week 6</th>
+                    )}
+                  <th>Total weight</th>
+                </tr>
+              </thead>
+              <tbody>
+                {weeklyTotalsData.length !== 0 &&
+                  weeklyTotalsData.map((row, index) => (
+                    <tr key={index}>
+                      <td>{row.item_name}</td>
+                      <td>{row.week1Total} kg</td>
+                      <td>{row.week2Total} kg</td>
+                      <td>{row.week3Total} kg</td>
+                      <td>{row.week4Total} kg</td>
+                      <td>{row.week5Total} kg</td>
+                      {row.week6Total && <td>{row.week6Total} kg</td>}
+                      <td>{row.monthlyTotal} kg</td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </>
         }
       </div>
     </>
