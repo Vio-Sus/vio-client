@@ -645,7 +645,8 @@ export default function SourceEntriesList() {
             }
           }
         }} data={barData}></Bar>}
-        {monthYearData().length !== 0 &&
+          <br /> <br /> <br />
+        {monthYearData().length !== 0 ?
           <>
             <h3 style={{ margin: '0 auto' }}>{formattedSelectedYearMonth} Weeks Collection</h3>
             <table>
@@ -679,9 +680,10 @@ export default function SourceEntriesList() {
                     </tr>
                   ))}
               </tbody>
-            </table>
+            </table> 
+           
           </>
-        }
+        : <p className="weekly-header">No Weekly Data Available</p>}
       </div>
     </>
   );

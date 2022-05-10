@@ -42,3 +42,7 @@ html {
     transform: rotate(360deg);
   }
 }
+
+.weekly-header {
+  text-align: center;
+}
