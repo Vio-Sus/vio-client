@@ -357,6 +357,9 @@ export default function SourceEntriesList() {
 
         setEntries(newEntries || []);
         setDateRangeEntries(entriesByDate || []);
+        setFilteredEntries(entriesByDate || []);
+        console.log('entries: ', entries)
+        console.log('filtered entries: ', filteredEntries)
         console.log('dateRangeEntries: ', dateRangeEntries)
         generateChartData(newEntries);
         generateWeeklyTableData(filterEntriesByMonths2(`${todayDate.substring(0, 7)}`, newEntries));
@@ -381,7 +384,6 @@ export default function SourceEntriesList() {
         );
         setItemList(uniqueItems);
 
-        updateFilter();
       } catch { }
     })();
   }, [startDate, endDate]);
@@ -492,7 +494,6 @@ export default function SourceEntriesList() {
       });
       setFilteredEntries(filtered);
     }
-    console.log(filteredEntries)
   };
 
   return (
@@ -573,7 +574,6 @@ export default function SourceEntriesList() {
                   <td> {entry.item_name} </td>
                   <td> {entry.entry_date} </td>
                   <td> {entry.entry_weight} kg </td>
-
                 </tr>
               ))
               : null}

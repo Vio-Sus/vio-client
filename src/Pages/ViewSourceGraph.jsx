@@ -106,7 +106,7 @@ const ViewSourceGraphPage = () => {
             <h3>Here's an overview of the performance.</h3>
           </div>
           <div class="buttonCont">
-            <StyledLink to="/viewData">
+            <StyledLink to="/viewSourceData">
               <Button buttoncolor="#4A4A4A" buttontext="List View" />
             </StyledLink>
 
@@ -117,9 +117,6 @@ const ViewSourceGraphPage = () => {
               onClick={handlePrint}
             />
 
-            <StyledLink to="/newEntry">
-              <Button buttontext="New Entry" />
-            </StyledLink>
           </div>
         </header>
         <DropdownCont>
