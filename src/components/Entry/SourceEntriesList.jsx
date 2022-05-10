@@ -20,12 +20,22 @@ export default function SourceEntriesList() {
   const [formattedData, setFormattedData] = useState([]);
   const [formattedGarbageData, setFormattedGarbageData] = useState([]);
   const [weeklyTotalsData, setWeeklyTotalsData] = useState([]);
-
   const labels = months({ count: new Date().getMonth() });
   const [selectedDate, setSelectedDate] = useState(new Date())
   const formattedSelectedYearMonth = selectedDate.toISOString().substring(7, -1);
   let startMonth = (new Date().getMonth() + 1).toString().padStart(2, '0');
   let endMonth = new Date().getFullYear()
+// total of one year
+  const [totalByYear, setTotalByYear] =useState([])
+  const todayObj = new Date(new Date().toString());
+  const todayMinus100 = new Date(new Date().setDate(todayObj.getDate() - 60));
+  const todayDate = dateToYMD(todayObj);
+  const defaultStartDate = dateToYMD(todayMinus100);
+
+  // Setting up dates
+  const [startDate, setStartDate] = useState(defaultStartDate);
+  const [endDate, setEndDate] = useState(todayDate);
+  const [today, setToday] = useState([]);
 
   function months(config) {
     var cfg = config || {};
@@ -88,17 +98,18 @@ export default function SourceEntriesList() {
   };
 
   // get the total of weight of the same item_id
-
-  const totals = entries.reduce((acc, item) => {
-    let existMaterial = acc.find(({ item_id }) => item.item_id === item_id);
-    if (existMaterial) {
-      existMaterial.entry_weight += item.entry_weight;
-    } else {
-      acc.push({ ...item });
-    }
-    return acc;
-  }, []);
-
+  function getTotals(data){
+    const totals = data.reduce((acc, item) => {
+      let existMaterial = acc.find(({ item_id }) => item.item_id === item_id);
+      if (existMaterial) {
+        existMaterial.entry_weight += item.entry_weight;
+      } else {
+        acc.push({ ...item });
+      }
+      return acc;
+    }, []);
+    setTotalByYear(totals)
+  }
 
   function filterEntriesByMonths(month) {
     const filtedEntriesByMonths = entries.filter(
@@ -126,7 +137,7 @@ export default function SourceEntriesList() {
   }
 
   const getWeeklyTotals = (data, distinctItems) => {
-    console.log(data);
+    // console.log(data);
     // console.log('in 2 looop');
     // console.log(distinctItems.length);
     for (let i = 0; i < distinctItems.length; i++) {
@@ -181,7 +192,7 @@ export default function SourceEntriesList() {
     const key = company + '_' + item_name;
     acc[key] = acc[key] || { company, item_name, entry_weight:0 };
     acc[key].entry_weight += entry_weight;
-    console.log(acc)
+    // console.log(acc)
     return acc;
   }, {}));
 
@@ -225,7 +236,6 @@ export default function SourceEntriesList() {
           result.push(0);
         }
       }
-      console.log(result)
     }
     return barData;
   }
@@ -260,17 +270,6 @@ export default function SourceEntriesList() {
     },
   };
 
-
-  const todayObj = new Date(new Date().toString());
-  const todayMinus100 = new Date(new Date().setDate(todayObj.getDate() - 60));
-  const todayDate = dateToYMD(todayObj);
-  const defaultStartDate = dateToYMD(todayMinus100);
-
-  // Setting up dates
-  const [startDate, setStartDate] = useState(defaultStartDate);
-  const [endDate, setEndDate] = useState(todayDate);
-  const [today, setToday] = useState([]);
-
   const getTheMonthAndYear = async (date) => {
     startMonth = new Date(date.getFullYear(), date.getMonth(), 1)
     endMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0)
@@ -283,9 +282,7 @@ export default function SourceEntriesList() {
     generateWeeklyTableData(filterEntriesByMonths2(`${date.getFullYear()}-${date.getMonth()+1}`, data));
     setEntriesByMonth(data)
     setSelectedDate(date);
-
   }
-
 
   useEffect(() => {
     (async () => {
@@ -314,6 +311,7 @@ export default function SourceEntriesList() {
         // console.log('Entries: ', newEntries);
         // generateWeeklyTableData(filterEntriesByMonths2('2022-04', newEntries));
         generateChartData(newEntries);
+        getTotals(newEntries);
 
         // Reduce the entries list so you only have unique collectors (for dropdown menu)
         const uniqueCollectors = entries.reduce(
@@ -472,8 +470,8 @@ export default function SourceEntriesList() {
             </select>
           </div>
 
-          <div class="flexColumn">
-            <label for="startDate">Start Date</label>
+          <div className="flexColumn">
+            <label htmlFor="startDate">Start Date</label>
             <input
               type="date"
               name="startDate"
@@ -487,8 +485,8 @@ export default function SourceEntriesList() {
             />
           </div>
 
-          <div class="flexColumn">
-            <label for="endDate">End Date</label>
+          <div className="flexColumn">
+            <label htmlFor="endDate">End Date</label>
             <input
               type="date"
               name="endDate"
@@ -540,8 +538,8 @@ export default function SourceEntriesList() {
             </tr>
           </thead>
           <tbody>
-            {totals
-              ? totals.map((entry, index) => (
+            {totalByYear
+              ? totalByYear.map((entry, index) => (
                 <tr key={index}>
                   <td> {entry.item_name} </td>
                   <td> {entry.entry_weight.toFixed(2)} kg </td>
