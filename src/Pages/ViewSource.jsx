@@ -32,13 +32,13 @@ const ViewSourcePage = ({ sources, items }) => {
 
   return (
     <>
-      <div class="pageCont">
+      <div className="pageCont">
         <header>
           <div class="headingCont">
             <h1>Sources</h1>
             <h3>Account and contact information.</h3>
           </div>
-          <div class="buttonCont">
+          <div className="buttonCont">
             <Button
               buttoncolor="#4A4A4A"
               buttontext="Print"
@@ -51,7 +51,7 @@ const ViewSourcePage = ({ sources, items }) => {
             />
           </div>
         </header>
-        <div class="pageCont">
+        <div className="pageCont">
           <SourcesList selectSource={selectSource}></SourcesList>
           {isEditing && (
             <EditSourceForm
