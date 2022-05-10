@@ -59,11 +59,11 @@ const StyledLink = styled(Link)`
                             </div>
                             <div className="buttonCont">
                                 <StyledLink to="/viewSourceGraph">
-                                    <Button buttontext="Graph View" buttoncolor="#4A4A4A" />
+                                    <Button buttontext="Download PDF" buttoncolor="#4A4A4A" />
                                 </StyledLink>
 
                                 <Button
-                                    buttontext="Print"
+                                    buttontext="Print Page"
                                     buttoncolor="#4A4A4A"
                                     onClick={handlePrint}
                                 />                             

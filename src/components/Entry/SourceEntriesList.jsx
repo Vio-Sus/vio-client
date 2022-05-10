@@ -415,7 +415,7 @@ export default function SourceEntriesList() {
           yearItemNumber={8}
         />
         {totalByYear.length !== 0 ?
-          <>
+          <><br/>
             <h3 style={{ margin: '0 auto' }}>Summary in {formattedSelectedYear}</h3>
             <table>
               <thead>
@@ -433,8 +433,8 @@ export default function SourceEntriesList() {
                     </tr>
                   ))}
                 {/* add styling for the total of one year */}
-                <tr>
-                  <td> Total in {formattedSelectedYear}</td>
+                <tr class="totals-row">
+                  <td className="total"> Total in {formattedSelectedYear}</td>
                   <td> {totalNum.toFixed(2)} kg </td>
                 </tr>
               </tbody>
