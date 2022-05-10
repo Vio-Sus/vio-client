@@ -7,6 +7,7 @@ import SourceEntriesList from '../components/Entry/SourceEntriesList';
 import EditForm from '../components/Entry/EditEntryForm';
 import DeleteConfirmation from '../components/Entry/DeleteEntryConfirmation';
 import Button from '../components/Button';
+import { getSourceGraphDataset } from '../common/network'; //Remove this after testing
 
 const StyledLink = styled(Link)`
     color: none;
@@ -52,6 +53,9 @@ const StyledLink = styled(Link)`
                 try {
                     await setStartDate(defaultStartDate);
                     await setEndDate(todayDate);
+
+                    const sourceGraphData = await getSourceGraphDataset();
+                    console.log(sourceGraphData)
 
                     console.log('startDate: ', startDate);
                     console.log('endDate: ', endDate);

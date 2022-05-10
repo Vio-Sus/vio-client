@@ -63,8 +63,8 @@ export default function DropDownOptions({ text, array, handleChange }) {
           <Select name={text} onChange={handleChange}>
             <option hidden>Select...</option>
             {array.map((item, key) => (
-              <option data-count={key} value={item.name}>
-                {item.name}{' '}
+              <option data-count={key} value={item}>
+                {item}{' '}
               </option>
             ))}
           </Select>
