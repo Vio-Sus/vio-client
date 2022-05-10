@@ -21,21 +21,6 @@ export default function SourceEntriesList() {
   const [formattedGarbageData, setFormattedGarbageData] = useState([]);
   const [weeklyTotalsData, setWeeklyTotalsData] = useState([]);
 
-  function months(config) {
-    var cfg = config || {};
-    var count = cfg.count || 12;
-    var section = cfg.section;
-    var values = [];
-    var i, value;
-
-    for (i = 0; i < count; ++i) {
-      value = MONTHS[Math.ceil(i) % 12];
-      values.push(value.substring(0, section));
-    }
-
-    return values;
-  }
-
   const labels = months({ count: new Date().getMonth() });
   const [selectedDate, setSelectedDate] = useState(new Date())
   const formattedSelectedYearMonth = selectedDate.toISOString().substring(7, -1);
@@ -190,16 +175,13 @@ export default function SourceEntriesList() {
     setWeeklyTotalsData(getWeeklyTotals(monthlyEntriesWithWeek, distinctItems));
   };
 
-  // console.log('filter data by months');
-  // console.log(filtedDataByMonths);
-
   const selectedYearMonth = filterEntriesByMonths(formattedSelectedYearMonth)
 
-  var filtedDataByMonths = Object.values(selectedYearMonth.reduce((acc, { company, item_name, entry_weight }) => {
-
+  var filtedDataByMonths = Object.values(selectedYearMonth.reduce((acc, { company, item_name, entry_weight=0 }) => {
     const key = company + '_' + item_name;
-    acc[key] = acc[key] || { company, item_name, entry_weight };
+    acc[key] = acc[key] || { company, item_name, entry_weight:0 };
     acc[key].entry_weight += entry_weight;
+    console.log(acc)
     return acc;
   }, {}));
 
@@ -243,6 +225,7 @@ export default function SourceEntriesList() {
           result.push(0);
         }
       }
+      console.log(result)
     }
     return barData;
   }
@@ -294,9 +277,9 @@ export default function SourceEntriesList() {
 
     let [data] = await Promise.all([getEntriesByDateRangeForCollector(startMonth.toISOString().substring(0, 10), endMonth.toISOString().substring(0, 10))]);
     console.log("data")
-    console.log(date)
-    console.log(date.getFullYear())
-    console.log(date.getMonth() + 1)
+    console.log(data)
+    // console.log(date.getFullYear())
+    // console.log(date.getMonth() + 1)
     generateWeeklyTableData(filterEntriesByMonths2(`${date.getFullYear()}-${date.getMonth()+1}`, data));
     setEntriesByMonth(data)
     setSelectedDate(date);
@@ -352,9 +335,6 @@ export default function SourceEntriesList() {
       } catch { }
     })();
   }, [startDate, endDate]);
-
-
-
 
   // console.log(total);
   const generateChartData = (data) => {
