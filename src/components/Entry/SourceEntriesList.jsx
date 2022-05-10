@@ -14,9 +14,6 @@ export default function SourceEntriesList() {
   const [entries, setEntries] = useState([]);
   const [entriesByMonth, setEntriesByMonth] = useState([]);
   const [filteredEntries, setFilteredEntries] = useState([]);
-  const [collectorList, setCollectorList] = useState([]);
-  const [itemList, setItemList] = useState([]);
-  const [total, setTotals] = useState([]);
   const [formattedData, setFormattedData] = useState([]);
   const [formattedGarbageData, setFormattedGarbageData] = useState([]);
   const [weeklyTotalsData, setWeeklyTotalsData] = useState([]);
@@ -29,17 +26,11 @@ export default function SourceEntriesList() {
   const [totalByYear, setTotalByYear] = useState([])
   const [totalNum, setTotalNum] = useState(0)
   const [selectedYear, setSelectedYear] = useState(new Date())
-  const [message, setMessage] = useState(" ")
   const formattedSelectedYear = selectedYear.toISOString().substring(0, 4);
   const todayObj = new Date(new Date().toString());
   const todayMinus100 = new Date(new Date().setDate(todayObj.getDate() - 60));
   const todayDate = dateToYMD(todayObj);
   const defaultStartDate = dateToYMD(todayMinus100);
-
-  // Setting up dates
-  const [startDate, setStartDate] = useState(defaultStartDate);
-  const [endDate, setEndDate] = useState(todayDate);
-  const [today, setToday] = useState([]);
 
   function months(config) {
     var cfg = config || {};
@@ -283,15 +274,11 @@ export default function SourceEntriesList() {
   const getDataByYear = async (date) => {
     startMonth = new Date(date.getFullYear(), 0, 1)
     endMonth = new Date(date.getFullYear(), 11, 31)
-    console.log(startMonth)
-    console.log(endMonth)
+    // console.log(startMonth)
+    // console.log(endMonth)
     let [data] = await Promise.all([getEntriesByDateRangeForCollector(startMonth.toISOString().substring(0, 10), endMonth.toISOString().substring(0, 10))]);
-    console.log("data")
-    console.log(data)
-    // console.log(date.getFullYear())
-    // console.log(date.getMonth() + 1)
-    // generateWeeklyTableData(filterEntriesByMonths2(`${date.getFullYear()}-${date.getMonth()+1}`, data));
-    // setEntriesByMonth(data)
+    // console.log("data")
+    // console.log(data)
     setSelectedYear(date)
     const newData = data.map((item) => {
       return {
@@ -321,8 +308,8 @@ export default function SourceEntriesList() {
   useEffect(() => {
     (async () => {
       try {
-        setToday(todayDate);
-        setTotals(filteredEntries);
+        // setToday(todayDate);
+        // setTotals(filteredEntries);
 
         let [entries] = await Promise.all([
 
@@ -343,27 +330,9 @@ export default function SourceEntriesList() {
         generateChartData(newEntries);
         getTotals(newEntries);
         setSelectedYear(new Date());
-
-        // Reduce the entries list so you only have unique collectors (for dropdown menu)
-        const uniqueCollectors = entries.reduce(
-          (acc, curr) =>
-            acc.find((e) => e.account_id === curr.account_id)
-              ? acc
-              : [...acc, curr],
-          []
-        );
-        setCollectorList(uniqueCollectors);
-
-        // Reduce the entries list so you only have unique items (for dropdown menu)
-        const uniqueItems = entries.reduce(
-          (acc, curr) =>
-            acc.find((e) => e.item_id === curr.item_id) ? acc : [...acc, curr],
-          []
-        );
-        setItemList(uniqueItems);
       } catch { }
     })();
-  }, [startDate, endDate]);
+  }, []);
 
   // console.log(total);
   const generateChartData = (data) => {
@@ -434,132 +403,9 @@ export default function SourceEntriesList() {
     }
   };
 
-  const updateFilter = () => {
-    let itemSelection = document.getElementById('itemSelection').value;
-    let collectorSelection =
-      document.getElementById('collectorSelection').value;
-
-    if (
-      collectorSelection === 'allCollectors' &&
-      itemSelection === 'allItems'
-    ) {
-      setFilteredEntries(entries);
-    } else if (collectorSelection === 'allCollectors') {
-      let filtered = entries.filter((entry) => {
-        if (entry['item_id'] === +itemSelection) {
-          return entry;
-        }
-      });
-      setFilteredEntries(filtered);
-    } else if (itemSelection === 'allItems') {
-      let filtered = entries.filter((entry) => {
-        if (entry['account_id'] === +collectorSelection) {
-          return entry;
-        }
-      });
-      setFilteredEntries(filtered);
-    } else {
-      let filtered = entries.filter((entry) => {
-        if (entry['account_id'] === +collectorSelection) {
-          return entry;
-        }
-      });
-      filtered = filtered.filter((entry) => {
-        if (entry['item_id'] === +itemSelection) {
-          return entry;
-        }
-      });
-      setFilteredEntries(filtered);
-    }
-  };
-
   return (
     <>
-      {/* Filter by Date Range: */}
       <div class="tableCont">
-        <div class="flexRow">
-          <div class="flexColumn">
-            <label>Collectors</label>
-            <select id="collectorSelection" onChange={(e) => updateFilter()}>
-              <option value="allCollectors">All</option>
-              {collectorList.map((collector, key) => (
-                <option key={key} value={collector.account_id}>
-                  {collector.company}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div class="flexColumn">
-            <label>Materials</label>
-            <select id="itemSelection" onChange={(e) => updateFilter()}>
-              <option value="allItems">All</option>
-              {itemList.map((item, key) => (
-                <option key={key} value={item.item_id}>
-                  {item.item_name}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="flexColumn">
-            <label htmlFor="startDate">Start Date</label>
-            <input
-              type="date"
-              name="startDate"
-              id="startDate"
-              value={startDate}
-              max={today}
-              onChange={(e) => {
-                setStartDate(e.target.value);
-                // dateRangeFilter();
-              }}
-            />
-          </div>
-
-          <div className="flexColumn">
-            <label htmlFor="endDate">End Date</label>
-            <input
-              type="date"
-              name="endDate"
-              id="endDate"
-              value={endDate}
-              max={today}
-              onChange={(e) => {
-                setEndDate(e.target.value);
-                // dateRangeFilter();
-              }}
-            />
-          </div>
-        </div>
-
-        <table>
-          <thead>
-            <tr>
-              <th> COLLECTOR</th>
-              <th> MATERIALS </th>
-              <th> DATE </th>
-              <th> WEIGHT </th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredEntries
-              ? filteredEntries.map((entry, index) => (
-                <tr key={index}>
-                  <td>{entry.company}</td>
-                  {/* <td> P1 </td> */}
-                  <td> {entry.item_name} </td>
-                  <td> {entry.entry_date} </td>
-                  <td> {entry.entry_weight} kg </td>
-
-                </tr>
-              ))
-              : null}
-          </tbody>
-        </table>
-        <br />
-        <br />
-        <br />
         <label>See data by year</label>
         <DatePicker
           selected={selectedYear}

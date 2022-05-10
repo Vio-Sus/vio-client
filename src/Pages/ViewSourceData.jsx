@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import EntriesList from '../components/Entry/EntriesList';
 import SourceEntriesList from '../components/Entry/SourceEntriesList';
+import SourceDetails from '../components/Entry/SourceDetails';
+
 import EditForm from '../components/Entry/EditEntryForm';
 import DeleteConfirmation from '../components/Entry/DeleteEntryConfirmation';
 import Button from '../components/Button';
