@@ -13,6 +13,7 @@ export default function SourceEntriesList() {
 
   const [entries, setEntries] = useState([]);
   const [entriesByMonth, setEntriesByMonth] = useState([]);
+  const [dateRangeEntries, setDateRangeEntries] = useState([]);
   const [filteredEntries, setFilteredEntries] = useState([]);
   const [formattedData, setFormattedData] = useState([]);
   const [formattedGarbageData, setFormattedGarbageData] = useState([]);
@@ -180,8 +181,6 @@ export default function SourceEntriesList() {
   };
 
   const generateWeeklyTableData = (test) => {
-    console.log("test")
-    console.log(test)
     const monthlyEntriesWithWeek = test.map((item) => ({
       ...item,
       week_of_month: getWeekNumOfMonthOfDate(item.entry_date),
@@ -323,11 +322,7 @@ export default function SourceEntriesList() {
   useEffect(() => {
     (async () => {
       try {
-        // setToday(todayDate);
-        // setTotals(filteredEntries);
-
         let [entries] = await Promise.all([
-
           getEntriesByDateRangeForCollector(
             `${todayDate.substring(0, 4)}-01-01`,
             todayDate
@@ -340,8 +335,16 @@ export default function SourceEntriesList() {
           };
         });
 
+        let [entriesByDate] = await Promise.all([
+          getEntriesByDateRangeForCollector(startDate, endDate)
+        ]);
+
         setEntries(newEntries || []);
-        setFilteredEntries(newEntries || []);
+        setDateRangeEntries(entriesByDate || []);
+        setFilteredEntries(entriesByDate || []);
+        console.log('entries: ', entries)
+        console.log('filtered entries: ', filteredEntries)
+        console.log('dateRangeEntries: ', dateRangeEntries)
         generateChartData(newEntries);
         generateWeeklyTableData(filterEntriesByMonths2(`${todayDate.substring(0, 7)}`, newEntries));
         getTotals(newEntries);
@@ -419,9 +422,134 @@ export default function SourceEntriesList() {
     }
   };
 
+
+  const updateFilter = () => {
+    let itemSelection = document.getElementById('itemSelection').value;
+    let collectorSelection =
+      document.getElementById('collectorSelection').value;
+
+    if (
+      collectorSelection === 'allCollectors' &&
+      itemSelection === 'allItems'
+    ) {
+      setFilteredEntries(dateRangeEntries);
+    } else if (collectorSelection === 'allCollectors') {
+      let filtered = dateRangeEntries.filter((entry) => {
+        if (entry['item_id'] === +itemSelection) {
+          return entry;
+        }
+      });
+      setFilteredEntries(filtered);
+    } else if (itemSelection === 'allItems') {
+      let filtered = dateRangeEntries.filter((entry) => {
+        if (entry['account_id'] === +collectorSelection) {
+          return entry;
+        }
+      });
+      setFilteredEntries(filtered);
+    } else {
+      let filtered = dateRangeEntries.filter((entry) => {
+        if (entry['account_id'] === +collectorSelection) {
+          return entry;
+        }
+      });
+      filtered = filtered.filter((entry) => {
+        if (entry['item_id'] === +itemSelection) {
+          return entry;
+        }
+      });
+      setFilteredEntries(filtered);
+    }
+  };
+
+
   return (
     <>
       <div class="tableCont">
+
+        <div class="flexRow">
+          <div class="flexColumn">
+            <label>Collectors</label>
+            <select id="collectorSelection" onChange={(e) => updateFilter()}>
+              <option value="allCollectors">All</option>
+              {collectorList.map((collector, key) => (
+                <option key={key} value={collector.account_id}>
+                  {collector.company}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div class="flexColumn">
+            <label>Materials</label>
+            <select id="itemSelection" onChange={(e) => updateFilter()}>
+              <option value="allItems">All</option>
+              {itemList.map((item, key) => (
+                <option key={key} value={item.item_id}>
+                  {item.item_name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="flexColumn">
+            <label htmlFor="startDate">Start Date</label>
+            <input
+              type="date"
+              name="startDate"
+              id="startDate"
+              value={startDate}
+              max={today}
+              onChange={(e) => {
+                setStartDate(e.target.value);
+                // dateRangeFilter();
+              }}
+            />
+          </div>
+
+          <div className="flexColumn">
+            <label htmlFor="endDate">End Date</label>
+            <input
+              type="date"
+              name="endDate"
+              id="endDate"
+              value={endDate}
+              max={today}
+              onChange={(e) => {
+                setEndDate(e.target.value);
+                // dateRangeFilter();
+              }}
+            />
+          </div>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th> COLLECTOR</th>
+              <th> MATERIALS </th>
+              <th> DATE </th>
+              <th> WEIGHT </th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredEntries
+              ? filteredEntries.map((entry, index) => (
+                <tr key={index}>
+                  <td>{entry.company}</td>
+                  {/* <td> P1 </td> */}
+                  <td> {entry.item_name} </td>
+                  <td> {entry.entry_date} </td>
+                  <td> {entry.entry_weight} kg </td>
+                </tr>
+              ))
+              : null}
+          </tbody>
+        </table>
+        <br />
+        <br />
+        <br />
+
         <label>See data by year</label>
         <DatePicker
           selected={selectedYear}

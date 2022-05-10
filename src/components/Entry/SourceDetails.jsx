@@ -30,7 +30,7 @@ export default function SourceDetails() {
     (async () => {
       try {
         setToday(todayDate);
-        setTotals(filteredEntries);
+        setTotals(dateRangeEntries);
 
         let [entries] = await Promise.all([
 
@@ -79,23 +79,23 @@ export default function SourceDetails() {
       collectorSelection === 'allCollectors' &&
       itemSelection === 'allItems'
     ) {
-      setFilteredEntries(entries);
+      setFilteredEntries(dateRangeEntries);
     } else if (collectorSelection === 'allCollectors') {
-      let filtered = entries.filter((entry) => {
+      let filtered = dateRangeEntries.filter((entry) => {
         if (entry['item_id'] === +itemSelection) {
           return entry;
         }
       });
       setFilteredEntries(filtered);
     } else if (itemSelection === 'allItems') {
-      let filtered = entries.filter((entry) => {
+      let filtered = dateRangeEntries.filter((entry) => {
         if (entry['account_id'] === +collectorSelection) {
           return entry;
         }
       });
       setFilteredEntries(filtered);
     } else {
-      let filtered = entries.filter((entry) => {
+      let filtered = dateRangeEntries.filter((entry) => {
         if (entry['account_id'] === +collectorSelection) {
           return entry;
         }
