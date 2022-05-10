@@ -45,12 +45,21 @@ html {
 
 .weekly-header {
   text-align: center;
+  font-family: 'Helvetica Neue';
+  color: '#666';
+  font-size: 12;
+  font-style: bold;
 }
 
 .total {
- 
+ background-color: rgba(124, 193, 233, 0.199);
 }
 
 .totals-row {
+  font-weight: 600; 
+}
+
+.source-headers {  
   font-weight: 600;
 }
+

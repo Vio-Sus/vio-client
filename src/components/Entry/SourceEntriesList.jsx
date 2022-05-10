@@ -432,7 +432,7 @@ export default function SourceEntriesList() {
         />
         {totalByYear.length !== 0 ?
           <><br/>
-            <h3 style={{ margin: '0 auto' }}>Summary in {formattedSelectedYear}</h3>
+            <h3 className="source-headers" style={{ margin: '0 auto' }}>Summary in {formattedSelectedYear}</h3>
             <table>
               <thead>
                 <tr>
@@ -451,7 +451,7 @@ export default function SourceEntriesList() {
                 {/* add styling for the total of one year */}
                 <tr class="totals-row">
                   <td className="total"> Total in {formattedSelectedYear}</td>
-                  <td> {totalNum.toFixed(2)} kg </td>
+                  <td className="total"> {totalNum.toFixed(2)} kg </td>
                 </tr>
               </tbody>
             </table>
@@ -510,7 +510,8 @@ export default function SourceEntriesList() {
           <br /> <br /> <br />
         {monthYearData().length !== 0 ?
           <>
-            <h3 style={{ margin: '0 auto' }}>{formattedSelectedYearMonth} Weekly Collection</h3>
+            <h3 className="source-headers" style={{ margin: '0 auto' }}>{formattedSelectedYearMonth} Weekly Collection</h3>
+            <br/>
             <table>
               <thead>
                 <tr>
