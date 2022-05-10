@@ -648,7 +648,7 @@ export default function SourceEntriesList() {
           <br /> <br /> <br />
         {monthYearData().length !== 0 ?
           <>
-            <h3 style={{ margin: '0 auto' }}>{formattedSelectedYearMonth} Weeks Collection</h3>
+            <h3 style={{ margin: '0 auto' }}>{formattedSelectedYearMonth} Weekly Collection</h3>
             <table>
               <thead>
                 <tr>
