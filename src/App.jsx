@@ -15,7 +15,6 @@ import AccountTypePage from './Pages/AccountType';
 import ViewSourceDataPage from './Pages/ViewSourceData';
 import UpdateProfilePage from './Pages/UpdateProfile';
 import ViewSourceDetailsPage from './Pages/ViewSourceDetails'
-
 import NavBarLogIn from './components/NavBarLogIn';
 import { NavigateBeforeTwoTone } from '@mui/icons-material';
 
