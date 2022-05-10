@@ -59,7 +59,7 @@ export default function Form({
       window.location.reload(false);
      
     } else if((accountValue) === collectorAccount) {      
-      navigate('/viewSourceData');
+      navigate('/viewSourceDetailsPage');
       window.location.reload(false);
     }
   };

@@ -111,11 +111,11 @@ const NavBar = ({ user}) => {
           <AccountType>Source Account</AccountType>  
           <ListUI>
           <LinkUI>
-            <AnchorUI href="viewSourceData">Collections</AnchorUI>
-          </LinkUI>
+            <AnchorUI href="viewSourceDetailsPage">Collection Summaries</AnchorUI>
+          </LinkUI>   
           <LinkUI>
-            <AnchorUI href="viewSourceDetailsPage">Collection Details</AnchorUI>
-          </LinkUI>                                                    
+            <AnchorUI href="viewSourceData">Collections</AnchorUI>
+          </LinkUI>                                                          
           </ListUI>
           <UserUI>
               <User>
