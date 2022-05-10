@@ -61,7 +61,7 @@ export default function EditForm({ entry, setIsEditing, items, sources }) {
   };
 
   const handleSubmit = async (event) => {
-    // event.preventDefault();
+    event.preventDefault();
     let formContent = {
       itemId,
       sourceId,
@@ -69,6 +69,7 @@ export default function EditForm({ entry, setIsEditing, items, sources }) {
       date,
     };
     try {
+      console.log('editing shits', formContent);
       await updateEntry(entry.entry_id, formContent);
       setIsEditing(false);
     } catch (error) {
@@ -101,7 +102,7 @@ export default function EditForm({ entry, setIsEditing, items, sources }) {
         <form id="edit-form">
           <div class="dropdownCont">
             <div class="flexColumn">
-              <label>Sub Account:</label>
+              <label>Source:</label>
               <select
                 value={sourceId}
                 name="source"
@@ -127,7 +128,7 @@ export default function EditForm({ entry, setIsEditing, items, sources }) {
           </div>
           <div class="dropdownCont">
             <div class="flexColumn">
-              <label>Material:</label>
+              <label>Item:</label>
               <select
                 value={itemId}
                 name="item"

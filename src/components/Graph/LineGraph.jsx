@@ -39,12 +39,12 @@ export default function LineGraph({ sourceName, xAxisLabels, datasets }) {
       legend: {
         position: 'right',
         labels: {
-          usePointStyle:true,
+          usePointStyle: true,
           boxWidth: 6,
           boxHeight: 6,
           padding: 20,
           //legend styling
-        }
+        },
       },
       title: {
         display: true,
@@ -58,14 +58,12 @@ export default function LineGraph({ sourceName, xAxisLabels, datasets }) {
     datasets: datasets,
   };
 
-
-
-
   return datasets ? (
     <Line options={options} data={data} />
   ) : (
     <>
-      There are no entries made for this source. <StyledLink to="/newEntry">Add some entries.</StyledLink>
+      There are no entries made for this source.{' '}
+      <StyledLink to="/newEntry">Add some entries.</StyledLink>
     </>
   );
 }

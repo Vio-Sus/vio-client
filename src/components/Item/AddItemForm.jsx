@@ -31,11 +31,12 @@ export default function AddItemForm({ setIsAdding }) {
         let res = await postItem(formContent);
         console.log(res);
         form.reset();
-        // window.location.reload();
+        setIsAdding(false);
       } catch (error) {
         console.log(error);
       }
     }
+    window.location.reload();
   };
 
   const handleCancel = () => {

@@ -60,13 +60,6 @@ export default function DateFilter(props) {
     props.today,
   ]);
 
-  console.log(
-    'inside dateFilter Component: ',
-    thisStartDate,
-    thisEndDate,
-    thisToday
-  );
-
   return (
     (thisStartDate, thisEndDate, thisToday) && (
       <>
