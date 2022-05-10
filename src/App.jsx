@@ -14,7 +14,7 @@ import BluetoothPage from './Pages/Bluetooth';
 import AccountTypePage from './Pages/AccountType';
 import ViewSourceDataPage from './Pages/ViewSourceData';
 import UpdateProfilePage from './Pages/UpdateProfile';
-
+import ViewSourceDetailsPage from './Pages/ViewSourceDetails'
 import NavBarLogIn from './components/NavBarLogIn';
 import { NavigateBeforeTwoTone } from '@mui/icons-material';
 
@@ -131,7 +131,11 @@ deleteItems(names)
                <Route
                 path="viewSourceData"
                 element={<ViewSourceDataPage sources={sources} items={items} />}
-              ></Route>                        
+              ></Route>
+                <Route
+                path="viewSourceDetailsPage"
+                element={<ViewSourceDetailsPage sources={sources} items={items} />}
+              ></Route>                       
             </Routes>
           </BrowserRouter>
         </div>

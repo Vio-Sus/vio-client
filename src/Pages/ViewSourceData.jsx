@@ -21,26 +21,7 @@ const StyledLink = styled(Link)`
         const [isDeleting, setIsDeleting] = useState(false);
         const [startDate, setStartDate] = useState('');
         const [endDate, setEndDate] = useState('');
-
-        /* -----------Loading Screen---------------- */
-        // Don't think we need this as sources will not be editing or deleting
-        // const selectEntry = (entry, method) => {
-        //     console.log('Entry selected: ', entry);
-        //     setSelectedEntry(entry);
-        //     switch(method) {
-        //         case 'edit':
-        //             setIsDeleting(false);
-        //             setIsEditing(true);
-        //             break;
-        //         case 'delete':
-        //             setIsEditing(false);
-        //             setIsDeleting(true);
-        //             break;
-        //         default:
-        //             return;
-        //     }
-        // };
-
+ 
         const todayObj = new Date(new Date().toString());
         const todayMinus100 = new Date(new Date().setDate(todayObj.getDate() - 60));
         // sets up dates for date input
@@ -88,12 +69,7 @@ const StyledLink = styled(Link)`
                                     buttontext="Print"
                                     buttoncolor="#4A4A4A"
                                     onClick={handlePrint}
-                                />
-
-                                {/* Delete this out since Source will not make entries */}
-                                {/* <StyledLink to="/NewEntry">
-                                    <Button buttontext="New Entry" />
-                                </StyledLink> */}
+                                />                             
                             </div>
                         </header>
                         <SourceEntriesList/>

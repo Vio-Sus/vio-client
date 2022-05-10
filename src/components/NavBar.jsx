@@ -111,8 +111,11 @@ const NavBar = ({ user}) => {
           <AccountType>Source Account</AccountType>  
           <ListUI>
           <LinkUI>
-            <AnchorUI href="viewSourceData">Data</AnchorUI>
-          </LinkUI>                                                   
+            <AnchorUI href="viewSourceData">Collections</AnchorUI>
+          </LinkUI>
+          <LinkUI>
+            <AnchorUI href="viewSourceDataDetails">Collection Details</AnchorUI>
+          </LinkUI>                                                    
           </ListUI>
           <UserUI>
               <User>

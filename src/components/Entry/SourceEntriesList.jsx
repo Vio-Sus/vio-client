@@ -29,7 +29,7 @@ export default function SourceEntriesList() {
   const [totalByYear, setTotalByYear] = useState([])
   const [totalNum, setTotalNum] = useState(0)
   const [selectedYear, setSelectedYear] = useState(new Date())
-  const [message, setMessage] = useState(" ")
+  // const [message, setMessage] = useState(" ")
   const formattedSelectedYear = selectedYear.toISOString().substring(0, 4);
   const todayObj = new Date(new Date().toString());
   const todayMinus100 = new Date(new Date().setDate(todayObj.getDate() - 60));
@@ -138,11 +138,25 @@ export default function SourceEntriesList() {
     numWeeks = weekCount(month);
     console.log("numweeks")
     console.log(numWeeks);
-    // console.log(wek)
+    const filtedEntriesByMonths = entries.filter(
+      (item) => item.entry_date.substring(0, 7) === month
+    );
+    console.log("fil")
+    console.log(filtedEntriesByMonths)
+    return filtedEntriesByMonths;
+  }
+
+  // used for dropdown change by alex
+  function filterEntriesByMonths3(month, entries) {
+
+    numWeeks = weekCount(month);
+    console.log("numweeks")
+    console.log(numWeeks);
     // const filtedEntriesByMonths = entries.filter(
     //   (item) => item.entry_date.substring(0, 7) === month
     // );
-    console.log(entries)
+    // console.log("fil")
+    // console.log(filtedEntriesByMonths)
     return entries;
   }
 
@@ -313,7 +327,7 @@ export default function SourceEntriesList() {
     console.log(data)
     // console.log(date.getFullYear())
     // console.log(date.getMonth() + 1)
-    generateWeeklyTableData(filterEntriesByMonths2(`${date.getFullYear()}-${date.getMonth() + 1}`, data));
+    generateWeeklyTableData(filterEntriesByMonths3(`${date.getFullYear()}-${date.getMonth() + 1}`, data));
     setEntriesByMonth(data)
     setSelectedDate(date);
   }
@@ -341,6 +355,7 @@ export default function SourceEntriesList() {
         setEntries(newEntries || []);
         setFilteredEntries(newEntries || []);
         generateChartData(newEntries);
+        generateWeeklyTableData(filterEntriesByMonths2(`${todayDate.substring(0, 7)}`, newEntries));
         getTotals(newEntries);
         setSelectedYear(new Date());
 
@@ -645,9 +660,10 @@ export default function SourceEntriesList() {
             }
           }
         }} data={barData}></Bar>}
-        {monthYearData().length !== 0 &&
+          <br /> <br /> <br />
+        {monthYearData().length !== 0 ?
           <>
-            <h3 style={{ margin: '0 auto' }}>{formattedSelectedYearMonth} Weeks Collection</h3>
+            <h3 style={{ margin: '0 auto' }}>{formattedSelectedYearMonth} Weekly Collection</h3>
             <table>
               <thead>
                 <tr>
@@ -679,9 +695,10 @@ export default function SourceEntriesList() {
                     </tr>
                   ))}
               </tbody>
-            </table>
+            </table> 
+           
           </>
-        }
+        : <p className="weekly-header">No Weekly Data Available</p>}
       </div>
     </>
   );
