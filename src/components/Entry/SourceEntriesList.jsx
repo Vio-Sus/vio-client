@@ -13,6 +13,7 @@ export default function SourceEntriesList() {
 
   const [entries, setEntries] = useState([]);
   const [entriesByMonth, setEntriesByMonth] = useState([]);
+  const [dateRangeEntries, setDateRangeEntries] = useState([]);
   const [filteredEntries, setFilteredEntries] = useState([]);
   const [collectorList, setCollectorList] = useState([]);
   const [itemList, setItemList] = useState([]);
@@ -188,8 +189,6 @@ export default function SourceEntriesList() {
   };
 
   const generateWeeklyTableData = (test) => {
-    console.log("test")
-    console.log(test)
     const monthlyEntriesWithWeek = test.map((item) => ({
       ...item,
       week_of_month: getWeekNumOfMonthOfDate(item.entry_date),
@@ -336,7 +335,7 @@ export default function SourceEntriesList() {
     (async () => {
       try {
         setToday(todayDate);
-        setTotals(filteredEntries);
+        setTotals(dateRangeEntries);
 
         let [entries] = await Promise.all([
 
@@ -352,8 +351,13 @@ export default function SourceEntriesList() {
           };
         });
 
+        let [entriesByDate] = await Promise.all([
+          getEntriesByDateRangeForCollector(startDate, endDate)
+        ]);
+
         setEntries(newEntries || []);
-        setFilteredEntries(newEntries || []);
+        setDateRangeEntries(entriesByDate || []);
+        console.log('dateRangeEntries: ', dateRangeEntries)
         generateChartData(newEntries);
         generateWeeklyTableData(filterEntriesByMonths2(`${todayDate.substring(0, 7)}`, newEntries));
         getTotals(newEntries);
@@ -376,6 +380,8 @@ export default function SourceEntriesList() {
           []
         );
         setItemList(uniqueItems);
+
+        updateFilter();
       } catch { }
     })();
   }, [startDate, endDate]);
@@ -458,23 +464,23 @@ export default function SourceEntriesList() {
       collectorSelection === 'allCollectors' &&
       itemSelection === 'allItems'
     ) {
-      setFilteredEntries(entries);
+      setFilteredEntries(dateRangeEntries);
     } else if (collectorSelection === 'allCollectors') {
-      let filtered = entries.filter((entry) => {
+      let filtered = dateRangeEntries.filter((entry) => {
         if (entry['item_id'] === +itemSelection) {
           return entry;
         }
       });
       setFilteredEntries(filtered);
     } else if (itemSelection === 'allItems') {
-      let filtered = entries.filter((entry) => {
+      let filtered = dateRangeEntries.filter((entry) => {
         if (entry['account_id'] === +collectorSelection) {
           return entry;
         }
       });
       setFilteredEntries(filtered);
     } else {
-      let filtered = entries.filter((entry) => {
+      let filtered = dateRangeEntries.filter((entry) => {
         if (entry['account_id'] === +collectorSelection) {
           return entry;
         }
@@ -486,6 +492,7 @@ export default function SourceEntriesList() {
       });
       setFilteredEntries(filtered);
     }
+    console.log(filteredEntries)
   };
 
   return (
