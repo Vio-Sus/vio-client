@@ -103,3 +103,9 @@ export async function getGraphDataset(startDate, endDate) {
   return res;
   // return (await axios.get(`/api/graph/line/${startDate}/${endDate}`)).data;
 }
+
+export async function getSourceGraphDataset(startDate, endDate) {
+  console.log('getSourceGraphDataset is called')
+  let res = await axios.get(`/api/sourceGraph/line/${startDate}/${endDate}`);
+  return res;
+}

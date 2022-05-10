@@ -5,7 +5,7 @@ import {
 
 import { graphApi } from '../common/mockData';
 import { dateToYMD } from '../common/date';
-import { getGraphDataset } from '../common/network';
+import { getGraphDataset, getSourceGraphDataset } from '../common/network';
 import { Link } from 'react-router-dom';
 import React from 'react';
 import styled from 'styled-components';
@@ -42,11 +42,12 @@ const GraphCont = styled.div`
   width: 60vw;
 `;
 
-
-const ViewSourceGraphPage = ({ collectors }) => {
+// In last version, collectors/sources was passed into this
+const ViewSourceGraphPage = () => {
   // const [startDate, setStartDate] = useState('2022-03-01');
   // const [endDate, setEndDate] = useState('2022-03-11');
-  const [selectedSource, setSelectedSource] = useState(null);
+  const [collectors, setCollectors] = useState([])
+  const [selectedCollector, setSelectedCollector] = useState(null);
 
   const todayObj = new Date(new Date().toString());
   const todayMinus100 = new Date(new Date().setDate(todayObj.getDate() - 30));
@@ -77,8 +78,10 @@ const ViewSourceGraphPage = ({ collectors }) => {
           let labels = await generateXAxis(startDate, endDate);
           setXAxisLabels(labels);
           // console.log('labels are', labels);
-          let sums = await getGraphDataset(startDate, endDate);
+          let sums = await getSourceGraphDataset(startDate, endDate);
           setDatasets(sums.data);
+          setCollectors(Object.keys(datasets))
+          console.log(collectors)
         } catch {}
       } else {
       }
@@ -89,8 +92,8 @@ const ViewSourceGraphPage = ({ collectors }) => {
     window.print();
   };
 
-  const handleSourceSelect = (e) => {
-          setSelectedSource(e.target.value);
+  const handleCollectorSelect = (e) => {
+          setSelectedCollector(e.target.value);
           // console.log('NOTHING', datasets);
         }
 
@@ -100,7 +103,7 @@ const ViewSourceGraphPage = ({ collectors }) => {
         <header>
           <div class="headerCont">
             <h1>Your Entries</h1>
-            <h3>Here’s an overview of the performance.</h3>
+            <h3>Here's an overview of the performance.</h3>
           </div>
           <div class="buttonCont">
             <StyledLink to="/viewData">
@@ -120,7 +123,7 @@ const ViewSourceGraphPage = ({ collectors }) => {
           </div>
         </header>
         <DropdownCont>
-          <DropDownOptions text="Source" array={collectors} handleChange={handleSourceSelect}/>
+          <DropDownOptions text="Collector" array={collectors} handleChange={handleCollectorSelect}/>
           {/* TODO: Add the ability to show a graph for quantity of items across multiple sources */}
           {/* <DropDownOptions text="Materials" /> */}
           {(startDate, endDate, today) && (
@@ -142,11 +145,11 @@ const ViewSourceGraphPage = ({ collectors }) => {
           {/* <GraphLeftSideFilter /> */}
           {/* give width & put it in div */}
           <GraphCont>
-            {xAxisLabels && datasets && selectedSource ? (
+            {xAxisLabels && datasets && selectedCollector ? (
         <LineGraph
-          sourceName={selectedSource}
+          collectorName={selectedCollector}
           xAxisLabels={xAxisLabels}
-          datasets={datasets[selectedSource]}
+          datasets={datasets[selectedCollector]}
         />
       ) : (
         <p>Pick a source from the drop down above to view!</p>
