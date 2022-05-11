@@ -59,7 +59,7 @@ export default function Form({
       window.location.reload(false);
      
     } else if((accountValue) === collectorAccount) {      
-      navigate('/viewSourceDetailsPage');
+      navigate('/collection-summaries');
       window.location.reload(false);
     }
   };

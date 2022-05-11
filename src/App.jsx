@@ -129,11 +129,11 @@ deleteItems(names)
                 element={<UpdateProfilePage handleSubmit={formValue => setFormValue(formValue)} user={user} handlefo/>}
               ></Route>
                <Route
-                path="viewSourceData"
+                path="collections"
                 element={<ViewSourceDataPage sources={sources} items={items} />}
               ></Route>
                 <Route
-                path="viewSourceDetailsPage"
+                path="collection-summaries"
                 element={<ViewSourceDetailsPage sources={sources} items={items} />}
               ></Route>                       
             </Routes>
