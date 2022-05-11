@@ -1,10 +1,6 @@
 import { useState } from 'react';
-import {
-  postSource,
-  checkSourcePhone,
-} from '../../common/network';
+import { postSource, checkSourcePhone } from '../../common/network';
 import styled from 'styled-components';
-//import CancelIcon from '@mui/icons-material/Cancel';
 import Button from '../Button';
 import { ValidatePhone, ValidateEmail } from '../../common/validation';
 
@@ -22,13 +18,15 @@ const PopupWrap = styled.form`
   border: solid grey 2px;
   position: absolute;
   border-radius: 10px;
-  width: 40vw;
+  margin-top: 10em;
+  width: 600px;
   height: 39vh;
+  z-index: 10;
 `;
 
 const Input = styled.input`
   height: 35px;
-  width: 350px;
+  width: 350px;  
   padding: 0 5px;
   margin-bottom: 5%;
   border-radius: 7px;
@@ -137,16 +135,7 @@ export default function AddSourceModal({
     if (ValidateEmail(email) === false) {
       console.log('invalid emial');
       return setMsg('Invalid Email; Try again');
-    } 
-    // else if (ValidateEmail(email) === true) {
-    //   const res = await checkSourceEmail(email);
-    //   console.log(res)
-    //   if (parseInt(res.data.count) > 0) {
-    //     return setMsg(
-    //       'This email is in use. Check to see if the source is already added.'
-    //     );
-    //   }
-    // }
+    }    
 
     try {
       console.log('sending form...', formContent);
@@ -159,8 +148,7 @@ export default function AddSourceModal({
     } catch (error) {
       console.log(error);
       return setMsg(error.message);
-    }
-    // setAddedSomething(!addedSomething);
+    }   
     setName(null);
     setAddress(null);
     setPhoneNumber(null);
@@ -177,7 +165,7 @@ export default function AddSourceModal({
   };
 
   return (
-    <PopupWrap>
+    <PopupWrap className="popupwrap">
       <div className="modalHeader" style={modalHeader}>
         <Heading>Add a New Source</Heading>
       </div>
@@ -186,6 +174,7 @@ export default function AddSourceModal({
           <Label>Name</Label>
           <br />
           <Input
+            className="modal-input"
             name="name"
             type="text"
             value={name}
@@ -195,6 +184,7 @@ export default function AddSourceModal({
           <Label>Address</Label>
           <br />
           <Input
+          className="modal-input"
             name="address"
             type="text"
             value={address}
@@ -204,6 +194,7 @@ export default function AddSourceModal({
           <Label>Phone Number</Label>
           <br />
           <Input
+            className="modal-input"
             type="text"
             name="phoneNumber"
             value={phoneNumber}
@@ -213,6 +204,7 @@ export default function AddSourceModal({
           <Label>Email</Label>
           <br />
           <Input
+            className="modal-input"
             type="text"
             name="email"
             value={email}

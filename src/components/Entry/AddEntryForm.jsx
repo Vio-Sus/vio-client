@@ -182,7 +182,7 @@ export default function Form({
               ></EntryDropdown>
             </SourceCont>
 
-            <DateItemWeightCont>
+            <DateItemWeightCont className="input-entry">
               <DateCont>
                 <label for="inputNewDate">Date</label>
                 <input
