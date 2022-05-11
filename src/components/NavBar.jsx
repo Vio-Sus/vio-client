@@ -26,19 +26,32 @@ const Logo = styled.img`
 
 const AccountType = styled.p`
   font-weight: 500;
+  width: 230px;
   margin-right: auto;
   margin-left: 20px;
   @media screen and (max-width: 600px) {
     margin: auto;
+    text-align: center;
   }
 } 
 `;
 
 const ListUI = styled.ul`
   display: flex;
-  min-width: 463px;
-  padding: 0;
+  width: 100%;
+  padding: 20px; 
   gap: 5%;
+  @media screen and (max-width: 600px) {
+    margin: auto;
+    display: flex;
+    width: 90%;
+    padding: 20px;
+    gap: 5%;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+  }
 `;
 
 const LinkUI = styled.li`
@@ -74,6 +87,7 @@ const User = styled.div`
 
 const UserUI = styled(User)`
   flex-direction: row;
+  width: 300px;
   margin-left: 10%;
   @media screen and (max-width: 600px) {
     margin: auto;
