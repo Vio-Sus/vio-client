@@ -372,13 +372,16 @@ export default function SourceEntriesList() {
   // console.log(total);
   const generateChartData = (data) => {
     if (data) {
+      console.log(data)
       const mapDayToMonth = data.map((x) => ({
         ...x,
-        entry_date: new Date(x.entry_date).getMonth(),
+        entry_date: new Date(x.entry_date.substring(0,7)).getMonth()+1,
       }));
+      // console.log("map day to month")
+      // console.log(mapDayToMonth)
       const totalsByMonths = mapDayToMonth.reduce((acc, item) => {
         let existMaterial = acc.find(
-          ({ entry_date }) => item.entry_date === entry_date
+          ({ entry_date}) => item.entry_date === entry_date
         );
         if (existMaterial) {
           existMaterial.entry_weight += item.entry_weight;
@@ -388,6 +391,8 @@ export default function SourceEntriesList() {
         }
         return acc;
       }, []);
+      // console.log("totals by months")
+      // console.log(totalsByMonths)
       //console.log("map day to month for garbage")
       const mapDayToMonthGarbage = mapDayToMonth.filter(
         (item) => item.item_name === 'Garbage'
@@ -428,11 +433,11 @@ export default function SourceEntriesList() {
           formattedTotalsGarbageByMonths.push(0);
         }
       }
+      //console.log(formattedTotalsGarbageByMonths)
       for (let i = 0; i < 12; i++) {
         formattedTotalsByMonths[i] =
           formattedTotalsByMonths[i] - formattedTotalsGarbageByMonths[i];
       }
-
       setFormattedGarbageData(formattedTotalsGarbageByMonths);
       setFormattedData(formattedTotalsByMonths);
     }
