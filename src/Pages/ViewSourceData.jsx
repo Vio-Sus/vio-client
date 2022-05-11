@@ -36,8 +36,8 @@ const StyledLink = styled(Link)`
                     await setStartDate(defaultStartDate);
                     await setEndDate(todayDate);
 
-                    const sourceGraphData = await getSourceGraphDataset();
-                    console.log(sourceGraphData)
+                    // const sourceGraphData = await getSourceGraphDataset();
+                  
 
                     console.log('startDate: ', startDate);
                     console.log('endDate: ', endDate);
