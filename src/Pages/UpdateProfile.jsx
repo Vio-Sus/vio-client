@@ -20,10 +20,7 @@ export default function UpdateProfile({user}) {
   console.log("USER" + JSON.stringify(user.user.email).replace(/['"]+/g, ''))
   const handleChange = (e) => {
     let inputName = e.target.name;       
-    switch (inputName) {     
-      case 'nickname':
-        setNickname(e.target.value);
-        break;     
+    switch (inputName) {                 
       case 'company':
         setCompanyName(e.target.value);
         break;
@@ -33,19 +30,17 @@ export default function UpdateProfile({user}) {
   };
 
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     let form = document.getElementById('new-source-form');
-    let formContent = {      
-      nickname,
+    let formContent = {            
       email: JSON.stringify(user.user.email).replace(/['"]+/g, ''),
-      company,
+      company
     };
     console.log(formContent); 
-    if (nickname.length === 0 || company === 0) {
+    if (company === 0) {
       return setMsg(
-        'Name, company, and email of source must be filled; Try again'
+        'Company, and email of source must be filled; Try again'
       );
     }
    
@@ -56,9 +51,11 @@ export default function UpdateProfile({user}) {
       if(res.data.error) {
         return setMsg(res.data.error);
       } else {
+        form.reset(); 
         return setMsg("Profile updated")
+       
       }
-      form.reset();     
+         
     } catch (error) {
       console.log(error);
     }
@@ -67,15 +64,7 @@ export default function UpdateProfile({user}) {
   return (
     <>     
       <StyledForm onSubmit={handleSubmit} id="new-source-form" noValidate>
-      <h2>Update Account Profile</h2>
-        <label>Nickname</label>
-        <br />
-        <input
-          name="nickname"
-          type="text"
-          placeholder="nickname"
-          onChange={(e) => handleChange(e)}
-        ></input>               
+      <h2>Update Account Profile</h2>                  
           <br />
         <label>Email</label>
         <br />
