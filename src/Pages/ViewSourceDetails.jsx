@@ -7,7 +7,6 @@ import SourceEntriesList from '../components/Entry/SourceEntriesList';
 import SourceDetails from '../components/Entry/SourceDetails';
 import EditForm from '../components/Entry/EditEntryForm';
 import DeleteConfirmation from '../components/Entry/DeleteEntryConfirmation';
-import Test from '../components/Entry/Test';
 import Button from '../components/Button';
 import { PDFDownloadLink, Document, Page } from '@react-pdf/renderer';
 
@@ -60,9 +59,9 @@ const StyledLink = styled(Link)`
                                 <h3>Here's an overview of your collections.</h3>
                             </div>
                             <div className="buttonCont">
-                                <StyledLink to="/viewSourceGraph">
+                                {/* <StyledLink to="/viewSourceGraph">
                                     <Button buttontext="Download PDF" buttoncolor="#4A4A4A" />
-                                </StyledLink>
+                                </StyledLink> */}
 
                                 <Button
                                     buttontext="Print Page"
@@ -72,8 +71,6 @@ const StyledLink = styled(Link)`
                             </div>
                         </header>
                         <SourceEntriesList/>
-                      
-                     <Test/>
                     </div>
                 </>
             )
