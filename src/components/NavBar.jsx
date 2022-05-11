@@ -114,7 +114,7 @@ const NavBar = ({ user}) => {
             <AnchorUI href="viewSourceData">Collections</AnchorUI>
           </LinkUI>
           <LinkUI>
-            <AnchorUI href="viewSourceDataDetails">Collection Details</AnchorUI>
+            <AnchorUI href="viewSourceDetailsPage">Collection Details</AnchorUI>
           </LinkUI>                                                    
           </ListUI>
           <UserUI>
