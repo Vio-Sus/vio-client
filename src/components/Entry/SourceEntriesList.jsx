@@ -422,11 +422,6 @@ export default function SourceEntriesList() {
   return (
     <>
       <div class="tableCont">
-
-        <br />
-        <br />
-        <br />
-
         <label>See data by year</label>
         <DatePicker
           selected={selectedYear}
