@@ -13,6 +13,7 @@ export default function SourceEntriesList() {
 
   const [entries, setEntries] = useState([]);
   const [entriesByMonth, setEntriesByMonth] = useState([]);
+  const [dateRangeEntries, setDateRangeEntries] = useState([]);
   const [filteredEntries, setFilteredEntries] = useState([]);
   const [formattedData, setFormattedData] = useState([]);
   const [formattedGarbageData, setFormattedGarbageData] = useState([]);
@@ -180,8 +181,6 @@ export default function SourceEntriesList() {
   };
 
   const generateWeeklyTableData = (test) => {
-    console.log("test")
-    console.log(test)
     const monthlyEntriesWithWeek = test.map((item) => ({
       ...item,
       week_of_month: getWeekNumOfMonthOfDate(item.entry_date),
@@ -323,11 +322,7 @@ export default function SourceEntriesList() {
   useEffect(() => {
     (async () => {
       try {
-        // setToday(todayDate);
-        // setTotals(filteredEntries);
-
         let [entries] = await Promise.all([
-
           getEntriesByDateRangeForCollector(
             `${todayDate.substring(0, 4)}-01-01`,
             todayDate
@@ -340,8 +335,13 @@ export default function SourceEntriesList() {
           };
         });
 
+       
+
         setEntries(newEntries || []);
-        setFilteredEntries(newEntries || []);
+       
+        console.log('entries: ', entries)
+        console.log('filtered entries: ', filteredEntries)
+        console.log('dateRangeEntries: ', dateRangeEntries)
         generateChartData(newEntries);
         generateWeeklyTableData(filterEntriesByMonths2(`${todayDate.substring(0, 7)}`, newEntries));
         getTotals(newEntries);
@@ -422,6 +422,11 @@ export default function SourceEntriesList() {
   return (
     <>
       <div class="tableCont">
+
+        <br />
+        <br />
+        <br />
+
         <label>See data by year</label>
         <DatePicker
           selected={selectedYear}

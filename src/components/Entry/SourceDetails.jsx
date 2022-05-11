@@ -25,15 +25,15 @@ export default function SourceDetails() {
   const [endDate, setEndDate] = useState(todayDate);
   const [today, setToday] = useState([]);
 
-
   useEffect(() => {
     (async () => {
       try {
         setToday(todayDate);
         setTotals(filteredEntries);
+        setStartDate(`${todayDate.substring(0, 4)}-01-01`);
+        setEndDate(todayDate);
 
         let [entries] = await Promise.all([
-
           getEntriesByDateRangeForCollector(
             `${todayDate.substring(0, 4)}-01-01`,
             todayDate
@@ -66,34 +66,66 @@ export default function SourceDetails() {
           []
         );
         setItemList(uniqueItems);
+        
       } catch { }
+    })();
+  }, []);
+
+  // changes date range when startdate and enddate are changed
+  useEffect(() => {
+    (async () => {
+      if (startDate && endDate) {
+        try {
+          let [entriesDateRange] = await Promise.all([
+            getEntriesByDateRangeForCollector(startDate, endDate),
+          ]);
+          setEntries(entriesDateRange);
+          setFilteredEntries(getFilteredResults(entriesDateRange || []));
+        } catch { }
+      } else {
+        let [entriesDateRange] = await Promise.all([
+          getEntriesByDateRangeForCollector(
+            `${todayDate.substring(0, 4)}-01-01`,
+            todayDate
+          ),
+        ]);
+
+        console.log(entriesDateRange);
+        setEntries(entriesDateRange);
+        setFilteredEntries(getFilteredResults(entriesDateRange || []));
+       
+      }
     })();
   }, [startDate, endDate]);
 
-  const updateFilter = () => {
+  const getFilteredResults = (collections) => {
+
     let itemSelection = document.getElementById('itemSelection').value;
     let collectorSelection =
       document.getElementById('collectorSelection').value;
+    if (!collections || collections.length <= 0) {
+      return
+    }
 
     if (
       collectorSelection === 'allCollectors' &&
       itemSelection === 'allItems'
     ) {
-      setFilteredEntries(entries);
+      return collections;
     } else if (collectorSelection === 'allCollectors') {
       let filtered = entries.filter((entry) => {
         if (entry['item_id'] === +itemSelection) {
           return entry;
         }
       });
-      setFilteredEntries(filtered);
+      return filtered;
     } else if (itemSelection === 'allItems') {
       let filtered = entries.filter((entry) => {
         if (entry['account_id'] === +collectorSelection) {
           return entry;
         }
       });
-      setFilteredEntries(filtered);
+      return filtered;
     } else {
       let filtered = entries.filter((entry) => {
         if (entry['account_id'] === +collectorSelection) {
@@ -105,7 +137,7 @@ export default function SourceDetails() {
           return entry;
         }
       });
-      setFilteredEntries(filtered);
+      return filtered;
     }
   };
 
@@ -116,7 +148,7 @@ export default function SourceDetails() {
         <div class="flexRow">
           <div class="flexColumn">
             <label>Collectors</label>
-            <select id="collectorSelection" onChange={(e) => updateFilter()}>
+            <select id="collectorSelection" onChange={(e) => setFilteredEntries(getFilteredResults(entries))}>
               <option value="allCollectors">All</option>
               {collectorList.map((collector, key) => (
                 <option key={key} value={collector.account_id}>
@@ -127,7 +159,7 @@ export default function SourceDetails() {
           </div>
           <div class="flexColumn">
             <label>Materials</label>
-            <select id="itemSelection" onChange={(e) => updateFilter()}>
+            <select id="itemSelection" onChange={(e) => setFilteredEntries(getFilteredResults(entries))}>
               <option value="allItems">All</option>
               {itemList.map((item, key) => (
                 <option key={key} value={item.item_id}>
@@ -147,7 +179,6 @@ export default function SourceDetails() {
               max={today}
               onChange={(e) => {
                 setStartDate(e.target.value);
-                // dateRangeFilter();
               }}
             />
           </div>
@@ -162,7 +193,6 @@ export default function SourceDetails() {
               max={today}
               onChange={(e) => {
                 setEndDate(e.target.value);
-                // dateRangeFilter();
               }}
             />
           </div>
@@ -190,7 +220,7 @@ export default function SourceDetails() {
               ))
               : null}
           </tbody>
-        </table>      
+        </table>
       </div>
     </>
   );
