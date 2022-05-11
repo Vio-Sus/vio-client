@@ -11,9 +11,12 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import styled from 'styled-components';
 import Chart from 'chart.js/auto';
-import { Page, Text, View, Document, StyleSheet, PDFDownloadLink } from '@react-pdf/renderer';
+import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
+import NewWindow from 'react-new-window';
+import Button from '../../components/Button';
 
 export default function SourceEntriesList() {
+  const [printPdf, setPrintPdf] = useState(false);
   const [entries, setEntries] = useState([]);
   const [entriesByMonth, setEntriesByMonth] = useState([]);
   const [dateRangeEntries, setDateRangeEntries] = useState([]);
@@ -38,7 +41,10 @@ export default function SourceEntriesList() {
   const todayDate = dateToYMD(todayObj);
   const defaultStartDate = dateToYMD(todayMinus100);
 
-  const labels = new Date(selectedYear).getFullYear() === new Date().getFullYear() ? months({ count: new Date().getMonth() + 1 }) : months({ count: 12 });
+  const labels =
+    new Date(selectedYear).getFullYear() === new Date().getFullYear()
+      ? months({ count: new Date().getMonth() + 1 })
+      : months({ count: 12 });
   // const labels = months({ count: 12 })
   // Setting up dates
   const [startDate, setStartDate] = useState(defaultStartDate);
@@ -48,13 +54,13 @@ export default function SourceEntriesList() {
     page: {
       display: 'flex',
       flexDirection: 'row',
-      backgroundColor: '#E4E4E4'
+      backgroundColor: '#E4E4E4',
     },
     section: {
       margin: 10,
       padding: 10,
-      flexGrow: 1
-    }
+      flexGrow: 1,
+    },
   });
 
   function months(config) {
@@ -129,7 +135,7 @@ export default function SourceEntriesList() {
 
       return acc;
     }, []);
-    console.log(totals)
+    console.log(totals);
     let initialValue = 0;
     const sum = totals.reduce(function (previousValue, currentValue) {
       return previousValue + currentValue.entry_weight;
@@ -329,7 +335,7 @@ export default function SourceEntriesList() {
     ]);
     // console.log("date")
     // console.log(date)
-    console.log(data)
+    console.log(data);
     setSelectedYear(date);
     const newData = data.map((item) => {
       return {
@@ -370,12 +376,9 @@ export default function SourceEntriesList() {
       try {
         // `${todayDate.substring(0, 4)}-01-01`,
         let [entries] = await Promise.all([
-          getEntriesByDateRangeForCollector(
-            `2020-01-01`,
-            todayDate
-          ),
+          getEntriesByDateRangeForCollector(`2020-01-01`, todayDate),
         ]); // returns new promise with all data
-        console.log(entries)
+        console.log(entries);
         const newEntries = entries.map((item) => {
           return {
             ...item,
@@ -389,19 +392,22 @@ export default function SourceEntriesList() {
         generateWeeklyTableData(
           filterEntriesByMonths2(`${todayDate.substring(0, 7)}`, newEntries)
         );
-        const newData = filterEntriesByYears(`${todayDate.substring(0, 4)}`, newEntries)
+        const newData = filterEntriesByYears(
+          `${todayDate.substring(0, 4)}`,
+          newEntries
+        );
         // console.log(newData)
         generateChartData(newData);
-        getTotals(newData)
+        getTotals(newData);
         setSelectedYear(new Date());
-      } catch { }
+      } catch {}
     })();
   }, []);
 
   // console.log(total);
   const generateChartData = (data) => {
     if (data) {
-      console.log(data)
+      console.log(data);
       const mapDayToMonth = data.map((x) => ({
         ...x,
         entry_date: new Date(x.entry_date.substring(0, 7)).getMonth() + 1,
@@ -470,6 +476,10 @@ export default function SourceEntriesList() {
       setFormattedGarbageData(formattedTotalsGarbageByMonths);
       setFormattedData(formattedTotalsByMonths);
     }
+  };
+
+  const handlePrint = () => {
+    window.print();
   };
 
   return (
@@ -620,7 +630,17 @@ export default function SourceEntriesList() {
           <p className="weekly-header">No Weekly Data Available</p>
         )}
       </div>
+      <Button
+        onClick={() => setPrintPdf(true)}
+        buttontext="Print Page"
+        buttoncolor="#4A4A4A"
+      />
       <Document>
+        <Page size="A4" orientation="landscape" style={styles.page}>
+          <Text style={{ textAlign: 'center', margin: '0 auto' }}>
+            Waste Report
+          </Text>
+        </Page>
         <Page size="A4" orientation="landscape" style={styles.page}>
           <View style={styles.section}>
             <Text>Section #1</Text>
@@ -628,57 +648,65 @@ export default function SourceEntriesList() {
           </View>
 
           <View style={styles.section}>
-
-
-            {monthYearData().length !== 0 ? <Bar options={{
-              plugins: {
-                title: {
-                  display: true,
-                  text: `${formattedSelectedYearMonth} Materials Collected by Collector`
-                },
-                legend: {
-                  display: true,
-                  position: "top"
-                },
-                scales: {
-                  x: {
-                    stacked: true
+            {monthYearData().length !== 0 ? (
+              <Bar
+                options={{
+                  plugins: {
+                    title: {
+                      display: true,
+                      text: `${formattedSelectedYearMonth} Materials Collected by Collector`,
+                    },
+                    legend: {
+                      display: true,
+                      position: 'top',
+                    },
+                    scales: {
+                      x: {
+                        stacked: true,
+                      },
+                      y: {
+                        stacked: true,
+                      },
+                    },
                   },
-                  y: {
-                    stacked: true,
+                }}
+                data={barData}
+              ></Bar>
+            ) : (
+              <Bar
+                options={{
+                  plugins: {
+                    title: {
+                      display: true,
+                      text: 'No data for this month',
+                    },
+                    legend: {
+                      display: true,
+                      position: 'top',
+                    },
+                    scales: {
+                      x: {
+                        stacked: true,
+                      },
+                      y: {
+                        stacked: true,
+                      },
+                    },
                   },
-                }
-              }
-            }} data={barData}></Bar> : <Bar options={{
-              plugins: {
-                title: {
-                  display: true,
-                  text: "No data for this month"
-                },
-                legend: {
-                  display: true,
-                  position: "top"
-                },
-                scales: {
-                  x: {
-                    stacked: true
-                  },
-                  y: {
-                    stacked: true,
-                  },
-                }
-              }
-            }} data={barData}></Bar>}
+                }}
+                data={barData}
+              ></Bar>
+            )}
           </View>
-
         </Page>
         <Page size="A4" orientation="landscape" style={styles.page}>
-
           <View style={styles.section}>
             <Text>Section #2</Text>
-            {monthYearData().length !== 0 ?
+            {monthYearData().length !== 0 ? (
               <>
-                <h3 style={{ margin: '0 auto' }}>{formattedSelectedYearMonth} Weekly Collection</h3>
+                <h3 style={{ margin: '0 auto' }}>
+                  {formattedSelectedYearMonth} Weekly Collection
+                </h3>
                 <table>
                   <thead>
                     <tr>
@@ -711,15 +739,16 @@ export default function SourceEntriesList() {
                       ))}
                   </tbody>
                 </table>
-
               </>
-              : <p className="weekly-header">No Weekly Data Available</p>}
-
+            ) : (
+              <p className="weekly-header">No Weekly Data Available</p>
+            )}
           </View>
 
           <View style={styles.section}>
-
-            <h3 style={{ margin: '0 auto' }}>Summary in {formattedSelectedYear}</h3>
+            <h3 style={{ margin: '0 auto' }}>
+              Summary in {formattedSelectedYear}
+            </h3>
             <table>
               <thead>
                 <tr>
@@ -728,8 +757,8 @@ export default function SourceEntriesList() {
                 </tr>
               </thead>
               <tbody>
-                {totalByYear
-                  && totalByYear.map((entry, index) => (
+                {totalByYear &&
+                  totalByYear.map((entry, index) => (
                     <tr key={index}>
                       <td> {entry.item_name} </td>
                       <td> {entry.entry_weight.toFixed(2)} kg </td>
@@ -743,54 +772,163 @@ export default function SourceEntriesList() {
               </tbody>
             </table>
           </View>
-
-          {/* <View style={styles.section}>
-              <Text>Section #3</Text>
-            {monthYearData().length !== 0 ?
-          <>
-            <h3 style={{ margin: '0 auto' }}>{formattedSelectedYearMonth} Weekly Collection</h3>
-            <table>
-              <thead>
-                <tr>
-                  <th>Materials</th>
-                  <th>Week 1</th>
-                  <th>Week 2</th>
-                  <th>Week 3</th>
-                  <th>Week 4</th>
-                  <th>Week 5</th>
-                  {weeklyTotalsData.length !== 0 &&
-                    weeklyTotalsData[0].hasOwnProperty('week6Total') && (
-                      <th>Week 6</th>
-                    )}
-                  <th>Total weight</th>
-                </tr>
-              </thead>
-              <tbody>
-                {weeklyTotalsData.length !== 0 &&
-                  weeklyTotalsData.map((row, index) => (
-                    <tr key={index}>
-                      <td>{row.item_name}</td>
-                      <td>{row.week1Total} kg</td>
-                      <td>{row.week2Total} kg</td>
-                      <td>{row.week3Total} kg</td>
-                      <td>{row.week4Total} kg</td>
-                      <td>{row.week5Total} kg</td>
-                      {row.week6Total && <td>{row.week6Total} kg</td>}
-                      <td>{row.monthlyTotal} kg</td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table> 
-           
-          </>
-        : <p className="weekly-header">No Weekly Data Available</p>}
-            
-
-            </View> */}
-
         </Page>
       </Document>
+      {printPdf === true && (
+        <NewWindow
+          url="about:blank"
+          name="popup"
+          onUnload={() => setPrintPdf(false)}
+        >
+          <Button
+            buttontext="Print"
+            id="print-button"
+            buttoncolor="#4A4A4A"
+            onClick={() => {
+              const winref = window.open('', 'popup', '', true);
+              // winref.document.getElementById("print-button").className = "hide-button"
+              winref.print();
+            }}
+          />
+          <Document className="pdf-document">
+            <Page size="A4" orientation="landscape" style={styles.page}>
+              <Text style={{ textAlign: 'center', margin: '0 auto' }}>
+                Waste Report
+              </Text>
+            </Page>
+            <Page size="A4" orientation="landscape" style={styles.page}>
+              <View style={styles.section}>
+                <Line options={options} data={data}></Line>
+              </View>
+
+              <View style={styles.section}>
+                {monthYearData().length !== 0 ? (
+                  <Bar
+                    options={{
+                      plugins: {
+                        title: {
+                          display: true,
+                          text: `${formattedSelectedYearMonth} Materials Collected by Collector`,
+                        },
+                        legend: {
+                          display: true,
+                          position: 'top',
+                        },
+                        scales: {
+                          x: {
+                            stacked: true,
+                          },
+                          y: {
+                            stacked: true,
+                          },
+                        },
+                      },
+                    }}
+                    data={barData}
+                  ></Bar>
+                ) : (
+                  <Bar
+                    options={{
+                      plugins: {
+                        title: {
+                          display: true,
+                          text: 'No data for this month',
+                        },
+                        legend: {
+                          display: true,
+                          position: 'top',
+                        },
+                        scales: {
+                          x: {
+                            stacked: true,
+                          },
+                          y: {
+                            stacked: true,
+                          },
+                        },
+                      },
+                    }}
+                    data={barData}
+                  ></Bar>
+                )}
+              </View>
+            </Page>
+            <Page size="A4" orientation="landscape" style={styles.page}>
+              <View style={styles.section}>
+                {monthYearData().length !== 0 ? (
+                  <>
+                    <h3 style={{ margin: '0 auto' }}>
+                      {formattedSelectedYearMonth} Weekly Collection
+                    </h3>
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Materials</th>
+                          <th>Week 1</th>
+                          <th>Week 2</th>
+                          <th>Week 3</th>
+                          <th>Week 4</th>
+                          <th>Week 5</th>
+                          {weeklyTotalsData.length !== 0 &&
+                            weeklyTotalsData[0].hasOwnProperty(
+                              'week6Total'
+                            ) && <th>Week 6</th>}
+                          <th>Total weight</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {weeklyTotalsData.length !== 0 &&
+                          weeklyTotalsData.map((row, index) => (
+                            <tr key={index}>
+                              <td>{row.item_name}</td>
+                              <td>{row.week1Total} kg</td>
+                              <td>{row.week2Total} kg</td>
+                              <td>{row.week3Total} kg</td>
+                              <td>{row.week4Total} kg</td>
+                              <td>{row.week5Total} kg</td>
+                              {row.week6Total && <td>{row.week6Total} kg</td>}
+                              <td>{row.monthlyTotal} kg</td>
+                            </tr>
+                          ))}
+                      </tbody>
+                    </table>
+                  </>
+                ) : (
+                  <p className="weekly-header">No Weekly Data Available</p>
+                )}
+              </View>
+
+              <View style={styles.section}>
+                <h3 style={{ margin: '0 auto' }}>
+                  Summary in {formattedSelectedYear}
+                </h3>
+                <table>
+                  <thead>
+                    <tr>
+                      <th> MATERIALS </th>
+                      <th> TOTAL WEIGHT </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {totalByYear &&
+                      totalByYear.map((entry, index) => (
+                        <tr key={index}>
+                          <td> {entry.item_name} </td>
+                          <td> {entry.entry_weight.toFixed(2)} kg </td>
+                        </tr>
+                      ))}
+                    {/* add styling for the total of one year */}
+                    <tr>
+                      <td> Total in {formattedSelectedYear}</td>
+                      <td> {totalNum.toFixed(2)} kg </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </View>
+            </Page>
+          </Document>
+        </NewWindow>
+      )}
     </>
   );
-
 }
