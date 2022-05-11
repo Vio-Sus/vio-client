@@ -74,14 +74,13 @@ export default function SourceDetails() {
   // changes date range when startdate and enddate are changed
   useEffect(() => {
     (async () => {
-      if (startDate && endDate) {
+      if (startDate || endDate) {
         try {
           let [entriesDateRange] = await Promise.all([
             getEntriesByDateRangeForCollector(startDate, endDate),
           ]);
           setEntries(entriesDateRange);
-          setFilteredEntries(entriesDateRange || []);
-          updateFilter();
+          setFilteredEntries(getFilteredResults(entriesDateRange || []));
         } catch { }
       } else {
         let [entriesDateRange] = await Promise.all([
@@ -90,19 +89,21 @@ export default function SourceDetails() {
             todayDate
           ),
         ]);
+
         console.log(entriesDateRange);
         setEntries(entriesDateRange);
-        setFilteredEntries(entriesDateRange || []);
+        setFilteredEntries(getFilteredResults(entriesDateRange || []));
        
       }
     })();
   }, [startDate, endDate]);
 
-  const updateFilter = () => {
+  const getFilteredResults = (collections) => {
+
     let itemSelection = document.getElementById('itemSelection').value;
     let collectorSelection =
       document.getElementById('collectorSelection').value;
-    if (!entries || entries.length <= 0) {
+    if (!collections || collections.length <= 0) {
       return
     }
 
@@ -110,23 +111,21 @@ export default function SourceDetails() {
       collectorSelection === 'allCollectors' &&
       itemSelection === 'allItems'
     ) {
-      console.log(entries);
-
-      setFilteredEntries(entries);
+      return collections;
     } else if (collectorSelection === 'allCollectors') {
       let filtered = entries.filter((entry) => {
         if (entry['item_id'] === +itemSelection) {
           return entry;
         }
       });
-      setFilteredEntries(filtered);
+      return filtered;
     } else if (itemSelection === 'allItems') {
       let filtered = entries.filter((entry) => {
         if (entry['account_id'] === +collectorSelection) {
           return entry;
         }
       });
-      setFilteredEntries(filtered);
+      return filtered;
     } else {
       let filtered = entries.filter((entry) => {
         if (entry['account_id'] === +collectorSelection) {
@@ -138,7 +137,7 @@ export default function SourceDetails() {
           return entry;
         }
       });
-      setFilteredEntries(filtered);
+      return filtered;
     }
   };
 
@@ -149,7 +148,7 @@ export default function SourceDetails() {
         <div class="flexRow">
           <div class="flexColumn">
             <label>Collectors</label>
-            <select id="collectorSelection" onChange={(e) => updateFilter()}>
+            <select id="collectorSelection" onChange={(e) => setFilteredEntries(getFilteredResults(entries))}>
               <option value="allCollectors">All</option>
               {collectorList.map((collector, key) => (
                 <option key={key} value={collector.account_id}>
@@ -160,7 +159,7 @@ export default function SourceDetails() {
           </div>
           <div class="flexColumn">
             <label>Materials</label>
-            <select id="itemSelection" onChange={(e) => updateFilter()}>
+            <select id="itemSelection" onChange={(e) => setFilteredEntries(getFilteredResults(entries))}>
               <option value="allItems">All</option>
               {itemList.map((item, key) => (
                 <option key={key} value={item.item_id}>
