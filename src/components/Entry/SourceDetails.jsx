@@ -25,15 +25,15 @@ export default function SourceDetails() {
   const [endDate, setEndDate] = useState(todayDate);
   const [today, setToday] = useState([]);
 
-
   useEffect(() => {
     (async () => {
       try {
         setToday(todayDate);
-        setTotals(dateRangeEntries);
+        setTotals(filteredEntries);
+        setStartDate(`${todayDate.substring(0, 4)}-01-01`);
+        setEndDate(todayDate);
 
         let [entries] = await Promise.all([
-
           getEntriesByDateRangeForCollector(
             `${todayDate.substring(0, 4)}-01-01`,
             todayDate
@@ -66,7 +66,35 @@ export default function SourceDetails() {
           []
         );
         setItemList(uniqueItems);
+        
       } catch { }
+    })();
+  }, []);
+
+  // changes date range when startdate and enddate are changed
+  useEffect(() => {
+    (async () => {
+      if (startDate && endDate) {
+        try {
+          let [entriesDateRange] = await Promise.all([
+            getEntriesByDateRangeForCollector(startDate, endDate),
+          ]);
+          setEntries(entriesDateRange);
+          setFilteredEntries(entriesDateRange || []);
+          updateFilter();
+        } catch { }
+      } else {
+        let [entriesDateRange] = await Promise.all([
+          getEntriesByDateRangeForCollector(
+            `${todayDate.substring(0, 4)}-01-01`,
+            todayDate
+          ),
+        ]);
+        console.log(entriesDateRange);
+        setEntries(entriesDateRange);
+        setFilteredEntries(entriesDateRange || []);
+       
+      }
     })();
   }, [startDate, endDate]);
 
@@ -74,28 +102,33 @@ export default function SourceDetails() {
     let itemSelection = document.getElementById('itemSelection').value;
     let collectorSelection =
       document.getElementById('collectorSelection').value;
+    if (!entries || entries.length <= 0) {
+      return
+    }
 
     if (
       collectorSelection === 'allCollectors' &&
       itemSelection === 'allItems'
     ) {
-      setFilteredEntries(dateRangeEntries);
+      console.log(entries);
+
+      setFilteredEntries(entries);
     } else if (collectorSelection === 'allCollectors') {
-      let filtered = dateRangeEntries.filter((entry) => {
+      let filtered = entries.filter((entry) => {
         if (entry['item_id'] === +itemSelection) {
           return entry;
         }
       });
       setFilteredEntries(filtered);
     } else if (itemSelection === 'allItems') {
-      let filtered = dateRangeEntries.filter((entry) => {
+      let filtered = entries.filter((entry) => {
         if (entry['account_id'] === +collectorSelection) {
           return entry;
         }
       });
       setFilteredEntries(filtered);
     } else {
-      let filtered = dateRangeEntries.filter((entry) => {
+      let filtered = entries.filter((entry) => {
         if (entry['account_id'] === +collectorSelection) {
           return entry;
         }
@@ -147,7 +180,6 @@ export default function SourceDetails() {
               max={today}
               onChange={(e) => {
                 setStartDate(e.target.value);
-                // dateRangeFilter();
               }}
             />
           </div>
@@ -162,7 +194,6 @@ export default function SourceDetails() {
               max={today}
               onChange={(e) => {
                 setEndDate(e.target.value);
-                // dateRangeFilter();
               }}
             />
           </div>
@@ -190,7 +221,7 @@ export default function SourceDetails() {
               ))
               : null}
           </tbody>
-        </table>      
+        </table>
       </div>
     </>
   );
