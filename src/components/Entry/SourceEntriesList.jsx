@@ -375,6 +375,7 @@ export default function SourceEntriesList() {
             todayDate
           ),
         ]); // returns new promise with all data
+        console.log(entries)
         const newEntries = entries.map((item) => {
           return {
             ...item,
@@ -384,12 +385,13 @@ export default function SourceEntriesList() {
         console.log(newEntries)
         setEntries(newEntries || []);
 
-        generateChartData(newEntries);
+        // generateChartData(newEntries);
         generateWeeklyTableData(
           filterEntriesByMonths2(`${todayDate.substring(0, 7)}`, newEntries)
         );
         const newData = filterEntriesByYears(`${todayDate.substring(0, 4)}`, newEntries)
-        // console.log(newData)
+        console.log(newData)
+        generateChartData(newData);
         getTotals(newData)
         setSelectedYear(new Date());
       } catch { }
