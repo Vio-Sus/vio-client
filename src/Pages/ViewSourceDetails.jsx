@@ -59,9 +59,9 @@ const StyledLink = styled(Link)`
                                 <h3>Here's an overview of your collections.</h3>
                             </div>
                             <div className="buttonCont">
-                                <StyledLink to="/viewSourceGraph">
+                                {/* <StyledLink to="/viewSourceGraph">
                                     <Button buttontext="Download PDF" buttoncolor="#4A4A4A" />
-                                </StyledLink>
+                                </StyledLink> */}
 
                                 <Button
                                     buttontext="Print Page"

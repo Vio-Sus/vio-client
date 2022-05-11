@@ -54,7 +54,7 @@ export default function SourceEntriesList() {
     page: {
       display: 'flex',
       flexDirection: 'row',
-      backgroundColor: '#E4E4E4',
+      // backgroundColor: '#E4E4E4',
     },
     section: {
       margin: 10,
@@ -632,18 +632,18 @@ export default function SourceEntriesList() {
       </div>
       <Button
         onClick={() => setPrintPdf(true)}
-        buttontext="Print Page"
+        buttontext="Print PDF"
         buttoncolor="#4A4A4A"
       />
+      <br />
       <Document>
         <Page size="A4" orientation="landscape" style={styles.page}>
-          <Text style={{ textAlign: 'center', margin: '0 auto' }}>
+          <Text style={{ textAlign: 'center', margin: '0 auto', fontWeight: "bold"}}>
             Waste Report
           </Text>
         </Page>
         <Page size="A4" orientation="landscape" style={styles.page}>
           <View style={styles.section}>
-            <Text>Section #1</Text>
             <Line options={options} data={data}></Line>
           </View>
 
@@ -701,7 +701,6 @@ export default function SourceEntriesList() {
         </Page>
         <Page size="A4" orientation="landscape" style={styles.page}>
           <View style={styles.section}>
-            <Text>Section #2</Text>
             {monthYearData().length !== 0 ? (
               <>
                 <h3 style={{ margin: '0 auto' }}>
@@ -781,12 +780,12 @@ export default function SourceEntriesList() {
           onUnload={() => setPrintPdf(false)}
         >
           <Button
-            buttontext="Print"
+            buttontext="Print PDF"
             id="print-button"
             buttoncolor="#4A4A4A"
             onClick={() => {
               const winref = window.open('', 'popup', '', true);
-              // winref.document.getElementById("print-button").className = "hide-button"
+              //winref.document.getElementById("print-button").className = "hide-button"
               winref.print();
             }}
           />

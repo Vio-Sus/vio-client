@@ -267,6 +267,8 @@ input::-webkit-calendar-picker-indicator {
 
 /* popup modal styling end */
 
-.hide-button {
-  display: none;
+@media print{
+  .hide-button{
+      display:none;
+  }
 }
