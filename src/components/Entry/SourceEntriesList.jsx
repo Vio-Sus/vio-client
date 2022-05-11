@@ -108,8 +108,10 @@ export default function SourceEntriesList() {
       } else {
         acc.push({ ...item });
       }
+      
       return acc;
     }, []);
+    console.log(totals)
     let initialValue = 0;
     const sum = totals.reduce(function (previousValue, currentValue) {
       return previousValue + currentValue.entry_weight;
@@ -304,6 +306,7 @@ export default function SourceEntriesList() {
     ]);
     // console.log("date")
     // console.log(date)
+    console.log(data)
     setSelectedYear(date);
     const newData = data.map((item) => {
       return {
@@ -342,9 +345,10 @@ export default function SourceEntriesList() {
   useEffect(() => {
     (async () => {
       try {
+        // `${todayDate.substring(0, 4)}-01-01`,
         let [entries] = await Promise.all([
           getEntriesByDateRangeForCollector(
-            `2020-01-01`,
+            `${todayDate.substring(0, 4)}-01-01`,
             todayDate
           ),
         ]); // returns new promise with all data
@@ -354,7 +358,7 @@ export default function SourceEntriesList() {
             entry_weight: +item.entry_weight,
           };
         });
-
+console.log(newEntries)
         setEntries(newEntries || []);
 
         console.log('entries: ', entries);
