@@ -74,7 +74,7 @@ export default function SourceDetails() {
   // changes date range when startdate and enddate are changed
   useEffect(() => {
     (async () => {
-      if (startDate || endDate) {
+      if (startDate && endDate) {
         try {
           let [entriesDateRange] = await Promise.all([
             getEntriesByDateRangeForCollector(startDate, endDate),
