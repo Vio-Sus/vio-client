@@ -27,6 +27,10 @@ const Logo = styled.img`
 const AccountType = styled.p`
   font-weight: 500;
   margin-right: auto;
+  margin-left: 20px;
+  @media screen and (max-width: 600px) {
+    margin: auto;
+  }
 } 
 `;
 
@@ -69,7 +73,7 @@ const User = styled.div`
 `;
 
 const UserUI = styled(User)`
-  flex-direction: column;
+  flex-direction: row;
   margin-left: 10%;
   @media screen and (max-width: 600px) {
     margin: auto;
