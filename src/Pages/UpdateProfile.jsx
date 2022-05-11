@@ -13,8 +13,7 @@ const StyledForm = styled.form`
 `;
 
 export default function UpdateProfile({user}) { 
-  const [nickname, setNickname] = useState('');
-  const [email, setEmail] = useState('');
+  const [nickname, setNickname] = useState(''); 
   const [company, setCompanyName] = useState('');
   const [msg, setMsg] = useState('');
 
@@ -24,10 +23,7 @@ export default function UpdateProfile({user}) {
     switch (inputName) {     
       case 'nickname':
         setNickname(e.target.value);
-        break;
-      case 'email':
-        setEmail(e.target.value);
-        break;
+        break;     
       case 'company':
         setCompanyName(e.target.value);
         break;
@@ -36,31 +32,31 @@ export default function UpdateProfile({user}) {
     }
   };
 
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     let form = document.getElementById('new-source-form');
     let formContent = {      
       nickname,
-      email,
+      email: JSON.stringify(user.user.email).replace(/['"]+/g, ''),
       company,
     };
     console.log(formContent); 
-    if (nickname.length === 0 || email.length === 0 || company === 0) {
+    if (nickname.length === 0 || company === 0) {
       return setMsg(
         'Name, company, and email of source must be filled; Try again'
       );
     }
    
-    if (ValidateEmail(email) === false) {
-      console.log('invalid email');
-      return setMsg('Invalid Email; Try again');
-    } 
 
     try {
       console.log('sending form...', formContent);
       let res = await updateAccountProfile(formContent);
       if(res.data.error) {
         return setMsg(res.data.error);
+      } else {
+        return setMsg("Profile updated")
       }
       form.reset();     
     } catch (error) {

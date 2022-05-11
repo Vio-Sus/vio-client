@@ -7,7 +7,9 @@ import SourceEntriesList from '../components/Entry/SourceEntriesList';
 import SourceDetails from '../components/Entry/SourceDetails';
 import EditForm from '../components/Entry/EditEntryForm';
 import DeleteConfirmation from '../components/Entry/DeleteEntryConfirmation';
+import Test from '../components/Entry/Test';
 import Button from '../components/Button';
+import { PDFDownloadLink, Document, Page } from '@react-pdf/renderer';
 
 const StyledLink = styled(Link)`
     color: none;
@@ -70,7 +72,8 @@ const StyledLink = styled(Link)`
                             </div>
                         </header>
                         <SourceEntriesList/>
-
+                      
+                     <Test/>
                     </div>
                 </>
             )
