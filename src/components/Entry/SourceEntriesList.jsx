@@ -343,7 +343,7 @@ export default function SourceEntriesList() {
       try {
         let [entries] = await Promise.all([
           getEntriesByDateRangeForCollector(
-            `${todayDate.substring(0, 4)}-01-01`,
+            `2020-01-01`,
             todayDate
           ),
         ]); // returns new promise with all data
@@ -455,7 +455,7 @@ export default function SourceEntriesList() {
           onChange={(date) => getDataByYear(date)}
           showYearPicker
           dateFormat="yyyy"
-          yearItemNumber={8}
+          yearItemNumber={6}
         />
         {totalByYear.length !== 0 ? (
           <>
