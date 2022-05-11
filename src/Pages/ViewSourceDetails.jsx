@@ -56,7 +56,7 @@ const StyledLink = styled(Link)`
                     <div className="pageCont">
                         <header>
                             <div className="headingCont">
-                                <h1>Your Collections</h1>
+                                <h1>Your Collections Summaries</h1>
                                 <h3>Here's an overview of your collections.</h3>
                             </div>
                             <div className="buttonCont">

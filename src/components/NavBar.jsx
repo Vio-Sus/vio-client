@@ -16,6 +16,7 @@ const NavbarUI = styled.div`
   }
 `;
 
+
 const Logo = styled.img`
   cursor: pointer;
   margin-right: auto;
@@ -64,7 +65,14 @@ const LinkUI = styled.li`
   font-weight: ${(props) => (props.selected ? '500' : '300')};
   &:hover {
     color: #489ced;
+    border-bottom: 2px solid blue;
   }
+  &:active {
+    border-bottom: 2px solid blue;
+  }
+  &:visited {
+    border-bottom: 2px solid blue;
+  }                    
 `;
 
 const AnchorUI = styled.a`
@@ -75,6 +83,9 @@ const AnchorUI = styled.a`
   }
   &:hover {
     color: #489ced;
+  }
+  &:visited {
+    border-bottom: 2px solid blue;
   }
 `;
 
@@ -113,7 +124,7 @@ const NavBar = ({ user}) => {
   }, [userValue, newFormValues])
   
   return (
-    <>    
+    <> 
       <NavbarUI>
       {userValue == 0 && (
       <ListUI>
@@ -132,7 +143,7 @@ const NavBar = ({ user}) => {
             <AnchorUI href="collection-summaries">Collection Summaries</AnchorUI>
           </LinkUI>   
           <LinkUI>
-            <AnchorUI href="collections">Collections</AnchorUI>
+            <AnchorUI href="collections">Collection Details</AnchorUI>
           </LinkUI>                                                          
           </ListUI>
           <UserUI>
@@ -148,25 +159,25 @@ const NavBar = ({ user}) => {
           <AccountType>Collector Account</AccountType> 
           <ListUI>
           <LinkUI>
-              <AnchorUI href="viewSource">Sources</AnchorUI>
+              <AnchorUI href="/viewSource">Sources</AnchorUI>
             </LinkUI>
             <LinkUI>
-              <AnchorUI href="viewData">Data</AnchorUI>
+              <AnchorUI href="/viewData">Data</AnchorUI>
             </LinkUI>   
           <LinkUI>
               <AnchorUI href="newEntry">New Entry</AnchorUI>
             </LinkUI>
             <LinkUI>
-              <AnchorUI href="viewItem">Items</AnchorUI>
+              <AnchorUI href="/viewItem">Items</AnchorUI>
             </LinkUI>
           <LinkUI>
-              <AnchorUI href="bluetooth">Bluetooth</AnchorUI>
+              <AnchorUI href="/bluetooth">Bluetooth</AnchorUI>
           </LinkUI>
           </ListUI>
           <UserUI>
               <User>
               <LinkUI>
-              <AnchorUI href="update-profile">
+              <AnchorUI href="/update-profile">
                 <PersonIcon fontSize="small" />
                 {JSON.stringify(user.user.nickname).replace(/['"]+/g, '')}
               </AnchorUI>
@@ -175,8 +186,7 @@ const NavBar = ({ user}) => {
               <LogoutButton />
             </UserUI></>
           )}
-      </NavbarUI>
-   
+      </NavbarUI>           
     </>
   );
 };
