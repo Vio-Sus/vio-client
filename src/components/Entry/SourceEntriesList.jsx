@@ -20,7 +20,6 @@ export default function SourceEntriesList() {
   const [formattedData, setFormattedData] = useState([]);
   const [formattedGarbageData, setFormattedGarbageData] = useState([]);
   const [weeklyTotalsData, setWeeklyTotalsData] = useState([]);
-  const labels = months({ count: new Date().getMonth()+1 });
   const [selectedDate, setSelectedDate] = useState(new Date());
   const formattedSelectedYearMonth = selectedDate
     .toISOString()
@@ -38,6 +37,8 @@ export default function SourceEntriesList() {
   const todayDate = dateToYMD(todayObj);
   const defaultStartDate = dateToYMD(todayMinus100);
 
+  const labels = new Date(selectedYear).getFullYear() === new Date().getFullYear() ? months({ count: new Date().getMonth()+1 }) : months({ count: 12 });
+  // const labels = months({ count: 12 })
   function months(config) {
     var cfg = config || {};
     var count = cfg.count || 12;
@@ -301,8 +302,8 @@ export default function SourceEntriesList() {
         endMonth.toISOString().substring(0, 10)
       ),
     ]);
-    // console.log("data")
-    // console.log(data)
+    // console.log("date")
+    // console.log(date)
     setSelectedYear(date);
     const newData = data.map((item) => {
       return {
@@ -449,7 +450,7 @@ export default function SourceEntriesList() {
         <br />
         <br />
         <br />
-        <label>See data by year</label>
+        <label>Select a year:</label>
         <DatePicker
           selected={selectedYear}
           onChange={(date) => getDataByYear(date)}
@@ -492,7 +493,7 @@ export default function SourceEntriesList() {
           <p>No data for year {formattedSelectedYear}. Please try again.</p>
         )}
         <br /> <br /> <br />
-        <label>See data by month</label>
+        <label>Select a month:</label>
         <DatePicker
           selected={selectedDate}
           onChange={(date) => getTheMonthAndYear(date)}
