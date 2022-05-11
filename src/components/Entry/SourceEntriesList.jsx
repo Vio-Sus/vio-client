@@ -11,6 +11,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import styled from 'styled-components';
 import Chart from 'chart.js/auto';
+import { Page, Text, View, Document, StyleSheet, PDFDownloadLink } from '@react-pdf/renderer';
 
 export default function SourceEntriesList() {
   const [entries, setEntries] = useState([]);
@@ -39,6 +40,24 @@ export default function SourceEntriesList() {
 
   const labels = new Date(selectedYear).getFullYear() === new Date().getFullYear() ? months({ count: new Date().getMonth()+1 }) : months({ count: 12 });
   // const labels = months({ count: 12 })
+  // Setting up dates
+  const [startDate, setStartDate] = useState(defaultStartDate);
+  const [endDate, setEndDate] = useState(todayDate);
+  const [today, setToday] = useState([]);
+  const styles = StyleSheet.create({
+    
+    page: {
+      display: 'flex',
+      flexDirection: 'row',
+      backgroundColor: '#E4E4E4'
+    },
+    section: {
+      margin: 10,
+      padding: 10,
+      flexGrow: 1
+    }
+  });
+
   function months(config) {
     var cfg = config || {};
     var count = cfg.count || 12;
@@ -599,6 +618,177 @@ console.log(newEntries)
           <p className="weekly-header">No Weekly Data Available</p>
         )}
       </div>
+      <Document>
+          <Page size="A4" orientation="landscape" style={styles.page}>
+            <View style={styles.section}>
+              <Text>Section #1</Text>
+            <Line options={options} data={data}></Line>
+            </View>
+
+<View style={styles.section}>
+
+            
+{monthYearData().length !== 0 ? <Bar options={{
+          plugins: {
+            title: {
+              display: true,
+              text: `${formattedSelectedYearMonth} Materials Collected by Collector`
+            },
+            legend: {
+              display: true,
+              position: "top"
+            },
+            scales: {
+              x: {
+                stacked: true
+              },
+              y: {
+                stacked: true,
+              },
+            }
+          }
+        }} data={barData}></Bar> : <Bar options={{
+          plugins: {
+            title: {
+              display: true,
+              text: "No data for this month"
+            },
+            legend: {
+              display: true,
+              position: "top"
+            },
+            scales: {
+              x: {
+                stacked: true
+              },
+              y: {
+                stacked: true,
+              },
+            }
+          }
+        }} data={barData}></Bar>}
+            </View>
+            
+            </Page>
+            <Page size="A4" orientation="landscape" style={styles.page}>
+
+            <View style={styles.section}>
+              <Text>Section #2</Text>
+              {monthYearData().length !== 0 ?
+          <>
+            <h3 style={{ margin: '0 auto' }}>{formattedSelectedYearMonth} Weekly Collection</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Materials</th>
+                  <th>Week 1</th>
+                  <th>Week 2</th>
+                  <th>Week 3</th>
+                  <th>Week 4</th>
+                  <th>Week 5</th>
+                  {weeklyTotalsData.length !== 0 &&
+                    weeklyTotalsData[0].hasOwnProperty('week6Total') && (
+                      <th>Week 6</th>
+                    )}
+                  <th>Total weight</th>
+                </tr>
+              </thead>
+              <tbody>
+                {weeklyTotalsData.length !== 0 &&
+                  weeklyTotalsData.map((row, index) => (
+                    <tr key={index}>
+                      <td>{row.item_name}</td>
+                      <td>{row.week1Total} kg</td>
+                      <td>{row.week2Total} kg</td>
+                      <td>{row.week3Total} kg</td>
+                      <td>{row.week4Total} kg</td>
+                      <td>{row.week5Total} kg</td>
+                      {row.week6Total && <td>{row.week6Total} kg</td>}
+                      <td>{row.monthlyTotal} kg</td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table> 
+           
+          </>
+        : <p className="weekly-header">No Weekly Data Available</p>}
+
+</View>
+
+            <View style={styles.section}>
+              
+<h3 style={{ margin: '0 auto' }}>Summary in {formattedSelectedYear}</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th> MATERIALS </th>
+                  <th> TOTAL WEIGHT </th>
+                </tr>
+              </thead>
+              <tbody>
+                {totalByYear
+                  && totalByYear.map((entry, index) => (
+                    <tr key={index}>
+                      <td> {entry.item_name} </td>
+                      <td> {entry.entry_weight.toFixed(2)} kg </td>
+                    </tr>
+                  ))}
+                {/* add styling for the total of one year */}
+                <tr>
+                  <td> Total in {formattedSelectedYear}</td>
+                  <td> {totalNum.toFixed(2)} kg </td>
+                </tr>
+              </tbody>
+            </table>
+            </View>
+
+            {/* <View style={styles.section}>
+              <Text>Section #3</Text>
+            {monthYearData().length !== 0 ?
+          <>
+            <h3 style={{ margin: '0 auto' }}>{formattedSelectedYearMonth} Weekly Collection</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Materials</th>
+                  <th>Week 1</th>
+                  <th>Week 2</th>
+                  <th>Week 3</th>
+                  <th>Week 4</th>
+                  <th>Week 5</th>
+                  {weeklyTotalsData.length !== 0 &&
+                    weeklyTotalsData[0].hasOwnProperty('week6Total') && (
+                      <th>Week 6</th>
+                    )}
+                  <th>Total weight</th>
+                </tr>
+              </thead>
+              <tbody>
+                {weeklyTotalsData.length !== 0 &&
+                  weeklyTotalsData.map((row, index) => (
+                    <tr key={index}>
+                      <td>{row.item_name}</td>
+                      <td>{row.week1Total} kg</td>
+                      <td>{row.week2Total} kg</td>
+                      <td>{row.week3Total} kg</td>
+                      <td>{row.week4Total} kg</td>
+                      <td>{row.week5Total} kg</td>
+                      {row.week6Total && <td>{row.week6Total} kg</td>}
+                      <td>{row.monthlyTotal} kg</td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table> 
+           
+          </>
+        : <p className="weekly-header">No Weekly Data Available</p>}
+            
+
+            </View> */}
+
+          </Page>
+          </Document>
     </>
   );
+  
 }
