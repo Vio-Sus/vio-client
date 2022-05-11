@@ -382,7 +382,7 @@ export default function SourceEntriesList() {
             entry_weight: +item.entry_weight,
           };
         });
-        console.log(newEntries)
+        // console.log(newEntries)
         setEntries(newEntries || []);
 
         // generateChartData(newEntries);
@@ -390,7 +390,7 @@ export default function SourceEntriesList() {
           filterEntriesByMonths2(`${todayDate.substring(0, 7)}`, newEntries)
         );
         const newData = filterEntriesByYears(`${todayDate.substring(0, 4)}`, newEntries)
-        console.log(newData)
+        // console.log(newData)
         generateChartData(newData);
         getTotals(newData)
         setSelectedYear(new Date());

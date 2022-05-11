@@ -73,6 +73,7 @@ const ViewSourceGraphPage = () => {
 
   useEffect(() => {
     (async () => {
+      
       if (startDate && endDate) {
         try {
           let labels = await generateXAxis(startDate, endDate);
@@ -149,7 +150,7 @@ const ViewSourceGraphPage = () => {
           datasets={datasets[selectedCollector]}
         />
       ) : (
-        <p>Pick a source from the drop down above to view!</p>
+        <p>Pick a collector from the drop down above to view!</p>
       )}
           </GraphCont>
           {/* <GraphRightSideKey /> */}
