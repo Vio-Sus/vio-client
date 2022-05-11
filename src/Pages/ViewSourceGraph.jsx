@@ -50,12 +50,12 @@ const ViewSourceGraphPage = () => {
   const [selectedCollector, setSelectedCollector] = useState(null);
 
   const todayObj = new Date(new Date().toString());
-  const todayMinus100 = new Date(new Date().setDate(todayObj.getDate() - 30));
+  const todayMinus100 = new Date(new Date().setDate(todayObj.getDate() - 100));
   const todayDate = dateToYMD(todayObj);
-  const [endDate, setEndDate] = useState(todayDate);
   const [today, setToday] = useState(todayDate);
   const defaultStartDate = dateToYMD(todayMinus100);
   const [startDate, setStartDate] = useState(defaultStartDate);
+  const [endDate, setEndDate] = useState(todayDate);
   const [xAxisLabels, setXAxisLabels] = useState([]);
 
   const [datasets, setDatasets] = useState([]);
@@ -73,6 +73,8 @@ const ViewSourceGraphPage = () => {
 
   useEffect(() => {
     (async () => {
+      console.log('Start Date: ', startDate)
+      console.log('End Date: ', endDate)
       if (startDate && endDate) {
         try {
           let labels = await generateXAxis(startDate, endDate);
@@ -106,7 +108,7 @@ const ViewSourceGraphPage = () => {
             <h3>Here's an overview of the performance.</h3>
           </div>
           <div class="buttonCont">
-            <StyledLink to="/viewData">
+            <StyledLink to="/viewSourceData">
               <Button buttoncolor="#4A4A4A" buttontext="List View" />
             </StyledLink>
 
