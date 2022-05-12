@@ -17,10 +17,9 @@ const PopupWrap = styled.form`
   box-shadow: 0px 2px 4px 0px #7474741a;
   border: solid grey 2px;
   position: absolute;
-  border-radius: 10px;
-  margin-top: 10em;
+  border-radius: 10px; 
   width: 600px;
-  height: 39vh;
+  height: 59vh;
   z-index: 10;
 `;
 
