@@ -120,17 +120,17 @@ const NavBar = ({ user}) => {
   return (
     <> 
       <NavbarUI>
-      {userValue == 0 && (
+      {userValue === 0 && (
       <ListUI>
-      <Logo src="public\Logo.png" style={{ width: 80 }} />
+      <Logo src="public/Logo.png" style={{ width: 80 }} />
       <AccountType>Account Selection</AccountType>
       <LinkUI>
               <AnchorUI href="account-type">Account Type</AnchorUI>
       </LinkUI>
       </ListUI>
       )}
-      {userValue == collectorAccount && (
-        <><Logo src="public\Logo.png" style={{ width: 80 }} />
+      {userValue === collectorAccount && (
+        <><Logo src="public/Logo.png" style={{ width: 80 }} />
           <AccountType>Source Account</AccountType>  
           <ListUI>
           <LinkUI>
@@ -148,8 +148,8 @@ const NavBar = ({ user}) => {
               <LogoutButton />
             </UserUI></>
          )}
-          {userValue == sourceAccount && ( 
-          <><Logo src="public\Logo.png" style={{ width: 80 }} />
+          {userValue === sourceAccount && ( 
+          <><Logo src="public/Logo.png" style={{ width: 80 }} />
           <AccountType>Collector Account</AccountType> 
           <ListUI>
           <LinkUI>
