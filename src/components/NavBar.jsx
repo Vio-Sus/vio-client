@@ -128,7 +128,7 @@ const NavBar = ({ user}) => {
       <NavbarUI>
       {userValue == 0 && (
       <ListUI>
-      <Logo src="./logo.png" style={{ width: 80 }} />
+      <Logo src="public\Logo.png" style={{ width: 80 }} />
       <AccountType>Account Selection</AccountType>
       <LinkUI>
               <AnchorUI href="account-type">Account Type</AnchorUI>
@@ -136,7 +136,7 @@ const NavBar = ({ user}) => {
       </ListUI>
       )}
       {userValue == collectorAccount && (
-        <><Logo src="./logo.png" style={{ width: 80 }} />
+        <><Logo src="public\Logo.png" style={{ width: 80 }} />
           <AccountType>Source Account</AccountType>  
           <ListUI>
           <LinkUI>
@@ -155,7 +155,7 @@ const NavBar = ({ user}) => {
             </UserUI></>
          )}
           {userValue == sourceAccount && ( 
-          <><Logo src="./logo.png" style={{ width: 80 }} />
+          <><Logo src="public\Logo.png" style={{ width: 80 }} />
           <AccountType>Collector Account</AccountType> 
           <ListUI>
           <LinkUI>
