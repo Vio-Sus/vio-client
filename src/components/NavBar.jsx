@@ -65,28 +65,22 @@ const LinkUI = styled.li`
   font-weight: ${(props) => (props.selected ? '500' : '300')};
   &:hover {
     color: #489ced;
-    border-bottom: 2px solid blue;
-  }
-  &:active {
-    border-bottom: 2px solid blue;
-  }
-  &:visited {
-    border-bottom: 2px solid blue;
-  }                    
+    text-decoration: underline solid;
+    transition: text-decoration 2s ease-out;
+    text-decoration-thickness: 5px;      
+    transition: 300ms ease-out;
+  } 
 `;
 
 const AnchorUI = styled.a`
   color: #000;
   text-decoration: none;
   &:visited {
-    color: black;
+    color: blue;    
   }
   &:hover {
     color: #489ced;
-  }
-  &:visited {
-    border-bottom: 2px solid blue;
-  }
+  } 
 `;
 
 const User = styled.div`
